@@ -1,11 +1,11 @@
+
+const path = require('path');
+const conf = require('./projectConfig');//引入多个项目的配置
+console.log(conf);
 module.exports = {
-    configureWebpack: config => {
-        if (process.env.NODE_ENV === 'production') {
-            console.log(111);
-            // 为生产环境修改配置...
-        } else {
-            console.log(222);
-            // 为开发环境修改配置...
-        }
-    }
+    pages: conf.pages,//使用不同的模板
+    outputDir: conf.outputDir,//输出到不同的文件夹下
+    devServer: conf.devServer,//代理服务器的配置不同,也主要是代理地址不同
+    chainWebpack: conf.chainWebpack,
+    configureWebpack: conf.configureWebpack
 }
