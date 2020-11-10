@@ -1,9 +1,9 @@
-const renderData = {
+export const renderData = {
     version: "1.0",
     description: "",
     container: {
-        width: 1920,
-        height: 1080
+        width: 500,
+        height: 500
     },
     change: [{}],
     pages: [{
@@ -38,7 +38,7 @@ const renderData = {
         ],
     }]
 };
-const staticEditorData = {
+export const staticEditorData = {
     Button: {
         notSupport: [
             {

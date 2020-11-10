@@ -5,7 +5,8 @@
 </template>
 <script>
 export default {
-    
+    name:"baseCmp",
+    props:["layoutConfig"]
 }
 </script>
 <style scoped>

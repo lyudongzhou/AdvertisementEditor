@@ -1,25 +1,32 @@
 <template>
-  <div id="app">
-      render
-  </div>
+  <ul>
+    <component :is="Name" :itemConfig="renderData"></component>
+  </ul>
 </template>
 
 <script>
+import ImageCmp from "../Component/Image.vue";
 
 export default {
-  name: 'app',
+  name: "app",
+  props: ["renderData"],
+  data(){
+    return {
+      Name:"ImageCmp",
+      currentIndex:0
+    }
+  },
   components: {
+    ImageCmp
+  },
+  mounted() {
+
+  },
+  methods:{
   }
-}
+};
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>

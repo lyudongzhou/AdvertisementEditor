@@ -1,6 +1,6 @@
 import Vue from 'vue'
-import App from './render.vue'
-
+import App from './App.vue'
+import "../Utils/css/reset.css"
 Vue.config.productionTip = false
 
 new Vue({
