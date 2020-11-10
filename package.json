@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "serve": "node dev.js",
+    "build": "node build.js",
     "lint": "vue-cli-service lint",
     "start": "npm run serve "
   },
@@ -20,8 +20,11 @@
   },
   "homepage": "https://github.com/lyudongzhou/AdvertisementEditor#readme",
   "dependencies": {
+    "axios": "^0.21.0",
     "core-js": "^3.6.5",
-    "vue": "^2.6.11"
+    "element-ui": "^2.14.0",
+    "vue": "^2.6.11",
+    "vue-router": "^3.4.9"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
