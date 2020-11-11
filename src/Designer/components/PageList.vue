@@ -1,4 +1,5 @@
 <script>
+  import { mapState } from 'vuex'
   export default {
     components: {
     },
@@ -6,13 +7,18 @@
     },
     data() {
       return {};
+    },
+    computed: {
+      ...mapState([
+        'currentPage',
+        'pages'
+      ]),
     }
   }
 </script>
 
 <template>
   <div class="them-dark-bg full-height overflow-auto p-sm">
-    <el-card class="text-center">page1</el-card>
-    <el-card class="text-center">page2</el-card>
+    <el-card class="text-center" v-for="page in pages" :key="page.id">{{page.name}}</el-card>
   </div>
 </template>

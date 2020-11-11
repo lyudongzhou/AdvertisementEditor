@@ -1,15 +1,15 @@
 <template>
   <el-container class="full-height">
-    <el-header class="no-padding" height="unset">
+    <el-header class="no-padding" height="50">
       <designer-header></designer-header>
     </el-header>
-    <el-container>
+    <el-container class="main-container">
 
       <el-aside width="200px">
         <PageList></PageList>
       </el-aside>
 
-      <el-main>
+      <el-main class="no-padding">
         <content-display></content-display>
       </el-main>
 
@@ -38,9 +38,15 @@ export default {
     ContentDisplay,
     DesignerOperator,
     Editor,
+  },
+  props: {
+    json: Object,
   }
 };
 </script>
 
 <style>
+  .main-container {
+    height: calc(100vh - 50px);
+  }
 </style>
