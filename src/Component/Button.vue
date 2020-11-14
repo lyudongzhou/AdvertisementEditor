@@ -1,15 +1,15 @@
 <template>
-  <baseCmp :layoutConfig='cmpConfig.layoutConfig'>
-    <div>111</div>
+  <baseCmp :layoutConfig="cmpConfig.layoutConfig">
+    <div>{{cmpConfig.name}}</div>
   </baseCmp>
 </template>
 <script>
 import baseCmp from "./Base.vue";
 export default {
-  name: "ImageCmp",
+  name: "BtnCmp",
   components: {
     baseCmp
   },
-  props:["cmpConfig"]
+  props: ["cmpConfig"]
 };
 </script>

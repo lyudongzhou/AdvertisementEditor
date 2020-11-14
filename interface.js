@@ -11,7 +11,34 @@ export const renderData = {
             {
                 id: 1,
                 name: "按钮1",
-                type: "Button",
+                type: "BtnCmp",
+                layoutConfig: {
+                    zIndex: 1,
+                    top: 100,
+                    left: 100,
+                    rotation: Math.PI,
+                    width: 1,
+                    height: 1,
+                    opacity: 1
+                },
+                props: {
+                    bgUrl: "/image/btn.png"
+                },
+                animation: [
+
+                ],
+                events: [
+                    {
+                        type: "openDialog",
+                        value: "Dialog1"
+                    }
+                ],
+                children: []
+            },
+            {
+                id: 2,
+                name: "图片1",
+                type: "ImageCmp",
                 layoutConfig: {
                     zIndex: 1,
                     top: 100,
@@ -41,8 +68,8 @@ export const renderData = {
         components: [
             {
                 id: 1,
-                name: "按钮1",
-                type: "Button",
+                name: "按钮2",
+                type: "BtnCmp",
                 layoutConfig: {
                     zIndex: 1,
                     top: 100,
