@@ -1,26 +1,41 @@
 <template>
-<div>test</div>
+  <singlePage :pageData="renderData.pages[currentIndex]" :pageIndex="currentIndex"></singlePage>
 </template>
-
 <script>
-import ImageCmp from "../Component/Image.vue";
-
+// import ImageCmp from "../Component/Image.vue";
+import singlePage from "./component/Page";
 export default {
   name: "app",
   props: ["renderData"],
   data(){
     return {
-      Name:"ImageCmp",
       currentIndex:0
     }
   },
   components: {
-    ImageCmp
+    singlePage
+    // ImageCmp
   },
   mounted() {
-
+    // this.currentIndex = 0;
+    console.log(this.renderData);
+    window.page = this;
   },
   methods:{
+    nextPage(){
+      if(this.currentIndex<this.renderData.pages.length-1){
+        this.currentIndex++;
+        return true;
+      }
+      return false;
+    },
+    prePage(){
+      if(this.currentIndex>0){
+        this.currentIndex--;
+        return true;
+      }
+      return false;
+    }
   }
 };
 </script>

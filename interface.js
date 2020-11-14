@@ -36,45 +36,76 @@ export const renderData = {
                 children: []
             }
         ],
+    },
+    {
+        components: [
+            {
+                id: 1,
+                name: "按钮1",
+                type: "Button",
+                layoutConfig: {
+                    zIndex: 1,
+                    top: 100,
+                    left: 100,
+                    rotation: Math.PI,
+                    width: 1,
+                    height: 1,
+                    opacity: 1
+                },
+                props: {
+                    bgUrl: "/image/btn.png"
+                },
+                animation: [
+
+                ],
+                events: [
+                    {
+                        type: "openDialog",
+                        value: "Dialog1"
+                    }
+                ],
+                children: []
+            }
+        ],
     }]
 };
 export const staticEditorData = {
     Button: {
         notSupport: [
             {
-                type:"layout"
+                type: "layout"
             },
             {
-                type:"animation"
+                type: "animation"
             }
         ],
-        userDefine:[
+        userDefine: [
             {
-                title:"图片",
-                key:1,
-                props:{
-                    bgUrl:{
-                        editor:{
-                            type:"imageUploader",
-                            props:{}
+                title: "图片",
+                key: 1,
+                props: {
+                    bgUrl: {
+                        editor: {
+                            type: "imageUploader",
+                            props: {}
                         },
-                        defaultValue:{
+                        defaultValue: {
 
                         }
                     }
                 }
             },
             {
-                title:"图片",
-                key:2,
-                props:{
-                    bgUrl:{
-                        label:"上传图片",
-                        editor:{
-                            type:"imageUploader",
+                title: "图片",
+                key: 2,
+                props: {
+                    bgUrl: {
+                        label: "上传图片",
+                        editor: {
+                            type: "imageUploader",
 
                         },
-                        defaultValue:{
+                        defaultValue: {
 
                         }
                     }
