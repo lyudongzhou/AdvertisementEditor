@@ -1,7 +1,5 @@
 <template>
-  <ul>
-    <component :is="Name" :itemConfig="renderData"></component>
-  </ul>
+<div></div>
 </template>
 
 <script>
