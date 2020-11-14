@@ -3,7 +3,8 @@ export const renderData = {
     description: "",
     container: {
         width: 500,
-        height: 500
+        height: 500,
+        backGround:"lightcyan"
     },
     change: [{}],
     pages: [{
@@ -22,7 +23,7 @@ export const renderData = {
                     opacity: 1
                 },
                 props: {
-                    bgUrl: "/image/btn.png"
+                    bgUrl: "https://www.pixijs.com/wp/wp-content/uploads/pixijs-v5-logo-1.png"
                 },
                 animation: [
 
@@ -49,7 +50,7 @@ export const renderData = {
                     opacity: 1
                 },
                 props: {
-                    bgUrl: "/image/btn.png"
+                    bgUrl: "https://www.pixijs.com/wp/wp-content/uploads/pixijs-v5-logo-1.png"
                 },
                 animation: [
 
@@ -69,7 +70,7 @@ export const renderData = {
             {
                 id: 1,
                 name: "按钮2",
-                type: "BtnCmp",
+                type: "ImageCmp",
                 layoutConfig: {
                     zIndex: 1,
                     top: 100,
@@ -80,7 +81,7 @@ export const renderData = {
                     opacity: 1
                 },
                 props: {
-                    bgUrl: "/image/btn.png"
+                    bgUrl: "http://img.xz7.com/up/2019-9/20199985738431530.jpg"
                 },
                 animation: [
 

@@ -1,6 +1,6 @@
 <template>
   <baseCmp :layoutConfig='cmpConfig.layoutConfig'>
-    <div>111</div>
+    <img :src="cmpConfig.props.bgUrl"/>
   </baseCmp>
 </template>
 <script>

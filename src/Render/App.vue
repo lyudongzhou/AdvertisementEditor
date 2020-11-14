@@ -1,17 +1,16 @@
 <template>
   <div
     id="app"
-    :style="{'position':'absolute','width':deviceWidth+'px','height':deviceHeight+'px','fontSize':Math.min(deviceWidth/renderData.container.width,deviceHeight/renderData.container.height)+'px','background-color':'#ff0000'}"
+    :style="{'position':'absolute','width':deviceWidth+'px','height':deviceHeight+'px','background-color':'lightgray'}"
   >
     <render
+      :displayWidth="deviceWidth"
+      :displayHeight="deviceHeight"
       :renderData="renderData"
       :style="{
-          'position':'absolute',
-          'width':renderData.container.width+'em',
-          'height':renderData.container.height+'em',
           'top': '50%',
           'left': '50%',
-          'transform': 'translate(-50%, -50%)','background-color':'#00ff00'
+          'transform': 'translate(-50%, -50%)'
           }"
     ></render>
   </div>
@@ -23,18 +22,16 @@ export default {
   components: {
     render
   },
+  methods: {},
   created() {
-    window.addEventListener("resize", ()=> {
+    window.addEventListener("resize", () => {
       this.deviceWidth = document.body.clientWidth;
       this.deviceHeight = document.body.clientHeight;
     });
-    //   let pw = this.deviceWidth/this.renderData.container.width;
-    //   let ph = this.deviceHeight/this.renderData.container.height;
-    //   let p = Math.min(pw,ph);
   },
   data() {
     return {
-        containerStyle:{},
+      containerStyle: {},
       deviceWidth: document.body.clientWidth,
       deviceHeight: document.body.clientHeight,
       renderData: renderData
@@ -43,5 +40,4 @@ export default {
 };
 </script>
 <style scoped>
-
 </style>

@@ -6,7 +6,10 @@
 <script>
 export default {
     name:"baseCmp",
-    props:["layoutConfig"]
+    props:["layoutConfig"],
+    methods:{
+
+    }
 }
 </script>
 <style scoped>

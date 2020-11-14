@@ -1,6 +1,6 @@
 <template>
   <ul>
-      <component v-for="(cmp,index) in pageData.components" :key="index" :is="cmp.type" :cmpConfig="cmp" />
+      <component v-for="(cmp,index) in pageData.components" :key="index" :is="cmp.type" :cmpConfig="cmp"/>
   </ul>
 </template>
 <script>
@@ -13,8 +13,9 @@ export default {
   name: "singlePage",
   props: ["pageData", "pageIndex"],
   components:cmps,
+  methods:{
+  },
   mounted() {
-    console.log(this.pageData.components);
   }
 };
 </script>
