@@ -1,5 +1,5 @@
 <template>
-  <baseCmp :layoutConfig='cmpConfig.layoutConfig'>
+  <baseCmp :cmpConfig='cmpConfig'>
     <img :src="cmpConfig.props.bgUrl"/>
   </baseCmp>
 </template>

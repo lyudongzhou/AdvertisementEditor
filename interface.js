@@ -2,12 +2,20 @@ export const renderData = {
     version: "1.0",
     description: "",
     container: {
-        width: 500,
-        height: 500,
-        backGround:"lightcyan"
+        width: 1000,
+        height: 700,
+        bgm: {
+            autoPlay: true,
+            src: ""
+        }
     },
     change: [{}],
     pages: [{
+        name: "",
+        id: "",
+        container: {
+            backGround: { type: "color", value: "lightcyan" },
+        },
         components: [
             {
                 id: 1,
@@ -30,7 +38,7 @@ export const renderData = {
                 ],
                 events: [
                     {
-                        type: "openDialog",
+                        type: "log",
                         value: "Dialog1"
                     }
                 ],
@@ -57,8 +65,8 @@ export const renderData = {
                 ],
                 events: [
                     {
-                        type: "openDialog",
-                        value: "Dialog1"
+                        type: "nextPage",
+                        value: ""
                     }
                 ],
                 children: []
@@ -66,6 +74,11 @@ export const renderData = {
         ],
     },
     {
+        name: "",
+        id: "",
+        container: {
+            backGround: { type: "image", value: "http://dik.img.kttpdq.com/pic/39/27153/5b61cb116a13028f_1680x1050.jpg" },
+        },
         components: [
             {
                 id: 1,
@@ -88,14 +101,15 @@ export const renderData = {
                 ],
                 events: [
                     {
-                        type: "openDialog",
-                        value: "Dialog1"
+                        type: "prePage",
+                        value: ""
                     }
                 ],
                 children: []
             }
         ],
-    }]
+    }],
+    dialogs: []
 };
 export const staticEditorData = {
     Button: {

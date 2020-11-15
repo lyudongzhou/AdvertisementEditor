@@ -1,0 +1,20 @@
+export default {
+    log:{
+        eventKey:"click",
+        method(eventValue,e,vm){
+            console.log(eventValue,e,vm);
+        }
+    },
+    nextPage:{
+        eventKey:"click",
+        method(eventValue,e,vm){
+            vm.$store.commit("nextPage");
+        }
+    },
+    prePage:{
+        eventKey:"click",
+        method(eventValue,e,vm){
+            vm.$store.commit("prePage");
+        }
+    }
+}

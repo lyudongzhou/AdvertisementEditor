@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/lyudongzhou/AdvertisementEditor#readme",
   "dependencies": {
+    "EventEmitter": "^1.0.0",
     "axios": "^0.21.0",
     "core-js": "^3.6.5",
     "element-ui": "^2.14.1",

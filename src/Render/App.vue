@@ -4,9 +4,10 @@
     :style="{'position':'absolute','width':deviceWidth+'px','height':deviceHeight+'px','background-color':'lightgray'}"
   >
     <render
-      :displayWidth="deviceWidth"
-      :displayHeight="deviceHeight"
       :renderData="renderData"
+      :currentPage="currentPage"
+      @click="onClick"
+      :designMode=true
       :style="{
           'top': '50%',
           'left': '50%',
@@ -22,19 +23,21 @@ export default {
   components: {
     render
   },
-  methods: {},
+  methods: {
+    onClick(dom){
+      console.log(dom);
+    }
+  },
   created() {
-    window.addEventListener("resize", () => {
-      this.deviceWidth = document.body.clientWidth;
-      this.deviceHeight = document.body.clientHeight;
-    });
+    window.test = this;
   },
   data() {
     return {
       containerStyle: {},
       deviceWidth: document.body.clientWidth,
       deviceHeight: document.body.clientHeight,
-      renderData: renderData
+      renderData: renderData,
+      currentPage:0
     };
   }
 };
