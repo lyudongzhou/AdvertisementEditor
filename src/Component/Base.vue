@@ -10,17 +10,31 @@ console.log(eventMap);
 export default {
   name: "baseCmp",
   props: ["cmpConfig"],
+  data () {
+    return {
+      layoutConfig: this.cmpConfig.layoutConfig
+    }
+  },
   computed: {
     publicList () {
-      return {
-        'width': `${this.cmpConfig.layoutConfig.width}rem`,
-        'height': `${this.cmpConfig.layoutConfig.height}rem`,
-        'left': `${this.cmpConfig.layoutConfig.left}rem`,
-        'top': `${this.cmpConfig.layoutConfig.top}rem`,
-        'z-index': this.cmpConfig.layoutConfig.zIndex,
-        'opacity': this.cmpConfig.layoutConfig.opacity,
-        "transform": `rotate(${this.cmpConfig.layoutConfig.rotation}deg)`
-      }
+      const style = {};
+      Object.keys(this.layoutConfig).forEach(key => {
+        switch (key) {
+          case 'rotation':
+            style['transform'] = `rotate(${this.layoutConfig.rotation}deg)`;
+            break;
+          case 'opacity':
+            style[key] = this.layoutConfig[key];
+            break;
+          case 'z-index':
+            style[key] = this.layoutConfig[key];
+            break;
+          default:
+            style[key] = `${this.layoutConfig[key]}px`;
+
+        }
+      })
+      return style;
     }
   },
   methods: {

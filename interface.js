@@ -23,11 +23,11 @@ export const renderData = {
                 type: "BtnCmp",
                 layoutConfig: {
                     zIndex: 1,
-                    top: 10,
-                    left: 10,
+                    top: 100,
+                    left: 100,
                     rotation: Math.PI*10,
-                    width: 5,
-                    height: 5,
+                    width: 100,
+                    height: 100,
                     opacity: 1
                 },
                 props: {
@@ -50,11 +50,11 @@ export const renderData = {
                 type: "ImageCmp",
                 layoutConfig: {
                     zIndex: 1,
-                    top: 20,
-                    left: 20,
+                    top: 200,
+                    left: 200,
                     rotation: Math.PI,
-                    width: 20,
-                    height: 20,
+                    width: 200,
+                    height: 200,
                     opacity: 1
                 },
                 props: {
