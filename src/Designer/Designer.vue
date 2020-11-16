@@ -29,6 +29,7 @@ import PageList from './components/PageList.vue';
 import ContentDisplay from './components/ContentDisplay.vue';
 import DesignerOperator from './components/DesignerOperator.vue';
 import Editor from './components/Editor.vue';
+import {mapMutations} from './store';
 
 export default {
   name: 'designer',
@@ -41,6 +42,12 @@ export default {
   },
   props: {
     json: Object,
+  },
+  methods: {
+    openProject(schema) {
+      this.resetSchema(schema);
+    },
+    ...mapMutations(['resetSchema']),
   }
 };
 </script>

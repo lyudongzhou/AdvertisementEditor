@@ -4,11 +4,12 @@ import currentRenderState from "../../Stores/Render/currentRenderState";
 import eventState from "../../Stores/Render/eventState";
 //创建VueX对象
 Vue.use(Vuex);
-const store = new Vuex.Store({
-    modules:{
-        currentRenderState:currentRenderState,
-        eventState:eventState
-    }
-});
+
+export const renderModules = {
+  currentRenderState: currentRenderState,
+  eventState: eventState,
+};
+
+const store = new Vuex.Store({modules: renderModules});
 window.store = store;
 export default store

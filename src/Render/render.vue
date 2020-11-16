@@ -29,20 +29,20 @@ export default {
   },
   watch:{
     pageCount(data){
-      this.$store.commit("pageCountChange",data);
+      this.$store.commit("currentRenderState/pageCountChange",data);
     },
     currentPage(data){
-      this.$store.commit("jumpPage",data);
+      this.$store.commit("currentRenderState/jumpPage",data);
     },
     designMode(data){
-      this.$store.commit("setDesignMode",data);
+      this.$store.commit("currentRenderState/setDesignMode",data);
     }
   },
   created(){
-    this.$store.commit("pageCountChange",this.pageCount);
-    this.$store.commit("setDesignMode",this.designMode);
-    pipe.on("click",(dom)=>{
-      this.$emit("click",dom);
+    this.$store.commit("currentRenderState/pageCountChange",this.pageCount);
+    this.$store.commit("currentRenderState/setDesignMode",this.designMode);
+    pipe.on("click",(dom, componentId)=>{
+      this.$emit("click",dom, componentId);
     });
   },
   components: {

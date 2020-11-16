@@ -1,24 +1,24 @@
 <template>
-  <designer :json="schema"></designer>
+  <designer @submit="handleSubmit" ref="designer"></designer>
 </template>
 <script>
 
 import designer from './Designer.vue';
 import testSchema from './mock/testSchema';
-import {mapState} from 'vuex';
 
 export default {
   components: {
     designer,
   },
   created() {
-    this.$store.commit('resetSchema', testSchema);
+    setTimeout(() => {
+      this.$refs.designer.openProject(testSchema);
+    }, 100);
   },
-  data() {
-    return {};
-  },
-  computed: {
-    ...mapState(['schema'])
+  methods: {
+    handleSubmit() {
+
+    }
   }
 };
 </script>

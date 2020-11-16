@@ -5,11 +5,12 @@ import 'element-ui/lib/theme-chalk/index.css';
 import "../Utils/css/reset.css";
 import './base/base.css';
 import store from './store';
-
-Vue.use(ElementUI);
+import handleRenderDep from './renderDep';
 
 Vue.config.productionTip = false;
-console.info(store);
+
+Vue.use(ElementUI);
+handleRenderDep({Vue, store});
 
 new Vue({
   render: h => h(App),

@@ -1,26 +1,20 @@
 <script>
-  import engine from '../mock/Engine.vue';
-  import {mapState, mapGetters} from 'vuex';
+  import render from '../../Render/render.vue';
+  import {mapState, mapGetters, mapMutations} from '../store';
   import {getPropByPath} from '../../Utils/utils';
-//  import {translateStyle} from '../mock/RenderComponent';
 
   export default {
     components: {
-      engine,
+      render,
     },
     created() {
     },
     data() {
-      return {
-
-      };
+      return {};
     },
     computed: {
-      ...mapState(['schema', 'currentComponentId', 'currentComponentInfo']),
+      ...mapState(['schema', 'currentComponentId', 'currentComponentInfo', 'currentPage', 'opened']),
       ...mapGetters(['currentComponent']),
-//      currentComponentLayout() {
-//        return this.currentComponent ? this.currentComponent.layoutConfig : {};
-//      },
       selectItemStyle() {
         const {top, left, width, height} = getPropByPath(this.currentComponentInfo, 'position', {});
         return {
@@ -29,11 +23,12 @@
           width,
           height,
         };
-      }
+      },
     },
     methods: {
       handleClick(ref, componentId) {
-        const dom = ref[0].$el;
+        const dom = ref.$el;
+        console.info(dom);
         const {top, left, height, width} = dom.getBoundingClientRect();
         const {top: containerTop, left: containerLeft} = this.$refs.workSpace.getBoundingClientRect();
         const componentInfo = {
@@ -45,15 +40,23 @@
           },
           id: componentId,
         };
-        this.$store.commit('selectComponent', componentInfo);
-      }
-    }
-  }
+        this.selectComponent(componentInfo);
+      },
+      ...mapMutations(['selectComponent'])
+    },
+  };
 </script>
 
 <template>
   <div class="work-space" ref="workSpace">
-    <engine :json="schema" designMode @click="handleClick" class="engine-design-mode"></engine>
+    <!--<engine :json="schema" designMode @click="handleClick" class="engine-design-mode"></engine>-->
+    <render v-if="opened"
+        :renderData="schema"
+        :currentPage="currentPage"
+        @click="handleClick"
+        :designMode="true"
+        class="engine-design-mode"
+    ></render>
     <div v-show="currentComponentId" class="select-item-container" ref="selectItemContainer">
       <div class="select-item" :style="selectItemStyle">
         <!--选中框-->

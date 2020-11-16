@@ -8,6 +8,7 @@ export default {
     // state.currentComponent = state.currentPage.components[0];
     // state.currentComponentId = state.currentComponent.id;
     state.pages = schema.pages;
+    state.opened = true;
   },
   selectComponent(state, componentInfo) {
     state.currentComponentId = componentInfo.id;

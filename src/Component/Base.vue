@@ -19,7 +19,7 @@ export default {
           }
         });
       }else if(type==="click"){
-          pipe.emit("click",this);
+          pipe.emit("click",this, this.cmpConfig.id);
       }
     }
   }

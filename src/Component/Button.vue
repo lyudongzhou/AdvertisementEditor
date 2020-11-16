@@ -1,5 +1,5 @@
 <template>
-  <baseCmp :layoutConfig="cmpConfig.layoutConfig">
+  <baseCmp :cmpConfig="cmpConfig">
     <div>{{cmpConfig.name}}</div>
   </baseCmp>
 </template>
