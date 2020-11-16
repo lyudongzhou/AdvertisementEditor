@@ -13,7 +13,7 @@
       return {};
     },
     computed: {
-      ...mapState(['schema', 'currentComponentId', 'currentComponentInfo', 'currentPage', 'opened']),
+      ...mapState(['vmSchema', 'currentComponentId', 'currentComponentInfo', 'currentPage', 'opened']),
       ...mapGetters(['currentComponent']),
       selectItemStyle() {
         const {top, left, width, height} = getPropByPath(this.currentComponentInfo, 'position', {});
@@ -24,11 +24,31 @@
           height,
         };
       },
+      engineContainerStyle() {
+        if (this.opened) {
+          const {width} = this.$refs.workSpace.getBoundingClientRect();
+          const containerWidth = this.vmSchema.container.width;
+          const maxWidth = width - 60;
+          let scaleValue;
+          const result = {};
+          if (maxWidth >= containerWidth) {
+            scaleValue = 1;
+            result.transform = `scale(${scaleValue}) translate(-50%, -50%)`;
+            result.top = '50%';
+            result.left = '50%';
+          } else {
+            scaleValue = maxWidth / containerWidth;
+            result.transform = `scale(${scaleValue})`;
+          }
+
+          return result;
+        }
+        return null;
+      }
     },
     methods: {
       handleClick(ref, componentId) {
         const dom = ref.$el;
-        console.info(dom);
         const {top, left, height, width} = dom.getBoundingClientRect();
         const {top: containerTop, left: containerLeft} = this.$refs.workSpace.getBoundingClientRect();
         const componentInfo = {
@@ -50,13 +70,16 @@
 <template>
   <div class="work-space" ref="workSpace">
     <!--<engine :json="schema" designMode @click="handleClick" class="engine-design-mode"></engine>-->
-    <render v-if="opened"
-        :renderData="schema"
-        :currentPage="currentPage"
-        @click="handleClick"
-        :designMode="true"
-        class="engine-design-mode"
-    ></render>
+    <div class="engine-design-mode"
+         :style="engineContainerStyle">
+      <render v-if="opened"
+              :renderData="vmSchema"
+              :currentPage="currentPage"
+              @click="handleClick"
+              :designMode="true"
+
+      ></render>
+    </div>
     <div v-show="currentComponentId" class="select-item-container" ref="selectItemContainer">
       <div class="select-item" :style="selectItemStyle">
         <!--选中框-->
@@ -75,10 +98,11 @@
     user-select: none;
     padding: 30px;
     overflow: auto;
+    height: 100%;
   }
   .engine-design-mode {
     transform-origin: left top;
-    transform: scale(0.700521);
+    position: absolute;
   }
   .select-item-container {
     position: absolute;

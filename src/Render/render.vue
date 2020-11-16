@@ -1,6 +1,6 @@
 <template>
   <singlePage
-    :style="{'position':'absolute',
+    :style="{'position':'relative',
           'width':renderData.container.width+'px',
           'height':renderData.container.height+'px'
           }"

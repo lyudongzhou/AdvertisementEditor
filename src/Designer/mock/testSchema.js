@@ -41,8 +41,8 @@ export default {
   version: "1.0",
   description: "",
   container: {
-    width: 1000,
-    height: 700,
+    width: 1024,
+    height: 768,
     bgm: {
       autoPlay: true,
       src: ""
