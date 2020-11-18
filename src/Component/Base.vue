@@ -6,6 +6,7 @@
 <script>
 import eventMap from "./eventmap";
 import pipe from "../Render/pipe";
+import {mapActions} from '../Render/store';
 console.log(eventMap);
 export default {
   name: "baseCmp",
@@ -38,6 +39,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'nextPage'
+    ]),
     dispatchEvent(type, e) {
       if (!this.$store.state.currentRenderState.designMode) {
         this.cmpConfig.events.forEach(ele => {

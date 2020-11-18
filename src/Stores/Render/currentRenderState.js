@@ -1,3 +1,5 @@
+import actions from './actions';
+
 const state = {
     pageCount: 0,//页面总数
     currentPage: 0,//当前页面index
@@ -32,5 +34,6 @@ const mutations = {
 export default {
     namespaced: true,
     state,
+    actions,
     mutations
 }
