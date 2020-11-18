@@ -8,13 +8,13 @@ export default {
     nextPage:{
         eventKey:"click",
         method(eventValue,e,vm){
-            vm.$store.commit("nextPage");
+            vm.$store.commit("currentRenderState/nextPage");
         }
     },
     prePage:{
         eventKey:"click",
         method(eventValue,e,vm){
-            vm.$store.commit("prePage");
+            vm.$store.commit("currentRenderState/prePage");
         }
     }
 }

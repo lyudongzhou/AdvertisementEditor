@@ -22,11 +22,15 @@ export default {
     fmtStyle() {
       if (this.pageData.container.backGround.type === "image") {
         return {
-          'background-image':`url(${this.pageData.container.backGround.value})`
+          'background-image':`url(${this.pageData.container.backGround.value})`,
+          'width':"100%",
+          "height":"100%"
         };
       }else{
         return {
-          'background-color':this.pageData.container.backGround.value
+          'background-color':this.pageData.container.backGround.value,
+          'width':"100%",
+          "height":"100%"
         }
       }
     }

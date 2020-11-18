@@ -6,7 +6,7 @@ export const renderData = {
         height: 700,
         bgm: {
             autoPlay: true,
-            src: ""
+            src: "http://xes-h5-icourse.oss-cn-beijing.aliyuncs.com/test1/lvdongzhou/mapproject1021local/audio/Satie%20Gymnopedie%20No.1.mp3"
         }
     },
     change: [{}],

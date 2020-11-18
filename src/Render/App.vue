@@ -7,7 +7,7 @@
       :renderData="renderData"
       :currentPage="currentPage"
       @click="onClick"
-      :designMode=true
+      :designMode=false
       :style="{
           'top': '50%',
           'left': '50%',
