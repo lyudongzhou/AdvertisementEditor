@@ -1,6 +1,6 @@
 <template>
   <baseCmp :cmpConfig='cmpConfig'>
-    <img :src="cmpConfig.props.bgUrl"/>
+    <img :src="cmpConfig.props.bgUrl" style="width:100%;height:100%"/>
   </baseCmp>
 </template>
 <script>
