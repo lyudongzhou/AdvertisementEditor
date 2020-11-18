@@ -25,7 +25,7 @@ export const renderData = {
                     zIndex: 1,
                     top: 100,
                     left: 100,
-                    rotation: Math.PI*10,
+                    rotation: Math.PI * 10,
                     width: 100,
                     height: 100,
                     opacity: 1
@@ -33,9 +33,7 @@ export const renderData = {
                 props: {
                     bgUrl: "https://www.pixijs.com/wp/wp-content/uploads/pixijs-v5-logo-1.png"
                 },
-                animation: [
-
-                ],
+                animation: {},
                 events: [
                     {
                         type: "log",
@@ -60,9 +58,11 @@ export const renderData = {
                 props: {
                     bgUrl: "https://www.pixijs.com/wp/wp-content/uploads/pixijs-v5-logo-1.png"
                 },
-                animation: [
-
-                ],
+                animation: {
+                    "in": { type: "fromtop", duration: 1000, delay: 0, times: -1 },
+                    "emphasize": { type: "shaking", duration: 1000, delay: 0, times: -1 },
+                    "out": { type: "fadeout", duration: 1000, delay: 0, times: -1 }
+                },
                 events: [
                     {
                         type: "nextPage",
@@ -89,16 +89,14 @@ export const renderData = {
                     top: 100,
                     left: 100,
                     rotation: Math.PI,
-                    width: 1,
-                    height: 1,
+                    width: 200,
+                    height: 100,
                     opacity: 1
                 },
                 props: {
-                    bgUrl: "http://img.xz7.com/up/2019-9/20199985738431530.jpg"
+                    bgUrl: "http://xes-h5-icourse.oss-cn-beijing.aliyuncs.com/test1/lvdongzhou/mapproject1021local/audio/si-glyph-comb.svg"
                 },
-                animation: [
-
-                ],
+                animation: {},
                 events: [
                     {
                         type: "prePage",

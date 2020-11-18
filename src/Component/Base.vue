@@ -12,7 +12,7 @@ export default {
   props: ["cmpConfig"],
   data () {
     return {
-      layoutConfig: this.cmpConfig.layoutConfig
+      layoutConfig: this.cmpConfig.layoutConfig,
     }
   },
   computed: {
@@ -49,6 +49,9 @@ export default {
           pipe.emit("click",this, this.cmpConfig.id);
       }
     }
+  },
+  mounted(){
+
   }
 };
 </script>
@@ -57,9 +60,5 @@ export default {
   display: flex;
   position: absolute;
   overflow: hidden;
-  img {
-    width: auto;
-    height: auto;
-  }
 }
 </style>
