@@ -36,11 +36,9 @@
 
         this.option.$pages.each(function () {
             var $page = $(this);
-            //console.log($page.attr('class'));
             $page.data('originalClassList', $page.attr('class'));
         });
 
-        //console.log(current);
         this.option.$pages.eq(this.option.current).addClass('pt-page-current');
     };
 
@@ -370,7 +368,6 @@
         this.option.isAnimating = true;
 
         var $currPage = this.option.$pages.eq(this.option.current);
-
         if (this.option.current < this.option.pagesCount - 1) {
             ++this.option.current;
         } else if (this.option.current >= this.option.pagesCount - 1 && this.option.loop) {
@@ -383,7 +380,6 @@
         var animateWork = self.chooseAnimation(animation);
         var $nextPage = this.option.$pages.eq(this.option.current).addClass('pt-page-current'),
             outClass = animateWork.outClass, inClass = animateWork.inClass;
-
 
         $currPage.addClass(outClass).on('webkitAnimationEnd', function () {
             $currPage.off('webkitAnimationEnd');
@@ -412,7 +408,6 @@
     transition.prototype.resetPage = function ($outpage, $inpage) {
         $outpage.attr('class', $outpage.data('originalClassList'));
         $inpage.attr('class', $inpage.data('originalClassList') + ' pt-page-current');
-
         this.option.callback && this.option.callback(this.option.current);
     };
 
@@ -428,7 +423,7 @@
         }
     };
 
-    transition.prototype.appendAfter = function (html) {
+    transition.prototype.prependAfter = function (html) {
         var pagesCount = this.option.pagesCount,
             diff = 0;
         this.option.$main.prepend(html);

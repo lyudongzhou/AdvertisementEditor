@@ -119,33 +119,6 @@ export const renderData = {
         components: [
             {
                 id: 1,
-                name: "按钮1",
-                type: "BtnCmp",
-                layoutConfig: {
-                    zIndex: 1,
-                    top: 100,
-                    left: 100,
-                    rotation: Math.PI*10,
-                    width: 100,
-                    height: 100,
-                    opacity: 1
-                },
-                props: {
-                    bgUrl: "https://www.pixijs.com/wp/wp-content/uploads/pixijs-v5-logo-1.png"
-                },
-                animation: [
-
-                ],
-                events: [
-                    {
-                        type: "log",
-                        value: "Dialog1"
-                    }
-                ],
-                children: []
-            },
-            {
-                id: 2,
                 name: "图片1",
                 type: "ImageCmp",
                 layoutConfig: {
@@ -158,7 +131,7 @@ export const renderData = {
                     opacity: 1
                 },
                 props: {
-                    bgUrl: "https://www.pixijs.com/wp/wp-content/uploads/pixijs-v5-logo-1.png"
+                    bgUrl: "http://xes-h5-icourse.oss-cn-beijing.aliyuncs.com/test1/13/resource/assets/images/1598609619472.png"
                 },
                 animation: [
 
@@ -177,7 +150,7 @@ export const renderData = {
         name: "页面4",
         id: 4,
         container: {
-            backGround: { type: "image", value: "http://dik.img.kttpdq.com/pic/39/27153/5b61cb116a13028f_1680x1050.jpg" },
+            backGround: { type: "image", value: "http://xes-h5-icourse.oss-cn-beijing.aliyuncs.com/test1/13/resource/assets/images/1599205350126.jpg" },
         },
         components: [
             {
@@ -194,7 +167,7 @@ export const renderData = {
                     opacity: 1
                 },
                 props: {
-                    bgUrl: "http://img.xz7.com/up/2019-9/20199985738431530.jpg"
+                    bgUrl: "http://xes-h5-icourse.oss-cn-beijing.aliyuncs.com/test1/13/resource/assets/images/1599205350126.jpg"
                 },
                 animation: [
 

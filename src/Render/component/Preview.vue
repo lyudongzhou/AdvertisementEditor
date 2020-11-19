@@ -1,11 +1,11 @@
 <template lang="html">
   <div class="preview">
     <div class="mask"></div>
-    <div class="pt-triggers">
+    <div class="pt-triggers" @click="handleNextPage">
       <button id="iterateEffects" class="pt-touch-button">显示下一页切换</button>
     </div>
     <div id="pt-main" class="pt-perspective" v-if="this.pageData">
-      <singlePage v-for="(page, index) in this.pageData" :key="index"
+      <singlePage v-for="page in this.pageData" :key="page.id"
         class="pt-page"
         :pageData="page"
         :pageIndex="page.id"></singlePage>
@@ -15,13 +15,14 @@
 
 <script>
 import singlePage from "./Page";
+import {mapActions} from '../store';
 import {transition} from "../pageChange/libs/transition";
 
 export default {
   name: "preview",
   data () {
     return {
-      pageConfig: [this.renderData.pages[this.currentIndex], this.renderData.pages[this.currentIndex+1]]
+      pageConfig: [this.renderData.pages[this.currentIndex], this.renderData.pages[this.currentIndex+1]],
     }
   },
   props: ["renderData", "currentIndex"],
@@ -39,25 +40,52 @@ export default {
     singlePage
   },
   mounted () {
-    let translate = new transition({
+    this.cutPageInit({
       $main: $('#pt-main'),
-      $pages: $('#pt-main').children('div.pt-page'),
-      loop: false,
-      callback: (index) => {
-        // this.pageData[0] = this.pageData[1]
-        // this.pageData[1] = this.renderData.pages[2]
-        this.pageData = [this.pageConfig[1], this.renderData.pages[2]];
-        console.log(this.pageData);
-        console.log(index);
-      }
-    })
-    let self = this;
-    $('#iterateEffects').click(function () {
-
-      console.log(self.pageData);
-        translate.nextPage(67);
+      $pages: $('#pt-main').children('div.pt-page')
     });
-  }
+  },
+  methods: {
+    ...mapActions([
+      'nextPage'
+    ]),
+    cutPageInit ({$main, $pages}) {
+      this.translate = new transition({
+        $main,
+        $pages,
+        loop: false,
+        callback: () => {
+          console.log('done');
+          this.changePageData();
+        }
+      })
+    },
+    /**
+     * 下一页
+     */
+    handleNextPage () {
+      if (this.currentIndex+1 < this.renderData.pages.length) {
+        this.nextPage();
+        this.translate.nextPage(67);
+      }
+    },
+    /**
+     * 修改页面展示的数据
+     */
+    changePageData () {
+      if (this.currentIndex+1 < this.renderData.pages.length) {
+        this.pageData.shift();
+        this.pageData.push(this.renderData.pages[this.currentIndex+1]);
+      }
+    }
+  },
+  updated () {
+    this.cutPageInit({
+      $main: $('#pt-main'),
+      $pages: $('#pt-main').children('div.pt-page')
+    });
+  },
+  watch: {}
 }
 </script>
 
