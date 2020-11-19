@@ -14,9 +14,12 @@ const cmps = {};
 for (let i in components) {
   cmps[components[i].name] = components[i];
 }
+//props属性：
+//pageState
+//0 准备进入 1 进入中 2 已进入 3 弹出中
 export default {
   name: "singlePage",
-  props: ["pageData", "pageIndex"],
+  props: ["pageData", "pageIndex","pageState"],
   components: cmps,
   methods: {
     fmtStyle() {
