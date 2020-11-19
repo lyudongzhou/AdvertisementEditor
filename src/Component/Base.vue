@@ -25,14 +25,13 @@ export default {
                 top: 0,
                 scale: 1,
                 rotation: 0,
+                opacity:1
             },
         };
     },
     computed: {
         publicList() {
-            const style = {
-              
-            };
+            const style = {};
             Object.keys(this.layoutConfig).forEach((key) => {
                 switch (key) {
                     case "rotation":
@@ -54,9 +53,9 @@ export default {
         },
         animationStyleComputed() {
             const style = {
-              position:"absolute",
-              width:"100%",
-              height:"100%"
+                position: "absolute",
+                width: "100%",
+                height: "100%",
             };
             let o = this.animationStyle;
             Object.keys(o).forEach((key) => {
@@ -75,7 +74,6 @@ export default {
         },
     },
     created() {
-        window.abc = this;
     },
     methods: {
         ...mapActions(["nextPage"]),
@@ -102,7 +100,13 @@ export default {
             animationDispatcher(this.cmpConfig.layoutConfig);
         },
         inAction() {
-            animationDispatcher("in",this.cmpConfig,this.animationStyle);
+            animationDispatcher("in", this.cmpConfig, this.animationStyle);
+        },
+        idleAction() {
+            animationDispatcher("emphasize", this.cmpConfig, this.animationStyle);
+        },
+        outAction() {
+            animationDispatcher("out", this.cmpConfig, this.animationStyle);
         },
     },
     mounted() {},

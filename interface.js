@@ -33,7 +33,9 @@ export const renderData = {
                 props: {
                     bgUrl: "https://www.pixijs.com/wp/wp-content/uploads/pixijs-v5-logo-1.png"
                 },
-                animation: {},
+                animation: {
+                    "in": { type: "shaking", duration: 100, delay: 0, times: 1},
+                },
                 events: [
                     {
                         type: "log",
@@ -60,7 +62,7 @@ export const renderData = {
                 },
                 animation: {
                     "in": { type: "fromtop", duration: 1000, delay: 0, times: 1},
-                    "emphasize": { type: "shaking", duration: 1000, delay: 0, times: 1 },
+                    "emphasize": { type: "shaking", duration: 100, delay: 0, times: 2 },
                     "out": { type: "fadeout", duration: 1000, delay: 0, times: -1 }
                 },
                 events: [
