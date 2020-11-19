@@ -7,15 +7,17 @@
         }"
     >
         <audio ref="bgm" :src="renderData.container.bgm.src"></audio>
-        <singlePage
+        <!-- <singlePage
             :pageData="renderData.pages[currentIndex]"
             :pageIndex="currentIndex"
-        ></singlePage>
+        ></singlePage> -->
+      <preview :renderData="renderData" :currentIndex="currentIndex"></preview>
     </div>
 </template>
 <script>
 // import ImageCmp from "../Component/Image.vue";
-import singlePage from "./component/Page";
+// import singlePage from "./component/Page";
+import preview from "./component/Preview";
 import pipe from "./pipe";
 export default {
     name: "app",
@@ -53,11 +55,11 @@ export default {
         });
     },
     components: {
-        singlePage,
+        // singlePage,
+        preview
         // ImageCmp
     },
     mounted() {
-        console.log(this.$refs);
         if (this.renderData.container.bgm.autoPlay) {
             this.$refs.bgm.play();
         }
