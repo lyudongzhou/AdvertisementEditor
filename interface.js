@@ -99,7 +99,11 @@ export const renderData = {
                 props: {
                     bgUrl: "http://xes-h5-icourse.oss-cn-beijing.aliyuncs.com/test1/lvdongzhou/mapproject1021local/audio/si-glyph-comb.svg"
                 },
-                animation: {},
+                animation: {
+                    "in": { type: "fromtop", duration: 1000, delay: 0, times: 1},
+                    "emphasize": { type: "shaking", duration: 100, delay: 0, times: 2 },
+                    "out": { type: "fadeout", duration: 1000, delay: 0, times: -1 }
+                },
                 events: [
                     {
                         type: "prePage",

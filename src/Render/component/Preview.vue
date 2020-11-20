@@ -5,8 +5,9 @@
       <button id="iterateEffects" class="pt-touch-button">显示下一页切换</button>
     </div>
     <div id="pt-main" class="pt-perspective" v-if="this.pageData">
-      <singlePage v-for="page in this.pageData" :key="page.id"
+      <singlePage v-for="(page, index) in this.pageData" :key="page.id"
         class="pt-page"
+        :pageState="index===0?pageState:0"
         :pageData="page"
         :pageIndex="page.id"></singlePage>
     </div>
@@ -23,6 +24,7 @@ export default {
   data () {
     return {
       pageConfig: [this.renderData.pages[this.currentIndex], this.renderData.pages[this.currentIndex+1]],
+      pageState: 0
     }
   },
   props: ["renderData", "currentIndex"],
@@ -39,7 +41,11 @@ export default {
   components: {
     singlePage
   },
+  created () {
+    this.pageState = 1;
+  },
   mounted () {
+    this.pageState = 2;
     this.cutPageInit({
       $main: $('#pt-main'),
       $pages: $('#pt-main').children('div.pt-page')
@@ -55,8 +61,8 @@ export default {
         $pages,
         loop: false,
         callback: () => {
-          console.log('done');
           this.changePageData();
+          this.pageState = 2;
         }
       })
     },
@@ -65,8 +71,12 @@ export default {
      */
     handleNextPage () {
       if (this.currentIndex+1 < this.renderData.pages.length) {
-        this.nextPage();
-        this.translate.nextPage(67);
+        this.pageState = 3;
+        setTimeout(() => {
+          this.pageState = 1;
+          this.nextPage();
+          this.translate.nextPage(67);
+        }, 500)
       }
     },
     /**
@@ -76,14 +86,17 @@ export default {
       if (this.currentIndex+1 < this.renderData.pages.length) {
         this.pageData.shift();
         this.pageData.push(this.renderData.pages[this.currentIndex+1]);
+        this.$nextTick(() => {
+          // 更改切页数据
+          this.cutPageInit({
+            $main: $('#pt-main'),
+            $pages: $('#pt-main').children('div.pt-page')
+          });
+        })
       }
     }
   },
   updated () {
-    this.cutPageInit({
-      $main: $('#pt-main'),
-      $pages: $('#pt-main').children('div.pt-page')
-    });
   },
   watch: {}
 }

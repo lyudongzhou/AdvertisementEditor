@@ -20,12 +20,13 @@ for (let i in components) {
 //0 准备进入 1 进入中 2 已进入 3 弹出中*
 export default {
     name: "singlePage",
-    props: ["pageData", "pageIndex"],
+    props: ["pageData", "pageIndex", "pageState"],
     components: cmps,
     data() {
         return {
-            pageState: 0,
         };
+    },
+    mounted() {
     },
     watch: {
         pageState(data) {
@@ -61,10 +62,6 @@ export default {
                 };
             }
         },
-    },
-    mounted() {
-        window.abc = this;
-        // console.log(this.pageData);
-    },
+    }
 };
 </script>
