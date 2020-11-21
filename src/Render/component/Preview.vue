@@ -23,11 +23,14 @@ export default {
   name: "preview",
   data () {
     return {
-      pageConfig: [this.renderData.pages[this.currentIndex]],
+      pageConfig: [this.renderData.pages[0]],
+      renderChange: this.renderData.change,
+      timer: null,
+      isOperation: false, // 用户是否切页，是：count=0
       pageState: 0
     }
   },
-  props: ["renderData", "currentIndex"],
+  props: ["renderData"],
   computed: {
     pageData: {
       get: function () {
@@ -51,11 +54,13 @@ export default {
       $main: $('#pt-main'),
       $pages: $('#pt-main').children('ul.pt-page')
     });
+    this.countDown();
   },
   methods: {
     ...mapActions([
       'nextPage',
-      'prevPage'
+      'prevPage',
+      'jumpPage'
     ]),
     cutPageInit ({$main, $pages}) {
       this.translate = new transition({
@@ -73,12 +78,16 @@ export default {
      * 下一页
      */
     handleNextPage () {
-      if (this.currentIndex+1 < this.renderData.pages.length) {
+      if (this.currentPage+1 > this.renderData.pages.length-1 && this.renderChange.loop) {
+        this.jumpPage(-1);
+      }
+      if (this.currentPage+1 <= this.renderData.pages.length-1) {
+        this.isOperation = true;
         this.pageState = 3;
         this.nextPage();
         this.changePageData().then(() => {
           this.pageState = 1;
-          this.translate.nextPage(1);
+          this.translate.nextPage(this.renderChange.type);
         })
       }
     },
@@ -86,12 +95,21 @@ export default {
      * 上一页
      */
     handlePrevPage () {
-      if (this.currentIndex-1 >= 0) {
+      if (this.currentPage-1 < 0 && this.renderChange.loop) {
+        this.jumpPage(this.renderData.pages.length-1);
+        this.isOperation = true;
         this.pageState = 3;
-        this.prevPage();
         this.changePageData().then(() => {
           this.pageState = 1;
-          this.translate.nextPage(2);
+          this.translate.nextPage(this.renderChange.type+1);
+        })
+      } else if (this.currentPage-1 >= 0) {
+        this.prevPage();
+        this.isOperation = true;
+        this.pageState = 3;
+        this.changePageData().then(() => {
+          this.pageState = 1;
+          this.translate.nextPage(this.renderChange.type+1);
         })
       }
     },
@@ -110,6 +128,22 @@ export default {
           resolve();
         })
       })
+    },
+    countDown () {
+      let count = 0;
+      this.timer = setInterval(() => {
+        if (this.isOperation) {
+          this.isOperation = false;
+          count = 0;
+        }
+        if (count < this.renderChange.singlePagePlayTime) {
+          count++;
+          // console.log('platTime: ', count);
+        } else if (count === this.renderChange.singlePagePlayTime) {
+          // console.log('platTime: ', count);
+          this.handleNextPage();
+        }
+      }, 1000)
     }
   },
   updated () {

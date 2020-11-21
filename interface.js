@@ -9,7 +9,11 @@ export const renderData = {
             src: "http://xes-h5-icourse.oss-cn-beijing.aliyuncs.com/test1/lvdongzhou/mapproject1021local/audio/Satie%20Gymnopedie%20No.1.mp3"
         }
     },
-    change: {},
+    change: {
+      type: 3,
+      loop: true,
+      singlePagePlayTime: 20
+    },
     pages: [
       {
         name: "页面1",
