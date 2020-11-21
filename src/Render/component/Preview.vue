@@ -23,7 +23,7 @@ export default {
   name: "preview",
   data () {
     return {
-      pageConfig: [this.renderData.pages[this.currentIndex], this.renderData.pages[this.currentIndex+1]],
+      pageConfig: [this.renderData.pages[this.currentIndex]],
       pageState: 0
     }
   },
@@ -49,8 +49,7 @@ export default {
     this.pageState = 2;
     this.cutPageInit({
       $main: $('#pt-main'),
-      $pages: $('#pt-main').children('ul.pt-page'),
-      current: 0
+      $pages: $('#pt-main').children('ul.pt-page')
     });
   },
   methods: {
@@ -58,14 +57,15 @@ export default {
       'nextPage',
       'prevPage'
     ]),
-    cutPageInit ({$main, $pages, current}) {
+    cutPageInit ({$main, $pages}) {
       this.translate = new transition({
         $main,
         $pages,
-        current,
         loop: false,
         callback: () => {
           this.pageState = 2;
+          // 删除非展示的页面数据
+          this.pageData.splice(this.pageData.findIndex(child=>child.id!==this.renderData[this.currentPage]),1)
         }
       })
     },
@@ -76,11 +76,10 @@ export default {
       if (this.currentIndex+1 < this.renderData.pages.length) {
         this.pageState = 3;
         this.nextPage();
-        this.pageState = 1;
-        this.translate.nextPage(1);
-        setTimeout(() => {
-          this.changePageData('next', this.currentPage+1);
-        }, 800)
+        this.changePageData().then(() => {
+          this.pageState = 1;
+          this.translate.nextPage(1);
+        })
       }
     },
     /**
@@ -90,7 +89,7 @@ export default {
       if (this.currentIndex-1 >= 0) {
         this.pageState = 3;
         this.prevPage();
-        this.changePageData('prev', this.currentPage).then(() => {
+        this.changePageData().then(() => {
           this.pageState = 1;
           this.translate.nextPage(2);
         })
@@ -98,20 +97,10 @@ export default {
     },
     /**
      * 修改页面展示的数据
-     * @param type {next||prev||assign}
-     * @param pageIndex {Number}
-     * @param current {0||1} init animation时需要的option.current
      */
-    changePageData (type, pageIndex) {
+    changePageData () {
       return new Promise (resolve => {
-        if (type === 'prev') {
-          console.log(this.renderData.pages[this.currentPage].id);
-          this.pageData.splice(this.pageData.findIndex(child=>child.id !== this.renderData.pages[this.currentPage].id), 1);
-        } else {
-          this.pageData.splice(this.pageData.findIndex(child=>child.id !== this.renderData.pages[this.currentPage].id), 1);
-        }
-        this.pageData.push(this.renderData.pages[pageIndex]);
-        console.log(...this.pageData);
+        this.pageData.push(this.renderData.pages[this.currentPage]);
         this.$nextTick(() => {
           // 更改切页数据
           this.cutPageInit({
