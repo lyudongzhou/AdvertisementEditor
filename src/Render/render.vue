@@ -1,7 +1,7 @@
 <template>
     <div
         :style="{
-            position: 'absolute',
+            position: 'relative',
             width: renderData.container.width + 'px',
             height: renderData.container.height + 'px',
         }"

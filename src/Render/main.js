@@ -3,7 +3,9 @@ import App from './App.vue'
 import "../Utils/css/reset.css";
 import './assets/css/animations.css';
 import store from "./store";
-Vue.config.productionTip = false
+import axios from 'axios';
+Vue.config.productionTip = false;
+Vue.prototype.$axios = axios
 new Vue({
   store,
   render: h => h(App),

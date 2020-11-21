@@ -6,6 +6,7 @@ export function shaking(cmpConfig, { duration, delay }) {
             yoyo: true, repeat: -1, delay: delay / 1000, left: 10, ease: Power3.easeIn
         }),
         cancel(){
+            o.tween.kill();
             cmpConfig.left = 0;
         }
     };

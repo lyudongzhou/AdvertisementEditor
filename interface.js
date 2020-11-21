@@ -15,186 +15,184 @@ export const renderData = {
       singlePagePlayTime: 20
     },
     pages: [
-      {
-        name: "页面1",
-        id: 1,
-        container: {
-            backGround: { type: "color", value: "lightcyan" },
-        },
-        components: [
-            {
-                id: 1,
-                name: "按钮1",
-                type: "BtnCmp",
-                layoutConfig: {
-                    zIndex: 1,
-                    top: 100,
-                    left: 100,
-                    rotation: Math.PI * 10,
-                    width: 100,
-                    height: 100,
-                    opacity: 1
-                },
-                props: {
-                    bgUrl: "https://www.pixijs.com/wp/wp-content/uploads/pixijs-v5-logo-1.png"
-                },
-                animation: {
-                    "in": { type: "shaking", duration: 100, delay: 0, times: 1},
-                },
-                events: [
-                    {
-                        type: "log",
-                        value: "Dialog1"
-                    }
-                ],
-                children: []
+        {
+            name: "页面1",
+            id: 1,
+            container: {
+                backGround: { type: "color", value: "lightcyan" },
             },
-            {
-                id: 2,
-                name: "图片1",
-                type: "ImageCmp",
-                layoutConfig: {
-                    zIndex: 1,
-                    top: 200,
-                    left: 200,
-                    rotation: Math.PI,
-                    width: 200,
-                    height: 200,
-                    opacity: 1
+            components: [
+                {
+                    id: 1,
+                    name: "按钮1",
+                    type: "BtnCmp",
+                    layoutConfig: {
+                        zIndex: 1,
+                        top: 100,
+                        left: 100,
+                        rotation: Math.PI * 10,
+                        width: 100,
+                        height: 100,
+                        opacity: 1
+                    },
+                    props: {
+                        text:"111"
+                    },
+                    animation: [
+                        { type: "shaking", duration: 100, delay: 0, times: 1 }
+                    ],
+                    events: [
+                        {
+                            type: "log",
+                            value: "Dialog1"
+                        }
+                    ],
+                    children: []
                 },
-                props: {
-                    bgUrl: "https://www.pixijs.com/wp/wp-content/uploads/pixijs-v5-logo-1.png"
-                },
-                animation: {
-                    "in": { type: "fromtop", duration: 1000, delay: 0, times: 1},
-                    "emphasize": { type: "shaking", duration: 100, delay: 0, times: 2 },
-                    "out": { type: "fadeout", duration: 1000, delay: 0, times: -1 }
-                },
-                events: [
-                    {
-                        type: "nextPage",
-                        value: ""
-                    }
-                ],
-                children: []
-            }
-        ],
-      },
-      {
-        name: "页面2",
-        id: 2,
-        container: {
-            backGround: { type: "image", value: "http://dik.img.kttpdq.com/pic/39/27153/5b61cb116a13028f_1680x1050.jpg" },
+                {
+                    id: 2,
+                    name: "图片1",
+                    type: "ImageCmp",
+                    layoutConfig: {
+                        zIndex: 1,
+                        top: 200,
+                        left: 200,
+                        rotation: Math.PI,
+                        width: 200,
+                        height: 200,
+                        opacity: 1
+                    },
+                    props: {
+                        bgUrl: "http://xes-h5-icourse.oss-cn-beijing.aliyuncs.com/test1/lvdongzhou/KungFu_Qiu/static/images/gameScene/bulletScreenIntroduceArr.png"
+                    },
+                    animation: [
+                        { type: "shaking", duration: 100, delay: 0, times: 2 }
+                    ],
+                    events: [
+                        {
+                            type: "nextPage",
+                            value: ""
+                        }
+                    ],
+                    children: []
+                }
+            ],
         },
-        components: [
-            {
-                id: 1,
-                name: "按钮2",
-                type: "ImageCmp",
-                layoutConfig: {
-                    zIndex: 1,
-                    top: 100,
-                    left: 100,
-                    rotation: Math.PI,
-                    width: 200,
-                    height: 100,
-                    opacity: 1
-                },
-                props: {
-                    bgUrl: "http://xes-h5-icourse.oss-cn-beijing.aliyuncs.com/test1/lvdongzhou/mapproject1021local/audio/si-glyph-comb.svg"
-                },
-                animation: {
-                    "in": { type: "fromtop", duration: 1000, delay: 0, times: 1},
-                    "emphasize": { type: "shaking", duration: 100, delay: 0, times: 2 },
-                    "out": { type: "fadeout", duration: 1000, delay: 0, times: -1 }
-                },
-                events: [
-                    {
-                        type: "prePage",
-                        value: ""
-                    }
-                ],
-                children: []
-            }
-        ],
-    },
-      {
-        name: "页面3",
-        id: 3,
-        container: {
-            backGround: { type: "color", value: "lightcyan" },
+        {
+            name: "页面2",
+            id: 2,
+            container: {
+                backGround: { type: "image", value: "http://dik.img.kttpdq.com/pic/39/27153/5b61cb116a13028f_1680x1050.jpg" },
+            },
+            components: [
+                {
+                    id: 1,
+                    name: "按钮2",
+                    type: "ImageCmp",
+                    layoutConfig: {
+                        zIndex: 1,
+                        top: 100,
+                        left: 100,
+                        rotation: Math.PI,
+                        width: 200,
+                        height: 100,
+                        opacity: 1
+                    },
+                    props: {
+                        bgUrl: "http://xes-h5-icourse.oss-cn-beijing.aliyuncs.com/test1/lvdongzhou/mapproject1021local/audio/si-glyph-comb.svg"
+                    },
+                    animation: [
+                        { type: "shaking", duration: 100, delay: 0, times: 2 }
+                    ],
+                    events: [
+                        {
+                            type: "prePage",
+                            value: ""
+                        }
+                    ],
+                    children: []
+                }
+            ],
         },
-        components: [
-            {
-                id: 1,
-                name: "图片1",
-                type: "ImageCmp",
-                layoutConfig: {
-                    zIndex: 1,
-                    top: 200,
-                    left: 200,
-                    rotation: Math.PI,
-                    width: 200,
-                    height: 200,
-                    opacity: 1
-                },
-                props: {
-                    bgUrl: "http://xes-h5-icourse.oss-cn-beijing.aliyuncs.com/test1/13/resource/assets/images/1598609619472.png"
-                },
-                animation: [
+        {
+            name: "页面3",
+            id: 3,
+            container: {
+                backGround: { type: "color", value: "lightcyan" },
+            },
+            components: [
+                {
+                    id: 1,
+                    name: "图片1",
+                    type: "ImageCmp",
+                    layoutConfig: {
+                        zIndex: 1,
+                        top: 200,
+                        left: 200,
+                        rotation: Math.PI,
+                        width: 200,
+                        height: 200,
+                        opacity: 1
+                    },
+                    props: {
+                        bgUrl: "http://xes-h5-icourse.oss-cn-beijing.aliyuncs.com/test1/13/resource/assets/images/1598609619472.png"
+                    },
+                    animation: [
 
-                ],
-                events: [
-                    {
-                        type: "nextPage",
-                        value: ""
-                    }
-                ],
-                children: []
-            }
-        ],
-      },
-      {
-        name: "页面4",
-        id: 4,
-        container: {
-            backGround: { type: "image", value: "http://xes-h5-icourse.oss-cn-beijing.aliyuncs.com/test1/13/resource/assets/images/1599205350126.jpg" },
+                    ],
+                    events: [
+                        {
+                            type: "nextPage",
+                            value: ""
+                        }
+                    ],
+                    children: []
+                }
+            ],
         },
-        components: [
-            {
-                id: 1,
-                name: "按钮2",
-                type: "ImageCmp",
-                layoutConfig: {
-                    zIndex: 1,
-                    top: 100,
-                    left: 100,
-                    rotation: Math.PI,
-                    width: 1,
-                    height: 1,
-                    opacity: 1
-                },
-                props: {
-                    bgUrl: "http://xes-h5-icourse.oss-cn-beijing.aliyuncs.com/test1/13/resource/assets/images/1599205350126.jpg"
-                },
-                animation: [
+        {
+            name: "页面4",
+            id: 4,
+            container: {
+                backGround: { type: "image", value: "http://xes-h5-icourse.oss-cn-beijing.aliyuncs.com/test1/13/resource/assets/images/1599205350126.jpg" },
+            },
+            components: [
+                {
+                    id: 1,
+                    name: "按钮2",
+                    type: "ImageCmp",
+                    layoutConfig: {
+                        zIndex: 1,
+                        top: 100,
+                        left: 100,
+                        rotation: Math.PI,
+                        width: 1,
+                        height: 1,
+                        opacity: 1
+                    },
+                    props: {
+                        bgUrl: "http://xes-h5-icourse.oss-cn-beijing.aliyuncs.com/test1/13/resource/assets/images/1599205350126.jpg"
+                    },
+                    animation: [
 
-                ],
-                events: [
-                    {
-                        type: "prePage",
-                        value: ""
-                    }
-                ],
-                children: []
-            }
-        ],
-    }
-  ],
+                    ],
+                    events: [
+                        {
+                            type: "prePage",
+                            value: ""
+                        }
+                    ],
+                    children: []
+                }
+            ],
+        }
+    ],
     dialogs: []
 };
 export const staticEditorData = {
     Button: {
+        name: '按钮',
+        type: 'Button',
         notSupport: [
             {
                 type: "layout"

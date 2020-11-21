@@ -41,8 +41,10 @@ export default {
   version: "1.0",
   description: "",
   container: {
-    width: 1000,
-    height: 700,
+    width: 1920,
+    height: 1080,
+    // width: 1024,
+    // height: 768,
     bgm: {
       autoPlay: true,
       src: ""
@@ -65,8 +67,8 @@ export default {
           top: 100,
           left: 100,
           rotation: Math.PI,
-          width: 1,
-          height: 1,
+          width: 42,
+          height: 18,
           opacity: 1
         },
         props: {

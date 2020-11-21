@@ -1,4 +1,5 @@
 import {clone} from '../../Utils/utils';
+import {UPDATE_COMPONENT_SIZE} from '../constant/schema';
 
 export default {
   resetSchema(state, schema) {
@@ -13,7 +14,14 @@ export default {
   selectComponent(state, componentInfo) {
     state.currentComponentId = componentInfo.id;
     state.currentComponentInfo = componentInfo;
-  }
+  },
+  updateSchema(state, type, arg, commit = true) {
+    console.info(state, type, arg, commit);
+    switch (type) {
+      case UPDATE_COMPONENT_SIZE:
+
+    }
+  },
 };
 
 

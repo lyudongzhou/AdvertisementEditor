@@ -25,7 +25,7 @@ export default {
                 top: 0,
                 scale: 1,
                 rotation: 0,
-                opacity:1
+                opacity: 1,
             },
         };
     },
@@ -73,8 +73,7 @@ export default {
             return style;
         },
     },
-    created() {
-    },
+    created() {},
     methods: {
         ...mapActions(["nextPage"]),
         dispatchEvent(type, e) {
@@ -96,17 +95,10 @@ export default {
                 pipe.emit("click", this, this.cmpConfig.id);
             }
         },
-        animation() {
-            animationDispatcher(this.cmpConfig.layoutConfig);
-        },
-        inAction() {
-            animationDispatcher("in", this.cmpConfig, this.animationStyle);
-        },
-        idleAction() {
-            animationDispatcher("emphasize", this.cmpConfig, this.animationStyle);
-        },
-        outAction() {
-            animationDispatcher("out", this.cmpConfig, this.animationStyle);
+        idleAction(isForce) {
+            if (!this.$store.state.currentRenderState.designMode||isForce) {
+                animationDispatcher(this.cmpConfig, this.animationStyle);
+            }
         },
     },
     mounted() {},
