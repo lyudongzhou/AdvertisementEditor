@@ -25,6 +25,7 @@
     "core-js": "^3.6.5",
     "element-ui": "^2.14.1",
     "gsap": "^3.5.1",
+    "html2canvas": "^1.0.0-rc.7",
     "jquery": "^3.5.1",
     "less": "^3.12.2",
     "less-loader": "^7.1.0",
@@ -47,6 +48,10 @@
     "env": {
       "node": true,
       "jquery": true
+    },
+    "globals": {
+      "window": true,
+      "document": true
     },
     "extends": [
       "plugin:vue/essential",

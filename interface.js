@@ -32,7 +32,7 @@ export const renderData = {
                         opacity: 1
                     },
                     props: {
-                        bgUrl: "https://www.pixijs.com/wp/wp-content/uploads/pixijs-v5-logo-1.png"
+                        text:"111"
                     },
                     animation: [
                         { type: "shaking", duration: 100, delay: 0, times: 1 }
@@ -59,7 +59,7 @@ export const renderData = {
                         opacity: 1
                     },
                     props: {
-                        bgUrl: "https://www.pixijs.com/wp/wp-content/uploads/pixijs-v5-logo-1.png"
+                        bgUrl: "http://xes-h5-icourse.oss-cn-beijing.aliyuncs.com/test1/lvdongzhou/KungFu_Qiu/static/images/gameScene/bulletScreenIntroduceArr.png"
                     },
                     animation: [
                         { type: "shaking", duration: 100, delay: 0, times: 2 }

@@ -10,6 +10,7 @@
     </ul>
 </template>
 <script>
+import html2canvas from "html2canvas";
 import * as components from "../../Component";
 const cmps = {};
 for (let i in components) {
@@ -25,7 +26,11 @@ export default {
     data() {
         return {};
     },
-    mounted() {},
+    mounted() {
+        if (!window.page) {
+            window.page = this;
+        }
+    },
     watch: {
         pageState(data) {
             if (data === 2) {
@@ -36,6 +41,25 @@ export default {
         },
     },
     methods: {
+        screenShots({width,height,canvas} = {}) {
+          return new Promise((resolve)=>{
+            let target = $(this.$el);
+            var copyDom = target.clone();
+            copyDom.width(width||target.width() + "px");
+            copyDom.height(height||target.height() + "px");
+            copyDom[0].style.top = "10000px";
+            copyDom[0].style.position = "absolute";
+            $("body").append(copyDom);
+            html2canvas(copyDom[0],{
+              allowTaint:true,
+              useCORS:false,
+              canvas:canvas
+            }).then((canvas) => {
+              copyDom.remove();
+              resolve(canvas);
+            });
+          });
+        },
         fmtStyle() {
             if (this.pageData.container.backGround.type === "image") {
                 return {

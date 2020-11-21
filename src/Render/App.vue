@@ -25,12 +25,9 @@ export default {
   },
   methods: {
     onClick(dom){
-      window.abc = dom
-      console.log(dom);
     }
   },
   created() {
-    window.render = this;
   },
   data() {
     return {
