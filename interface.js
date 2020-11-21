@@ -187,6 +187,8 @@ export const renderData = {
 };
 export const staticEditorData = {
     Button: {
+        name: '按钮',
+        type: 'Button',
         notSupport: [
             {
                 type: "layout"
