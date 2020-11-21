@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "serve": "node dev.js",
-    "build": "node build.js",
+    "serve": "node build/dev.js",
+    "build": "node build/build.js",
     "lint": "vue-cli-service lint",
     "start": "npm run serve "
   },
