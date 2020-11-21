@@ -1,4 +1,6 @@
 const webpack = require("webpack");
+const path = require('path');
+console.log(path.join(__dirname,"../../src/Designer/public/"));
 module.exports = {
     pages: {
         index: {
@@ -9,6 +11,10 @@ module.exports = {
     },
     outputDir: 'dist/Designer/',
     configureWebpack: {
+      devServer:{
+          contentBase:path.join(__dirname,"../../src/Designer/public/"),
+          open:true
+      },
         plugins: [
             new webpack.ProvidePlugin({
                 $: "jquery",
