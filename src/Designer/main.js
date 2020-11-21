@@ -6,12 +6,15 @@ import "../Utils/css/reset.css";
 import './base/base.css';
 import store from './store';
 import handleRenderDep from './renderDep';
-import Event from './event';
+import Event from './plugin/event';
+import http from './plugin/http';
 
 Vue.config.productionTip = false;
 
 Vue.use(ElementUI);
 Vue.use(Event);
+Vue.use(http);
+// 处理render依赖
 handleRenderDep({Vue, store});
 
 new Vue({

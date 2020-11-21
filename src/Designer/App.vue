@@ -4,16 +4,15 @@
 <script>
 
 import designer from './Designer.vue';
-import testSchema from './mock/testSchema';
 
 export default {
   components: {
     designer,
   },
   created() {
-    setTimeout(() => {
-      this.$refs.designer.openProject(testSchema);
-    }, 100);
+    this.$axios.get('designer/schema.json').then(({data}) => {
+      this.$refs.designer.openProject(data);
+    })
   },
   methods: {
     handleSubmit() {
