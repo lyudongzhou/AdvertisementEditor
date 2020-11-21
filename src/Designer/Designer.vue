@@ -52,8 +52,11 @@ export default {
 };
 </script>
 
-<style>
+<style lang="less">
   .main-container {
     height: calc(100vh - 50px);
+    .no-padding {
+      position: relative;
+    }
   }
 </style>

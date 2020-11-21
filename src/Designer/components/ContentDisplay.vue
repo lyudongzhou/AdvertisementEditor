@@ -228,36 +228,39 @@
   </div>
 </template>
 
-<style scoped>
+<style lang='less' scoped>
   .work-space {
     /*position: relative;*/
     /*user-select: none;*/
     /*height: 100%;*/
-    position: fixed;
-    top: 40px;
-    left: 200px;
-    right: 219px;
-    bottom: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    // top: 40px;
+    // left: 200px;
+    // right: 219px;
+    // bottom: 0;
     background-color: #d0cfd8;
     overflow: auto;
     z-index: 11;
     -moz-user-select: none;
     -webkit-user-select: none;
     user-select: none;
-  }
-  .engine-design-mode {
-    transform-origin: left top;
-    position: absolute;
-  }
-  .select-item-container {
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    right: 0;
-  }
-  .select-item {
-    position: absolute;
-    border: 1px solid #409eff;
+    .engine-design-mode {
+      transform-origin: left top;
+      position: absolute;
+    }
+    .select-item-container {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      right: 0;
+
+      .select-item {
+        position: absolute;
+        border: 1px solid #409eff;
+      }
+    }
   }
 </style>
