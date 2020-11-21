@@ -31,9 +31,16 @@ const mutations = {
         store.designMode = bool;
     }
 };
+const getters = {
+  currentPage(state) {
+    return state.currentPage;
+  },
+};
+
 export default {
     namespaced: true,
     state,
+    mutations,
     actions,
-    mutations
+    getters,
 }

@@ -33,7 +33,6 @@
         this.option.current = option.current ? option.current : 0;
         this.option.callback = option.callback ? option.callback : null;
         this.option.loop = option.loop != undefined ? option.loop : true;
-
         this.option.$pages.each(function () {
             var $page = $(this);
             $page.data('originalClassList', $page.attr('class'));
@@ -326,9 +325,7 @@
         }
 
         this.option.isAnimating = true;
-
         var $currPage = this.option.$pages.eq(this.option.current);
-
         if (this.option.current > 0) {
             --this.option.current;
         } else if (this.option.current <= 0 && this.option.loop) {
@@ -336,14 +333,12 @@
         } else {
             return false;
         }
-
         var self = this;
         var animateWork = self.chooseAnimation(animation);
         var $nextPage = this.option.$pages.eq(this.option.current).addClass('pt-page-current'),
             outClass = animateWork.outClass, inClass = animateWork.inClass;
-
-
         $currPage.addClass(outClass).on('webkitAnimationEnd', function () {
+          console.log('end currentPage');
             $currPage.off('webkitAnimationEnd');
             self.option.endCurrPage = true;
             if (self.option.endNextPage) {
@@ -352,6 +347,7 @@
         });
 
         $nextPage.addClass(inClass).on('webkitAnimationEnd', function () {
+          console.log('end nextPage');
             $nextPage.off('webkitAnimationEnd');
             self.option.endNextPage = true;
             if (self.option.endCurrPage) {
@@ -366,7 +362,6 @@
         }
 
         this.option.isAnimating = true;
-
         var $currPage = this.option.$pages.eq(this.option.current);
         if (this.option.current < this.option.pagesCount - 1) {
             ++this.option.current;
@@ -380,7 +375,6 @@
         var animateWork = self.chooseAnimation(animation);
         var $nextPage = this.option.$pages.eq(this.option.current).addClass('pt-page-current'),
             outClass = animateWork.outClass, inClass = animateWork.inClass;
-
         $currPage.addClass(outClass).on('webkitAnimationEnd', function () {
             $currPage.off('webkitAnimationEnd');
             self.option.endCurrPage = true;

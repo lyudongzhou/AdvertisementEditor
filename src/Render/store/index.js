@@ -11,7 +11,7 @@ export const renderModules = {
   eventState: eventState,
 };
 
-export const {mapActions} = createNamespacedHelpers('currentRenderState');
+export const {mapActions, mapGetters} = createNamespacedHelpers('currentRenderState');
 
 const store = new Vuex.Store({modules: renderModules});
 window.store = store;
