@@ -1,14 +1,24 @@
 const projectName = require('./project');
+const webpack = require("webpack");
 const config = {
     Render: {
         pages: {
             index: {
                 entry: 'src/Render/main.js',
                 template: 'src/Render/index.html',
-                filename: 'index.html',
+                filename: 'index.html'
             }
         },
         outputDir: 'dist/Render/',
+        configureWebpack: {
+          plugins: [
+            new webpack.ProvidePlugin({
+              $:"jquery",
+              jQuery:"jquery",
+              "windows.jQuery":"jquery"
+            })
+          ]
+        }
     },
     Designer: {
         pages: {

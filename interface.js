@@ -6,13 +6,14 @@ export const renderData = {
         height: 700,
         bgm: {
             autoPlay: true,
-            src: ""
+            src: "http://xes-h5-icourse.oss-cn-beijing.aliyuncs.com/test1/lvdongzhou/mapproject1021local/audio/Satie%20Gymnopedie%20No.1.mp3"
         }
     },
     change: [{}],
-    pages: [{
-        name: "",
-        id: "",
+    pages: [
+      {
+        name: "页面1",
+        id: 1,
         container: {
             backGround: { type: "color", value: "lightcyan" },
         },
@@ -25,7 +26,7 @@ export const renderData = {
                     zIndex: 1,
                     top: 100,
                     left: 100,
-                    rotation: Math.PI*10,
+                    rotation: Math.PI * 10,
                     width: 100,
                     height: 100,
                     opacity: 1
@@ -33,9 +34,9 @@ export const renderData = {
                 props: {
                     bgUrl: "https://www.pixijs.com/wp/wp-content/uploads/pixijs-v5-logo-1.png"
                 },
-                animation: [
-
-                ],
+                animation: {
+                    "in": { type: "shaking", duration: 100, delay: 0, times: 1},
+                },
                 events: [
                     {
                         type: "log",
@@ -60,6 +61,82 @@ export const renderData = {
                 props: {
                     bgUrl: "https://www.pixijs.com/wp/wp-content/uploads/pixijs-v5-logo-1.png"
                 },
+                animation: {
+                    "in": { type: "fromtop", duration: 1000, delay: 0, times: 1},
+                    "emphasize": { type: "shaking", duration: 100, delay: 0, times: 2 },
+                    "out": { type: "fadeout", duration: 1000, delay: 0, times: -1 }
+                },
+                events: [
+                    {
+                        type: "nextPage",
+                        value: ""
+                    }
+                ],
+                children: []
+            }
+        ],
+      },
+      {
+        name: "页面2",
+        id: 2,
+        container: {
+            backGround: { type: "image", value: "http://dik.img.kttpdq.com/pic/39/27153/5b61cb116a13028f_1680x1050.jpg" },
+        },
+        components: [
+            {
+                id: 1,
+                name: "按钮2",
+                type: "ImageCmp",
+                layoutConfig: {
+                    zIndex: 1,
+                    top: 100,
+                    left: 100,
+                    rotation: Math.PI,
+                    width: 200,
+                    height: 100,
+                    opacity: 1
+                },
+                props: {
+                    bgUrl: "http://xes-h5-icourse.oss-cn-beijing.aliyuncs.com/test1/lvdongzhou/mapproject1021local/audio/si-glyph-comb.svg"
+                },
+                animation: {
+                    "in": { type: "fromtop", duration: 1000, delay: 0, times: 1},
+                    "emphasize": { type: "shaking", duration: 100, delay: 0, times: 2 },
+                    "out": { type: "fadeout", duration: 1000, delay: 0, times: -1 }
+                },
+                events: [
+                    {
+                        type: "prePage",
+                        value: ""
+                    }
+                ],
+                children: []
+            }
+        ],
+    },
+      {
+        name: "页面3",
+        id: 3,
+        container: {
+            backGround: { type: "color", value: "lightcyan" },
+        },
+        components: [
+            {
+                id: 1,
+                name: "图片1",
+                type: "ImageCmp",
+                layoutConfig: {
+                    zIndex: 1,
+                    top: 200,
+                    left: 200,
+                    rotation: Math.PI,
+                    width: 200,
+                    height: 200,
+                    opacity: 1
+                },
+                props: {
+                    bgUrl: "http://xes-h5-icourse.oss-cn-beijing.aliyuncs.com/test1/13/resource/assets/images/1598609619472.png"
+                },
                 animation: [
 
                 ],
@@ -72,12 +149,12 @@ export const renderData = {
                 children: []
             }
         ],
-    },
-    {
-        name: "",
-        id: "",
+      },
+      {
+        name: "页面4",
+        id: 4,
         container: {
-            backGround: { type: "image", value: "http://dik.img.kttpdq.com/pic/39/27153/5b61cb116a13028f_1680x1050.jpg" },
+            backGround: { type: "image", value: "http://xes-h5-icourse.oss-cn-beijing.aliyuncs.com/test1/13/resource/assets/images/1599205350126.jpg" },
         },
         components: [
             {
@@ -94,7 +171,7 @@ export const renderData = {
                     opacity: 1
                 },
                 props: {
-                    bgUrl: "http://img.xz7.com/up/2019-9/20199985738431530.jpg"
+                    bgUrl: "http://xes-h5-icourse.oss-cn-beijing.aliyuncs.com/test1/13/resource/assets/images/1599205350126.jpg"
                 },
                 animation: [
 
@@ -108,7 +185,8 @@ export const renderData = {
                 children: []
             }
         ],
-    }],
+    }
+  ],
     dialogs: []
 };
 export const staticEditorData = {
