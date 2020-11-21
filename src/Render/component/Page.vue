@@ -23,24 +23,14 @@ export default {
     props: ["pageData", "pageIndex", "pageState"],
     components: cmps,
     data() {
-        return {
-        };
+        return {};
     },
-    mounted() {
-    },
+    mounted() {},
     watch: {
         pageState(data) {
-            if (data === 1) {
-                this.pageData.components.forEach((ele) => {
-                    this.$refs[ele.id][0].parent.inAction();
-                });
-            } else if (data === 2) {
+            if (data === 2) {
                 this.pageData.components.forEach((ele) => {
                     this.$refs[ele.id][0].parent.idleAction();
-                });
-            }else if(data===3){
-                this.pageData.components.forEach((ele) => {
-                    this.$refs[ele.id][0].parent.outAction();
                 });
             }
         },
@@ -62,6 +52,6 @@ export default {
                 };
             }
         },
-    }
+    },
 };
 </script>

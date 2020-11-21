@@ -7,7 +7,7 @@
       :renderData="renderData"
       :currentPage="currentPage"
       @click="onClick"
-      :designMode=false
+      :designMode=true
       :style="{
           'top': '50%',
           'left': '50%',
@@ -25,11 +25,12 @@ export default {
   },
   methods: {
     onClick(dom){
+      window.abc = dom
       console.log(dom);
     }
   },
   created() {
-    window.test = this;
+    window.render = this;
   },
   data() {
     return {
