@@ -6,6 +6,7 @@ import store from "./store";
 import axios from 'axios';
 Vue.config.productionTip = false;
 Vue.prototype.$axios = axios;
+Vue.prototype.$BASE_URL = BASE_URL;
 new Vue({
   store,
   render: h => h(App),

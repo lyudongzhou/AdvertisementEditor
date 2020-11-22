@@ -6,7 +6,7 @@
         "height": 700,
         "bgm": {
             "autoPlay": true,
-            "src": "http://xes-h5-icourse.oss-cn-beijing.aliyuncs.com/test1/lvdongzhou/mapproject1021local/audio/Satie%20Gymnopedie%20No.1.mp3"
+            "src": "audios/audio.mp3"
         }
     },
     "change": {
@@ -71,7 +71,7 @@
                         "opacity": 1
                     },
                     "props": {
-                        "bgUrl": "/images/Jellyfish.jpg"
+                        "bgUrl": "images/Koala.jpg"
                     },
                     "animation": [
                         {
@@ -97,7 +97,7 @@
             "container": {
                 "backGround": {
                     "type": "image",
-                    "value": "http://dik.img.kttpdq.com/pic/39/27153/5b61cb116a13028f_1680x1050.jpg"
+                    "value": "images/Koala.jpg"
                 }
             },
             "components": [
@@ -115,7 +115,7 @@
                         "opacity": 1
                     },
                     "props": {
-                        "bgUrl": "http://xes-h5-icourse.oss-cn-beijing.aliyuncs.com/test1/lvdongzhou/mapproject1021local/audio/si-glyph-comb.svg"
+                        "bgUrl": "svgs/si-glyph-comb.svg"
                     },
                     "animation": [
                         {
@@ -159,7 +159,7 @@
                         "opacity": 1
                     },
                     "props": {
-                        "bgUrl": "http://xes-h5-icourse.oss-cn-beijing.aliyuncs.com/test1/13/resource/assets/images/1598609619472.png"
+                        "bgUrl": "images/Koala.jpg"
                     },
                     "animation": [],
                     "events": [
@@ -178,7 +178,7 @@
             "container": {
                 "backGround": {
                     "type": "image",
-                    "value": "http://xes-h5-icourse.oss-cn-beijing.aliyuncs.com/test1/13/resource/assets/images/1599205350126.jpg"
+                    "value": "images/Koala.jpg"
                 }
             },
             "components": [
@@ -196,7 +196,7 @@
                         "opacity": 1
                     },
                     "props": {
-                        "bgUrl": "http://xes-h5-icourse.oss-cn-beijing.aliyuncs.com/test1/13/resource/assets/images/1599205350126.jpg"
+                        "bgUrl": "images/Koala.jpg"
                     },
                     "animation": [],
                     "events": [

@@ -4,4 +4,4 @@ let fs = require('fs')
 const path = require('path');
 fs.writeFileSync(path.join(__dirname,'./project.js'), `exports.name = '${projectName}'`)
 let exec = require('child_process').execSync;
-exec('vue-cli-service serve --mode development', {stdio: 'inherit'});
+exec("concurrently \"vue-cli-service serve --mode development\" \"npm run fakeServe\"", {stdio: 'inherit'});

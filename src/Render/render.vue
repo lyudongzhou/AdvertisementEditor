@@ -6,7 +6,7 @@
             height: renderData.container.height + 'px',
         }"
     >
-        <audio ref="bgm" :src="renderData.container.bgm.src"></audio>
+        <audio ref="bgm" :src="$BASE_URL+renderData.container.bgm.src"></audio>
         <!-- <singlePage
             :pageData="renderData.pages[currentIndex]"
             :pageIndex="currentIndex"

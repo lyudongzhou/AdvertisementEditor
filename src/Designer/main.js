@@ -14,9 +14,9 @@ Vue.config.productionTip = false;
 Vue.use(ElementUI);
 Vue.use(Event);
 Vue.use(http);
+Vue.prototype.$BASE_URL = BASE_URL;
 // 处理render依赖
 handleRenderDep({Vue, store});
-
 new Vue({
   render: h => h(App),
   store,

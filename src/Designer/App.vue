@@ -10,8 +10,10 @@ export default {
     designer,
   },
   created() {
-    this.$axios.get('designer/schema.json').then(({data}) => {
-      this.$refs.designer.openProject(data);
+    window.axios = this.$axios;
+    console.log(BASE_URL);
+    this.$axios.get(BASE_URL+"schema").then(({data}) => {
+      this.$refs.designer.openProject(JSON.parse(data));
     })
   },
   methods: {
