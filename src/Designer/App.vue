@@ -10,7 +10,8 @@ export default {
     designer,
   },
   created() {
-    this.$axios.get('designer/schema.json').then(({data}) => {
+    this.$axios.get('schema.json').then(({data}) => {
+    // this.$axios.get('designer/schema.json').then(({data}) => {
       this.$refs.designer.openProject(data);
     })
   },
