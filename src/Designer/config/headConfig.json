@@ -9,7 +9,7 @@
   {
     "id": 2,
     "label": "图片",
-    "type": "img",
+    "type": "ImageCmp",
     "icon": "/icon_img.png",
     "children": []
   },
@@ -45,7 +45,7 @@
           {
             "id": 3,
             "label": "按钮",
-            "type": "button",
+            "type": "BtnCmp",
             "icon": "/icon_button.png"
           },
           {
