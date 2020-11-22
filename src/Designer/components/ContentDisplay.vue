@@ -242,7 +242,7 @@
     // bottom: 0;
     background-color: #d0cfd8;
     overflow: auto;
-    z-index: 11;
+    z-index: 2;
     -moz-user-select: none;
     -webkit-user-select: none;
     user-select: none;
