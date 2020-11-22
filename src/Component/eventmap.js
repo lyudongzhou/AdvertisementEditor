@@ -7,13 +7,13 @@ export default {
     },
     nextPage:{
         eventKey:"click",
-        method(eventValue,e,vm){
-            vm.$store.commit("currentRenderState/nextPage");
+        method(eventProps,eventObj,vm){
+            vm.$store.dispatch('currentRenderState/nextPage')
         }
     },
     prePage:{
         eventKey:"click",
-        method(eventValue,e,vm){
+        method(eventProps,eventObj,vm){
             vm.$store.commit("currentRenderState/prePage");
         }
     }

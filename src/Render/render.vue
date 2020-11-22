@@ -11,7 +11,7 @@
             :pageData="renderData.pages[currentIndex]"
             :pageIndex="currentIndex"
         ></singlePage> -->
-      <preview :renderData="renderData" :currentIndex="currentIndex"></preview>
+      <preview ref="preview" :renderData="renderData" :currentIndex="currentIndex"></preview>
     </div>
 </template>
 <script>
@@ -64,7 +64,11 @@ export default {
             this.$refs.bgm.play();
         }
     },
-    methods: {},
+    methods: {
+        getCmp(id){
+            return this.$refs["preview"].getCmp(id);
+        }
+    },
 };
 </script>
 

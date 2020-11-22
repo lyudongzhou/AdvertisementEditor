@@ -1,0 +1,6 @@
+{
+    "BaseURL":{
+        "Render":"./",
+        "Designer":"./"
+    }
+}

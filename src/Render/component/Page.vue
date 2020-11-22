@@ -41,6 +41,14 @@ export default {
         },
     },
     methods: {
+        getCmp(id){
+            let cmp = this.$refs[id];
+            if(cmp){
+                return cmp[0];
+            }else{
+                return null;
+            }
+        },
         screenShots({width,height,canvas} = {}) {
           return new Promise((resolve)=>{
             let target = $(this.$el);
