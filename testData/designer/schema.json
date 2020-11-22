@@ -6,13 +6,13 @@
         "height": 700,
         "bgm": {
             "autoPlay": true,
-            "src": "audios/audio.mp3"
+            "src": "http://xes-h5-icourse.oss-cn-beijing.aliyuncs.com/test1/lvdongzhou/mapproject1021local/audio/Satie%20Gymnopedie%20No.1.mp3"
         }
     },
     "change": {
         "type": 3,
         "loop": true,
-        "singlePagePlayTime": 20
+        "singlePagePlayTime": 5
     },
     "pages": [
         {
@@ -71,7 +71,7 @@
                         "opacity": 1
                     },
                     "props": {
-                        "bgUrl": "images/Koala.jpg"
+                        "bgUrl": "/images/Jellyfish.jpg"
                     },
                     "animation": [
                         {
@@ -97,12 +97,12 @@
             "container": {
                 "backGround": {
                     "type": "image",
-                    "value": "images/Koala.jpg"
+                    "value": "http://dik.img.kttpdq.com/pic/39/27153/5b61cb116a13028f_1680x1050.jpg"
                 }
             },
             "components": [
                 {
-                    "id": 3,
+                    "id": 1,
                     "name": "按钮2",
                     "type": "ImageCmp",
                     "layoutConfig": {
@@ -115,7 +115,7 @@
                         "opacity": 1
                     },
                     "props": {
-                        "bgUrl": "svgs/si-glyph-comb.svg"
+                        "bgUrl": "http://xes-h5-icourse.oss-cn-beijing.aliyuncs.com/test1/lvdongzhou/mapproject1021local/audio/si-glyph-comb.svg"
                     },
                     "animation": [
                         {
@@ -127,7 +127,7 @@
                     ],
                     "events": [
                         {
-                            "type": "nextPage",
+                            "type": "prePage",
                             "value": ""
                         }
                     ],
@@ -146,7 +146,7 @@
             },
             "components": [
                 {
-                    "id": 4,
+                    "id": 1,
                     "name": "图片1",
                     "type": "ImageCmp",
                     "layoutConfig": {
@@ -159,7 +159,7 @@
                         "opacity": 1
                     },
                     "props": {
-                        "bgUrl": "images/Koala.jpg"
+                        "bgUrl": "http://xes-h5-icourse.oss-cn-beijing.aliyuncs.com/test1/13/resource/assets/images/1598609619472.png"
                     },
                     "animation": [],
                     "events": [
@@ -178,12 +178,12 @@
             "container": {
                 "backGround": {
                     "type": "image",
-                    "value": "images/Koala.jpg"
+                    "value": "http://xes-h5-icourse.oss-cn-beijing.aliyuncs.com/test1/13/resource/assets/images/1599205350126.jpg"
                 }
             },
             "components": [
                 {
-                    "id": 5,
+                    "id": 1,
                     "name": "按钮2",
                     "type": "ImageCmp",
                     "layoutConfig": {
@@ -196,7 +196,7 @@
                         "opacity": 1
                     },
                     "props": {
-                        "bgUrl": "images/Koala.jpg"
+                        "bgUrl": "http://xes-h5-icourse.oss-cn-beijing.aliyuncs.com/test1/13/resource/assets/images/1599205350126.jpg"
                     },
                     "animation": [],
                     "events": [
