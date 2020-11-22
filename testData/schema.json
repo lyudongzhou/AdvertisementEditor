@@ -12,7 +12,7 @@
     "change": {
         "type": 3,
         "loop": true,
-        "singlePagePlayTime": 5
+        "singlePagePlayTime": 20
     },
     "pages": [
         {
@@ -127,7 +127,7 @@
                     ],
                     "events": [
                         {
-                            "type": "prePage",
+                            "type": "nextPage",
                             "value": ""
                         }
                     ],

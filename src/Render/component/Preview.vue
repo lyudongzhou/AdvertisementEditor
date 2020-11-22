@@ -26,152 +26,157 @@ import { transition } from "../pageChange/libs/transition";
 export default {
     name: "preview",
     data() {
-        return {
-            pageConfig: [this.renderData.pages[0]],
-            renderChange: this.renderData.change,
-            timer: null,
-            isClick: true, // 数据渲染完成页面才可被切换
-            isOperation: false, // 用户是否切页，是：count=0
-            pageState: 0,
-        };
+      return {
+        pageConfig: [],
+        renderChange: this.renderData.change,
+        timer: null,
+        isClick: true, // 数据渲染完成页面才可被切换
+        isOperation: false, // 用户是否切页，是：count=0
+        pageState: 0,
+        isPrev: false
+      };
     },
     props: ["renderData"],
     computed: {
-        pageData: {
-            get: function() {
-                return this.pageConfig;
-            },
-            set: function(newValue = null) {
-                this.pageConfig = newValue;
-            },
+      pageData: {
+        get: function() {
+          return this.pageConfig;
         },
-        ...mapGetters(["currentPage"]),
+        set: function(newValue = null) {
+          this.pageConfig = newValue;
+        },
+      },
+      ...mapGetters(["currentPage"]),
     },
     components: {
-        singlePage,
+      singlePage,
     },
     created() {
-        this.pageState = 1;
+      this.pageState = 1;
+      this.pageConfig.push(this.renderData.pages[this.currentPage])
     },
     mounted() {
-        this.pageState = 2;
-        this.cutPageInit({
-            $main: $("#pt-main"),
-            $pages: $("#pt-main").children("ul.pt-page"),
-        });
-        this.countDown();
+      this.pageState = 2;
+      this.cutPageInit({
+        $main: $("#pt-main"),
+        $pages: $("#pt-main").children("ul.pt-page"),
+      });
+      this.countDown();
     },
     methods: {
-        ...mapActions(["nextPage", "prevPage", "jumpPage"]),
-        cutPageInit({ $main, $pages }) {
-            this.translate = new transition({
-                $main,
-                $pages,
-                loop: false,
-                callback: () => {
-                    this.pageState = 2;
-                    // 删除非展示的页面数据
-                    this.pageData.splice(
-                        this.pageData.findIndex(
-                            (child) =>
-                                child.id !== this.renderData[this.currentPage]
-                        ),
-                        1
-                    );
-                },
+      ...mapActions(["nextPage", "prevPage", "jumpPage"]),
+      cutPageInit({ $main, $pages }) {
+        this.translate = new transition({
+          $main,
+          $pages,
+          loop: false,
+          callback: () => {
+            this.pageState = 2;
+            // 删除非展示的页面数据
+            this.pageData.splice(
+              this.pageData.findIndex(
+                (child) =>
+                  child.id !== this.renderData[this.currentPage]
+              ),
+              1
+            );
+            this.isClick = true;
+          }
+        });
+      },
+      /**
+       * 下一页
+       */
+      handleNextPage() {
+        if (this.isClick) {
+          if (
+            this.currentPage + 1 > this.renderData.pages.length - 1 &&
+            this.renderChange.loop
+          ) {
+            this.isOperation = true;
+            this.pageState = 3;
+            this.jumpPage(0);
+          } else if (this.currentPage + 1 <= this.renderData.pages.length - 1) {
+            this.isOperation = true;
+            this.pageState = 3;
+            this.nextPage();
+          }
+          this.isClick = false;
+        }
+      },
+      /**
+       * 上一页
+       */
+      handlePrevPage() {
+        if (this.isClick) {
+          this.isPrev = true;
+          if (this.currentPage - 1 < 0 && this.renderChange.loop) {
+            this.jumpPage(this.renderData.pages.length - 1);
+            this.isOperation = true;
+            this.pageState = 3;
+          } else if (this.currentPage - 1 >= 0) {
+            this.prevPage();
+            this.isOperation = true;
+            this.pageState = 3;
+          }
+          this.isClick = false;
+        }
+      },
+      /**
+       * 修改页面展示的数据
+       */
+      changePageData() {
+        return new Promise((resolve) => {
+          this.pageData.push(this.renderData.pages[this.currentPage]);
+          this.$nextTick(() => {
+            // 更改切页数据
+            this.cutPageInit({
+              $main: $("#pt-main"),
+              $pages: $("#pt-main").children("ul.pt-page"),
             });
-        },
-        /**
-         * 下一页
-         */
-        handleNextPage() {
-            if (this.isClick) {
-                if (
-                    this.currentPage + 1 > this.renderData.pages.length - 1 &&
-                    this.renderChange.loop
-                ) {
-                    this.jumpPage(-1);
-                }
-                if (this.currentPage + 1 <= this.renderData.pages.length - 1) {
-                    this.isOperation = true;
-                    this.pageState = 3;
-                    this.nextPage();
-                    this.changePageData().then(() => {
-                        this.pageState = 1;
-                        this.translate.nextPage(this.renderChange.type);
-                    });
-                }
-                this.isClick = false;
-            }
-        },
-        /**
-         * 上一页
-         */
-        handlePrevPage() {
-            if (this.isClick) {
-                if (this.currentPage - 1 < 0 && this.renderChange.loop) {
-                    this.jumpPage(this.renderData.pages.length - 1);
-                    this.isOperation = true;
-                    this.pageState = 3;
-                    this.changePageData().then(() => {
-                        this.pageState = 1;
-                        this.translate.nextPage(this.renderChange.type + 1);
-                    });
-                } else if (this.currentPage - 1 >= 0) {
-                    this.prevPage();
-                    this.isOperation = true;
-                    this.pageState = 3;
-                    this.changePageData().then(() => {
-                        this.pageState = 1;
-                        this.translate.nextPage(this.renderChange.type + 1);
-                    });
-                }
-                this.isClick = false;
-            }
-        },
-        /**
-         * 修改页面展示的数据
-         */
-        changePageData() {
-            return new Promise((resolve) => {
-                this.pageData.push(this.renderData.pages[this.currentPage]);
-                this.$nextTick(() => {
-                    // 更改切页数据
-                    this.cutPageInit({
-                        $main: $("#pt-main"),
-                        $pages: $("#pt-main").children("ul.pt-page"),
-                    });
-                    resolve();
-                });
-            });
-        },
-        countDown() {
-            let count = 0;
-            this.timer = setInterval(() => {
-                if (this.isOperation) {
-                    this.isOperation = false;
-                    count = 0;
-                }
-                if (count < this.renderChange.singlePagePlayTime) {
-                    count++;
-                    // console.log('platTime: ', count);
-                } else if (count === this.renderChange.singlePagePlayTime) {
-                    // console.log('platTime: ', count);
-                    this.handleNextPage();
-                }
-            }, 1000);
-        },
-        getCmp(id) {
-            let page = this.$refs["singlePage"];
-            if (page) {
-                return page[0].getCmp(id);
-            } else {
-                return;
-            }
-        },
+            resolve();
+          });
+        });
+      },
+      countDown() {
+        let count = 0;
+        this.timer = setInterval(() => {
+          if (this.isOperation) {
+            this.isOperation = false;
+            count = 0;
+          }
+          if (count < this.renderChange.singlePagePlayTime) {
+            count++;
+            // console.log('platTime: ', count);
+          } else if (count === this.renderChange.singlePagePlayTime) {
+            // console.log('platTime: ', count);
+            this.handleNextPage();
+          }
+        }, 1000);
+      },
+      getCmp(id) {
+        let page = this.$refs["singlePage"];
+        if (page) {
+          return page[0].getCmp(id);
+        } else {
+          return;
+        }
+      },
     },
     updated() {},
-    watch: {},
+    watch: {
+      currentPage () {
+        this.changePageData().then(() => {
+          this.pageState = 1;
+          this.translate.nextPage(
+            !this.isPrev?
+              this.renderChange.type:
+              this.renderChange.type + 1
+          );
+          this.isPrev = false;
+        });
+      }
+    },
 };
 </script>
 
