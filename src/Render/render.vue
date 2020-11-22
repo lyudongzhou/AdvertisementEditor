@@ -45,6 +45,7 @@ export default {
         },
     },
     created() {
+        window.render = this;
         this.$store.commit(
             "currentRenderState/pageCountChange",
             this.pageCount

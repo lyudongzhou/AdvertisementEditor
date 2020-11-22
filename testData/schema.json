@@ -12,7 +12,7 @@
     "change": {
         "type": 3,
         "loop": true,
-        "singlePagePlayTime": 1000
+        "singlePagePlayTime": 5
     },
     "pages": [
         {
