@@ -26,6 +26,7 @@ export default {
       pageConfig: [this.renderData.pages[0]],
       renderChange: this.renderData.change,
       timer: null,
+      isClick: true, // 数据渲染完成页面才可被切换
       isOperation: false, // 用户是否切页，是：count=0
       pageState: 0
     }
@@ -69,8 +70,9 @@ export default {
         loop: false,
         callback: () => {
           this.pageState = 2;
+          this.isClick = true;
           // 删除非展示的页面数据
-          this.pageData.splice(this.pageData.findIndex(child=>child.id!==this.renderData[this.currentPage]),1)
+          this.pageData.splice(this.pageData.findIndex(child=>child.id!==this.renderData.pages[this.currentPage].id),1)
         }
       })
     },
@@ -78,39 +80,45 @@ export default {
      * 下一页
      */
     handleNextPage () {
-      if (this.currentPage+1 > this.renderData.pages.length-1 && this.renderChange.loop) {
-        this.jumpPage(-1);
-      }
-      if (this.currentPage+1 <= this.renderData.pages.length-1) {
-        this.isOperation = true;
-        this.pageState = 3;
-        this.nextPage();
-        this.changePageData().then(() => {
-          this.pageState = 1;
-          this.translate.nextPage(this.renderChange.type);
-        })
+      if (this.isClick) {
+        if (this.currentPage+1 > this.renderData.pages.length-1 && this.renderChange.loop) {
+          this.jumpPage(-1);
+        }
+        if (this.currentPage+1 <= this.renderData.pages.length-1) {
+          this.isOperation = true;
+          this.pageState = 3;
+          this.nextPage();
+          this.changePageData().then(() => {
+            this.pageState = 1;
+            this.translate.nextPage(this.renderChange.type);
+          })
+        }
+        this.isClick = false;
       }
     },
     /**
      * 上一页
      */
     handlePrevPage () {
-      if (this.currentPage-1 < 0 && this.renderChange.loop) {
-        this.jumpPage(this.renderData.pages.length-1);
-        this.isOperation = true;
-        this.pageState = 3;
-        this.changePageData().then(() => {
-          this.pageState = 1;
-          this.translate.nextPage(this.renderChange.type+1);
-        })
-      } else if (this.currentPage-1 >= 0) {
-        this.prevPage();
-        this.isOperation = true;
-        this.pageState = 3;
-        this.changePageData().then(() => {
-          this.pageState = 1;
-          this.translate.nextPage(this.renderChange.type+1);
-        })
+      if (this.isClick) {
+        if (this.currentPage-1 < 0 && this.renderChange.loop) {
+          this.jumpPage(this.renderData.pages.length-1);
+          this.isOperation = true;
+          this.pageState = 3;
+          this.changePageData().then(() => {
+            this.pageState = 1;
+            this.translate.nextPage(this.renderChange.type+1);
+          })
+        } else if (this.currentPage-1 >= 0) {
+          this.prevPage();
+          this.isOperation = true;
+          this.pageState = 3;
+          this.changePageData().then(() => {
+            this.pageState = 1;
+            this.translate.nextPage(this.renderChange.type+1);
+          })
+        }
+        this.isClick = false;
       }
     },
     /**
