@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-container them-dark-bg them-dark-text space-around">
+  <div class="flex-container them-dark-bg them-dark-text space-around full-height">
     <div class="full-width"></div>
     <div class="full-width">
       <components></components>

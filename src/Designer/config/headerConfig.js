@@ -1,30 +1,37 @@
-[
+import iconText from '../public/icon_text.png'
+import iconVedio from '../public/icon_vedio.png'
+import iconModule from '../public/icon_module.png'
+import iconOther from '../public/icon_other.png'
+import iconPlugin from '../public/icon_plugin.png'
+// import iconImg from '../public/icon_img.png'
+
+export default [
   {
     "id": 1,
     "label": "文本",
     "type": "text",
-    "icon": "/icon_text.png",
+    "icon": iconText,
     "children": []
   },
   {
     "id": 2,
     "label": "图片",
     "type": "ImageCmp",
-    "icon": "/icon_img.png",
+    "icon": "",
     "children": []
   },
   {
     "id": 3,
     "label": "视频",
     "type": "vedio",
-    "icon": "/icon_vedio.png",
+    "icon": iconVedio,
     "children": []
   },
   {
     "id": 4,
     "label": "组件",
     "type": "module",
-    "icon": "/icon_module.png",
+    "icon": iconModule,
     "children": [
       {
         "id": 1,
@@ -218,7 +225,7 @@
     "id": 5,
     "label": "插件",
     "type": "plugin",
-    "icon": "/icon_plugin.png",
+    "icon": iconPlugin,
     "children": [
       {
         "id": 1,
@@ -256,7 +263,7 @@
     "id": 6,
     "label": "其他",
     "type": "other",
-    "icon": "/icon_other.png",
+    "icon": iconOther,
     "children": [
       {
         "id": 1,

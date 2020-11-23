@@ -1,6 +1,6 @@
 <template>
   <el-container class="full-height">
-    <el-header class="no-padding" height="50">
+    <el-header class="no-padding" height="55px">
       <designer-header></designer-header>
     </el-header>
     <el-container class="main-container">
@@ -54,7 +54,7 @@ export default {
 
 <style lang="less">
   .main-container {
-    height: calc(100vh - 50px);
+    height: calc(100vh - 55px);
     .no-padding {
       position: relative;
     }

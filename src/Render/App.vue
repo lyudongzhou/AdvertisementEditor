@@ -33,19 +33,9 @@ export default {
         onClick() {},
     },
     created() {
-        if (PRODUCTION) {
-            this.$axios({
-                url: BASE_URL + "schema.json",
-                method: "get",
-                params: {},
-            }).then((res) => {
-                this.renderData = res.data;
-            });
-        } else {
-            this.$axios.get(BASE_URL + "schema").then(({ data }) => {
-                this.renderData=JSON.parse(data);
-            });
-        }
+      this.$axios.get("/testSchema").then(({ data }) => {
+        this.renderData = data;
+      });
     },
     data() {
         return {

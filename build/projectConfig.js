@@ -1,4 +1,3 @@
-const project = require('./project');
 const devRender = require("./Render/dev.config");
 const buildRender = require("./Render/build.config");
 const devDesigner = require("./Designer/dev.config");
@@ -15,7 +14,7 @@ const webpackConfigMap = {
     product: buildDesigner,
   }
 };
-const projectName = project.name;
+const projectName = process.env.Project;
 const webpackConfig = webpackConfigMap[projectName];
 const isDevEnv = process.env.BuildType === "development";
 

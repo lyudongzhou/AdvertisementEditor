@@ -6,7 +6,6 @@
             :is="cmp.type"
             :cmpConfig="cmp"
             :ref="cmp.id"
-            :BASE_URL="BASE_URL"
         />
     </ul>
 </template>
@@ -33,7 +32,6 @@ export default {
         }
     },
     created(){
-        this.BASE_URL = BASE_URL;
     },
     watch: {
         pageState(data) {
@@ -75,7 +73,7 @@ export default {
         fmtStyle() {
             if (this.pageData.container.backGround.type === "image") {
                 return {
-                    "background-image": `url(${BASE_URL+this.pageData.container.backGround.value})`,
+                    "background-image": `url(${this.pageData.container.backGround.value})`,
                     width: "100%",
                     height: "100%",
                 };

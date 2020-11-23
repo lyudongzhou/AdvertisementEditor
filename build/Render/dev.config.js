@@ -1,9 +1,5 @@
-const path = require('path');
-const commonConfig = require("../webpack.common.js");
+const devConfig = require("../webpack.dev.js");
 const {merge} = require('webpack-merge');
-module.exports = merge(commonConfig, {
-  devServer: {
-    contentBase: path.join(__dirname, "../../testData/"),
-    open: true,
-  }
+module.exports = merge(devConfig, {
+
 });

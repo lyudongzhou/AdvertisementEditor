@@ -31,7 +31,7 @@
 </template>
 
 <script>
-  import headConfig from '../config/headConfig.json';
+  import headConfig from '../config/headerConfig';
 
   export default {
     name: 'components',
@@ -56,7 +56,7 @@
 <style lang="less" scoped>
   .flex-container {
     width: 100%;
-    height: 55px;
+    height: 100%;
     >ul {
       width: 100%;
       height: 100%;

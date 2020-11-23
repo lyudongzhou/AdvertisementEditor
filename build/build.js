@@ -1,7 +1,4 @@
-let projectName = process.argv[2]//是通过拿到环境参数来控制向project.js文件写入一个运行的名称
-let fs = require('fs')
-//写入
-const path = require('path');
-fs.writeFileSync(path.join(__dirname,'./project.js'), `exports.name = '${projectName}'`)
+// 项目名称放入env中
+process.env.Project = process.argv[2];
 let exec = require('child_process').execSync;
 exec('vue-cli-service build', {stdio: 'inherit'});
