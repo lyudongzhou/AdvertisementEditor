@@ -4,7 +4,7 @@ const {merge} = require('webpack-merge');
 const enhanceApp = require('../server/enhanceApp');
 module.exports = merge(commonConfig, {
   devServer: {
-    contentBase: path.join(__dirname, "../../testData/"),
+    contentBase: path.join(__dirname, "../testData/"),
     open: true,
     before(app) {
       enhanceApp(app);
