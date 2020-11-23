@@ -4,5 +4,6 @@ module.exports = {
     outputDir: conf.outputDir,//输出到不同的文件夹下
     devServer: conf.devServer,//代理服务器的配置不同,也主要是代理地址不同
     chainWebpack: conf.chainWebpack,
-    configureWebpack: conf.configureWebpack
+    configureWebpack: conf.configureWebpack,
+    publicPath:'./'
 }
