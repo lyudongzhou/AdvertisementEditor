@@ -12,6 +12,7 @@
 <script>
 import html2canvas from "html2canvas";
 import * as components from "../../Component";
+import {mapGetters} from "../store";
 const cmps = {};
 for (let i in components) {
     cmps[components[i].name] = components[i];
@@ -32,6 +33,9 @@ export default {
         }
     },
     created(){
+    },
+    computed: {
+        ...mapGetters(['handleUrl'])
     },
     watch: {
         pageState(data) {
@@ -73,7 +77,7 @@ export default {
         fmtStyle() {
             if (this.pageData.container.backGround.type === "image") {
                 return {
-                    "background-image": `url(${this.pageData.container.backGround.value})`,
+                    "background-image": `url(${this.handleUrl(this.pageData.container.backGround.value)})`,
                     width: "100%",
                     height: "100%",
                 };

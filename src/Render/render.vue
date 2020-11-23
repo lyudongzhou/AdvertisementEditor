@@ -6,7 +6,7 @@
             height: renderData.container.height + 'px',
         }"
     >
-        <audio ref="bgm" :src="renderData.container.bgm.src"></audio>
+        <audio ref="bgm" :src="handleUrl(renderData.container.bgm.src)"></audio>
         <!-- <singlePage
             :pageData="renderData.pages[currentIndex]"
             :pageIndex="currentIndex"
@@ -19,9 +19,10 @@
 // import singlePage from "./component/Page";
 import preview from "./component/Preview";
 import pipe from "./pipe";
+import {mapGetters} from "./store";
 export default {
     name: "app",
-    props: ["renderData", "currentPage", "designMode"],
+    props: ["renderData", "currentPage", "designMode", "baseUrl"],
     data() {
         return {};
     },
@@ -32,6 +33,7 @@ export default {
         pageCount() {
             return this.renderData.pages.length;
         },
+        ...mapGetters(['handleUrl']),
     },
     watch: {
         pageCount(data) {
@@ -49,6 +51,10 @@ export default {
         this.$store.commit(
             "currentRenderState/pageCountChange",
             this.pageCount
+        );
+        this.$store.commit(
+          "currentRenderState/setBaseUrl",
+          this.baseUrl
         );
         this.$store.commit("currentRenderState/setDesignMode", this.designMode);
         pipe.on("click", (dom, componentId) => {
@@ -69,7 +75,7 @@ export default {
         getCmp(id){
             return this.$refs["preview"].getCmp(id);
         }
-    },
+    }
 };
 </script>
 

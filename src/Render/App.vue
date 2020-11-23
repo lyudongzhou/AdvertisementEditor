@@ -14,6 +14,7 @@
             :currentPage="currentPage"
             @click="onClick"
             :designMode="false"
+            :baseUrl="baseUrl"
             :style="{
                 top: '50%',
                 left: '50%',
@@ -33,17 +34,15 @@ export default {
         onClick() {},
     },
     created() {
-      this.$axios.get("/testSchema").then(({ data }) => {
-        this.renderData = data;
-      });
     },
     data() {
         return {
             containerStyle: {},
             deviceWidth: document.body.clientWidth,
             deviceHeight: document.body.clientHeight,
-            renderData: null,
+            renderData: window.renderData,
             currentPage: 0,
+            baseUrl: '',
         };
     },
 };

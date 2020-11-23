@@ -3,7 +3,8 @@ import actions from './actions';
 const state = {
     pageCount: 0,//页面总数
     currentPage: 0,//当前页面index
-    designMode: false
+    designMode: false,
+    baseUrl: '',
 };
 const mutations = {
     pageCountChange(store, count) {
@@ -29,12 +30,16 @@ const mutations = {
     },
     setDesignMode(store,bool){
         store.designMode = bool;
+    },
+    setBaseUrl(store, baseUrl) {
+        store.baseUrl = baseUrl;
     }
 };
 const getters = {
   currentPage(state) {
     return state.currentPage;
   },
+  handleUrl: state => url => `${state.baseUrl}${url}`,
 };
 
 export default {
