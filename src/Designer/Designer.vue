@@ -40,8 +40,7 @@ export default {
     DesignerOperator,
     Editor,
   },
-  props: {
-    json: Object,
+  mounted () {
   },
   methods: {
     openProject(schema) {

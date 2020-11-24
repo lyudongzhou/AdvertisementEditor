@@ -21,6 +21,9 @@ export default {
       }
       return null;
     },
+    getPages (state) {
+      return state.pages;
+    }
   },
   mutations,
 };
