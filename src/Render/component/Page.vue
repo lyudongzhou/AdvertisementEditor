@@ -1,5 +1,5 @@
 <template>
-    <ul :style="fmtStyle(this.pageData)">
+    <ul :style="fmtStyle(this.pageData)" ref="page">
         <component
             v-for="(cmp, index) in pageData.components"
             :key="index"
@@ -55,21 +55,13 @@ export default {
                 return null;
             }
         },
-        screenShots({width,height,canvas} = {}) {
+        screenShots({width, height} = {}) {
           return new Promise((resolve)=>{
-            let target = $(this.$el);
-            var copyDom = target.clone();
-            copyDom.width(width||target.width() + "px");
-            copyDom.height(height||target.height() + "px");
-            copyDom[0].style.top = "10000px";
-            copyDom[0].style.position = "absolute";
-            $("body").append(copyDom);
-            html2canvas(copyDom[0],{
-              allowTaint:true,
-              useCORS:false,
-              canvas:canvas
+            html2canvas(this.$refs.page, {
+              width, height,
+              allowTaint: true,
+              useCORS: false,
             }).then((canvas) => {
-              copyDom.remove();
               resolve(canvas);
             });
           });

@@ -6,7 +6,7 @@
     <el-container class="main-container">
 
       <el-aside width="200px">
-        <PageList></PageList>
+        <editor></editor>
       </el-aside>
 
       <el-main class="no-padding">
@@ -16,8 +16,8 @@
       <el-aside width="20px">
         <designer-operator></designer-operator>
       </el-aside>
-      <el-aside width="200px">
-        <editor></editor>
+      <el-aside width="298px">
+        <PageFrame></PageFrame>
       </el-aside>
     </el-container>
   </el-container>
@@ -25,7 +25,7 @@
 
 <script>
 import DesignerHeader from './components/DesignerHeader.vue';
-import PageList from './components/PageList.vue';
+import PageFrame from './components/PageFrame.vue';
 import ContentDisplay from './components/ContentDisplay.vue';
 import DesignerOperator from './components/DesignerOperator.vue';
 import Editor from './components/Editor.vue';
@@ -35,13 +35,12 @@ export default {
   name: 'designer',
   components: {
     DesignerHeader,
-    PageList,
+    PageFrame,
     ContentDisplay,
     DesignerOperator,
     Editor,
   },
-  props: {
-    json: Object,
+  mounted () {
   },
   methods: {
     openProject(schema) {

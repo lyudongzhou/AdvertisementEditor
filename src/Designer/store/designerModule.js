@@ -25,6 +25,9 @@ export default {
         return state.pages.find(({id}) => state.currentPageId === id) || null;
       }
       return null
+    },
+    getPages (state) {
+      return state.pages;
     }
   },
   mutations,

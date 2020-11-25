@@ -9,10 +9,16 @@ export default {
   components: {
     designer,
   },
+  data () {
+    return {
+    }
+  },
   created() {
     this.$axios.get("/schema").then(({data}) => {
       this.$refs.designer.openProject(data);
     })
+  },
+  mounted () {
   },
   methods: {
     handleSubmit() {
