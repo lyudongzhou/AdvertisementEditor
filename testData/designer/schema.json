@@ -24,7 +24,7 @@
             },
             "components": [
                 {
-                    "id": 1,
+                    "id": "1",
                     "name": "按钮1",
                     "type": "BtnCmp",
                     "layoutConfig": {
@@ -44,6 +44,38 @@
                         {
                             "type": "log",
                             "value": "Dialog1"
+                        }
+                    ],
+                    "children": []
+                },
+                {
+                    "id": "2",
+                    "name": "图片1",
+                    "type": "ImageCmp",
+                    "layoutConfig": {
+                        "zIndex": 1,
+                        "top": 200,
+                        "left": 200,
+                        "rotation": 3.141592653589793,
+                        "width": 200,
+                        "height": 200,
+                        "opacity": 1
+                    },
+                    "props": {
+                        "bgUrl": "images/Koala.jpg"
+                    },
+                    "animation": [
+                        {
+                            "type": "shaking",
+                            "duration": 100,
+                            "delay": 0,
+                            "times": 2
+                        }
+                    ],
+                    "events": [
+                        {
+                            "type": "nextPage",
+                            "value": ""
                         }
                     ],
                     "children": []

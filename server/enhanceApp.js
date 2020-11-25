@@ -7,6 +7,6 @@ module.exports = app => {
   });
   app.get('/schema', (req, res) => {
     let result = fs.readFileSync(path.resolve(__dirname, "../testData/designer/schema.json"), 'utf8');
-    res.json(result)
+    res.send(result)
   });
 }

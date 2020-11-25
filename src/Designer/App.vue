@@ -11,7 +11,7 @@ export default {
   },
   created() {
     this.$axios.get("/schema").then(({data}) => {
-      this.$refs.designer.openProject(JSON.parse(data));
+      this.$refs.designer.openProject(data);
     })
   },
   methods: {

@@ -8,19 +8,24 @@ export default {
       vmSchema: {},
       currentPage: {},
       currentComponentId: 0,
-      currentComponentInfo: null,
       currentIndex: 1,
       pages: [],
       opened: false,
     };
   },
   getters: {
-    currentComponent(state) {
-      if (state.currentPage && state.currentComponentId) {
-        return state.currentPage.components.find(({id}) => state.currentComponentId === id) || null;
+    currentComponent(state, getters) {
+      if (getters.currentPage && state.currentComponentId) {
+        return getters.currentPage.components.find(({id}) => state.currentComponentId === id) || null;
       }
       return null;
     },
+    currentPage(state) {
+      if (state.pages && state.currentPageId) {
+        return state.pages.find(({id}) => state.currentPageId === id) || null;
+      }
+      return null
+    }
   },
   mutations,
 };

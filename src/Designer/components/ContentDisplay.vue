@@ -5,7 +5,17 @@
   import VueDraggableResizable from 'vue-draggable-resizable'
   import 'vue-draggable-resizable/dist/VueDraggableResizable.css'
   import Vue from 'vue';
-  import {CHANGE_SCALE, BEFORE_DELETE_COMPONENT} from '../constant/event';
+  import {CHANGE_SCALE} from '../constant/event';
+  import {CONTENT_OFFSET} from '../constant/base';
+  import {
+//    BEFORE_UPDATE_COMPONENT_SIZE,
+//    UPDATING_COMPONENT_SIZE,
+//    AFTER_UPDATE_COMPONENT_SIZE,
+//
+    BEFORE_UPDATE_COMPONENT_POSITION,
+    UPDATING_COMPONENT_POSITION,
+    AFTER_UPDATE_COMPONENT_POSITION,
+  } from '../constant/schema';
 
   const getScaleValue = (originValue, maxValue) => {
     if (maxValue >= originValue) {
@@ -15,9 +25,6 @@
   };
   const getCenterPositionValue = (containerValue, originValue, scaleValue) => (containerValue - originValue * scaleValue) / 2;
   const warpUnit = (value, unit = 'px') => `${value}${unit}`;
-  const OFFSET = 35;
-  // 缓存dom，注意内存泄漏
-  let currentDom = null;
 
   export default {
     components: {
@@ -34,31 +41,31 @@
         }
         this.scaleState = newScale;
         if (this.currentComponentId) {
-          Vue.nextTick(() => this.handleSelectComponent(currentDom, this.currentComponentId));
-        }
-      });
-      this.$event.on(BEFORE_DELETE_COMPONENT, (componentId) => {
-        // 删除的情况是不是this.currentComponentId必定===componentId
-        if (this.currentDom && this.currentComponentId === componentId) {
-          this.currentDom = null;
+          Vue.nextTick(() => this.selectComponentById(this.currentComponentId));
         }
       });
     },
     destroyed() {
-      currentDom = null;
     },
     data() {
       return {
         scaleState: null,
-        currentDom: null,
-        testObject: {},
+        selectItemInfo: null,
       };
     },
     computed: {
-      ...mapState(['vmSchema', 'currentComponentId', 'currentComponentInfo', 'currentPage', 'opened']),
+      ...mapState(['vmSchema', 'currentComponentId', 'currentPage', 'opened']),
       ...mapGetters(['currentComponent']),
-      selectItemPosition() {
-        const {top, left, width, height} = getPropByPath(this.currentComponentInfo, 'position', {});
+      containerOffset() {
+        const {top, left} = this.$refs.renderContainer.getBoundingClientRect();
+        const {top: selectItemContainerTop, left: selectItemContainerLeft} = this.$refs.selectItemContainer.getBoundingClientRect();
+        return {
+          top: top - selectItemContainerTop,
+          left: left - selectItemContainerLeft
+        }
+      },
+      selectItemLayoutInfo() {
+        const {top, left, width, height} = getPropByPath(this.selectItemInfo, 'position', {});
         return {
 //          y: Math.ceil(top),
 //          x: Math.ceil(left),
@@ -68,6 +75,8 @@
           x: left,
           w: width,
           h: height,
+
+          rotation: this.currentComponent.layoutConfig.rotation,
         };
       },
       scaleValue() {
@@ -80,16 +89,16 @@
       // 内容样式，为了滚动条
       contentStyle() {
         return {
-          width: warpUnit(this.scaleValue * this.vmSchema.container.width + OFFSET * 2),
-          height: warpUnit(this.scaleValue * this.vmSchema.container.height + OFFSET * 2),
+          width: warpUnit(this.scaleValue * this.vmSchema.container.width + CONTENT_OFFSET * 2),
+          height: warpUnit(this.scaleValue * this.vmSchema.container.height + CONTENT_OFFSET * 2),
         }
       },
       workspaceInfo() {
         const {width, height} = this.$refs.workspace.getBoundingClientRect();
         const originWidth = this.vmSchema.container.width;
         const originHeight = this.vmSchema.container.height;
-        const maxWidth = width - OFFSET * 2;
-        const maxHeight = height - OFFSET * 2;
+        const maxWidth = width - CONTENT_OFFSET * 2;
+        const maxHeight = height - CONTENT_OFFSET * 2;
         return {width, height, originWidth, originHeight, maxWidth, maxHeight};
       },
       engineContainerStyle() {
@@ -115,18 +124,18 @@
           // 超出容器
         } else if (scaledWidth > maxWidth && scaledHeight > maxHeight) {
           positionStyle = {
-            left: warpUnit(35),
-            top: warpUnit(35),
+            left: warpUnit(CONTENT_OFFSET),
+            top: warpUnit(CONTENT_OFFSET),
           };
         } else if (scaledWidth > maxWidth && scaledHeight <= maxHeight) {
           positionStyle = {
-            left: warpUnit(35),
+            left: warpUnit(CONTENT_OFFSET),
             top: warpUnit(getCenterPositionValue(height, originHeight, scaleValue)),
           };
         } else {
           positionStyle = {
             left: warpUnit(getCenterPositionValue(width, originWidth, scaleValue)),
-            top: warpUnit(35),
+            top: warpUnit(CONTENT_OFFSET),
           };
         }
 
@@ -144,39 +153,60 @@
         const heightScale = getScaleValue(originHeight, maxHeight);
         return Math.min(widthScale, heightScale);
       },
-      handleSelectComponent(dom, componentId) {
-        // 缓存选中组件的dom
-        currentDom = dom;
+      selectComponentById(componentId) {
+        this.handleSelectComponent(this.$refs.render.getCmp(componentId), componentId)
+      },
+      handleSelectComponent(ref, componentId) {
+        const dom = ref.$el;
         const {top, left, height, width} = dom.getBoundingClientRect();
         const {top: containerTop, left: containerLeft} = this.$refs.workspace.getBoundingClientRect();
-        const componentInfo = {
+        this.selectItemInfo = {
           position: {
             height: height,
             width: width,
             top: top - containerTop,
             left: left - containerLeft,
           },
-          id: componentId,
         };
-        this.selectComponent(componentInfo);
+        this.selectComponent(componentId);
       },
       handleClick(ref, componentId) {
-        const dom = ref.$el;
-        currentDom = dom;
-        this.handleSelectComponent(dom, componentId);
+        this.handleSelectComponent(ref, componentId);
       },
       onDrag(left, top) {
-        console.info(left, top);
-        this.updateSchema();
+        const {top: offsetTop, left: offsetLeft} = this.containerOffset;
+        this.updateSchema({
+          type: UPDATING_COMPONENT_POSITION,
+          value: {
+            left: Math.floor((left - offsetLeft) / this.scaleValue),
+            top: Math.floor((top - offsetTop) / this.scaleValue),
+          }
+        });
+        this.selectItemInfo.position.left = left;
+        this.selectItemInfo.position.top = top;
       },
       onResize(...arg) {
         console.info(arg)
       },
-      dragStop() {
-        // todo commit vmSchema to schema
+      dragStop(left, top) {
+        const {top: offsetTop, left: offsetLeft} = this.containerOffset;
+        this.updateSchema({
+          type: AFTER_UPDATE_COMPONENT_POSITION,
+          value: {
+            left: Math.floor((left - offsetLeft) / this.scaleValue),
+            top: Math.floor((top - offsetTop) / this.scaleValue),
+          }
+        });
+        this.selectItemInfo.position.left = left;
+        this.selectItemInfo.position.top = top;
       },
       resizeStop() {
         // todo commit vmSchema to schema
+      },
+      onDragStart() {
+        this.updateSchema({
+          type: BEFORE_UPDATE_COMPONENT_POSITION,
+        });
       },
       ...mapMutations(['selectComponent', 'updateSchema'])
     },
@@ -185,41 +215,46 @@
 
 <template>
   <div class="work-space" ref="workspace">
-    <!--<engine :json="schema" designMode @click="handleClick" class="engine-design-mode"></engine>-->
 
     <!--滚动条-->
     <div :style="contentStyle" v-if="opened">
     </div>
 
     <div class="engine-design-mode"
+         ref="renderContainer"
          :style="engineContainerStyle">
       <render v-if="opened"
+              ref="render"
               :renderData="vmSchema"
               :currentPage="currentPage"
               @click="handleClick"
               :designMode="true"
-
+              baseUrl=""
       ></render>
     </div>
+
     <div v-if="currentComponentId" class="select-item-container" ref="selectItemContainer">
       <!--选中框-->
-        <vue-draggable-resizable
-            :active="true"
-            :preventDeactivation="true"
-            :parent="true"
-            :min-width="null"
-            :min-height="null"
-            :x="selectItemPosition.x"
-            :y="selectItemPosition.y"
-            :h="selectItemPosition.h"
-            :w="selectItemPosition.w"
-            @dragging="onDrag"
-            @resizing="onResize"
-            @dragstop="dragStop"
-            @resizestop="resizeStop"
-        >
-          <!--<div class="select-item" :style="selectItemStyle"></div>-->
-        </vue-draggable-resizable>
+      <vue-draggable-resizable
+          :style="{transform: `translate(${selectItemLayoutInfo.x}px, ${selectItemLayoutInfo.y}px) rotate(${selectItemLayoutInfo.rotation}deg)`}"
+          class="select-item"
+          :active="true"
+          :preventDeactivation="true"
+          :parent="true"
+          :min-width="null"
+          :min-height="null"
+          :x="selectItemLayoutInfo.x"
+          :y="selectItemLayoutInfo.y"
+          :h="selectItemLayoutInfo.h"
+          :w="selectItemLayoutInfo.w"
+          @dragging="onDrag"
+          :onDragStart="onDragStart"
+          @resizing="onResize"
+          @dragstop="dragStop"
+          @resizestop="resizeStop"
+      >
+        <div class="test"></div>
+      </vue-draggable-resizable>
     </div>
 
     <div>
@@ -251,6 +286,7 @@
       position: absolute;
     }
     .select-item-container {
+      pointer-events: none;
       position: absolute;
       left: 0;
       top: 0;
@@ -258,8 +294,27 @@
       right: 0;
 
       .select-item {
+        pointer-events: auto;
+      }
+    }
+
+    .test {
+      position: absolute;
+      top: -30px;
+      width: 10px;
+      height: 10px;
+      border-radius: 10px;
+      background-color: aqua;
+      left: 50%;
+      transform: translateX(-50%);
+      &:after {
+        content: '';
+        display: block;
+        border-left: 1px solid aqua;
         position: absolute;
-        border: 1px solid #409eff;
+        left: 50%;
+        bottom: -20px;
+        top: 0;
       }
     }
   }
