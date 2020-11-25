@@ -5,8 +5,8 @@
     </el-header>
     <el-container class="main-container">
 
-      <el-aside width="298px">
-        <PageFrame></PageFrame>
+      <el-aside width="200px">
+        <editor></editor>
       </el-aside>
 
       <el-main class="no-padding">
@@ -16,8 +16,8 @@
       <el-aside width="20px">
         <designer-operator></designer-operator>
       </el-aside>
-      <el-aside width="200px">
-        <editor></editor>
+      <el-aside width="298px">
+        <PageFrame></PageFrame>
       </el-aside>
     </el-container>
   </el-container>

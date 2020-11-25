@@ -11,7 +11,7 @@
 </template>
 
 <script>
-  import { mapState, mapGetters } from '../store';
+  import { mapState } from '../store';
   import PageList from './pageCmp/PageList.vue';
   import PopupList from './popupCmp/PopupList.vue';
 
