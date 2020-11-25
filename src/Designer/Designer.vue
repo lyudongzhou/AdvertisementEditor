@@ -5,8 +5,8 @@
     </el-header>
     <el-container class="main-container">
 
-      <el-aside width="200px">
-        <PageList></PageList>
+      <el-aside width="298px">
+        <PageFrame></PageFrame>
       </el-aside>
 
       <el-main class="no-padding">
@@ -25,7 +25,7 @@
 
 <script>
 import DesignerHeader from './components/DesignerHeader.vue';
-import PageList from './components/PageList.vue';
+import PageFrame from './components/PageFrame.vue';
 import ContentDisplay from './components/ContentDisplay.vue';
 import DesignerOperator from './components/DesignerOperator.vue';
 import Editor from './components/Editor.vue';
@@ -35,7 +35,7 @@ export default {
   name: 'designer',
   components: {
     DesignerHeader,
-    PageList,
+    PageFrame,
     ContentDisplay,
     DesignerOperator,
     Editor,
