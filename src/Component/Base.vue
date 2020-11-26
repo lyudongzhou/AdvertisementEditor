@@ -17,11 +17,6 @@ import animationDispatcher from "./animation/";
 export default {
     name: "baseCmp",
     props: ["cmpConfig", "pageState"],
-    watch: {
-        cmpConfig() {
-            console.log("change");
-        },
-    },
     data() {
         return {
             animationStyle: {

@@ -41,9 +41,6 @@ export default {
                     this.$refs[ele.id][0].parent.idleAction();
                 });
             }
-        },
-        pageData(){
-            console.log("page","change");
         }
     },
     methods: {

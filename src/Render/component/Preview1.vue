@@ -41,8 +41,7 @@ export default {
         singlePage,
     },
     created() {
-        window.abc = this;
-        console.log("created");
+
     },
     mounted() {
         if (!this.designMode) {
@@ -62,7 +61,6 @@ export default {
                         $pages,
                         loop: false,
                         callback: () => {
-                            console.log("finish");
                             resolve();
                         },
                     });
@@ -126,9 +124,6 @@ export default {
                     });
                 });
             });
-        },
-        renderData() {
-            console.log("change");
         }
     }
 };

@@ -13,11 +13,6 @@ export default {
     props: ["cmpConfig"],
     mounted() {
         this.parent = this.$refs["parent"];
-    },
-    watch:{
-        cmpConfig(){
-            console.log("change");
-        }
     }
 };
 </script>
