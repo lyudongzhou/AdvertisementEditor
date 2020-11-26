@@ -14,5 +14,10 @@ export default {
     mounted() {
         this.parent = this.$refs["parent"];
     },
+    watch:{
+        cmpConfig(){
+            console.log("change");
+        }
+    }
 };
 </script>

@@ -12,7 +12,7 @@ window.renderData = {
   "change": {
     "type": 3,
     "loop": true,
-    "singlePagePlayTime": 20
+    "singlePagePlayTime": 2000
   },
   "pages": [
     {
@@ -92,30 +92,30 @@ window.renderData = {
       ]
     },
     {
-      "name": "页面2",
-      "id": 2,
+      "name": "页面1",
+      "id": 1,
       "container": {
         "backGround": {
-          "type": "image",
-          "value": "images/Koala.jpg"
+          "type": "color",
+          "value": "lightgreen"
         }
       },
       "components": [
         {
-          "id": 3,
-          "name": "按钮2",
+          "id": 2,
+          "name": "图片1",
           "type": "ImageCmp",
           "layoutConfig": {
             "zIndex": 1,
-            "top": 100,
-            "left": 100,
+            "top": 200,
+            "left": 200,
             "rotation": 3.141592653589793,
             "width": 200,
-            "height": 100,
+            "height": 200,
             "opacity": 1
           },
           "props": {
-            "bgUrl": "svgs/si-glyph-comb.svg"
+            "bgUrl": "images/Koala.jpg"
           },
           "animation": [
             {
@@ -134,44 +134,9 @@ window.renderData = {
           "children": []
         }
       ]
-    },
-    {
-      "name": "页面3",
-      "id": 3,
-      "container": {
-        "backGround": {
-          "type": "color",
-          "value": "lightcyan"
-        }
-      },
-      "components": [
-        {
-          "id": 4,
-          "name": "图片1",
-          "type": "ImageCmp",
-          "layoutConfig": {
-            "zIndex": 1,
-            "top": 200,
-            "left": 200,
-            "rotation": 3.141592653589793,
-            "width": 200,
-            "height": 200,
-            "opacity": 1
-          },
-          "props": {
-            "bgUrl": "images/Koala.jpg"
-          },
-          "animation": [],
-          "events": [
-            {
-              "type": "nextPage",
-              "value": ""
-            }
-          ],
-          "children": []
-        }
-      ]
-    },
+    }
+  ],
+  "dialogs": [
     {
       "name": "页面4",
       "id": 4,
@@ -208,7 +173,5 @@ window.renderData = {
           "children": []
         }
       ]
-    }
-  ],
-  "dialogs": []
+    }]
 }

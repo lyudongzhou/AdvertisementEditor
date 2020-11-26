@@ -17,9 +17,13 @@ import animationDispatcher from "./animation/";
 export default {
     name: "baseCmp",
     props: ["cmpConfig", "pageState"],
+    watch: {
+        cmpConfig() {
+            console.log("change");
+        },
+    },
     data() {
         return {
-            layoutConfig: this.cmpConfig.layoutConfig,
             animationStyle: {
                 left: 0,
                 top: 0,
@@ -30,6 +34,9 @@ export default {
         };
     },
     computed: {
+        layoutConfig(){
+            return this.cmpConfig.layoutConfig;
+        },
         publicList() {
             const style = {};
             Object.keys(this.layoutConfig).forEach((key) => {
@@ -96,7 +103,7 @@ export default {
             }
         },
         idleAction(isForce) {
-            if (!this.$store.state.currentRenderState.designMode||isForce) {
+            if (!this.$store.state.currentRenderState.designMode || isForce) {
                 animationDispatcher(this.cmpConfig, this.animationStyle);
             }
         },

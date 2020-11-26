@@ -28,9 +28,6 @@ export default {
         return {};
     },
     mounted() {
-        if (!window.page) {
-            window.page = this;
-        }
     },
     created(){
     },
@@ -45,6 +42,9 @@ export default {
                 });
             }
         },
+        pageData(){
+            console.log("page","change");
+        }
     },
     methods: {
         getCmp(id){

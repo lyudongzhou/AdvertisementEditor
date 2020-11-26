@@ -17,7 +17,7 @@
 <script>
 // import ImageCmp from "../Component/Image.vue";
 // import singlePage from "./component/Page";
-import preview from "./component/Preview";
+import preview from "./component/Preview1";
 import pipe from "./pipe";
 import {mapGetters} from "./store";
 export default {
@@ -45,6 +45,9 @@ export default {
         designMode(data) {
             this.$store.commit("currentRenderState/setDesignMode", data);
         },
+        renderData(){
+            console.log("change");
+        }
     },
     created() {
         window.render = this;
