@@ -70,7 +70,7 @@ export default {
         // ImageCmp
     },
     mounted() {
-        if (this.renderData.container.bgm.autoPlay) {
+        if (this.renderData.container.bgm.autoPlay&&!this.designMode) {
             this.$refs.bgm.play();
         }
     },

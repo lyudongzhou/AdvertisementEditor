@@ -1,8 +1,11 @@
-import { reg } from "./reg";
-reg({
+import { reg } from "@/registor";
+import { REG_EVENTS } from "@/const";
+reg(REG_EVENTS, {
     type: "nextPage",
-    eventKey: "click",
-    method(eventProps, eventObj, vm) {
-        vm.$store.dispatch('currentRenderState/nextPage')
+    payload: {
+        eventKey: "click",
+        method(eventProps, eventObj, vm) {
+            vm.$store.dispatch('currentRenderState/nextPage')
+        }
     }
 });

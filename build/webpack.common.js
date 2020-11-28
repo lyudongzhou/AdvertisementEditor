@@ -1,7 +1,15 @@
 const webpack = require("webpack");
-
+const path = require("path");
+function resolve(p) {
+  return path.resolve(__dirname, '../', p);
+}
 // 公用webpack配置
 module.exports = {
+  resolve: {
+    alias: {
+      '@': resolve('src/Utils'),
+    }
+  },
   plugins: [
     new webpack.ProvidePlugin({
       $: "jquery",

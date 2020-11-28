@@ -9,7 +9,7 @@ export default{
     ],
     extraTabs:[
         {
-            type:"",
+            type:"上传图片",
             name:"",
             children:[
                 {

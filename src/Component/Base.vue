@@ -10,10 +10,13 @@
     </li>
 </template>
 <script>
-import eventMap from "./events/";
 import pipe from "../Render/pipe";
 import { mapActions } from "../Render/store";
 import animationDispatcher from "./animations/";
+import "./events";
+import {get} from "@/registor";
+import {REG_EVENTS} from "@/const";
+const eventMap = get(REG_EVENTS);
 export default {
     name: "baseCmp",
     props: ["cmpConfig", "pageState"],
@@ -29,7 +32,7 @@ export default {
         };
     },
     computed: {
-        layoutConfig(){
+        layoutConfig() {
             return this.cmpConfig.layoutConfig;
         },
         publicList() {

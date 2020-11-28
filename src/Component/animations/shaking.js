@@ -1,8 +1,9 @@
 import { TweenMax, Power3 } from "gsap";
-import {reg} from "./reg";
-reg({
+import { reg } from "@/registor";
+import {REG_ANIMATIONS} from "@/const";
+reg(REG_ANIMATIONS,{
     type:"shaking",
-    fun(cmpConfig, { duration, delay }) {
+    payload(cmpConfig, { duration, delay }) {
         cmpConfig.left = -10;
         const o = {
             tween:TweenMax.from(cmpConfig, duration / 1000, {

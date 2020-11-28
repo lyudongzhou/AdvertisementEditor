@@ -11,7 +11,9 @@
 </template>
 <script>
 import html2canvas from "html2canvas";
-import {tplMap} from "../../Component";
+import "../../Component";
+import {get} from "@/registor";
+import {REG_COMPONENTS} from "@/const";
 import {mapGetters} from "../store";
 //props属性：
 //pageState
@@ -19,7 +21,7 @@ import {mapGetters} from "../store";
 export default {
     name: "singlePage",
     props: ["pageData", "pageIndex", "pageState"],
-    components: tplMap,
+    components: get(REG_COMPONENTS),
     data() {
         return {};
     },

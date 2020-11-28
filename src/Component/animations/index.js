@@ -1,9 +1,10 @@
-import animations from "./reg";
+import { get } from "@/registor";
+import {REG_ANIMATIONS} from "@/const";
 //reg animation instance
 import "./fadeout";
 import "./fromtop";
 import "./shaking";
-
+const animations = get(REG_ANIMATIONS);
 export default function (cmpConfig, obj) {
     if(!obj.currentAni){
         obj.currentAni = [];

@@ -38,7 +38,7 @@ export default {
     PageFrame,
     ContentDisplay,
     DesignerOperator,
-    Editor,
+    Editor
   },
   mounted () {
   },

@@ -1,2 +1,2 @@
-import colorPicker from "./colorPicker";
-export default {colorPicker};
+import "./tabs";
+import "./editors";
