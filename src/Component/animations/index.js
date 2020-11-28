@@ -1,7 +1,9 @@
-import { fromtop } from "./fromtop";
-import { shaking } from "./shaking";
-import { fadeout } from "./fadeout";
-const o = { fromtop, shaking, fadeout };
+import animations from "./reg";
+//reg animation instance
+import "./fadeout";
+import "./fromtop";
+import "./shaking";
+
 export default function (cmpConfig, obj) {
     if(!obj.currentAni){
         obj.currentAni = [];
@@ -14,7 +16,7 @@ export default function (cmpConfig, obj) {
     cmpConfig.animation.forEach(ele=>{
         let aniType = ele.type;
         if (aniType) {
-            obj.currentAni.push(o[aniType](obj, ele));
+            obj.currentAni.push(animations[aniType].fun(obj, ele));
         }
     });  
 }

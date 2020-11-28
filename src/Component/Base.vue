@@ -13,7 +13,7 @@
 import eventMap from "./events/";
 import pipe from "../Render/pipe";
 import { mapActions } from "../Render/store";
-import animationDispatcher from "./animation/";
+import animationDispatcher from "./animations/";
 export default {
     name: "baseCmp",
     props: ["cmpConfig", "pageState"],
