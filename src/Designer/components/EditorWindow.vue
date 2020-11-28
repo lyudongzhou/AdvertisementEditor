@@ -9,7 +9,7 @@
                     :title="tab.name"
                     :name="index"
                 >
-                    <component :is="tab.type"></component>
+                    <component :is="tab.type" :configData="editorData" :config="tab"></component>
                 </el-collapse-item>
             </el-collapse>
         </el-main>
@@ -17,18 +17,49 @@
 </template>
 
 <script>
-
 import { get } from "@/registor";
-import {REG_TABS} from "@/const";
+import { REG_TABS, REG_COMPONENTSSCHEMA, DEFAULTTABS } from "@/const";
 import "./designerCmp";
 export default {
     name: "editorWin",
     components: get(REG_TABS),
+    props: ["editorType", "editorData"],
     data() {
         return {
             activeNames: [0],
-            tabs: [{ name: "Basic",type:"basicTab"}, { name: "Feature",type:"basicTab"}],
+            editorSchema: null,
+            tabs: [],
         };
+    },
+    created() {},
+    mounted() {
+        this.onChangeType(this.editorType);
+    },
+    methods: {
+        onChangeType(data) {
+            const schema = get(REG_COMPONENTSSCHEMA)[data];
+            if (!schema) {
+                return;
+            }
+            const notSupport = {};
+            while (this.tabs.length) {
+                this.tabs.pop();
+            }
+            schema.notSupport &&
+                schema.notSupport.forEach((ele) => {
+                    notSupport[ele.type] = true;
+                });
+            DEFAULTTABS.forEach((ele) => {
+                if (!notSupport[ele.type]) {
+                    this.tabs.push(ele);
+                }
+            });
+        },
+    },
+    watch: {
+        editorType(data) {
+            this.onChangeType(data);
+        },
     },
 };
 </script>

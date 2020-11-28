@@ -27,7 +27,6 @@ const getScaleValue = (originValue, maxValue) => {
 const getCenterPositionValue = (containerValue, originValue, scaleValue) =>
     (containerValue - originValue * scaleValue) / 2;
 const warpUnit = (value, unit = "px") => `${value}${unit}`;
-
 export default {
     components: {
         render,
@@ -35,6 +34,7 @@ export default {
         editorWin,
     },
     created() {
+      window.display = this;
         // scale变化，选择款需要同步变化
         this.$event.on(CHANGE_SCALE, (addition) => {
             // todo 弹框处理
@@ -55,6 +55,39 @@ export default {
         return {
             scaleState: null,
             selectItemInfo: null,
+            editorType: "textCmp",
+            editorData: {
+                id: 1,
+                name: "按钮1",
+                type: "textCmp",
+                layoutConfig: {
+                    zIndex: 1,
+                    top: 100,
+                    left: 100,
+                    rotation: 31.41592653589793,
+                    width: 100,
+                    height: 100,
+                    opacity: 1,
+                },
+                props: {
+                    text: "111",
+                },
+                animation: [
+                    {
+                        type: "shaking",
+                        duration: 100,
+                        delay: 0,
+                        times: 1,
+                    },
+                ],
+                events: [
+                    {
+                        type: "log",
+                        value: "Dialog1",
+                    },
+                ],
+                children: [],
+            },
         };
     },
     computed: {
@@ -328,7 +361,7 @@ export default {
         <div>
             <!--辅助线-->
         </div>
-        <editorWin class="editWin"></editorWin>
+        <editorWin class="editWin" :editorType="editorType" :editorData="editorData"></editorWin>
     </div>
 </template>
 

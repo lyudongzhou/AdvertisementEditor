@@ -1,5 +1,6 @@
 <template>
-  <el-color-picker v-model="color" show-alpha></el-color-picker>
+<div>colorPicker</div>
+  <!-- <el-color-picker v-model="color" show-alpha></el-color-picker> -->
 </template>
 
 <script>
