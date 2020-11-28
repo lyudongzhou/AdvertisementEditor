@@ -62,6 +62,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    background: #4D4D4D;
     .title {
       width: 100%;
       height: 40px;
