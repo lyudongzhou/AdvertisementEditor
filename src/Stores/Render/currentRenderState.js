@@ -56,7 +56,7 @@ const mutations = {
         store.baseUrl = baseUrl;
     },
 
-    addPathData (state, uuid, type) {
+    addPathData (state, {uuid, type}) {
       if (type === 'pages') {
         state.pathStroage.length = 0;
       }

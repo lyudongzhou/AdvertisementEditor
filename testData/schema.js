@@ -214,8 +214,8 @@ window.renderData = {
   ],
   "dialogs": [
     {
-      "name": "页面4",
-      "id": "dialog1",
+      "name": "弹窗1",
+      "id": "弹窗1",
       "container": {
         "backGround": {
           "type": "image",
@@ -252,11 +252,11 @@ window.renderData = {
     },
     {
       "name": "弹窗2",
-      "id": "dialogs2",
+      "id": "弹窗2",
       "container": {
         "backGround": {
           "type": "color",
-          "value": "lightgreen"
+          "value": "#ABCDEF"
         }
       },
       "components": [

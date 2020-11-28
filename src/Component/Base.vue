@@ -26,7 +26,7 @@ export default {
                 rotation: 0,
                 opacity: 1,
             },
-            testId: ['1', 'dialog1', 'dialogs2', '2']
+            testId: ['1', 'dialog1', 'dialogs2', 'dialogs3', '2', '3']
         };
     },
     computed: {
@@ -97,11 +97,6 @@ export default {
               });
           } else if (type === "click") {
               pipe.emit("click", this, this.cmpConfig.id);
-
-              /**
-               * 模拟dialog Jam
-               */
-              this.jumpPage(this.testId[3]);
           }
       },
       idleAction(isForce) {

@@ -38,13 +38,16 @@ export default {
     computed: {
         ...mapGetters(["targetPage", "currentPage", "designMode"]),
         currentLayout () {
+          console.log(this.findCurrentMessage(this.currentPage).layout);
           return this.findCurrentMessage(this.currentPage).layout;
         }
     },
     components: {
         singlePage,
     },
-    created() {},
+    created() {
+      window.abc = this;
+    },
     mounted() {
         if (!this.designMode) {
             this.beginTime = new Date().getTime();
@@ -177,8 +180,6 @@ export default {
     watch: {
         /**
          * @description Watch the varible targetPage for change current page.
-         * @author lyuDongzhou
-         * @date 2020-11-28
          */
         targetPage(next, old) {
           if (next === this.currentPage) {
@@ -186,7 +187,10 @@ export default {
               return;
           }
           this.beginTime = null;
-          this.nextData  = this.findCurrentMessage(next).layout;
+          let findCurrentMessage = this.findCurrentMessage(next);
+          this.nextData  = findCurrentMessage.layout;
+          this.addPathData({uuid: next, type:findCurrentMessage.type});
+          this.isDialog = findCurrentMessage.type === 'dialogs';
           this.currentState = 1;
           this.$nextTick(() => {
             let oldType  = this.findCurrentMessage(old).type,
@@ -206,9 +210,7 @@ export default {
                 });
             });
           });
-        },
-        // currentPage (news, old) {
-        // }
+        }
     },
 };
 </script>
