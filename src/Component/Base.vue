@@ -10,7 +10,7 @@
     </li>
 </template>
 <script>
-import eventMap from "./eventmap";
+import eventMap from "./events/";
 import pipe from "../Render/pipe";
 import { mapActions } from "../Render/store";
 import animationDispatcher from "./animation/";

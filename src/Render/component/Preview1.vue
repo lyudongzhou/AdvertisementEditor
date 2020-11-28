@@ -40,9 +40,7 @@ export default {
     components: {
         singlePage,
     },
-    created() {
-
-    },
+    created() {},
     mounted() {
         if (!this.designMode) {
             this.beginTime = new Date().getTime();
@@ -51,6 +49,12 @@ export default {
     },
     methods: {
         ...mapMutations(["jumpPageReal", "nextPage", "prePage"]),
+        /**
+         * @description Change page action
+         * @author lyuDongzhou
+         * @date 2020-11-28
+         * @param {*} isPrev define change type
+         */
         action(isPrev) {
             return new Promise((resolve, reject) => {
                 if (this.nextIndex !== null) {
@@ -74,6 +78,11 @@ export default {
                 }
             });
         },
+        /**
+         * @description autoChange Logic
+         * @author lyuDongzhou
+         * @date 2020-11-28
+         */
         handleAutoChange() {
             if (this.beginTime) {
                 let dt = new Date().getTime() - this.beginTime;
@@ -83,20 +92,19 @@ export default {
                 }
             }
         },
+        /**
+         * @description reg the auto change fun
+         * @author lyuDongzhou
+         * @date 2020-11-28
+         */
         autoChange() {
             if (this.renderData.change.loop) {
                 setInterval(this.handleAutoChange.bind(this), 200);
             }
         },
-        /**
-         * 下一页
-         */
         handleNextPage() {
             this.nextPage();
         },
-        /**
-         * 上一页
-         */
         handlePrevPage() {
             this.prePage();
         },
@@ -110,7 +118,16 @@ export default {
         },
     },
     watch: {
+        /**
+         * @description Watch the varible targetPage for change current page.
+         * @author lyuDongzhou
+         * @date 2020-11-28
+         */
         targetPage(next, old) {
+            if (next === this.currentPage) {
+                this.currentState = 2;
+                return;
+            }
             this.beginTime = null;
             this.nextIndex = next;
             this.currentState = 1;
@@ -124,8 +141,8 @@ export default {
                     });
                 });
             });
-        }
-    }
+        },
+    },
 };
 </script>
 

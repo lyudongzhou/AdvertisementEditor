@@ -1,6 +1,6 @@
 <template>
     <baseCmp ref="parent" :cmpConfig="cmpConfig">
-        <div>{{ cmpConfig.name }}</div>
+        <div @click="handleClick">{{ cmpConfig.name }}</div>
     </baseCmp>
 </template>
 <script>
@@ -13,6 +13,11 @@ export default {
     props: ["cmpConfig"],
     mounted() {
         this.parent = this.$refs["parent"];
+    },
+    methods:{
+        handleClick(){
+            console.log("btnClick");
+        }
     }
 };
 </script>

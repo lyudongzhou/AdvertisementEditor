@@ -1,9 +1,9 @@
 import actions from './actions';
 
 const state = {
-    pageCount: 0,//页面总数
+    pageCount: 0,
     currentPage: 0,//当前页面index
-    targetPage: 0,
+    targetPage: 0,//目标页面index
     designMode: false,
     baseUrl: '',
 };
@@ -13,8 +13,14 @@ const mutations = {
         if (store.targetPage >= count) {
             store.targetPage = count - 1;
         }
-
     },
+
+    /**
+     * @description Jump to next page. It is not a sync function. 
+     * @author lyuDongzhou
+     * @date 2020-11-28
+     * @param {*} store
+     */
     nextPage(store) {
         if (store.targetPage < store.pageCount - 1) {
             if (store.currentPage === store.targetPage) {
@@ -22,6 +28,13 @@ const mutations = {
             }
         }
     },
+
+    /**
+     * @description Jump to pre page. It is not a sync function
+     * @author lyuDongzhou
+     * @date 2020-11-28
+     * @param {*} store
+     */
     prePage(store) {
         if (store.targetPage > 0) {
             if (store.currentPage === store.targetPage) {
@@ -29,6 +42,14 @@ const mutations = {
             }
         }
     },
+
+    /**
+     * @description Jump to specific page. It is not a sync function
+     * @author lyuDongzhou
+     * @date 2020-11-28
+     * @param {*} store
+     * @param {*} pageID
+     */
     jumpPage(store, pageID) {
         if (pageID < store.pageCount) {
             if (store.currentPage === store.targetPage) {
@@ -36,10 +57,30 @@ const mutations = {
             }
         }
     },
+
+    /**
+     * @description Jump to specific page. It is sync function
+     * @author lyuDongzhou
+     * @date 2020-11-28
+     * @param {*} store
+     * @param {*} pageID
+     */
     jumpPageReal(store, pageID) {
         if (pageID < store.pageCount) {
             store.currentPage = pageID;
         }
+    },
+
+    /**
+     * @description This function should change currentPage first to avoid jump page action.
+     * @author lyuDongzhou
+     * @date 2020-11-28
+     * @param {*} store
+     * @param {*} pageID
+     */
+    jumpPageImmediately(store,pageID){
+        store.currentPage = pageID;
+        store.targetPage = pageID;
     },
     setDesignMode(store, bool) {
         store.designMode = bool;
