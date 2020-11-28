@@ -1,6 +1,6 @@
 <template>
   <div class="flex-container content-center">
-    <ul ref="test">
+    <ul>
       <li v-for="config in headConfig" :key="config.label">
         <div v-if="config.children.length>0" ref="moreCmp">
           <i><img :src="config.icon" alt="" /></i>

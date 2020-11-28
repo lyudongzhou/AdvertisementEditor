@@ -38,6 +38,10 @@ export default {
   selectPage(state, pageId) {
     state.currentPageId = pageId;
   },
+  // 切换render展示页面调用
+  switchPage (state, page) {
+    state.currentPage = page;
+  },
   updateSchema(state, operateConfig) {
     if (!operateConfig.currentPageId) {
       operateConfig.currentPageId = state.currentPageId;
