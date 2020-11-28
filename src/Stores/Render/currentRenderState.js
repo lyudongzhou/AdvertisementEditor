@@ -35,9 +35,7 @@ const mutations = {
      * @param {*} pageID
      */
     jumpPageReal(store, ID) {
-        // if (pageID < store.pageCount) {
-            store.currentPage = ID;
-        // }
+      store.currentPage = ID;
     },
 
     /**

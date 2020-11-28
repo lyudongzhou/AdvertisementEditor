@@ -11,10 +11,10 @@
                 :pageState="currentState"
             ></singlePage>
             <singlePage
-                v-if="nextIndex !== null"
+                v-if="nextData !== null"
                 ref="nextPage"
                 class="pt-page"
-                :pageData="renderData.pages[nextIndex]"
+                :pageData="nextData"
             ></singlePage>
         </div>
     </div>
@@ -30,7 +30,7 @@ export default {
     data() {
         return {
             currentState: 0,
-            nextIndex: null,
+            nextData: null,
             isDialog: false,
         };
     },
@@ -38,7 +38,7 @@ export default {
     computed: {
         ...mapGetters(["targetPage", "currentPage", "designMode"]),
         currentLayout () {
-          return this.findCurrentLayout().layout;
+          return this.findCurrentMessage(this.currentPage).layout;
         }
     },
     components: {
@@ -53,6 +53,7 @@ export default {
     },
     methods: {
         ...mapMutations([
+          "jumpPage",
           "jumpPageReal",
           "nextPage",
           "prePage",
@@ -66,7 +67,7 @@ export default {
          */
         action(isPrev) {
             return new Promise((resolve, reject) => {
-                if (this.nextIndex !== null) {
+                if (this.nextData !== null) {
                     let $main = $(this.$refs["main"]);
                     let $pages = $($main).children("ul.pt-page");
                     this.translate = new transition({
@@ -112,17 +113,17 @@ export default {
             }
         },
         handleNextPage() {
-          let getIndex = this.findCurrentPageIndex(this.currentPage),
+          let getIndex = this.findCurrentIndex('pages', this.currentPage),
               pages = this.renderData.pages;
           if (getIndex+1<pages.length) {
-            this.jumpPageReal(pages[getIndex+1].id);
+            this.jumpPage(pages[getIndex+1].id);
           }
         },
         handlePrevPage() {
-          let getIndex = this.findCurrentPageIndex(this.currentPage),
+          let getIndex = this.findCurrentIndex('pages', this.currentPage),
               pages = this.renderData.pages;
           if (getIndex-1>=0) {
-            this.jumpPageReal(pages[getIndex-1].id);
+            this.jumpPage(pages[getIndex-1].id);
           }
         },
         getCmp(id) {
@@ -134,31 +135,36 @@ export default {
             }
         },
         /**
-         * 获取currentPage在pages的下标
+         * 获取currentPage在pages或者dialogs的下标
          * @return {Number Index}
          */
-        findCurrentPageIndex (useId) {
+        findCurrentIndex (chooice,useId) {
           let getIndex;
-          this.renderData.pages.some((page, index)=> {
-            if (page.id === useId) {
+          this.renderData[chooice].some((child, index)=> {
+            if (child.id === useId) {
               getIndex = index;
               return true;
             }
           })
           return getIndex;
         },
-        findCurrentLayout () {
+        /**
+         * 获取当前展示的内容，pages或者dialogs
+         * @return {Object} layout
+         * @return {String} type
+         */
+        findCurrentMessage (useId) {
           let layout, type;
           this.renderData.pages.some(page => {
-            if (page.id === this.currentPage) {
-              type =  'page';
+            if (page.id === useId) {
+              type =  'pages';
               layout = page;
               return true;
             }
           })
           this.renderData.dialogs.some(dialog => {
-            if (dialog.id === this.currentPage) {
-              type =  'dialog';
+            if (dialog.id === useId) {
+              type =  'dialogs';
               layout = dialog;
               return true;
             }
@@ -175,25 +181,34 @@ export default {
          * @date 2020-11-28
          */
         targetPage(next, old) {
-            if (next === this.currentPage) {
-                this.currentState = 2;
-                return;
+          if (next === this.currentPage) {
+              this.currentState = 2;
+              return;
+          }
+          this.beginTime = null;
+          this.nextData  = this.findCurrentMessage(next).layout;
+          this.currentState = 1;
+          this.$nextTick(() => {
+            let oldType  = this.findCurrentMessage(old).type,
+                nextType = this.findCurrentMessage(next).type,
+                isPrev   = false;
+            if (oldType === nextType) {
+              let oldIndex = this.findCurrentIndex(oldType, old),
+                  nextIndex = this.findCurrentIndex(nextType, next);
+              isPrev = nextIndex < oldIndex;
             }
-            this.beginTime = null;
-            this.nextIndex = next;
-            this.currentState = 1;
-            this.$nextTick(() => {
-                this.action(old > next).then(() => {
-                    this.jumpPageReal(next);
-                    this.$nextTick(() => {
-                        this.nextIndex = null;
-                        this.currentState = 2;
-                        this.beginTime = new Date().getTime();
-                    });
+            this.action(isPrev).then(() => {
+                this.jumpPageReal(next);
+                this.$nextTick(() => {
+                    this.nextIndex = null;
+                    this.currentState = 2;
+                    this.beginTime = new Date().getTime();
                 });
             });
+          });
         },
-
+        // currentPage (news, old) {
+        // }
     },
 };
 </script>
