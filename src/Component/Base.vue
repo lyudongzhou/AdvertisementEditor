@@ -29,6 +29,7 @@ export default {
                 rotation: 0,
                 opacity: 1,
             },
+            testId: ['1', 'dialog1', 'dialogs2', 'dialogs3', '2', '3']
         };
     },
     computed: {
@@ -80,31 +81,31 @@ export default {
     },
     created() {},
     methods: {
-        ...mapActions(["nextPage"]),
-        dispatchEvent(type, e) {
-            if (!this.$store.state.currentRenderState.designMode) {
-                this.cmpConfig.events.forEach((ele) => {
-                    if (
-                        eventMap[ele.type] &&
-                        eventMap[ele.type].eventKey === type
-                    ) {
-                        eventMap[ele.type].method.call(
-                            this,
-                            ele.value,
-                            e,
-                            this
-                        );
-                    }
-                });
-            } else if (type === "click") {
-                pipe.emit("click", this, this.cmpConfig.id);
-            }
-        },
-        idleAction(isForce) {
-            if (!this.$store.state.currentRenderState.designMode || isForce) {
-                animationDispatcher(this.cmpConfig, this.animationStyle);
-            }
-        },
+      ...mapActions(["nextPage"]),
+      dispatchEvent(type, e) {
+          if (!this.$store.state.currentRenderState.designMode) {
+              this.cmpConfig.events.forEach((ele) => {
+                  if (
+                      eventMap[ele.type] &&
+                      eventMap[ele.type].eventKey === type
+                  ) {
+                      eventMap[ele.type].method.call(
+                          this,
+                          ele.value,
+                          e,
+                          this
+                      );
+                  }
+              });
+          } else if (type === "click") {
+              pipe.emit("click", this, this.cmpConfig.id);
+          }
+      },
+      idleAction(isForce) {
+          if (!this.$store.state.currentRenderState.designMode || isForce) {
+              animationDispatcher(this.cmpConfig, this.animationStyle);
+          }
+      },
     },
     mounted() {},
 };

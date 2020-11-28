@@ -2,10 +2,11 @@ import actions from './actions';
 
 const state = {
     pageCount: 0,
-    currentPage: 0,//当前页面index
-    targetPage: 0,//目标页面index
+    currentPage: "1",//当前页面ID
+    targetPage: "1",//目标页面ID
     designMode: false,
     baseUrl: '',
+    pathStroage: [] // 页面路径存储，弹窗返回使用
 };
 const mutations = {
     pageCountChange(store, count) {
@@ -16,46 +17,14 @@ const mutations = {
     },
 
     /**
-     * @description Jump to next page. It is not a sync function. 
-     * @author lyuDongzhou
-     * @date 2020-11-28
-     * @param {*} store
-     */
-    nextPage(store) {
-        if (store.targetPage < store.pageCount - 1) {
-            if (store.currentPage === store.targetPage) {
-                store.targetPage += 1;
-            }
-        }
-    },
-
-    /**
-     * @description Jump to pre page. It is not a sync function
-     * @author lyuDongzhou
-     * @date 2020-11-28
-     * @param {*} store
-     */
-    prePage(store) {
-        if (store.targetPage > 0) {
-            if (store.currentPage === store.targetPage) {
-                store.targetPage -= 1;
-            }
-        }
-    },
-
-    /**
      * @description Jump to specific page. It is not a sync function
      * @author lyuDongzhou
      * @date 2020-11-28
      * @param {*} store
-     * @param {*} pageID
+     * @param {*} ID(pageID||DialogID)
      */
-    jumpPage(store, pageID) {
-        if (pageID < store.pageCount) {
-            if (store.currentPage === store.targetPage) {
-                store.targetPage = pageID;
-            }
-        }
+    jumpPage(store, ID) {
+      store.targetPage = ID;
     },
 
     /**
@@ -65,10 +34,8 @@ const mutations = {
      * @param {*} store
      * @param {*} pageID
      */
-    jumpPageReal(store, pageID) {
-        if (pageID < store.pageCount) {
-            store.currentPage = pageID;
-        }
+    jumpPageReal(store, ID) {
+      store.currentPage = ID;
     },
 
     /**
@@ -87,12 +54,22 @@ const mutations = {
     },
     setBaseUrl(store, baseUrl) {
         store.baseUrl = baseUrl;
+    },
+
+    addPathData (state, {uuid, type}) {
+      if (type === 'pages') {
+        state.pathStroage.length = 0;
+      }
+      state.pathStroage.push(uuid);
+    },
+    backPrevPath (state) {
+      state.pathStroage.pop();
     }
+
+
 };
 const getters = {
-    currentPage(state) {
-        return state.currentPage;
-    },
+    currentPage: state => state.currentPage,
     handleUrl: state => url => `${state.baseUrl}${url}`,
     targetPage:state=>state.targetPage,
     designMode:state=>state.designMode
