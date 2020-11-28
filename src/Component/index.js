@@ -1,4 +1,4 @@
-import Image from "./Image";
-import Button from "./Button";
-console.log(Image);
-export {Image,Button}
+import { tplMap, schemaMap } from "./reg";
+import "./text";
+import "./image";
+export { tplMap, schemaMap };
