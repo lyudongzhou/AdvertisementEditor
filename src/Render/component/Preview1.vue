@@ -1,13 +1,13 @@
 <template lang="html">
     <div class="preview">
         <div class="mask"></div>
-        <button id="prevBtn" @click="handlePrevPage">上一页</button>
-        <button id="nextBtn" @click="handleNextPage">下一页</button>
+        <button id="prevBtn" :disable="isDialog" @click="handlePrevPage">上一页</button>
+        <button id="nextBtn" :disable="isDialog" @click="handleNextPage">下一页</button>
         <div id="pt-main" class="pt-perspective" ref="main">
             <singlePage
                 ref="displayPage"
                 class="pt-page pt-page-current"
-                :pageData="renderData.pages[currentPage]"
+                :pageData="currentLayout"
                 :pageState="currentState"
             ></singlePage>
             <singlePage
@@ -31,11 +31,15 @@ export default {
         return {
             currentState: 0,
             nextIndex: null,
+            isDialog: false,
         };
     },
     props: ["renderData"],
     computed: {
         ...mapGetters(["targetPage", "currentPage", "designMode"]),
+        currentLayout () {
+          return this.findCurrentLayout().layout;
+        }
     },
     components: {
         singlePage,
@@ -48,7 +52,12 @@ export default {
         }
     },
     methods: {
-        ...mapMutations(["jumpPageReal", "nextPage", "prePage"]),
+        ...mapMutations([
+          "jumpPageReal",
+          "nextPage",
+          "prePage",
+          "addPathData",
+          "backPrevPath"]),
         /**
          * @description Change page action
          * @author lyuDongzhou
@@ -103,10 +112,18 @@ export default {
             }
         },
         handleNextPage() {
-            this.nextPage();
+          let getIndex = this.findCurrentPageIndex(this.currentPage),
+              pages = this.renderData.pages;
+          if (getIndex+1<pages.length) {
+            this.jumpPageReal(pages[getIndex+1].id);
+          }
         },
         handlePrevPage() {
-            this.prePage();
+          let getIndex = this.findCurrentPageIndex(this.currentPage),
+              pages = this.renderData.pages;
+          if (getIndex-1>=0) {
+            this.jumpPageReal(pages[getIndex-1].id);
+          }
         },
         getCmp(id) {
             let page = this.$refs["singlePage"];
@@ -116,6 +133,40 @@ export default {
                 return;
             }
         },
+        /**
+         * 获取currentPage在pages的下标
+         * @return {Number Index}
+         */
+        findCurrentPageIndex (useId) {
+          let getIndex;
+          this.renderData.pages.some((page, index)=> {
+            if (page.id === useId) {
+              getIndex = index;
+              return true;
+            }
+          })
+          return getIndex;
+        },
+        findCurrentLayout () {
+          let layout, type;
+          this.renderData.pages.some(page => {
+            if (page.id === this.currentPage) {
+              type =  'page';
+              layout = page;
+              return true;
+            }
+          })
+          this.renderData.dialogs.some(dialog => {
+            if (dialog.id === this.currentPage) {
+              type =  'dialog';
+              layout = dialog;
+              return true;
+            }
+          })
+          return {
+            layout, type
+          };
+        }
     },
     watch: {
         /**
@@ -142,6 +193,7 @@ export default {
                 });
             });
         },
+
     },
 };
 </script>

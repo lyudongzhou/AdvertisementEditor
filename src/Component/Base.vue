@@ -12,7 +12,7 @@
 <script>
 import eventMap from "./events/";
 import pipe from "../Render/pipe";
-import { mapActions } from "../Render/store";
+import { mapMutations, mapActions } from "../Render/store";
 import animationDispatcher from "./animation/";
 export default {
     name: "baseCmp",
@@ -26,6 +26,7 @@ export default {
                 rotation: 0,
                 opacity: 1,
             },
+            testId: ['1', 'dialog1', 'dialogs2', '2']
         };
     },
     computed: {
@@ -77,31 +78,37 @@ export default {
     },
     created() {},
     methods: {
-        ...mapActions(["nextPage"]),
-        dispatchEvent(type, e) {
-            if (!this.$store.state.currentRenderState.designMode) {
-                this.cmpConfig.events.forEach((ele) => {
-                    if (
-                        eventMap[ele.type] &&
-                        eventMap[ele.type].eventKey === type
-                    ) {
-                        eventMap[ele.type].method.call(
-                            this,
-                            ele.value,
-                            e,
-                            this
-                        );
-                    }
-                });
-            } else if (type === "click") {
-                pipe.emit("click", this, this.cmpConfig.id);
-            }
-        },
-        idleAction(isForce) {
-            if (!this.$store.state.currentRenderState.designMode || isForce) {
-                animationDispatcher(this.cmpConfig, this.animationStyle);
-            }
-        },
+      ...mapMutations(['jumpPage']),
+      ...mapActions(["nextPage"]),
+      dispatchEvent(type, e) {
+          if (!this.$store.state.currentRenderState.designMode) {
+              this.cmpConfig.events.forEach((ele) => {
+                  if (
+                      eventMap[ele.type] &&
+                      eventMap[ele.type].eventKey === type
+                  ) {
+                      eventMap[ele.type].method.call(
+                          this,
+                          ele.value,
+                          e,
+                          this
+                      );
+                  }
+              });
+          } else if (type === "click") {
+              pipe.emit("click", this, this.cmpConfig.id);
+
+              /**
+               * 模拟dialog Jam
+               */
+              this.jumpPage(this.testId[3]);
+          }
+      },
+      idleAction(isForce) {
+          if (!this.$store.state.currentRenderState.designMode || isForce) {
+              animationDispatcher(this.cmpConfig, this.animationStyle);
+          }
+      },
     },
     mounted() {},
 };

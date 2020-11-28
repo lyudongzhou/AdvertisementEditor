@@ -17,7 +17,7 @@ window.renderData = {
   "pages": [
     {
       "name": "页面1",
-      "id": 1,
+      "id": "1",
       "container": {
         "backGround": {
           "type": "color",
@@ -93,7 +93,7 @@ window.renderData = {
     },
     {
       "name": "页面1",
-      "id": 1,
+      "id": "2",
       "container": {
         "backGround": {
           "type": "color",
@@ -139,7 +139,7 @@ window.renderData = {
   "dialogs": [
     {
       "name": "页面4",
-      "id": 4,
+      "id": "dialog1",
       "container": {
         "backGround": {
           "type": "image",
@@ -173,5 +173,50 @@ window.renderData = {
           "children": []
         }
       ]
-    }]
+    },
+    {
+      "name": "弹窗2",
+      "id": "dialogs2",
+      "container": {
+        "backGround": {
+          "type": "color",
+          "value": "lightgreen"
+        }
+      },
+      "components": [
+        {
+          "id": 2,
+          "name": "图片1",
+          "type": "ImageCmp",
+          "layoutConfig": {
+            "zIndex": 1,
+            "top": 200,
+            "left": 200,
+            "rotation": 3.141592653589793,
+            "width": 200,
+            "height": 200,
+            "opacity": 1
+          },
+          "props": {
+            "bgUrl": "images/Koala.jpg"
+          },
+          "animation": [
+            {
+              "type": "shaking",
+              "duration": 100,
+              "delay": 0,
+              "times": 2
+            }
+          ],
+          "events": [
+            {
+              "type": "nextPage",
+              "value": ""
+            }
+          ],
+          "children": []
+        }
+      ]
+    }
+  ]
 }
