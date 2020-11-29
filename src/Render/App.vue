@@ -13,7 +13,7 @@
             :renderData="renderData"
             :currentPage="currentPage"
             @click="onClick"
-            :designMode="true"
+            :designMode="false"
             :baseUrl="baseUrl"
             :style="{
                 top: '50%',

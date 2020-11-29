@@ -1,12 +1,8 @@
 <template lang="html">
     <div class="preview">
         <div class="mask"></div>
-        <button id="prevBtn" :disable="isDialog" @click="handlePrevPage">
-            上一页
-        </button>
-        <button id="nextBtn" :disable="isDialog" @click="handleNextPage">
-            下一页
-        </button>
+        <button id="prevBtn" :disabled=isDialog @click="handlePrevPage">上一页</button>
+        <button id="nextBtn" :disabled=isDialog @click="handleNextPage">下一页</button>
         <div id="pt-main" class="pt-perspective" ref="main">
             <singlePage
                 ref="displayPage"
@@ -25,9 +21,9 @@
 </template>
 
 <script>
-import singlePage from './Page'
-import { mapMutations, mapGetters } from '../store'
-import { transition } from '../pageChange/libs/transition'
+import singlePage from "./Page";
+import { mapState, mapMutations, mapGetters } from "../store";
+import { transition } from "../pageChange/libs/transition";
 
 export default {
     name: 'preview',
@@ -36,36 +32,33 @@ export default {
             currentState: 0,
             nextData: null,
             isDialog: false,
-        }
+            loopType: null,
+        };
     },
     props: ['renderData'],
     computed: {
-        ...mapGetters(['targetPage', 'currentPage', 'designMode']),
-        currentLayout() {
-            console.log(this.findCurrentMessage(this.currentPage).layout)
-            return this.findCurrentMessage(this.currentPage).layout
-        },
+      ...mapState(['dialogStroage']),
+      ...mapGetters(["targetPage", "currentPage", "designMode"]),
+      currentLayout () {
+        return this.findCurrentMessage(this.currentPage).layout;
+      }
     },
     components: {
         singlePage,
     },
     created() {
-        window.abc = this
     },
     mounted() {
-        if (!this.designMode) {
-            this.beginTime = new Date().getTime()
-            this.autoChange()
-        }
+        // if (!this.designMode) {
+        //     this.beginTime = new Date().getTime();
+        //     this.autoChange();
+        // }
     },
     methods: {
         ...mapMutations([
-            'jumpPage',
-            'jumpPageReal',
-            'nextPage',
-            'prePage',
-            'addPathData',
-            'backPrevPath',
+          "jumpPage",
+          "jumpPageReal",
+          "backPrevDialog",
         ]),
         /**
          * @description Change page action
@@ -121,18 +114,26 @@ export default {
             }
         },
         handleNextPage() {
-            let getIndex = this.findCurrentIndex('pages', this.currentPage),
-                pages = this.renderData.pages
-            if (getIndex + 1 < pages.length) {
-                this.jumpPage(pages[getIndex + 1].id)
-            }
+          let getIndex = this.findCurrentIndex('pages', this.currentPage),
+              pages = this.renderData.pages;
+          if (getIndex+1<pages.length) {
+            this.jumpPage(pages[getIndex+1].id);
+          } else if (this.renderData.change.loop) {
+            // loop
+            this.jumpPage(pages[0].id);
+            this.loopType = 'next';
+          }
         },
         handlePrevPage() {
-            let getIndex = this.findCurrentIndex('pages', this.currentPage),
-                pages = this.renderData.pages
-            if (getIndex - 1 >= 0) {
-                this.jumpPage(pages[getIndex - 1].id)
-            }
+          let getIndex = this.findCurrentIndex('pages', this.currentPage),
+              pages = this.renderData.pages;
+          if (getIndex-1>=0) {
+            this.jumpPage(pages[getIndex-1].id);
+          } else if (this.renderData.change.loop) {
+            // loop
+            this.jumpPage(pages[pages.length-1].id);
+            this.loopType = 'prev';
+          }
         },
         getCmp(id) {
             let page = this.$refs['displayPage']
@@ -188,35 +189,47 @@ export default {
          * @description Watch the varible targetPage for change current page.
          */
         targetPage(next, old) {
-            if (next === this.currentPage) {
-                this.currentState = 2
-                return
+          clearInterval(this._timer);
+          if (next === this.currentPage) {
+              this.currentState = 2;
+              return;
+          }
+          this.beginTime = null;
+          let findCurrentMessage = this.findCurrentMessage(next);
+          this.nextData  = findCurrentMessage.layout;
+          this.isDialog = findCurrentMessage.type === 'dialogs';
+          this.currentState = 1;
+          this.$nextTick(() => {
+            let oldType  = this.findCurrentMessage(old).type,
+                nextType = this.findCurrentMessage(next).type,
+                isPrev   = false;
+            if (oldType === nextType) {
+              let oldIndex = this.findCurrentIndex(oldType, old),
+                  nextIndex = this.findCurrentIndex(nextType, next);
+              isPrev = this.loopType===null?nextIndex < oldIndex:(this.loopType==='next'?false:true);
+            } else {
+              // type不同的情况下，只有dialog返回到page，不存在page返回到dialog
+              isPrev = nextType==='pages'?true:false;
             }
-            this.beginTime = null
-            let findCurrentMessage = this.findCurrentMessage(next)
-            this.nextData = findCurrentMessage.layout
-            this.addPathData({ uuid: next, type: findCurrentMessage.type })
-            this.isDialog = findCurrentMessage.type === 'dialogs'
-            this.currentState = 1
-            this.$nextTick(() => {
-                let oldType = this.findCurrentMessage(old).type,
-                    nextType = this.findCurrentMessage(next).type,
-                    isPrev = false
-                if (oldType === nextType) {
-                    let oldIndex = this.findCurrentIndex(oldType, old),
-                        nextIndex = this.findCurrentIndex(nextType, next)
-                    isPrev = nextIndex < oldIndex
+            this.action(isPrev).then(() => {
+              this.loopType = null;
+              this.jumpPageReal(next);
+              this.$nextTick(() => {
+                this.nextIndex = null;
+                this.currentState = 2;
+                this.beginTime = new Date().getTime();
+                let msg = this.dialogStroage;
+                if (msg.length>0) {
+                  this._timer = setInterval(() => {
+                    this.jumpPage(msg[msg.length-1].fromId);
+                    this.backPrevDialog();
+                    clearInterval(this._timer);
+                  }, msg[msg.length-1].backTime);
                 }
-                this.action(isPrev).then(() => {
-                    this.jumpPageReal(next)
-                    this.$nextTick(() => {
-                        this.nextIndex = null
-                        this.currentState = 2
-                        this.beginTime = new Date().getTime()
-                    })
-                })
-            })
-        },
+              });
+            });
+          });
+        }
     },
 }
 </script>

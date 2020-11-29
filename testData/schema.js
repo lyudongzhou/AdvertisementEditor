@@ -51,8 +51,8 @@ window.renderData = {
           ],
           "events": [
             {
-              "type": "log",
-              "value": "Dialog1"
+              "type": "openDialog",
+              "value": {'openId':'弹窗1','backTime':1000}
             }
           ],
           "children": []
@@ -83,8 +83,8 @@ window.renderData = {
           ],
           "events": [
             {
-              "type": "nextPage",
-              "value": ""
+              "type": "openDialog",
+              "value": {'openId':'弹窗1','backTime':1000}
             }
           ],
           "children": []
@@ -92,7 +92,7 @@ window.renderData = {
       ]
     },
     {
-      "name": "页面1",
+      "name": "页面2",
       "id": "2",
       "container": {
         "backGround": {
@@ -127,7 +127,7 @@ window.renderData = {
           ],
           "events": [
             {
-              "type": "nextPage",
+              "type": "jumpPage",
               "value": ""
             }
           ],
@@ -146,6 +146,38 @@ window.renderData = {
       },
       "components": [
         {
+          "id": 1,
+          "name": "按钮1",
+          "type": "textCmp",
+          "layoutConfig": {
+            "zIndex": 1,
+            "top": 100,
+            "left": 100,
+            "rotation": 31.41592653589793,
+            "width": 100,
+            "height": 100,
+            "opacity": 1
+          },
+          "props": {
+            "text": "111"
+          },
+          "animation": [
+            {
+              "type": "shaking",
+              "duration": 100,
+              "delay": 0,
+              "times": 1
+            }
+          ],
+          "events": [
+            {
+              "type": "log",
+              "value": "Dialog1"
+            }
+          ],
+          "children": []
+        },
+        {
           "id": 2,
           "name": "图片1",
           "type": "ImageCmp",
@@ -171,7 +203,7 @@ window.renderData = {
           ],
           "events": [
             {
-              "type": "nextPage",
+              "type": "jumpPage",
               "value": ""
             }
           ],
@@ -186,15 +218,15 @@ window.renderData = {
       "id": "弹窗1",
       "container": {
         "backGround": {
-          "type": "image",
-          "value": "images/Koala.jpg"
+          "type": "color",
+          "value": "#ABCDEF"
         }
       },
       "components": [
         {
           "id": 5,
           "name": "按钮2",
-          "type": "ImageCmp",
+          "type": "textCmp",
           "layoutConfig": {
             "zIndex": 1,
             "top": 100,
@@ -205,13 +237,15 @@ window.renderData = {
             "opacity": 1
           },
           "props": {
-            "bgUrl": "images/Koala.jpg"
+            "text": "弹窗1，打开弹窗2"
           },
-          "animation": [],
+          "animation": [{
+            "name": "fadeout"
+          }],
           "events": [
             {
-              "type": "prePage",
-              "value": ""
+              "type": "openDialog",
+              "value": {"openId": "弹窗2", "backTime": 1000}
             }
           ],
           "children": []
@@ -224,7 +258,51 @@ window.renderData = {
       "container": {
         "backGround": {
           "type": "color",
-          "value": "#ABCDEF"
+          "value": "orange"
+        }
+      },
+      "components": [
+        {
+          "id": 2,
+          "name": "图片1",
+          "type": "textCmp",
+          "layoutConfig": {
+            "zIndex": 1,
+            "top": 200,
+            "left": 200,
+            "rotation": 3.141592653589793,
+            "width": 200,
+            "height": 200,
+            "opacity": 1
+          },
+          "props": {
+            "text": "弹窗2，打开弹窗3"
+          },
+          "animation": [
+            {
+              "name": "fadetop",
+              "duration": 100,
+              "delay": 0,
+              "times": 2
+            }
+          ],
+          "events": [
+            {
+              "type": "openDialog",
+              "value": {"openId": "弹窗3", "backTime": 1000}
+            }
+          ],
+          "children": []
+        }
+      ]
+    },
+    {
+      "name": "弹窗3",
+      "id": "弹窗3",
+      "container": {
+        "backGround": {
+          "type": "color",
+          "value": "yellow"
         }
       },
       "components": [
@@ -246,7 +324,7 @@ window.renderData = {
           },
           "animation": [
             {
-              "type": "shaking",
+              "name": "fadeout",
               "duration": 100,
               "delay": 0,
               "times": 2
@@ -254,13 +332,13 @@ window.renderData = {
           ],
           "events": [
             {
-              "type": "nextPage",
-              "value": ""
+              "type": "openPage",
+              "value": {"openId": "2", "backTime": 1000}
             }
           ],
           "children": []
         }
       ]
-    }
+    },
   ]
 }
