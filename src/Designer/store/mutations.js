@@ -65,6 +65,7 @@ export default {
     state.vmSchema = clone(schema);
     state.currentPageId = getPropByPath(schema, 'pages[0].id', null);
     state.currentPageType = 'page';
+    state.currentType = 'page';
     // state.currentComponent = state.currentPage.components[0];
     // state.currentComponentId = state.currentComponent.id;
     state.opened = true;
