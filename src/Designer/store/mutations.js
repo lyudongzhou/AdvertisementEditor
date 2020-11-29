@@ -51,6 +51,7 @@ export default {
   },
   // 切换render展示页面调用
   switchPage (state, page) {
+    // todo state上不需要currentPage，修改currentPageId即可
     state.currentPage = page;
   },
   updateSchema (state, operateConfig) {
