@@ -9,10 +9,10 @@
   import {CHANGE_SCALE, UPDATE_SELECT_INFO} from '../constant/event';
   import {CONTENT_OFFSET} from '../constant/base';
   import {
-    //    BEFORE_UPDATE_COMPONENT_SIZE,
-    //    UPDATING_COMPONENT_SIZE,
-    //    AFTER_UPDATE_COMPONENT_SIZE,
-    //
+    BEFORE_UPDATE_COMPONENT_SIZE,
+    UPDATING_COMPONENT_SIZE,
+    AFTER_UPDATE_COMPONENT_SIZE,
+
     BEFORE_UPDATE_COMPONENT_POSITION,
     UPDATING_COMPONENT_POSITION,
     AFTER_UPDATE_COMPONENT_POSITION,
@@ -24,9 +24,14 @@
     }
     return maxValue / originValue;
   };
+
   const getCenterPositionValue = (containerValue, originValue, scaleValue) =>
     (containerValue - originValue * scaleValue) / 2;
+
   const warpUnit = (value, unit = 'px') => `${value}${unit}`;
+
+  const calculateRealValue = (value, scale) => Math.floor(value / scale);
+
   export default {
     components: {
       render,
@@ -238,41 +243,53 @@
           });
         }
       },
-      onDrag(left, top) {
+      commitDragMutation(left, top, type) {
         const {top: offsetTop, left: offsetLeft} = this.containerOffset;
         this.updateSchema({
-          type: UPDATING_COMPONENT_POSITION,
+          type,
           value: {
-            left: Math.floor((left - offsetLeft) / this.scaleValue),
-            top: Math.floor((top - offsetTop) / this.scaleValue),
+            left: calculateRealValue(left - offsetLeft, this.scaleValue),
+            top: calculateRealValue(top - offsetTop, this.scaleValue),
           },
         });
         //        this.selectItemInfo.position.left = left;
         //        this.selectItemInfo.position.top = top;
-      },
-      onResize(...arg) {
-        console.info(arg);
-      },
-      dragStop(left, top) {
-        const {top: offsetTop, left: offsetLeft} = this.containerOffset;
-        this.updateSchema({
-          type: AFTER_UPDATE_COMPONENT_POSITION,
-          value: {
-            left: Math.floor((left - offsetLeft) / this.scaleValue),
-            top: Math.floor((top - offsetTop) / this.scaleValue),
-          },
-        });
-        this.selectItemInfo.position.left = left;
-        this.selectItemInfo.position.top = top;
-      },
-      resizeStop() {
-        // todo commit vmSchema to schema
       },
       onDragStart() {
         this.updateSchema({
           type: BEFORE_UPDATE_COMPONENT_POSITION,
         });
       },
+      onDrag(left, top) {
+        this.commitDragMutation(left, top, UPDATING_COMPONENT_POSITION);
+      },
+      dragStop(left, top) {
+        this.commitDragMutation(left, top, AFTER_UPDATE_COMPONENT_POSITION);
+      },
+      commitResizeMutation(left, top, width, height, type) {
+        const {top: offsetTop, left: offsetLeft} = this.containerOffset;
+        this.updateSchema({
+          type,
+          value: {
+            left: calculateRealValue(left - offsetLeft, this.scaleValue),
+            top: calculateRealValue(top - offsetTop, this.scaleValue),
+            width: calculateRealValue(width, this.scaleValue),
+            height: calculateRealValue(height, this.scaleValue),
+          },
+        });
+      },
+      onResizeStart() {
+        this.updateSchema({
+          type: BEFORE_UPDATE_COMPONENT_SIZE,
+        });
+      },
+      onResize(left, top, width, height) {
+        this.commitResizeMutation(left, top, width, height, UPDATING_COMPONENT_SIZE);
+      },
+      resizeStop(left, top, width, height) {
+        this.commitResizeMutation(left, top, width, height, AFTER_UPDATE_COMPONENT_SIZE);
+      },
+
       ...mapMutations(['selectComponent', 'updateSchema']),
     },
   };
@@ -321,6 +338,7 @@
           :w="selectItemLayoutInfo.w"
           @dragging="onDrag"
           :onDragStart="onDragStart"
+          :onResizeStart="onResizeStart"
           @resizing="onResize"
           @dragstop="dragStop"
           @resizestop="resizeStop"
