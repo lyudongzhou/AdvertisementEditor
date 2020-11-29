@@ -12,7 +12,7 @@ window.renderData = {
   "change": {
     "type": 3,
     "loop": true,
-    "singlePagePlayTime": 2000
+    "singlePagePlayTime": 3000
   },
   "pages": [
     {
@@ -39,11 +39,11 @@ window.renderData = {
             "opacity": 1
           },
           "props": {
-            "text": "111"
+            "text": "open the dialog 1"
           },
           "animation": [
             {
-              "type": "shaking",
+              "type": "fadeout",
               "duration": 100,
               "delay": 0,
               "times": 1
@@ -51,8 +51,8 @@ window.renderData = {
           ],
           "events": [
             {
-              "type": "openDialog",
-              "value": {'openId':'弹窗1','backTime':1000}
+              "type": "openTheWindow",
+              "value": {'openId':'弹窗1','backTime':2000}
             }
           ],
           "children": []
@@ -60,7 +60,7 @@ window.renderData = {
         {
           "id": 2,
           "name": "图片1",
-          "type": "ImageCmp",
+          "type": "textCmp",
           "layoutConfig": {
             "zIndex": 1,
             "top": 200,
@@ -71,7 +71,7 @@ window.renderData = {
             "opacity": 1
           },
           "props": {
-            "bgUrl": "images/Koala.jpg"
+            "text": "open the page 3"
           },
           "animation": [
             {
@@ -83,12 +83,39 @@ window.renderData = {
           ],
           "events": [
             {
-              "type": "openDialog",
-              "value": {'openId':'弹窗1','backTime':1000}
+              "type": "openTheWindow",
+              "value": {'openId':'3','backTime':2000}
             }
           ],
           "children": []
-        }
+        },
+        {
+          "id": 3,
+          "name": "按钮3",
+          "type": "textCmp",
+          "layoutConfig": {
+            "zIndex": 1,
+            "top": 200,
+            "left": 400,
+            "rotation": 31.41592653589793,
+            "width": 100,
+            "height": 100,
+            "opacity": 1
+          },
+          "props": {
+            "text": "page 1 -> no event"
+          },
+          "animation": [
+            {
+              "type": "fadeout",
+              "duration": 100,
+              "delay": 0,
+              "times": 1
+            }
+          ],
+          "events": [],
+          "children": []
+        },
       ]
     },
     {
@@ -102,13 +129,40 @@ window.renderData = {
       },
       "components": [
         {
+          "id": 1,
+          "name": "按钮1",
+          "type": "textCmp",
+          "layoutConfig": {
+            "zIndex": 1,
+            "top": 100,
+            "left": 100,
+            "rotation": 31.41592653589793,
+            "width": 100,
+            "height": 100,
+            "opacity": 1
+          },
+          "props": {
+            "text": "page 2 not events"
+          },
+          "animation": [
+            {
+              "type": "shaking",
+              "duration": 100,
+              "delay": 0,
+              "times": 1
+            }
+          ],
+          "events": [],
+          "children": []
+        },
+        {
           "id": 2,
           "name": "图片1",
           "type": "ImageCmp",
           "layoutConfig": {
             "zIndex": 1,
-            "top": 200,
-            "left": 200,
+            "top": 300,
+            "left": 300,
             "rotation": 3.141592653589793,
             "width": 200,
             "height": 200,
@@ -125,14 +179,9 @@ window.renderData = {
               "times": 2
             }
           ],
-          "events": [
-            {
-              "type": "jumpPage",
-              "value": ""
-            }
-          ],
+          "events": [],
           "children": []
-        }
+        },
       ]
     },
     {
@@ -159,7 +208,7 @@ window.renderData = {
             "opacity": 1
           },
           "props": {
-            "text": "111"
+            "text": "open the dialog3"
           },
           "animation": [
             {
@@ -171,44 +220,39 @@ window.renderData = {
           ],
           "events": [
             {
-              "type": "log",
-              "value": "Dialog1"
+              "type": "openTheWindow",
+              "value": {"openId": "弹窗3", "backTime": 2000}
             }
           ],
           "children": []
         },
         {
           "id": 2,
-          "name": "图片1",
-          "type": "ImageCmp",
+          "name": "按钮2",
+          "type": "textCmp",
           "layoutConfig": {
             "zIndex": 1,
-            "top": 200,
-            "left": 200,
-            "rotation": 3.141592653589793,
-            "width": 200,
-            "height": 200,
+            "top": 300,
+            "left": 300,
+            "rotation": 31.41592653589793,
+            "width": 100,
+            "height": 100,
             "opacity": 1
           },
           "props": {
-            "bgUrl": "images/Koala.jpg"
+            "text": "page 3 -> no event"
           },
           "animation": [
             {
-              "type": "shaking",
+              "type": "fadeout",
               "duration": 100,
               "delay": 0,
-              "times": 2
+              "times": 1
             }
           ],
-          "events": [
-            {
-              "type": "jumpPage",
-              "value": ""
-            }
-          ],
+          "events": [],
           "children": []
-        }
+        },
       ]
     }
   ],
@@ -224,8 +268,8 @@ window.renderData = {
       },
       "components": [
         {
-          "id": 5,
-          "name": "按钮2",
+          "id": 1,
+          "name": "按钮1",
           "type": "textCmp",
           "layoutConfig": {
             "zIndex": 1,
@@ -237,17 +281,39 @@ window.renderData = {
             "opacity": 1
           },
           "props": {
-            "text": "弹窗1，打开弹窗2"
+            "text": "open the dialog 2"
           },
           "animation": [{
             "name": "fadeout"
           }],
           "events": [
             {
-              "type": "openDialog",
-              "value": {"openId": "弹窗2", "backTime": 1000}
+              "type": "openTheWindow",
+              "value": {"openId": "弹窗2", "backTime": 2000}
             }
           ],
+          "children": []
+        },
+        {
+          "id": 2,
+          "name": "按钮2",
+          "type": "textCmp",
+          "layoutConfig": {
+            "zIndex": 1,
+            "top": 300,
+            "left": 300,
+            "rotation": 3.141592653589793,
+            "width": 1,
+            "height": 1,
+            "opacity": 1
+          },
+          "props": {
+            "text": "dialog 1 -> no event"
+          },
+          "animation": [{
+            "name": "fadeout"
+          }],
+          "events": [],
           "children": []
         }
       ]
@@ -263,7 +329,7 @@ window.renderData = {
       },
       "components": [
         {
-          "id": 2,
+          "id": 1,
           "name": "图片1",
           "type": "textCmp",
           "layoutConfig": {
@@ -276,7 +342,7 @@ window.renderData = {
             "opacity": 1
           },
           "props": {
-            "text": "弹窗2，打开弹窗3"
+            "text": "open the dialog 3"
           },
           "animation": [
             {
@@ -288,8 +354,8 @@ window.renderData = {
           ],
           "events": [
             {
-              "type": "openDialog",
-              "value": {"openId": "弹窗3", "backTime": 1000}
+              "type": "openTheWindow",
+              "value": {"openId": "弹窗3", "backTime": 2000}
             }
           ],
           "children": []
@@ -307,20 +373,20 @@ window.renderData = {
       },
       "components": [
         {
-          "id": 2,
+          "id": 1,
           "name": "图片1",
-          "type": "ImageCmp",
+          "type": "textCmp",
           "layoutConfig": {
             "zIndex": 1,
-            "top": 200,
-            "left": 200,
+            "top": 100,
+            "left": 100,
             "rotation": 3.141592653589793,
             "width": 200,
             "height": 200,
             "opacity": 1
           },
           "props": {
-            "bgUrl": "images/Koala.jpg"
+            "text": "open the page 2"
           },
           "animation": [
             {
@@ -332,10 +398,37 @@ window.renderData = {
           ],
           "events": [
             {
-              "type": "openPage",
-              "value": {"openId": "2", "backTime": 1000}
+              "type": "openTheWindow",
+              "value": {"openId": "2", "backTime": 2000}
             }
           ],
+          "children": []
+        },
+        {
+          "id": 1,
+          "name": "图片1",
+          "type": "textCmp",
+          "layoutConfig": {
+            "zIndex": 1,
+            "top": 300,
+            "left": 300,
+            "rotation": 3.141592653589793,
+            "width": 200,
+            "height": 200,
+            "opacity": 1
+          },
+          "props": {
+            "text": "dialog 3 -> no event"
+          },
+          "animation": [
+            {
+              "name": "fadeout",
+              "duration": 100,
+              "delay": 0,
+              "times": 2
+            }
+          ],
+          "events": [],
           "children": []
         }
       ]

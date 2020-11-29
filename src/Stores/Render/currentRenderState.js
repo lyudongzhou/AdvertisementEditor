@@ -6,7 +6,7 @@ const state = {
     targetPage: "1",//目标页面ID
     designMode: false,
     baseUrl: '',
-    dialogStroage: [] // 页面路径存储，弹窗返回使用
+    windowStorage: [] // 页面路径存储，弹窗返回使用
 };
 const mutations = {
     pageCountChange(store, count) {
@@ -56,18 +56,19 @@ const mutations = {
         store.baseUrl = baseUrl;
     },
 
-    addDialogData (state, {toId, backTime, type}) {
+    addWindowData (state, {toId, backTime, type}) {
       if (type === 'pages') {
-        state.dialogStroage.length = 0;
+        console.log('clear windowStorage');
+        state.windowStorage.length = 0;
       }
-      state.dialogStroage.push({
+      state.windowStorage.push({
         fromId:state.currentPage,
         toId,
         backTime,
       });
     },
     backPrevDialog (state) {
-      state.dialogStroage.pop();
+      state.windowStorage.pop();
     }
 
 
