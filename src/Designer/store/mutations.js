@@ -53,13 +53,9 @@ export default {
   switchPage (state, page) {
     state.currentPage = page;
   },
-<<<<<<< HEAD
   updateSchema (state, operateConfig) {
-=======
-  updateSchema(state, operateConfig) {
     operateConfig.currentType = state.currentType;
     operateConfig.currentPageType = state.currentPageType;
->>>>>>> 0329db3183c0fbd9f6c370396e11e5c1ecee29b2
     if (!operateConfig.currentPageId) {
       operateConfig.currentPageId = state.currentPageId;
     }
