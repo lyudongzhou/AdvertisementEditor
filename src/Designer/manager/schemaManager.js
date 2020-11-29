@@ -1,7 +1,7 @@
 /**
  * 注意处理拖拽这一类的行为，vm需要实时生效，model需要按照次数来
  */
-import {clone, getPropByPath} from '../../Utils/utils';
+import {clone} from '../../Utils/utils';
 import Vue from 'vue';
 import operatorMap from './operators';
 
