@@ -1,3 +1,9 @@
+<!--
+ * @Author: LyuDongzhou
+ * @Date: 2020-11-30 04:01:05
+ * @LastEditTime: 2020-11-30 06:55:51
+ * @Description: file content
+-->
 <template lang="html">
   <div class="pageManager">
     <!-- 截图依赖的dom -->
@@ -12,7 +18,7 @@
 </template>
 
 <script>
-import ThumbnailShow from './ThumbnailShow.vue';
+import ThumbnailShow from './ThumbnailShow1.vue';
 import ListShow from './ListShow.vue';
 
 export default {

@@ -1,3 +1,9 @@
+<!--
+ * @Author: LyuDongzhou
+ * @Date: 2020-11-30 04:01:05
+ * @LastEditTime: 2020-11-30 05:29:17
+ * @Description: A template for render single page or single dialog
+-->
 <template>
     <ul :style="fmtStyle(this.pageData)" ref="page" :key="pageData.id">
         <component
@@ -20,7 +26,7 @@ import {mapGetters} from "../store";
 //0 准备进入 1 进入中 2 已进入 3 弹出中*
 export default {
     name: "singlePage",
-    props: ["pageData", "pageIndex", "pageState"],
+    props: ["pageData", "pageState"],
     components: get(REG_COMPONENTS),
     data() {
         return {};

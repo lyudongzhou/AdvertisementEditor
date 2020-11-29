@@ -1,3 +1,9 @@
+<!--
+ * @Author: LyuDongzhou
+ * @Date: 2020-11-30 04:01:05
+ * @LastEditTime: 2020-11-30 07:52:28
+ * @Description: file content
+-->
 <template>
   <el-container class="full-height">
     <el-header class="no-padding" height="55px">
@@ -20,6 +26,7 @@
         <PageFrame></PageFrame>
       </el-aside>
     </el-container>
+    <pageSnapshot :isPage="true" :id="'1'"></pageSnapshot>
   </el-container>
 </template>
 
@@ -29,6 +36,7 @@ import PageFrame from './components/PageFrame.vue';
 import ContentDisplay from './components/ContentDisplay.vue';
 import DesignerOperator from './components/DesignerOperator.vue';
 import Editor from './components/Editor.vue';
+import pageSnapshot from "./components/pageSnapshot";
 import {mapMutations} from './store';
 
 export default {
@@ -38,7 +46,8 @@ export default {
     PageFrame,
     ContentDisplay,
     DesignerOperator,
-    Editor
+    Editor,
+    pageSnapshot
   },
   mounted () {
   },
