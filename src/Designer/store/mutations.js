@@ -29,6 +29,7 @@ export default {
     state.schema = clone(schema);
     state.vmSchema = clone(schema);
     state.currentPageId = getPropByPath(schema, 'pages[0].id', null);
+    state.currentPageType = 'page';
     // state.currentComponent = state.currentPage.components[0];
     // state.currentComponentId = state.currentComponent.id;
     state.pages = state.vmSchema.pages || [];
@@ -36,16 +37,21 @@ export default {
   },
   selectComponent(state, componentId) {
     state.currentComponentId = componentId;
+    state.currentType = 'component';
     eventBus.emit(UPDATE_SELECT_INFO);
   },
   selectPage(state, pageId) {
     state.currentPageId = pageId;
+    state.currentPageType = 'page';
+    state.currentType = 'page';
   },
   // 切换render展示页面调用
   switchPage (state, page) {
     state.currentPage = page;
   },
   updateSchema(state, operateConfig) {
+    operateConfig.currentType = state.currentType;
+    operateConfig.currentPageType = state.currentPageType;
     if (!operateConfig.currentPageId) {
       operateConfig.currentPageId = state.currentPageId;
     }

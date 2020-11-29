@@ -30,8 +30,8 @@ const getComponent = (schema, config) => {
 };
 
 const getPage = (schema, config) => {
-  const {currentPageId} = config;
-  return (schema.pages || []).find(({id}) => id === currentPageId) || null;
+  const {currentPageId, currentPageType} = config;
+  return (schema[currentPageType === 'page' ? 'pages' : 'dialogs'] || []).find(({id}) => id === currentPageId) || null;
 };
 
 const generateComponentUpdater = targetPath => (schema, config) => {
