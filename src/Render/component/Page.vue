@@ -1,5 +1,5 @@
 <template>
-    <ul :style="fmtStyle(this.pageData)" ref="page">
+    <ul :style="fmtStyle(this.pageData)" ref="page" :key="pageData.id">
         <component
             v-for="(cmp, index) in pageData.components"
             :key="index"

@@ -1,8 +1,8 @@
 <template lang="html">
     <div class="preview">
         <div class="mask"></div>
-        <button id="prevBtn" :disable="isDialog" @click="handlePrevPage">上一页</button>
-        <button id="nextBtn" :disable="isDialog" @click="handleNextPage">下一页</button>
+        <button id="prevBtn" :disabled=isDialog @click="handlePrevPage">上一页</button>
+        <button id="nextBtn" :disabled=isDialog @click="handleNextPage">下一页</button>
         <div id="pt-main" class="pt-perspective" ref="main">
             <singlePage
                 ref="displayPage"
@@ -22,7 +22,7 @@
 
 <script>
 import singlePage from "./Page";
-import { mapMutations, mapGetters } from "../store";
+import { mapState, mapMutations, mapGetters } from "../store";
 import { transition } from "../pageChange/libs/transition";
 
 export default {
@@ -37,31 +37,29 @@ export default {
     },
     props: ["renderData"],
     computed: {
-        ...mapGetters(["targetPage", "currentPage", "designMode"]),
-        currentLayout () {
-          return this.findCurrentMessage(this.currentPage).layout;
-        }
+      ...mapState(['dialogStroage']),
+      ...mapGetters(["targetPage", "currentPage", "designMode"]),
+      currentLayout () {
+        return this.findCurrentMessage(this.currentPage).layout;
+      }
     },
     components: {
         singlePage,
     },
     created() {
-      window.abc = this;
     },
     mounted() {
-        if (!this.designMode) {
-            this.beginTime = new Date().getTime();
-            this.autoChange();
-        }
+        // if (!this.designMode) {
+        //     this.beginTime = new Date().getTime();
+        //     this.autoChange();
+        // }
     },
     methods: {
         ...mapMutations([
           "jumpPage",
           "jumpPageReal",
-          "nextPage",
-          "prePage",
-          "addPathData",
-          "backPrevPath"]),
+          "backPrevDialog",
+        ]),
         /**
          * @description Change page action
          * @author lyuDongzhou
@@ -190,6 +188,7 @@ export default {
          * @description Watch the varible targetPage for change current page.
          */
         targetPage(next, old) {
+          clearInterval(this._timer);
           if (next === this.currentPage) {
               this.currentState = 2;
               return;
@@ -197,7 +196,6 @@ export default {
           this.beginTime = null;
           let findCurrentMessage = this.findCurrentMessage(next);
           this.nextData  = findCurrentMessage.layout;
-          this.addPathData({uuid: next, type:findCurrentMessage.type});
           this.isDialog = findCurrentMessage.type === 'dialogs';
           this.currentState = 1;
           this.$nextTick(() => {
@@ -208,6 +206,9 @@ export default {
               let oldIndex = this.findCurrentIndex(oldType, old),
                   nextIndex = this.findCurrentIndex(nextType, next);
               isPrev = this.loopType===null?nextIndex < oldIndex:(this.loopType==='next'?false:true);
+            } else {
+              // type不同的情况下，只有dialog返回到page，不存在page返回到dialog
+              isPrev = nextType==='pages'?true:false;
             }
             this.action(isPrev).then(() => {
               this.loopType = null;
@@ -216,6 +217,14 @@ export default {
                 this.nextIndex = null;
                 this.currentState = 2;
                 this.beginTime = new Date().getTime();
+                let msg = this.dialogStroage;
+                if (msg.length>0) {
+                  this._timer = setInterval(() => {
+                    this.jumpPage(msg[msg.length-1].fromId);
+                    this.backPrevDialog();
+                    clearInterval(this._timer);
+                  }, msg[msg.length-1].backTime);
+                }
               });
             });
           });

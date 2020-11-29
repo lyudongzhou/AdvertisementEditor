@@ -17,9 +17,10 @@ import "./events";
 import {get} from "@/registor";
 import {REG_EVENTS} from "@/const";
 const eventMap = get(REG_EVENTS);
+
 export default {
     name: "baseCmp",
-    props: ["cmpConfig", "pageState"],
+    props: ["cmpConfig", "pageState",],
     data() {
         return {
             animationStyle: {
@@ -29,7 +30,6 @@ export default {
                 rotation: 0,
                 opacity: 1,
             },
-            testId: ['1', 'dialog1', 'dialogs2', 'dialogs3', '2', '3']
         };
     },
     computed: {
@@ -80,8 +80,10 @@ export default {
         },
     },
     created() {},
+    mounted() {
+    },
     methods: {
-      ...mapActions(["nextPage"]),
+      ...mapActions([]),
       dispatchEvent(type, e) {
           if (!this.$store.state.currentRenderState.designMode) {
               this.cmpConfig.events.forEach((ele) => {
@@ -93,7 +95,7 @@ export default {
                           this,
                           ele.value,
                           e,
-                          this
+                          this,
                       );
                   }
               });
@@ -107,7 +109,6 @@ export default {
           }
       },
     },
-    mounted() {},
 };
 </script>
 <style scoped>

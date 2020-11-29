@@ -17,7 +17,8 @@ export default function (cmpConfig, obj) {
     cmpConfig.animation.forEach(ele=>{
         let aniType = ele.type;
         if (aniType) {
-            obj.currentAni.push(animations[aniType].fun(obj, ele));
+          obj.currentAni.push(animations[aniType](obj, ele));
+            // obj.currentAni.push(animations[aniType].fun(obj, ele));
         }
-    });  
+    });
 }
