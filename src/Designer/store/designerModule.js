@@ -19,21 +19,36 @@ export default {
   },
   getters: {
     currentComponent (state, getters) {
-      if (getters.currentPage && state.currentComponentId) {
-        return getters.currentPage.components.find(({ id }) => state.currentComponentId === id) || null;
+      // 触发getter，依赖收集-_-||
+      state.currentComponentId;
+      state.currentPageType;
+      getters.currentPage;
+      getters.currentDialog;
+      if (state.currentComponentId && state.currentPageType) {
+        const container = state.currentPageType === 'page' ? getters.currentPage : getters.currentDialog;
+        return container.components.find(({ id }) => state.currentComponentId === id) || null;
       }
       return null;
     },
+    pages(state) {
+      return state.vmSchema.pages || [];
+    },
+    dialog(state) {
+      return state.vmSchema.dialogs || [];
+    },
     currentPage (state, getters) {
-      if (getters.pages && state.currentPageId) {
+      if (getters.pages && state.currentPageId && state.currentPageType === 'page') {
         return getters.pages.find(({ id }) => state.currentPageId === id) || null;
       }
       return null
     },
-    pages (state) {
-      return state.vmSchema.pages || [];
+    currentDialog(state, getters) {
+      if (getters.dialog && state.currentPageId && state.currentPageType === 'dialog') {
+        return getters.dialog.find(({ id }) => state.currentPageId === id) || null;
+      }
+      return null
     },
-    currentPageMaxIndex(state, getters) {
+    currentMaxIndex(state, getters) {
       return Math.max(...getPropByPath(getters, 'currentPage.components', []).map(component => component.layoutConfig.zIndex)) || 0;
     }
   },

@@ -25,7 +25,7 @@ export default {
       if (!base.layoutConfig) {
         base.layoutConfig = {};
       }
-      base.layoutConfig.zIndex = executeGetter.call(this, 'currentPageMaxIndex') + 1;
+      base.layoutConfig.zIndex = executeGetter.call(this, 'currentMaxIndex') + 1;
       if (!base.layoutConfig.height || !base.layoutConfig.width) {
         // todo 找组件协议，初始化组件的高宽
         base.layoutConfig.height = 100;
