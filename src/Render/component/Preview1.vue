@@ -32,12 +32,12 @@ export default {
             currentState: 0,
             nextData: null,
             isDialog: false,
-            loopType: null,
+            clickSwitchPage: null,
         };
     },
     props: ['renderData'],
     computed: {
-      ...mapState(['dialogStroage']),
+      ...mapState(['windowStorage']),
       ...mapGetters(["targetPage", "currentPage", "designMode"]),
       currentLayout () {
         return this.findCurrentMessage(this.currentPage).layout;
@@ -49,10 +49,10 @@ export default {
     created() {
     },
     mounted() {
-        // if (!this.designMode) {
-        //     this.beginTime = new Date().getTime();
-        //     this.autoChange();
-        // }
+        if (!this.designMode) {
+            this.beginTime = new Date().getTime();
+            this.automaticCycle();
+        }
     },
     methods: {
         ...mapMutations([
@@ -89,29 +89,24 @@ export default {
                 }
             })
         },
+
         /**
-         * @description autoChange Logic
-         * @author lyuDongzhou
-         * @date 2020-11-28
+         * 自动轮播page
+         * page timer
          */
-        handleAutoChange() {
-            if (this.beginTime) {
+        automaticCycle() {
+          if (this.renderData.change.loop) {
+            let singlePagePlayTime = this.renderData.change.singlePagePlayTime;
+            this._timer = setInterval(() => {
+              if (this.beginTime) {
                 let dt = new Date().getTime() - this.beginTime
-                if (dt > this.renderData.change.singlePagePlayTime) {
-                    this.nextPage()
-                    this.beginTime = null
+                if (dt > singlePagePlayTime) {
+                  this.handleNextPage();
+                  this.beginTime = null
                 }
-            }
-        },
-        /**
-         * @description reg the auto change fun
-         * @author lyuDongzhou
-         * @date 2020-11-28
-         */
-        autoChange() {
-            if (this.renderData.change.loop) {
-                setInterval(this.handleAutoChange.bind(this), 200)
-            }
+              }
+            }, singlePagePlayTime);
+          }
         },
         handleNextPage() {
           let getIndex = this.findCurrentIndex('pages', this.currentPage),
@@ -121,7 +116,7 @@ export default {
           } else if (this.renderData.change.loop) {
             // loop
             this.jumpPage(pages[0].id);
-            this.loopType = 'next';
+            this.clickSwitchPage = 'next';
           }
         },
         handlePrevPage() {
@@ -132,7 +127,7 @@ export default {
           } else if (this.renderData.change.loop) {
             // loop
             this.jumpPage(pages[pages.length-1].id);
-            this.loopType = 'prev';
+            this.clickSwitchPage = 'prev';
           }
         },
         getCmp(id) {
@@ -142,6 +137,16 @@ export default {
             } else {
                 return
             }
+        },
+        /**
+         * 获取dialogId在windowStroage的下标
+         * dialog->dialog使用
+         */
+        findStorageIndex(dialogId) {
+          return this.windowStorage.findIndex(item=>item.toId===dialogId);
+        },
+        findStorageMessage(next, old) {
+          return this.windowStorage.findIndex(item=>item.toId===next&&item.fromId===old);
         },
         /**
          * 获取currentPage在pages或者dialogs的下标
@@ -183,6 +188,44 @@ export default {
                 type,
             }
         },
+        /**
+         * 切页的方向
+         * page->page || page->dialog || dialog->dialog || dialog->page
+         */
+        judgeDirection (next, old) {
+          let oldType  = this.findCurrentMessage(old).type,
+              nextType = this.findCurrentMessage(next).type,
+              isPrev   = false;
+          if (oldType === nextType) {
+            if (nextType === 'pages') {
+              // TODO: page->page -> only click prevBtn isPrev=true
+              if (this.clickSwitchPage) {
+                isPrev = this.clickSwitchPage==='prev'?true:false;
+              }
+            } else {
+              // dialog->dialog
+              if (this.windowStorage[this.windowStorage.length-1].toId === next &&
+                  this.windowStorage[this.windowStorage.length-1].fromId !== old) {
+                isPrev = true;
+              }
+            }
+          } else {
+            if (nextType==='pages') {
+              // dialog->page
+              if (this.windowStorage.length===0) {
+                // back the form page
+                isPrev = true;
+              } else {
+                // go the to page
+                isPrev = false;
+              }
+            } else {
+              // page->dialog must be next
+              isPrev = false;
+            }
+          }
+          return isPrev;
+        }
     },
     watch: {
         /**
@@ -200,31 +243,27 @@ export default {
           this.isDialog = findCurrentMessage.type === 'dialogs';
           this.currentState = 1;
           this.$nextTick(() => {
-            let oldType  = this.findCurrentMessage(old).type,
-                nextType = this.findCurrentMessage(next).type,
-                isPrev   = false;
-            if (oldType === nextType) {
-              let oldIndex = this.findCurrentIndex(oldType, old),
-                  nextIndex = this.findCurrentIndex(nextType, next);
-              isPrev = this.loopType===null?nextIndex < oldIndex:(this.loopType==='next'?false:true);
-            } else {
-              // type不同的情况下，只有dialog返回到page，不存在page返回到dialog
-              isPrev = nextType==='pages'?true:false;
-            }
+            let isPrev = this.judgeDirection(next, old);
             this.action(isPrev).then(() => {
-              this.loopType = null;
+              this.clickSwitchPage = null;
               this.jumpPageReal(next);
               this.$nextTick(() => {
                 this.nextIndex = null;
                 this.currentState = 2;
                 this.beginTime = new Date().getTime();
-                let msg = this.dialogStroage;
-                if (msg.length>0) {
-                  this._timer = setInterval(() => {
-                    this.jumpPage(msg[msg.length-1].fromId);
-                    this.backPrevDialog();
-                    clearInterval(this._timer);
-                  }, msg[msg.length-1].backTime);
+                let nextType  = this.findCurrentMessage(next).type;
+                if (nextType === 'pages') {
+                  // auto change page
+                  this.automaticCycle();
+                } else {
+                  // auto back prev dialog
+                  let msg = this.windowStorage;
+                  if (msg.length>0) {
+                    this._timer = setInterval(() => {
+                      this.jumpPage(msg[msg.length-1].fromId);
+                      this.backPrevDialog();
+                    }, msg[msg.length-1].backTime);
+                  }
                 }
               });
             });
