@@ -113,6 +113,7 @@ export default {
     after: [COMMAND_UPDATE_SELECT_ITEM],
   },
   [AFTER_UPDATE_COMPONENT_POSITION]: {
+    handler: commitHandler,
     updater: updateComponentLayout,
     after: [COMMAND_UPDATE_SELECT_ITEM],
   },
