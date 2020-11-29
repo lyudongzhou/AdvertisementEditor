@@ -17,6 +17,7 @@ function getFromState(name) {
 
 /**
  * 用于操作schema的组件逻辑复用
+ * 使用混入而不是mutation，是因为mutation访问不到getter
  */
 export default {
   methods: {
@@ -53,7 +54,6 @@ export default {
 }
 
 const createComponent = (base) => {
-  // todo props的初始化
   return {
     props: {
     },
