@@ -1,4 +1,5 @@
 import mutations from './mutations';
+import {getPropByPath} from '../../Utils/utils';
 
 export default {
   namespaced: true,
@@ -6,13 +7,14 @@ export default {
     return {
       schema: {},
       vmSchema: {},
-      currentComponentId: 0,
-      currentIndex: 1,
+      currentComponentId: null,
       opened: false,
       // 当前选中对象的类型： component、page、dialog
       currentType: '',
-      // 当前选中页面的类型： page、dialog
+      // 当前选中对象所属页面的类型： page、dialog
       currentPageType: '',
+      // 复制的组件
+      copyComponent: null,
     };
   },
   getters: {
@@ -30,6 +32,9 @@ export default {
     },
     pages (state) {
       return state.vmSchema.pages || [];
+    },
+    currentPageMaxIndex(state, getters) {
+      return Math.max(...getPropByPath(getters, 'currentPage.components', []).map(component => component.layoutConfig.zIndex)) || 0;
     }
   },
   mutations,

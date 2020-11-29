@@ -1,32 +1,63 @@
-import { clone, getPropByPath } from '../../Utils/utils';
-import {
-  BEFORE_UPDATE_COMPONENT_SIZE,
-  UPDATING_COMPONENT_SIZE,
-  AFTER_UPDATE_COMPONENT_SIZE,
-
-  BEFORE_UPDATE_COMPONENT_POSITION,
-  UPDATING_COMPONENT_POSITION,
-  AFTER_UPDATE_COMPONENT_POSITION,
-
-  ADD_COMPONENT,
-  DELETE_COMPONENT,
-  UPDATE_COMPONENT_PROPS,
-
-  ADD_PAGE,
-  DELETE_PAGE,
-
-  SWITCH_INDEX,
-  UPDATE_INDEX_TO_TOP,
-  UPDATE_INDEX_TO_BOTTOM,
-
-  BEFORE_UPDATE_COMPONENT_PROPS,
-  UPDATING_COMPONENT_PROPS,
-  AFTER_UPDATE_COMPONENT_PROPS
-} from '../constant/schema';
+import {clone, getPropByPath} from '../../Utils/utils';
 import { getMergeSchemaManager } from '../manager/schemaManager';
 import { eventBus } from '../plugin/event';
 import { UPDATE_SELECT_INFO } from '../constant/event';
+import operatorMap from '../manager/operators';
+import {
+  COMMAND_UPDATE_SELECT_ITEM,
+  COMMAND_SELECT_COMPONENT,
+  COMMAND_SELECT_CONTAINER,
+  COMMAND_SELECT_PAGE,
+  COMMAND_SELECT_SIBLING_PAGE,
+} from '../constant/base';
 
+const afterCommandMap = {
+  /**
+   * 更新选中框
+   */
+  [COMMAND_UPDATE_SELECT_ITEM]() {
+    eventBus.emit(UPDATE_SELECT_INFO);
+  },
+  /**
+   * focus组件
+   *
+   * @param state
+   * @param operateConfig
+   */
+  [COMMAND_SELECT_COMPONENT](state, operateConfig) {
+    state.currentComponentId = operateConfig.targetId;
+    state.currentType = 'component';
+  },
+  /**
+   * focus当前容器(page/dialog)
+   */
+  [COMMAND_SELECT_CONTAINER](state) {
+    state.currentType = state.currentPageType;
+    state.currentComponentId = null;
+  },
+  /**
+   * focus容器(page/dialog)
+   * @param state
+   * @param operateConfig
+   */
+  [COMMAND_SELECT_PAGE](state, operateConfig) {
+    state.currentPageId = operateConfig.targetId;
+    state.currentType = operateConfig.currentType;
+    state.currentPageType = state.currentType;
+  },
+  /**
+   * 选择兄弟容器
+   *
+   * @param state
+   * @param operateConfig
+   */
+  [COMMAND_SELECT_SIBLING_PAGE](state, operateConfig) {
+    const {currentPageType} = operateConfig;
+    state.currentPageType = currentPageType;
+    state.currentType = currentPageType;
+    state.currentPageId = getPropByPath(state.vmSchema, `${currentPageType === 'page' ? 'pages' : 'dialogs'}[0].id`, null);
+  },
+};
 
 export default {
   resetSchema (state, schema) {
@@ -36,7 +67,6 @@ export default {
     state.currentPageType = 'page';
     // state.currentComponent = state.currentPage.components[0];
     // state.currentComponentId = state.currentComponent.id;
-    state.pages = state.vmSchema.pages || [];
     state.opened = true;
   },
   selectComponent (state, componentId) {
@@ -55,50 +85,28 @@ export default {
     state.currentPage = page;
   },
   updateSchema (state, operateConfig) {
-    operateConfig.currentType = state.currentType;
-    operateConfig.currentPageType = state.currentPageType;
+    if (!operateConfig.currentPageType) {
+      operateConfig.currentPageType = state.currentPageType;
+    }
+    if (!operateConfig.currentType) {
+      operateConfig.currentType = state.currentType;
+    }
     if (!operateConfig.currentPageId) {
       operateConfig.currentPageId = state.currentPageId;
     }
     if (!operateConfig.targetId) {
       operateConfig.targetId = state.currentComponentId;
     }
-    const manager = getMergeSchemaManager(state);
-    const { schemaManager, vmSchemaManager } = manager;
-    switch (operateConfig.type) {
-      case BEFORE_UPDATE_COMPONENT_SIZE:
-      case BEFORE_UPDATE_COMPONENT_POSITION:
-      case BEFORE_UPDATE_COMPONENT_PROPS:
-        vmSchemaManager.snapshot(operateConfig);
-        break;
-      case AFTER_UPDATE_COMPONENT_SIZE:
-      case AFTER_UPDATE_COMPONENT_POSITION:
-      case AFTER_UPDATE_COMPONENT_PROPS:
-        schemaManager.commit(operateConfig);
-        vmSchemaManager.commit(operateConfig);
-        break;
-      case UPDATING_COMPONENT_SIZE:
-      case UPDATING_COMPONENT_POSITION:
-      case UPDATING_COMPONENT_PROPS:
-        vmSchemaManager.update(operateConfig);
-        break;
 
-      case ADD_COMPONENT:
-      case DELETE_COMPONENT:
-      case UPDATE_COMPONENT_PROPS:
-      case ADD_PAGE:
-      case DELETE_PAGE:
-        manager.commit(operateConfig);
-        break;
+    const {handler, after = []} = operatorMap[operateConfig.type];
 
-      case SWITCH_INDEX:
-      case UPDATE_INDEX_TO_TOP:
-      case UPDATE_INDEX_TO_BOTTOM:
-        break;
-    }
+    // 执行操作
+    handler(state, operateConfig);
 
-    eventBus.emit(UPDATE_SELECT_INFO);
-
+    // 后处理器
+    after.forEach(command => {
+      afterCommandMap[command](state, operateConfig);
+    })
   },
   redo (state) {
     const manager = getMergeSchemaManager(state);
@@ -110,7 +118,7 @@ export default {
     manager.undo();
     eventBus.emit(UPDATE_SELECT_INFO);
   },
+  copyComponent(state, copyComponent) {
+    state.copyComponent = copyComponent;
+  }
 };
-
-
-// 对协议的修改 新增页面、新增组件、删除页面、删除组件、修改组件属性

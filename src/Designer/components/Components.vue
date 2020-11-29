@@ -32,9 +32,11 @@
 
 <script>
   import headConfig from '../config/headerConfig';
+  import schemaMixin from '../mixin/schemaMixin';
 
   export default {
     name: 'components',
+    mixins: [schemaMixin],
     components: {
     },
     created() {
@@ -47,7 +49,7 @@
     },
     methods: {
       addCmp (config) {
-        this.$emit('add_cmp', config.type);
+        this.$$addNewComponent({type: config.type});
       }
     }
   }

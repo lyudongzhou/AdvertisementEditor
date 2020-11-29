@@ -1,3 +1,6 @@
+import { v1 as uuidv1 } from 'uuid';
+
+
 export const clone = obj => JSON.parse(JSON.stringify(obj));
 
 export function getPropByPath(obj = {}, path = '', defaultValue) {
@@ -21,4 +24,8 @@ export function setPropByPath(obj = {}, path = '', value) {
       }
       return p[c]
     }, obj);
+}
+
+export function getUuid() {
+  return uuidv1();
 }
