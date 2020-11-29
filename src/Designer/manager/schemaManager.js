@@ -31,7 +31,7 @@ export default class SchemaManager {
    * 提交schema并且生成redo undo
    */
   commit(operateConfig) {
-    // 没有快照 || 快照没有match
+    // 没有快照
     if (!this.snapshotInfo) {
       this.snapshot(operateConfig);
     }
@@ -68,7 +68,6 @@ export default class SchemaManager {
   updateByRedoUndo(snapshotInfo, type) {
     this.update({
       updater: () => {
-        console.info(getPropByPath(clone(snapshotInfo[type === 'redo' ? 'to' : 'from']), 'pages[0].components[1].layoutConfig.top'));
         this.setSchema(clone(snapshotInfo[type === 'redo' ? 'to' : 'from']));
       },
     });
@@ -124,21 +123,10 @@ export const getMergeSchemaManager = (state) => {
   };
 };
 
-// const generateGetterSetter = (key, state) => ({
-//   getSchema: () => state[key],
-//   setSchema: (newSchema) => state[key] = newSchema
-// })
-
-const generateGetterSetter = (key, state) => {
-  generateGetterSetter.counter++;
-  return {
-    getSchema: () => state[key],
-    setSchema: (newSchema) => {
-      state[key] = newSchema;
-    },
-  };
-};
-generateGetterSetter.counter = 0;
+const generateGetterSetter = (key, state) => ({
+  getSchema: () => state[key],
+  setSchema: (newSchema) => state[key] = newSchema,
+});
 
 const merge = (a, b) => {
   return {
