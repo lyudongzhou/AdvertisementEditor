@@ -3,7 +3,7 @@ import {getPropByPath} from '../../Utils/utils';
 
 export default {
   namespaced: true,
-  state () {
+  state() {
     return {
       schema: {},
       vmSchema: {},
@@ -18,15 +18,9 @@ export default {
     };
   },
   getters: {
-    currentComponent (state, getters) {
-      // 触发getter，依赖收集-_-||
-      state.currentComponentId;
-      state.currentPageType;
-      getters.currentPage;
-      getters.currentDialog;
+    currentComponent(state, getters) {
       if (state.currentComponentId && state.currentPageType) {
-        const container = state.currentPageType === 'page' ? getters.currentPage : getters.currentDialog;
-        return container.components.find(({ id }) => state.currentComponentId === id) || null;
+        return getters.currentContainer.components.find(({id}) => state.currentComponentId === id) || null;
       }
       return null;
     },
@@ -36,21 +30,29 @@ export default {
     dialog(state) {
       return state.vmSchema.dialogs || [];
     },
-    currentPage (state, getters) {
+    currentPage(state, getters) {
       if (getters.pages && state.currentPageId && state.currentPageType === 'page') {
-        return getters.pages.find(({ id }) => state.currentPageId === id) || null;
+        return getters.pages.find(({id}) => state.currentPageId === id) || null;
       }
-      return null
+      return null;
     },
     currentDialog(state, getters) {
       if (getters.dialog && state.currentPageId && state.currentPageType === 'dialog') {
-        return getters.dialog.find(({ id }) => state.currentPageId === id) || null;
+        return getters.dialog.find(({id}) => state.currentPageId === id) || null;
       }
-      return null
+      return null;
+    },
+    currentContainer(state, getters) {
+      // 触发getter，依赖收集-_-||
+      const containerMap = {
+        page: getters.currentPage,
+        dialog: getters.currentDialog,
+      };
+      return containerMap[state.currentPageType];
     },
     currentMaxIndex(state, getters) {
-      return Math.max(...getPropByPath(getters, 'currentPage.components', []).map(component => component.layoutConfig.zIndex)) || 0;
-    }
+      return Math.max(...getPropByPath(getters, 'currentContainer.components', []).map(component => component.layoutConfig.zIndex)) || 0;
+    },
   },
   mutations,
 };
