@@ -60,6 +60,8 @@
       return {
         scaleState: null,
         selectItemInfo: null,
+        draging: false,
+        resizing: false,
       };
     },
     computed: {
@@ -261,10 +263,14 @@
         });
       },
       onDrag(left, top) {
+        this.draging = true;
         this.commitDragMutation(left, top, UPDATING_COMPONENT_POSITION);
       },
       dragStop(left, top) {
-        this.commitDragMutation(left, top, AFTER_UPDATE_COMPONENT_POSITION);
+        if (this.draging) {
+          this.draging = false;
+          this.commitDragMutation(left, top, AFTER_UPDATE_COMPONENT_POSITION);
+        }
       },
       commitResizeMutation(left, top, width, height, type) {
         const {top: offsetTop, left: offsetLeft} = this.containerOffset;
@@ -284,10 +290,14 @@
         });
       },
       onResize(left, top, width, height) {
+        this.resizing = true;
         this.commitResizeMutation(left, top, width, height, UPDATING_COMPONENT_SIZE);
       },
       resizeStop(left, top, width, height) {
-        this.commitResizeMutation(left, top, width, height, AFTER_UPDATE_COMPONENT_SIZE);
+        if (this.resizing) {
+          this.resizing = false;
+          this.commitResizeMutation(left, top, width, height, AFTER_UPDATE_COMPONENT_SIZE);
+        }
       },
 
       ...mapMutations(['selectComponent', 'updateSchema']),
