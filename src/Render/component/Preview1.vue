@@ -135,9 +135,15 @@ export default {
             }
         },
         getCmp(id) {
+<<<<<<< HEAD
             let page = this.$refs['displayPage']
             if (page) {
                 return page[0].getCmp(id)
+=======
+            let page = this.$refs["displayPage"];
+            if (page) {
+                return page.getCmp(id);
+>>>>>>> 53775689e1aec994b8df275a606a5a6f69d8a210
             } else {
                 return
             }

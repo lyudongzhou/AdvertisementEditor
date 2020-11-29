@@ -24,6 +24,8 @@ import {
   AFTER_UPDATE_COMPONENT_PROPS
 } from '../constant/schema';
 import { getMergeSchemaManager } from '../manager/schemaManager';
+import { eventBus } from '../plugin/event';
+import { UPDATE_SELECT_INFO } from '../constant/event';
 
 
 export default {
@@ -38,6 +40,7 @@ export default {
   },
   selectComponent (state, componentId) {
     state.currentComponentId = componentId;
+    eventBus.emit(UPDATE_SELECT_INFO);
   },
   selectPage (state, pageId) {
     state.currentPageId = pageId;
@@ -87,15 +90,18 @@ export default {
         break;
     }
 
+    eventBus.emit(UPDATE_SELECT_INFO);
 
   },
   redo (state) {
     const manager = getMergeSchemaManager(state);
     manager.redo();
+    eventBus.emit(UPDATE_SELECT_INFO);
   },
   undo (state) {
     const manager = getMergeSchemaManager(state);
     manager.undo();
+    eventBus.emit(UPDATE_SELECT_INFO);
   },
 };
 

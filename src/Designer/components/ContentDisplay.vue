@@ -6,7 +6,7 @@ import VueDraggableResizable from 'vue-draggable-resizable'
 import 'vue-draggable-resizable/dist/VueDraggableResizable.css'
 import editorWin from './EditorWindow'
 import Vue from 'vue'
-import { CHANGE_SCALE } from '../constant/event'
+import { CHANGE_SCALE, UPDATE_SELECT_INFO } from '../constant/event'
 import { CONTENT_OFFSET } from '../constant/base'
 import {
     //    BEFORE_UPDATE_COMPONENT_SIZE,
@@ -43,11 +43,10 @@ export default {
                 return
             }
             this.scaleState = newScale
-            if (this.currentComponentId) {
-                Vue.nextTick(() =>
-                    this.selectComponentById(this.currentComponentId)
-                )
-            }
+            this.updateSelectItemInfo()
+        })
+        this.$event.on(UPDATE_SELECT_INFO, () => {
+            this.updateSelectItemInfo()
         })
     },
     destroyed() {},
@@ -55,39 +54,6 @@ export default {
         return {
             scaleState: null,
             selectItemInfo: null,
-            editorType: 'textCmp',
-            editorData: {
-                id: 1,
-                name: '按钮1',
-                type: 'textCmp',
-                layoutConfig: {
-                    zIndex: 1,
-                    top: 100,
-                    left: 100,
-                    rotation: 31.41592653589793,
-                    width: 100,
-                    height: 100,
-                    opacity: 1,
-                },
-                props: {
-                    text: '111',
-                },
-                animation: [
-                    {
-                        type: 'shaking',
-                        duration: 100,
-                        delay: 0,
-                        times: 1,
-                    },
-                ],
-                events: [
-                    {
-                        type: 'log',
-                        value: 'Dialog1',
-                    },
-                ],
-                children: [],
-            },
         }
     },
     computed: {
@@ -241,31 +207,35 @@ export default {
             const heightScale = getScaleValue(originHeight, maxHeight)
             return Math.min(widthScale, heightScale)
         },
-        selectComponentById(componentId) {
-            this.handleSelectComponent(
-                this.$refs.render.getCmp(componentId),
-                componentId
-            )
-        },
-        handleSelectComponent(ref, componentId) {
-            const dom = ref.$el
-            const { top, left, height, width } = dom.getBoundingClientRect()
-            const {
-                top: containerTop,
-                left: containerLeft,
-            } = this.$refs.workspace.getBoundingClientRect()
-            this.selectItemInfo = {
-                position: {
-                    height: height,
-                    width: width,
-                    top: top - containerTop,
-                    left: left - containerLeft,
-                },
-            }
+        handleClickComponent(ref, componentId) {
             this.selectComponent(componentId)
         },
-        handleClick(ref, componentId) {
-            this.handleSelectComponent(ref, componentId)
+        updateSelectItemInfo() {
+            if (this.currentComponentId) {
+                Vue.nextTick(() => {
+                    const dom = this.$refs.render.getCmp(
+                        this.currentComponentId
+                    ).$el
+                    const {
+                        top,
+                        left,
+                        height,
+                        width,
+                    } = dom.getBoundingClientRect()
+                    const {
+                        top: containerTop,
+                        left: containerLeft,
+                    } = this.$refs.workspace.getBoundingClientRect()
+                    this.selectItemInfo = {
+                        position: {
+                            height: height,
+                            width: width,
+                            top: top - containerTop,
+                            left: left - containerLeft,
+                        },
+                    }
+                })
+            }
         },
         onDrag(left, top) {
             const { top: offsetTop, left: offsetLeft } = this.containerOffset
@@ -276,8 +246,8 @@ export default {
                     top: Math.floor((top - offsetTop) / this.scaleValue),
                 },
             })
-            this.selectItemInfo.position.left = left
-            this.selectItemInfo.position.top = top
+            //        this.selectItemInfo.position.left = left;
+            //        this.selectItemInfo.position.top = top;
         },
         onResize(...arg) {
             console.info(arg)
@@ -322,7 +292,7 @@ export default {
                 ref="render"
                 :renderData="vmSchema"
                 :currentPage="currentPage"
-                @click="handleClick"
+                @click="handleClickComponent"
                 :designMode="true"
                 baseUrl=""
             ></render>
@@ -361,7 +331,11 @@ export default {
         <div>
             <!--辅助线-->
         </div>
-        <editorWin class="editWin"></editorWin>
+        <editorWin
+            class="editWin"
+            :editorType="editorType"
+            :editorData="editorData"
+        ></editorWin>
     </div>
 </template>
 
@@ -372,10 +346,8 @@ export default {
     top: 50px;
     bottom: 0;
     right: 0;
-    width: 300px;
-    height: 800px;
-    z-index: 4;
 }
+
 .work-space {
     /*position: relative;*/
     /*user-select: none;*/

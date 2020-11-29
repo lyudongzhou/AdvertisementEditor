@@ -1,2 +1,5 @@
+// 更新scale
 export const CHANGE_SCALE = 'CHANGE_SCALE';
+// 更新选中框
+export const UPDATE_SELECT_INFO = 'UPDATE_SELECT_INFO';
 export const BEFORE_DELETE_COMPONENT = 'BEFORE_DELETE_COMPONENT';
