@@ -130,9 +130,9 @@ export default {
           }
         },
         getCmp(id) {
-            let page = this.$refs["singlePage"];
+            let page = this.$refs["displayPage"];
             if (page) {
-                return page[0].getCmp(id);
+                return page.getCmp(id);
             } else {
                 return;
             }
