@@ -10,6 +10,10 @@ export default {
       currentComponentId: 0,
       currentIndex: 1,
       opened: false,
+      // 当前选中对象的类型： component、page、dialog
+      currentType: '',
+      // 当前选中页面的类型： page、dialog
+      currentPageType: '',
     };
   },
   getters: {
