@@ -32,13 +32,13 @@ export default {
             currentState: 0,
             nextData: null,
             isDialog: false,
+            loopType: null,
         };
     },
     props: ["renderData"],
     computed: {
         ...mapGetters(["targetPage", "currentPage", "designMode"]),
         currentLayout () {
-          console.log(this.findCurrentMessage(this.currentPage).layout);
           return this.findCurrentMessage(this.currentPage).layout;
         }
     },
@@ -120,6 +120,10 @@ export default {
               pages = this.renderData.pages;
           if (getIndex+1<pages.length) {
             this.jumpPage(pages[getIndex+1].id);
+          } else if (this.renderData.change.loop) {
+            // loop
+            this.jumpPage(pages[0].id);
+            this.loopType = 'next';
           }
         },
         handlePrevPage() {
@@ -127,6 +131,10 @@ export default {
               pages = this.renderData.pages;
           if (getIndex-1>=0) {
             this.jumpPage(pages[getIndex-1].id);
+          } else if (this.renderData.change.loop) {
+            // loop
+            this.jumpPage(pages[pages.length-1].id);
+            this.loopType = 'prev';
           }
         },
         getCmp(id) {
@@ -199,15 +207,16 @@ export default {
             if (oldType === nextType) {
               let oldIndex = this.findCurrentIndex(oldType, old),
                   nextIndex = this.findCurrentIndex(nextType, next);
-              isPrev = nextIndex < oldIndex;
+              isPrev = this.loopType===null?nextIndex < oldIndex:(this.loopType==='next'?false:true);
             }
             this.action(isPrev).then(() => {
-                this.jumpPageReal(next);
-                this.$nextTick(() => {
-                    this.nextIndex = null;
-                    this.currentState = 2;
-                    this.beginTime = new Date().getTime();
-                });
+              this.loopType = null;
+              this.jumpPageReal(next);
+              this.$nextTick(() => {
+                this.nextIndex = null;
+                this.currentState = 2;
+                this.beginTime = new Date().getTime();
+              });
             });
           });
         }

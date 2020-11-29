@@ -148,7 +148,7 @@ window.renderData = {
         {
           "id": 1,
           "name": "按钮1",
-          "type": "BtnCmp",
+          "type": "textCmp",
           "layoutConfig": {
             "zIndex": 1,
             "top": 100,

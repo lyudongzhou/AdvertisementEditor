@@ -33,13 +33,13 @@ export default {
         ...mapGetters(['handleUrl'])
     },
     watch: {
-        pageState(data) {
-            if (data === 2) {
-                this.pageData.components.forEach((ele) => {
-                    this.$refs[ele.id][0].parent.idleAction();
-                });
-            }
+      pageState(data) {
+        if (data === 2) {
+          this.pageData.components.forEach((ele) => {
+              this.$refs[ele.id][0].parent.idleAction();
+          });
         }
+      }
     },
     methods: {
         getCmp(id){
