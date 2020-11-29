@@ -20,6 +20,78 @@ export const DEFAULTTABS = [
                 props: {},
                 target: "layoutConfig.top",
                 type: "numberField"
+            },
+            {
+                label: "Y:",
+                props: {},
+                target: "layoutConfig.top",
+                type: "numberField"
+            },
+            {
+                label: "Y:",
+                props: {},
+                target: "layoutConfig.top",
+                type: "numberField"
+            },
+            {
+                label: "Y:",
+                props: {},
+                target: "layoutConfig.top",
+                type: "numberField"
+            },
+            {
+                label: "Y:",
+                props: {},
+                target: "layoutConfig.top",
+                type: "numberField"
+            },
+            {
+                label: "Y:",
+                props: {},
+                target: "layoutConfig.top",
+                type: "numberField"
+            },
+            {
+                label: "Y:",
+                props: {},
+                target: "layoutConfig.top",
+                type: "numberField"
+            },
+            {
+                label: "Y:",
+                props: {},
+                target: "layoutConfig.top",
+                type: "numberField"
+            },
+            {
+                label: "Y:",
+                props: {},
+                target: "layoutConfig.top",
+                type: "numberField"
+            },
+            {
+                label: "Y:",
+                props: {},
+                target: "layoutConfig.top",
+                type: "numberField"
+            },
+            {
+                label: "Y:",
+                props: {},
+                target: "layoutConfig.top",
+                type: "numberField"
+            },
+            {
+                label: "Y:",
+                props: {},
+                target: "layoutConfig.top",
+                type: "numberField"
+            },
+            {
+                label: "Y:",
+                props: {},
+                target: "layoutConfig.top",
+                type: "numberField"
             }
         ]
     },

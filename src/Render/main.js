@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import "../Utils/css/reset.css";
 import './assets/css/animations.css';
-import "@/registor";
+import "@/register";
 import store from "./store";
 import axios from 'axios';
 Vue.config.productionTip = false;

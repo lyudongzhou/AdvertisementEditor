@@ -369,7 +369,7 @@
 <style lang="less" scoped>
   .editWin {
     position: absolute;
-    left: 1100px;
+    left: 0px;
     top: 50px;
     bottom: 0;
     right: 0;

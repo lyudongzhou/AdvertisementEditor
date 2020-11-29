@@ -14,7 +14,7 @@ import pipe from "../Render/pipe";
 import { mapActions } from "../Render/store";
 import animationDispatcher from "./animations/";
 import "./events";
-import {get} from "@/registor";
+import {get} from "@/register";
 import {REG_EVENTS} from "@/const";
 const eventMap = get(REG_EVENTS);
 

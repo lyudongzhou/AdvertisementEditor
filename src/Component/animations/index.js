@@ -1,6 +1,6 @@
-import { get } from "@/registor";
+import { get } from "@/register";
 import {REG_ANIMATIONS} from "@/const";
-//reg animation instance
+//register animation instance
 import "./fadeout";
 import "./fromtop";
 import "./shaking";

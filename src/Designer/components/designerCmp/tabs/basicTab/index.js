@@ -1,7 +1,7 @@
-import {reg} from "@/registor";
+import {register} from "@/register";
 import {REG_TABS} from "@/const.js";
 import tab from "./basicTab.vue";
-reg(REG_TABS,{
+register(REG_TABS,{
     type:"basicTab",
     payload:tab
 });

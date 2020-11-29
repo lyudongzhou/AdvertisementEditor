@@ -6,7 +6,7 @@ import "../Utils/css/reset.css";
 import './base/base.css';
 import "./base/element.css";
 import '../Render/assets/css/animations.css';
-import "@/registor";
+import "@/register";
 import store from './store';
 import handleRenderDep from './renderDep';
 import Event from './plugin/event';

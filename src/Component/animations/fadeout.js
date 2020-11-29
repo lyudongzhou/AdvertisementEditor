@@ -1,7 +1,7 @@
 import { TweenMax, Power0 } from "gsap";
-import { reg } from "@/registor";
+import { register } from "@/register";
 import {REG_ANIMATIONS} from "@/const";
-reg(REG_ANIMATIONS,{
+register(REG_ANIMATIONS,{
     type: "fadeout",
     payload(cmpConfig, { duration, delay }) {
         const o = {

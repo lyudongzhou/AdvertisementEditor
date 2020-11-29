@@ -12,7 +12,7 @@
 <script>
 import html2canvas from "html2canvas";
 import "../../Component";
-import {get} from "@/registor";
+import {get} from "@/register";
 import {REG_COMPONENTS} from "@/const";
 import {mapGetters} from "../store";
 //props属性：

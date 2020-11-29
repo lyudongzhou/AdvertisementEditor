@@ -23,7 +23,7 @@
 
 <script>
 import '../../editors'
-import { get } from '@/registor'
+import { get } from '@/register'
 import { REG_EDITORS } from '@/const'
 export default {
     name: 'basicTab',

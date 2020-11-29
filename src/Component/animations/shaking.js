@@ -1,7 +1,7 @@
 import { TweenMax, Power3 } from "gsap";
-import { reg } from "@/registor";
+import { register } from "@/register";
 import {REG_ANIMATIONS} from "@/const";
-reg(REG_ANIMATIONS,{
+register(REG_ANIMATIONS,{
     type:"shaking",
     payload(cmpConfig, { duration, delay }) {
         cmpConfig.left = -10;

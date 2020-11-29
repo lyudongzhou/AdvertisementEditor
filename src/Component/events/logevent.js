@@ -1,6 +1,6 @@
-import { reg } from "@/registor";
+import { register } from "@/register";
 import { REG_EVENTS } from "@/const";
-reg(REG_EVENTS, {
+register(REG_EVENTS, {
     type: "log",
     payload: {
         eventKey: "click",

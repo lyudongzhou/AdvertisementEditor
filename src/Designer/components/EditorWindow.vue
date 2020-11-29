@@ -3,7 +3,7 @@
         <el-container>
             <el-header style="text-align:center;height:30px"
                 ><div style="line-height:30px;">
-                    abccc
+                    Editor
                 </div></el-header
             >
             <el-main class="noPadding">
@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { get } from '@/registor'
+import { get } from '@/register'
 import { REG_TABS, REG_COMPONENTSSCHEMA, DEFAULTTABS } from '@/const'
 import './designerCmp'
 import { mapGetters } from '../store'
@@ -96,12 +96,18 @@ export default {
     background-color: #cccccc;
 }
 .noPadding {
+    overflow: hidden;
     padding: 0;
+    height:760px;
+    overflow-y: auto;
 }
 .fly {
     background-color: #555555;
     border: 5px solid #666666;
     border-radius: 10px;
     color: snow;
+    width:300px;
+    height:800px;
+    overflow: hidden;
 }
 </style>
