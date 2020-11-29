@@ -146,38 +146,6 @@ window.renderData = {
       },
       "components": [
         {
-          "id": 1,
-          "name": "按钮1",
-          "type": "BtnCmp",
-          "layoutConfig": {
-            "zIndex": 1,
-            "top": 100,
-            "left": 100,
-            "rotation": 31.41592653589793,
-            "width": 100,
-            "height": 100,
-            "opacity": 1
-          },
-          "props": {
-            "text": "111"
-          },
-          "animation": [
-            {
-              "type": "shaking",
-              "duration": 100,
-              "delay": 0,
-              "times": 1
-            }
-          ],
-          "events": [
-            {
-              "type": "log",
-              "value": "Dialog1"
-            }
-          ],
-          "children": []
-        },
-        {
           "id": 2,
           "name": "图片1",
           "type": "ImageCmp",

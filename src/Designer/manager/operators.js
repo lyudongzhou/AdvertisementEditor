@@ -17,20 +17,24 @@ import {
   SWITCH_INDEX,
   UPDATE_INDEX_TO_TOP,
   UPDATE_INDEX_TO_BOTTOM,
+
+  BEFORE_UPDATE_COMPONENT_PROPS,
+  UPDATING_COMPONENT_PROPS,
+  AFTER_UPDATE_COMPONENT_PROPS
 } from '../constant/schema';
-import {setPropByPath} from '../../Utils/utils';
+import { setPropByPath } from '../../Utils/utils';
 
 const getComponent = (schema, config) => {
   const page = getPage(schema, config);
   if (page) {
-    const {targetId} = config;
-    return (page.components || []).find(({id}) => id === targetId);
+    const { targetId } = config;
+    return (page.components || []).find(({ id }) => id === targetId);
   }
   return null;
 };
 const getPage = (schema, config) => {
-  const {currentPageId} = config;
-  return (schema.pages || []).find(({id}) => id === currentPageId) || null;
+  const { currentPageId } = config;
+  return (schema.pages || []).find(({ id }) => id === currentPageId) || null;
 };
 // const componentSizeUpdater = (schema, config) => {
 //   const component = getComponent(schema, config);
@@ -46,7 +50,7 @@ const getPage = (schema, config) => {
 const generateUpdateComponent = targetPath => (schema, config) => {
   const component = getComponent(schema, config);
   Object.entries(config.value).forEach(([path, value]) => {
-    path = `${targetPath}${path.startsWith('.') ? '' : '.'}${path}`;
+    path = `${targetPath ? targetPath + '.' : ''}${path}`;
     setPropByPath(component, path, value);
   });
 };
@@ -56,6 +60,15 @@ const updateComponent = generateUpdateComponent('');
 const updateComponentLayout = generateUpdateComponent('layoutConfig');
 
 export default {
+  [BEFORE_UPDATE_COMPONENT_PROPS]: {
+
+  },
+  [UPDATING_COMPONENT_PROPS]: {
+    updater: updateComponent
+  },
+  [AFTER_UPDATE_COMPONENT_PROPS]: {
+    updater: updateComponent
+  },
   [BEFORE_UPDATE_COMPONENT_SIZE]: {
   },
   [UPDATING_COMPONENT_SIZE]: {
@@ -83,8 +96,8 @@ export default {
   [DELETE_COMPONENT]: {
     updater: (schema, config) => {
       const page = getPage(schema, config);
-      const {targetId} = config;
-      page.components = page.components.filter(({id}) => id !== targetId);
+      const { targetId } = config;
+      page.components = page.components.filter(({ id }) => id !== targetId);
     },
   },
   [UPDATE_COMPONENT_PROPS]: {
@@ -97,8 +110,8 @@ export default {
   },
   [DELETE_PAGE]: {
     updater: (schema, config) => {
-      const {targetId} = config;
-      schema.pages = schema.pages.filter(({id}) => id !== targetId);
+      const { targetId } = config;
+      schema.pages = schema.pages.filter(({ id }) => id !== targetId);
     },
   },
   [SWITCH_INDEX]: {

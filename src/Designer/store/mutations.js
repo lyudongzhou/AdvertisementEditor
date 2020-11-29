@@ -1,4 +1,4 @@
-import {clone, getPropByPath} from '../../Utils/utils';
+import { clone, getPropByPath } from '../../Utils/utils';
 import {
   BEFORE_UPDATE_COMPONENT_SIZE,
   UPDATING_COMPONENT_SIZE,
@@ -18,12 +18,16 @@ import {
   SWITCH_INDEX,
   UPDATE_INDEX_TO_TOP,
   UPDATE_INDEX_TO_BOTTOM,
+
+  BEFORE_UPDATE_COMPONENT_PROPS,
+  UPDATING_COMPONENT_PROPS,
+  AFTER_UPDATE_COMPONENT_PROPS
 } from '../constant/schema';
-import {getMergeSchemaManager} from '../manager/schemaManager';
+import { getMergeSchemaManager } from '../manager/schemaManager';
 
 
 export default {
-  resetSchema(state, schema) {
+  resetSchema (state, schema) {
     state.schema = clone(schema);
     state.vmSchema = clone(schema);
     state.currentPageId = getPropByPath(schema, 'pages[0].id', null);
@@ -32,17 +36,17 @@ export default {
     state.pages = state.vmSchema.pages || [];
     state.opened = true;
   },
-  selectComponent(state, componentId) {
+  selectComponent (state, componentId) {
     state.currentComponentId = componentId;
   },
-  selectPage(state, pageId) {
+  selectPage (state, pageId) {
     state.currentPageId = pageId;
   },
   // 切换render展示页面调用
   switchPage (state, page) {
     state.currentPage = page;
   },
-  updateSchema(state, operateConfig) {
+  updateSchema (state, operateConfig) {
     if (!operateConfig.currentPageId) {
       operateConfig.currentPageId = state.currentPageId;
     }
@@ -50,19 +54,22 @@ export default {
       operateConfig.targetId = state.currentComponentId;
     }
     const manager = getMergeSchemaManager(state);
-    const {schemaManager, vmSchemaManager} = manager;
+    const { schemaManager, vmSchemaManager } = manager;
     switch (operateConfig.type) {
       case BEFORE_UPDATE_COMPONENT_SIZE:
       case BEFORE_UPDATE_COMPONENT_POSITION:
+      case BEFORE_UPDATE_COMPONENT_PROPS:
         vmSchemaManager.snapshot(operateConfig);
         break;
       case AFTER_UPDATE_COMPONENT_SIZE:
       case AFTER_UPDATE_COMPONENT_POSITION:
+      case AFTER_UPDATE_COMPONENT_PROPS:
         schemaManager.commit(operateConfig);
         vmSchemaManager.commit(operateConfig);
         break;
       case UPDATING_COMPONENT_SIZE:
       case UPDATING_COMPONENT_POSITION:
+      case UPDATING_COMPONENT_PROPS:
         vmSchemaManager.update(operateConfig);
         break;
 
@@ -82,11 +89,11 @@ export default {
 
 
   },
-  redo(state) {
+  redo (state) {
     const manager = getMergeSchemaManager(state);
     manager.redo();
   },
-  undo(state) {
+  undo (state) {
     const manager = getMergeSchemaManager(state);
     manager.undo();
   },

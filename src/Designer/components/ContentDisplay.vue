@@ -1,13 +1,13 @@
 <script>
-import render from "../../Render/render.vue";
-import { mapState, mapGetters, mapMutations } from "../store";
-import { getPropByPath } from "../../Utils/utils";
-import VueDraggableResizable from "vue-draggable-resizable";
-import "vue-draggable-resizable/dist/VueDraggableResizable.css";
-import editorWin from "./EditorWindow";
-import Vue from "vue";
-import { CHANGE_SCALE } from "../constant/event";
-import { CONTENT_OFFSET } from "../constant/base";
+import render from '../../Render/render.vue'
+import { mapState, mapGetters, mapMutations } from '../store'
+import { getPropByPath } from '../../Utils/utils'
+import VueDraggableResizable from 'vue-draggable-resizable'
+import 'vue-draggable-resizable/dist/VueDraggableResizable.css'
+import editorWin from './EditorWindow'
+import Vue from 'vue'
+import { CHANGE_SCALE } from '../constant/event'
+import { CONTENT_OFFSET } from '../constant/base'
 import {
     //    BEFORE_UPDATE_COMPONENT_SIZE,
     //    UPDATING_COMPONENT_SIZE,
@@ -16,17 +16,17 @@ import {
     BEFORE_UPDATE_COMPONENT_POSITION,
     UPDATING_COMPONENT_POSITION,
     AFTER_UPDATE_COMPONENT_POSITION,
-} from "../constant/schema";
+} from '../constant/schema'
 
 const getScaleValue = (originValue, maxValue) => {
     if (maxValue >= originValue) {
-        return 1;
+        return 1
     }
-    return maxValue / originValue;
-};
+    return maxValue / originValue
+}
 const getCenterPositionValue = (containerValue, originValue, scaleValue) =>
-    (containerValue - originValue * scaleValue) / 2;
-const warpUnit = (value, unit = "px") => `${value}${unit}`;
+    (containerValue - originValue * scaleValue) / 2
+const warpUnit = (value, unit = 'px') => `${value}${unit}`
 export default {
     components: {
         render,
@@ -34,32 +34,32 @@ export default {
         editorWin,
     },
     created() {
-      window.display = this;
+        window.display = this
         // scale变化，选择款需要同步变化
         this.$event.on(CHANGE_SCALE, (addition) => {
             // todo 弹框处理
-            const newScale = this.scaleValue + addition;
+            const newScale = this.scaleValue + addition
             if (newScale < 0.15 || newScale > 1.5) {
-                return;
+                return
             }
-            this.scaleState = newScale;
+            this.scaleState = newScale
             if (this.currentComponentId) {
                 Vue.nextTick(() =>
                     this.selectComponentById(this.currentComponentId)
-                );
+                )
             }
-        });
+        })
     },
     destroyed() {},
     data() {
         return {
             scaleState: null,
             selectItemInfo: null,
-            editorType: "textCmp",
+            editorType: 'textCmp',
             editorData: {
                 id: 1,
-                name: "按钮1",
-                type: "textCmp",
+                name: '按钮1',
+                type: 'textCmp',
                 layoutConfig: {
                     zIndex: 1,
                     top: 100,
@@ -70,11 +70,11 @@ export default {
                     opacity: 1,
                 },
                 props: {
-                    text: "111",
+                    text: '111',
                 },
                 animation: [
                     {
-                        type: "shaking",
+                        type: 'shaking',
                         duration: 100,
                         delay: 0,
                         times: 1,
@@ -82,42 +82,42 @@ export default {
                 ],
                 events: [
                     {
-                        type: "log",
-                        value: "Dialog1",
+                        type: 'log',
+                        value: 'Dialog1',
                     },
                 ],
                 children: [],
             },
-        };
+        }
     },
     computed: {
         ...mapState([
-            "vmSchema",
-            "currentComponentId",
-            "currentPage",
-            "opened",
+            'vmSchema',
+            'currentComponentId',
+            'currentPage',
+            'opened',
         ]),
-        ...mapGetters(["currentComponent"]),
+        ...mapGetters(['currentComponent']),
         containerOffset() {
             const {
                 top,
                 left,
-            } = this.$refs.renderContainer.getBoundingClientRect();
+            } = this.$refs.renderContainer.getBoundingClientRect()
             const {
                 top: selectItemContainerTop,
                 left: selectItemContainerLeft,
-            } = this.$refs.selectItemContainer.getBoundingClientRect();
+            } = this.$refs.selectItemContainer.getBoundingClientRect()
             return {
                 top: top - selectItemContainerTop,
                 left: left - selectItemContainerLeft,
-            };
+            }
         },
         selectItemLayoutInfo() {
             const { top, left, width, height } = getPropByPath(
                 this.selectItemInfo,
-                "position",
+                'position',
                 {}
-            );
+            )
             return {
                 //          y: Math.ceil(top),
                 //          x: Math.ceil(left),
@@ -129,13 +129,13 @@ export default {
                 h: height,
 
                 rotation: this.currentComponent.layoutConfig.rotation,
-            };
+            }
         },
         scaleValue() {
             if (this.scaleState) {
-                return this.scaleState;
+                return this.scaleState
             } else {
-                return this.getInitialScale();
+                return this.getInitialScale()
             }
         },
         // 内容样式，为了滚动条
@@ -149,17 +149,17 @@ export default {
                     this.scaleValue * this.vmSchema.container.height +
                         CONTENT_OFFSET * 2
                 ),
-            };
+            }
         },
         workspaceInfo() {
             const {
                 width,
                 height,
-            } = this.$refs.workspace.getBoundingClientRect();
-            const originWidth = this.vmSchema.container.width;
-            const originHeight = this.vmSchema.container.height;
-            const maxWidth = width - CONTENT_OFFSET * 2;
-            const maxHeight = height - CONTENT_OFFSET * 2;
+            } = this.$refs.workspace.getBoundingClientRect()
+            const originWidth = this.vmSchema.container.width
+            const originHeight = this.vmSchema.container.height
+            const maxWidth = width - CONTENT_OFFSET * 2
+            const maxHeight = height - CONTENT_OFFSET * 2
             return {
                 width,
                 height,
@@ -167,18 +167,18 @@ export default {
                 originHeight,
                 maxWidth,
                 maxHeight,
-            };
+            }
         },
         engineContainerStyle() {
             if (!this.opened) {
-                return null;
+                return null
             }
             // scale
-            const scaleValue = this.scaleValue;
-            const scaleStyle = { transform: `scale(${scaleValue})` };
+            const scaleValue = this.scaleValue
+            const scaleStyle = { transform: `scale(${scaleValue})` }
 
             // position
-            let positionStyle;
+            let positionStyle
             const {
                 originWidth,
                 originHeight,
@@ -186,9 +186,9 @@ export default {
                 maxHeight,
                 height,
                 width,
-            } = this.workspaceInfo;
-            const scaledWidth = scaleValue * originWidth;
-            const scaledHeight = scaleValue * originHeight;
+            } = this.workspaceInfo
+            const scaledWidth = scaleValue * originWidth
+            const scaledHeight = scaleValue * originHeight
 
             // 展现内容小于容器
             if (scaledWidth <= maxWidth && scaledHeight <= maxHeight) {
@@ -199,36 +199,36 @@ export default {
                     top: warpUnit(
                         getCenterPositionValue(height, originHeight, scaleValue)
                     ),
-                };
+                }
                 // 超出容器
             } else if (scaledWidth > maxWidth && scaledHeight > maxHeight) {
                 positionStyle = {
                     left: warpUnit(CONTENT_OFFSET),
                     top: warpUnit(CONTENT_OFFSET),
-                };
+                }
             } else if (scaledWidth > maxWidth && scaledHeight <= maxHeight) {
                 positionStyle = {
                     left: warpUnit(CONTENT_OFFSET),
                     top: warpUnit(
                         getCenterPositionValue(height, originHeight, scaleValue)
                     ),
-                };
+                }
             } else {
                 positionStyle = {
                     left: warpUnit(
                         getCenterPositionValue(width, originWidth, scaleValue)
                     ),
                     top: warpUnit(CONTENT_OFFSET),
-                };
+                }
             }
 
-            return { ...scaleStyle, ...positionStyle };
+            return { ...scaleStyle, ...positionStyle }
         },
     },
     methods: {
         getInitialScale() {
             if (!this.opened) {
-                return null;
+                return null
             }
             // 计算缩放以及居中属性
             const {
@@ -236,24 +236,24 @@ export default {
                 originHeight,
                 maxWidth,
                 maxHeight,
-            } = this.workspaceInfo;
-            const widthScale = getScaleValue(originWidth, maxWidth);
-            const heightScale = getScaleValue(originHeight, maxHeight);
-            return Math.min(widthScale, heightScale);
+            } = this.workspaceInfo
+            const widthScale = getScaleValue(originWidth, maxWidth)
+            const heightScale = getScaleValue(originHeight, maxHeight)
+            return Math.min(widthScale, heightScale)
         },
         selectComponentById(componentId) {
             this.handleSelectComponent(
                 this.$refs.render.getCmp(componentId),
                 componentId
-            );
+            )
         },
         handleSelectComponent(ref, componentId) {
-            const dom = ref.$el;
-            const { top, left, height, width } = dom.getBoundingClientRect();
+            const dom = ref.$el
+            const { top, left, height, width } = dom.getBoundingClientRect()
             const {
                 top: containerTop,
                 left: containerLeft,
-            } = this.$refs.workspace.getBoundingClientRect();
+            } = this.$refs.workspace.getBoundingClientRect()
             this.selectItemInfo = {
                 position: {
                     height: height,
@@ -261,38 +261,38 @@ export default {
                     top: top - containerTop,
                     left: left - containerLeft,
                 },
-            };
-            this.selectComponent(componentId);
+            }
+            this.selectComponent(componentId)
         },
         handleClick(ref, componentId) {
-            this.handleSelectComponent(ref, componentId);
+            this.handleSelectComponent(ref, componentId)
         },
         onDrag(left, top) {
-            const { top: offsetTop, left: offsetLeft } = this.containerOffset;
+            const { top: offsetTop, left: offsetLeft } = this.containerOffset
             this.updateSchema({
                 type: UPDATING_COMPONENT_POSITION,
                 value: {
                     left: Math.floor((left - offsetLeft) / this.scaleValue),
                     top: Math.floor((top - offsetTop) / this.scaleValue),
                 },
-            });
-            this.selectItemInfo.position.left = left;
-            this.selectItemInfo.position.top = top;
+            })
+            this.selectItemInfo.position.left = left
+            this.selectItemInfo.position.top = top
         },
         onResize(...arg) {
-            console.info(arg);
+            console.info(arg)
         },
         dragStop(left, top) {
-            const { top: offsetTop, left: offsetLeft } = this.containerOffset;
+            const { top: offsetTop, left: offsetLeft } = this.containerOffset
             this.updateSchema({
                 type: AFTER_UPDATE_COMPONENT_POSITION,
                 value: {
                     left: Math.floor((left - offsetLeft) / this.scaleValue),
                     top: Math.floor((top - offsetTop) / this.scaleValue),
                 },
-            });
-            this.selectItemInfo.position.left = left;
-            this.selectItemInfo.position.top = top;
+            })
+            this.selectItemInfo.position.left = left
+            this.selectItemInfo.position.top = top
         },
         resizeStop() {
             // todo commit vmSchema to schema
@@ -300,11 +300,11 @@ export default {
         onDragStart() {
             this.updateSchema({
                 type: BEFORE_UPDATE_COMPONENT_POSITION,
-            });
+            })
         },
-        ...mapMutations(["selectComponent", "updateSchema"]),
+        ...mapMutations(['selectComponent', 'updateSchema']),
     },
-};
+}
 </script>
 
 <template>
@@ -361,17 +361,20 @@ export default {
         <div>
             <!--辅助线-->
         </div>
-        <editorWin class="editWin" :editorType="editorType" :editorData="editorData"></editorWin>
+        <editorWin class="editWin"></editorWin>
     </div>
 </template>
 
 <style lang="less" scoped>
 .editWin {
     position: absolute;
-    left: 0;
-    top: 0;
+    left: 1100px;
+    top: 50px;
     bottom: 0;
     right: 0;
+    width: 300px;
+    height: 800px;
+    z-index: 4;
 }
 .work-space {
     /*position: relative;*/
@@ -417,7 +420,7 @@ export default {
         left: 50%;
         transform: translateX(-50%);
         &:after {
-            content: "";
+            content: '';
             display: block;
             border-left: 1px solid aqua;
             position: absolute;

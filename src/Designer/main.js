@@ -4,6 +4,7 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import "../Utils/css/reset.css";
 import './base/base.css';
+import "./base/element.css";
 import '../Render/assets/css/animations.css';
 import "@/registor";
 import store from './store';
@@ -17,11 +18,11 @@ Vue.use(ElementUI);
 Vue.use(Event);
 Vue.use(http);
 // 处理render依赖
-handleRenderDep({Vue, store});
+handleRenderDep({ Vue, store });
 new Vue({
   render: h => h(App),
   store,
-  destroyed() {
+  destroyed () {
     this.$event.clear();
   }
 }).$mount('#app');

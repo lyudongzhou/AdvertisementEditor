@@ -1,9 +1,9 @@
 import Vuex from 'vuex';
 import Vue from 'vue';
 import designer from './designerModule';
-import {createNamespacedHelpers} from 'vuex';
+import { createNamespacedHelpers } from 'vuex';
 
-export const {mapState, mapGetters, mapMutations, mapActions} = createNamespacedHelpers('designer');
+export const { mapState, mapGetters, mapMutations, mapActions } = createNamespacedHelpers('designer');
 
 Vue.use(Vuex);
 

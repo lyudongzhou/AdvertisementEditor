@@ -1,75 +1,107 @@
 <template>
-    <el-container class="fly">
-        <el-header>Config</el-header>
-        <el-main>
-            <el-collapse v-model="activeNames">
-                <el-collapse-item
-                    v-for="(tab, index) in tabs"
-                    :key="index"
-                    :title="tab.name"
-                    :name="index"
-                >
-                    <component :is="tab.type" :configData="editorData" :config="tab"></component>
-                </el-collapse-item>
-            </el-collapse>
-        </el-main>
-    </el-container>
+    <div class="fly">
+        <el-container>
+            <el-header style="text-align:center;height:30px"
+                ><div style="line-height:30px;">
+                    abccc
+                </div></el-header
+            >
+            <el-main class="noPadding">
+                <el-collapse v-model="activeNames">
+                    <el-collapse-item
+                        v-for="(tab, index) in tabs"
+                        :key="index"
+                        :title="tab.name"
+                        :name="index"
+                        class="collapse-item"
+                    >
+                        <component
+                            :is="tab.type"
+                            :configData="currentComponent"
+                            :config="tab"
+                            class="tabInner"
+                        ></component>
+                    </el-collapse-item>
+                </el-collapse>
+            </el-main>
+        </el-container>
+    </div>
 </template>
 
 <script>
-import { get } from "@/registor";
-import { REG_TABS, REG_COMPONENTSSCHEMA, DEFAULTTABS } from "@/const";
-import "./designerCmp";
+import { get } from '@/registor'
+import { REG_TABS, REG_COMPONENTSSCHEMA, DEFAULTTABS } from '@/const'
+import './designerCmp'
+import { mapGetters } from '../store'
 export default {
-    name: "editorWin",
+    name: 'editorWin',
     components: get(REG_TABS),
-    props: ["editorType", "editorData"],
+    props: [],
     data() {
         return {
             activeNames: [0],
-            editorSchema: null,
             tabs: [],
-        };
+        }
+    },
+    computed: {
+        ...mapGetters(['currentComponent']),
     },
     created() {},
     mounted() {
-        this.onChangeType(this.editorType);
+        window.abc = this
+        this.onChangeType(this.currentComponent)
     },
     methods: {
         onChangeType(data) {
-            const schema = get(REG_COMPONENTSSCHEMA)[data];
-            if (!schema) {
-                return;
+            if (!data) {
+                return
             }
-            const notSupport = {};
+            const schema = get(REG_COMPONENTSSCHEMA)[data.type]
+            if (!schema) {
+                return
+            }
+            const notSupport = {}
             while (this.tabs.length) {
-                this.tabs.pop();
+                this.tabs.pop()
             }
             schema.notSupport &&
                 schema.notSupport.forEach((ele) => {
-                    notSupport[ele.type] = true;
-                });
+                    notSupport[ele.type] = true
+                })
             DEFAULTTABS.forEach((ele) => {
                 if (!notSupport[ele.type]) {
-                    this.tabs.push(ele);
+                    this.tabs.push(ele)
                 }
-            });
+            })
+            schema.extraTabs &&
+                schema.extraTabs.forEach((ele) => {
+                    this.tabs.push(ele)
+                })
         },
     },
     watch: {
-        editorType(data) {
-            this.onChangeType(data);
+        currentComponent(data) {
+            this.onChangeType(data)
         },
     },
-};
+}
 </script>
 
 <style scoped>
+.collapse-item {
+    background-color: slategrey;
+}
+.tabInner {
+    padding: 10px;
+    background-color: #cccccc;
+}
+.noPadding {
+    padding: 0;
+}
 .fly {
-    position: absolute;
-    width: 300px;
-    height: 800px;
-    background-color: red;
-    z-index: 4;
+    background-color: #555555;
+    border: 5px solid #666666;
+    border-radius: 10px;
+    color: snow;
 }
 </style>

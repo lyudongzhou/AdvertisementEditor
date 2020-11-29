@@ -23,7 +23,6 @@
   "dependencies": {
     "EventEmitter": "^1.0.0",
     "axios": "^0.21.0",
-    "copy-webpack-plugin": "^6.3.2",
     "core-js": "^3.6.5",
     "element-ui": "^2.14.1",
     "gsap": "^3.5.1",

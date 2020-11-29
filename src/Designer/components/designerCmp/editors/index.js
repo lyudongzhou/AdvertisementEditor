@@ -1,2 +1,2 @@
-import "./colorPicker";
+import "./vcolorpicker";
 import "./numberField";

@@ -4,13 +4,41 @@ export const REG_EVENTS = "RegistorEvents";
 export const REG_COMPONENTS = "RegComponents";
 export const REG_COMPONENTSSCHEMA = "RegComponentsSchema";
 export const REG_EDITORS = "RegistorEditors";
-export const DEFAULTTABS = [{
-    type:"basicTab",
-    name: "基本配置",
-    children:[{
-        label:"Y:",
-        props:{},
-        target:["layoutConfig","top"],
-        type:"numberField"
-    }]
-}];
+export const DEFAULTTABS = [
+    {
+        type: "basicTab",
+        name: "Basic Config",
+        children: [
+            {
+                label: "X:",
+                props: {},
+                target: "layoutConfig.left",
+                type: "numberField"
+            },
+            {
+                label: "Y:",
+                props: {},
+                target: "layoutConfig.top",
+                type: "numberField"
+            }
+        ]
+    },
+    {
+        type: "basicTab",
+        name: "Advanced Config",
+        children: [
+            {
+                label: "X:",
+                props: {},
+                target: "layoutConfig.left",
+                type: "numberField"
+            },
+            {
+                label: "Y:",
+                props: {},
+                target: "layoutConfig.top",
+                type: "numberField"
+            }
+        ]
+    }
+];
