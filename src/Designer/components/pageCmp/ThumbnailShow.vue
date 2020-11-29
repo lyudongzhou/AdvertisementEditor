@@ -70,11 +70,11 @@ export default {
         },
     },
     watch: {
-        pages(newValue) {
-            this.$nextTick(() => {
-                this.renderThumbnail(newValue)
-            })
-        },
+        // pages(newValue) {
+        //     this.$nextTick(() => {
+        //         // this.renderThumbnail(newValue)
+        //     })
+        // },
     },
 }
 </script>

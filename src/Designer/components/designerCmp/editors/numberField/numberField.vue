@@ -1,6 +1,6 @@
 <template>
     <el-input
-        :value="dataText"
+        v-model="text"
         placeholder="请输入内容"
         @change="onChange"
         @focus="onFocus"
@@ -20,11 +20,13 @@ export default {
     name: 'numberField',
     props: ['configData', 'config'],
     data() {
-        return {}
+        return {
+            text: '',
+        }
     },
     computed: {
         dataText() {
-            return getPropByPath(this.configData, this.config, '')
+            return getPropByPath(this.configData, this.config)
         },
     },
     methods: {
@@ -48,8 +50,11 @@ export default {
         },
     },
     watch: {
-        configData() {
-            console.log('dataConfigChange')
+        dataText(text) {
+            this.text = text
+        },
+        configData(data1, data2) {
+            console.log('dataConfigChange', data1 === data2)
         },
     },
     mounted() {
