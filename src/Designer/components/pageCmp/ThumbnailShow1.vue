@@ -17,7 +17,7 @@
 
 <script>
 import { mapMutations, mapGetters } from "../../store";
-import snapShotDisplay from "../snapShotDisplay";
+import snapShotDisplay from "../thumbnail/snapShotDisplay";
 import manager from "../../manager/snapShot";
 export default {
   name: "ThumbnailShow",
@@ -37,34 +37,12 @@ export default {
   updated() {},
   methods: {
     ...mapMutations(["switchPage"]),
-    renderThumbnail(pages) {
-      pages.forEach((page, index) => {
-        let hideDomWidth = this.$refs.hideDom[index].offsetWidth,
-          hideDomHeight = this.$refs.hideDom[index].offsetHeight,
-          offsetWidth = 124,
-          offsetHeight = 157,
-          scaleX = offsetWidth / hideDomWidth,
-          scaleY = offsetHeight / hideDomHeight;
-        let currentPage = this.$refs.singlePage[index];
-        currentPage
-          .screenShots({
-            width: this.$refs.hideDom[index].offsetWidth,
-            height: this.$refs.hideDom[index].offsetHeight,
-          })
-          .then((canvas) => {
-            canvas.style.transform = `scale(${scaleX}, ${scaleY})`;
-            canvas.style["transform-origin"] = "0 0";
-            this.$refs.listThumbnail[index].appendChild(canvas);
-            this.$refs.hideDom[index].style.display = "none";
-          });
-      });
-    },
     /**
      * 点击缩略图切换页面
      * @param {Object} page
      */
     switchCurrentPage(page) {
-      this.switchPage(page);
+      this.switchPage(page.id);
     },
   },
   watch: {

@@ -1,17 +1,11 @@
-<!--
- * @Author: LyuDongzhou
- * @Date: 2020-11-30 06:47:04
- * @LastEditTime: 2020-11-30 07:49:23
- * @Description: display screen shoot base64 image  
--->
 <template>
-  <el-container v-loading="loading" style="margin-top: 76.5px;transform: translateY(-50%);">
+  <el-container v-loading="loading">
     <img :src="data" style="width: 100%; height: 100%" />
   </el-container>
 </template>
 
 <script>
-import manager from "../manager/snapShot";
+import manager from "../../manager/snapShot";
 export default {
   name: "snapShotDisplay",
   props: ["id"],
@@ -39,5 +33,31 @@ export default {
 };
 </script>
 
-<style>
+<style lang="less">
+  .el-container {
+    .el-loading-mask {
+      .el-loading-spinner {
+        display: flex;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        top: 0;
+      }
+    }
+  }
+</style>
+<style lang="less" scoped>
+  .el-container {
+    width: 100%;
+    height: 100%;
+    .el-loading-mask {
+      .el-loading-spinner {
+        display: flex;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
 </style>
