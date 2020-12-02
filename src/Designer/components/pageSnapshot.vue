@@ -1,27 +1,5 @@
-<!--
- *  ┌─────────────────────────────────────────────────────────────┐
- *  │┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┐│
- *  ││Esc│!1 │@2 │#3 │$4 │%5 │^6 │&7 │*8 │(9 │)0 │_- │+= │|\ │`~ ││
- *  │├───┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴───┤│
- *  ││ Tab │ Q │ W │ E │ R │ T │ Y │ U │ I │ O │ P │{[ │}] │ BS  ││
- *  │├─────┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴─────┤│
- *  ││ Ctrl │ A │ S │ D │ F │ G │ H │ J │ K │ L │: ;│" '│ Enter  ││
- *  │├──────┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴────┬───┤│
- *  ││ Shift  │ Z │ X │ C │ V │ B │ N │ M │< ,│> .│? /│Shift │Fn ││
- *  │└─────┬──┴┬──┴──┬┴───┴───┴───┴───┴───┴──┬┴───┴┬──┴┬─────┴───┘│
- *  │      │Fn │ Alt │         Space         │ Alt │Win│   HHKB   │
- *  │      └───┴─────┴───────────────────────┴─────┴───┘          │
- *  └─────────────────────────────────────────────────────────────┘
- -->
-
-<!--
- * @Author: LyuDongzhou
- * @Date: 2020-11-30 04:47:31
- * @LastEditTime: 2020-11-30 07:25:23
- * @Description: single page snapshot
--->
-
 <template>
+  <!-- thumbnail from this page -->
   <div v-if="snapping" style="position: absolute; top: 5000px">
     <div :style="containerStyle">
       <singlePage ref="page" :pageData="snapData"></singlePage>
@@ -49,7 +27,7 @@ export default {
   props: [],
   computed: {
     ...mapState(["vmSchema"]),
-    ...mapGetters(["pages", "dialog"]),
+    ...mapGetters(["pages", "dialogs"]),
     containerStyle() {
       return {
         position: "absolute",
@@ -69,7 +47,7 @@ export default {
     getPageData(id) {
       let data = this.pages.find((ele) => ele.id === id);
       if (!data) {
-        data = this.dialog.find((ele) => ele.id === id);
+        data = this.dialogs.find((ele) => ele.id === id);
       }
       return data;
     },

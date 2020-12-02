@@ -87,21 +87,8 @@ export default {
 }
 </script>
 
-<style scoped>
-.collapse-item {
-    background-color: slategrey;
-}
-.tabInner {
-    padding: 10px;
-    background-color: #cccccc;
-}
-.noPadding {
-    overflow: hidden;
-    padding: 0;
-    height:760px;
-    overflow-y: auto;
-}
-.fly {
+<style lang="less" scoped>
+  .fly {
     background-color: #555555;
     border: 5px solid #666666;
     border-radius: 10px;
@@ -109,5 +96,18 @@ export default {
     width:300px;
     height:800px;
     overflow: hidden;
-}
+    .noPadding {
+      overflow: hidden;
+      padding: 0;
+      height:760px;
+      overflow-y: auto;
+      .collapse-item {
+        background-color: slategrey;
+        .tabInner {
+          padding: 10px;
+          background-color: #cccccc;
+        }
+      }
+    }
+  }
 </style>

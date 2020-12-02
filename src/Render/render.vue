@@ -40,6 +40,7 @@ export default {
             this.$store.commit("currentRenderState/pageCountChange", data);
         },
         currentPage(data) {
+          console.log(data, 'render');
             this.$store.commit("currentRenderState/jumpPageImmediately", data);
         },
         designMode(data) {

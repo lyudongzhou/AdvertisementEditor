@@ -2,12 +2,12 @@
     <div class="thumbnailShow">
         <ul>
             <li
-                v-for="page in pages"
+                v-for="(page,index) in pages"
                 :key="page.id"
                 @click="switchCurrentPage(page)"
             >
-                <p class="list_index">{{ page.id }}</p>
-                <p class="list_thumbnail" ref="listThumbnail">
+                <p class="list_index">{{index+1}}</p>
+                <p class="list_thumbnail">
                     <snapShotDisplay :id="page.id"></snapShotDisplay>
                 </p>
             </li>
@@ -36,35 +36,13 @@ export default {
   },
   updated() {},
   methods: {
-    ...mapMutations(["switchPage"]),
-    renderThumbnail(pages) {
-      pages.forEach((page, index) => {
-        let hideDomWidth = this.$refs.hideDom[index].offsetWidth,
-          hideDomHeight = this.$refs.hideDom[index].offsetHeight,
-          offsetWidth = 124,
-          offsetHeight = 157,
-          scaleX = offsetWidth / hideDomWidth,
-          scaleY = offsetHeight / hideDomHeight;
-        let currentPage = this.$refs.singlePage[index];
-        currentPage
-          .screenShots({
-            width: this.$refs.hideDom[index].offsetWidth,
-            height: this.$refs.hideDom[index].offsetHeight,
-          })
-          .then((canvas) => {
-            canvas.style.transform = `scale(${scaleX}, ${scaleY})`;
-            canvas.style["transform-origin"] = "0 0";
-            this.$refs.listThumbnail[index].appendChild(canvas);
-            this.$refs.hideDom[index].style.display = "none";
-          });
-      });
-    },
+    ...mapMutations(["selectPage"]),
     /**
      * 点击缩略图切换页面
      * @param {Object} page
      */
     switchCurrentPage(page) {
-      this.switchPage(page);
+      this.selectPage(page.id, 'page', 'page');
     },
   },
   watch: {
@@ -81,13 +59,6 @@ export default {
 .thumbnailShow {
   width: 100%;
   height: 100%;
-  .hideDom {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 1000px;
-    left: 0;
-  }
   > ul {
     width: 100%;
     height: 100%;
