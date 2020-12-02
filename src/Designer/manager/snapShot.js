@@ -48,7 +48,6 @@ class ScreenSnapshotManager extends EventEmitter{
         }
     }
     addTask(id) {
-      console.log(id, 'addTask');
         if (this.aTask.indexOf(id) === -1) {
             this.aTask.push(id);
         }

@@ -75,15 +75,15 @@ export default {
     state.currentType = 'component';
     eventBus.emit(UPDATE_SELECT_INFO);
   },
-  selectPage (state, pageId) {
+  selectPage (state, pageId, pageType, type) {
     state.currentPageId = pageId;
-    state.currentPageType = 'page';
-    state.currentType = 'page';
+    state.currentPageType = pageType;
+    state.currentType = type;
   },
   // 切换render展示页面调用
   switchPage (state, page) {
     // todo state上不需要currentPage，修改currentPageId即可
-    state.currentPage = page;
+    state.currentPageId = page;
   },
   updateSchema (state, operateConfig) {
     if (!operateConfig.currentPageType) {

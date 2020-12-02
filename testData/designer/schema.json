@@ -186,34 +186,58 @@
       "id": "弹窗1",
       "container": {
         "backGround": {
-          "type": "image",
-          "value": "images/Koala.jpg"
+          "type": "color",
+          "value": "#EFEFEF"
         }
       },
       "components": [
         {
-          "id": 5,
-          "name": "按钮2",
-          "type": "ImageCmp",
+          "id": 1,
+          "name": "按钮1",
+          "type": "textCmp",
           "layoutConfig": {
             "zIndex": 1,
             "top": 100,
             "left": 100,
             "rotation": 3.141592653589793,
-            "width": 1,
-            "height": 1,
+            "width": 100,
+            "height": 100,
             "opacity": 1
           },
           "props": {
-            "bgUrl": "images/Koala.jpg"
+            "text": "open the dialog 2"
           },
-          "animation": [],
+          "animation": [{
+            "name": "fadeout"
+          }],
           "events": [
             {
-              "type": "prePage",
-              "value": ""
+              "type": "openTheWindow",
+              "value": {"openId": "弹窗2", "backTime": 2000}
             }
           ],
+          "children": []
+        },
+        {
+          "id": 2,
+          "name": "按钮2",
+          "type": "textCmp",
+          "layoutConfig": {
+            "zIndex": 1,
+            "top": 300,
+            "left": 300,
+            "rotation": 3.141592653589793,
+            "width": 100,
+            "height": 100,
+            "opacity": 1
+          },
+          "props": {
+            "text": "dialog 1 -> no event"
+          },
+          "animation": [{
+            "name": "fadeout"
+          }],
+          "events": [],
           "children": []
         }
       ]
@@ -224,14 +248,14 @@
       "container": {
         "backGround": {
           "type": "color",
-          "value": "#ABCDEF"
+          "value": "#356454"
         }
       },
       "components": [
         {
-          "id": 2,
+          "id": 1,
           "name": "图片1",
-          "type": "ImageCmp",
+          "type": "textCmp",
           "layoutConfig": {
             "zIndex": 1,
             "top": 200,
@@ -242,11 +266,11 @@
             "opacity": 1
           },
           "props": {
-            "bgUrl": "images/Koala.jpg"
+            "text": "open the dialog 3"
           },
           "animation": [
             {
-              "type": "shaking",
+              "name": "fadetop",
               "duration": 100,
               "delay": 0,
               "times": 2
@@ -254,8 +278,8 @@
           ],
           "events": [
             {
-              "type": "nextPage",
-              "value": ""
+              "type": "openTheWindow",
+              "value": {"openId": "弹窗3", "backTime": 2000}
             }
           ],
           "children": []

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import manager from "../../manager/snapShot";
+import manager from "../manager/snapShot";
 export default {
   name: "snapShotDisplay",
   props: ["id"],

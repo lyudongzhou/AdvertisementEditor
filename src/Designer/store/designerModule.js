@@ -27,7 +27,7 @@ export default {
     pages(state) {
       return state.vmSchema.pages || [];
     },
-    dialog(state) {
+    dialogs(state) {
       return state.vmSchema.dialogs || [];
     },
     currentPage(state, getters) {

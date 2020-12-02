@@ -30,7 +30,7 @@ import PageFrame from './components/PageFrame.vue';
 import ContentDisplay from './components/ContentDisplay.vue';
 import DesignerOperator from './components/DesignerOperator.vue';
 import Editor from './components/Editor.vue';
-import pageSnapshot from "./components/thumbnail/pageSnapshot.vue";
+import pageSnapshot from "./components/pageSnapshot.vue";
 import {mapMutations} from './store';
 
 export default {

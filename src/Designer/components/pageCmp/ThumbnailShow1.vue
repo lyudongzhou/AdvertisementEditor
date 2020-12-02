@@ -2,12 +2,12 @@
     <div class="thumbnailShow">
         <ul>
             <li
-                v-for="page in pages"
+                v-for="(page,index) in pages"
                 :key="page.id"
                 @click="switchCurrentPage(page)"
             >
-                <p class="list_index">{{ page.id }}</p>
-                <p class="list_thumbnail" ref="listThumbnail">
+                <p class="list_index">{{index+1}}</p>
+                <p class="list_thumbnail">
                     <snapShotDisplay :id="page.id"></snapShotDisplay>
                 </p>
             </li>
@@ -17,7 +17,7 @@
 
 <script>
 import { mapMutations, mapGetters } from "../../store";
-import snapShotDisplay from "../thumbnail/snapShotDisplay";
+import snapShotDisplay from "../snapShotDisplay";
 import manager from "../../manager/snapShot";
 export default {
   name: "ThumbnailShow",
@@ -36,13 +36,13 @@ export default {
   },
   updated() {},
   methods: {
-    ...mapMutations(["switchPage"]),
+    ...mapMutations(["selectPage"]),
     /**
      * 点击缩略图切换页面
      * @param {Object} page
      */
     switchCurrentPage(page) {
-      this.switchPage(page.id);
+      this.selectPage(page.id, 'page', 'page');
     },
   },
   watch: {
@@ -59,13 +59,6 @@ export default {
 .thumbnailShow {
   width: 100%;
   height: 100%;
-  .hideDom {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 1000px;
-    left: 0;
-  }
   > ul {
     width: 100%;
     height: 100%;

@@ -8,9 +8,9 @@
 </template>
 
 <script>
-import singlePage from "../../../Render/component/Page.vue";
-import { mapGetters, mapState } from "../../store";
-import { setSnapShotInstance } from "../../manager/snapShot";
+import singlePage from "../../Render/component/Page.vue";
+import { mapGetters, mapState } from "../store";
+import { setSnapShotInstance } from "../manager/snapShot";
 export default {
   name: "snapShot",
   data() {
@@ -27,7 +27,7 @@ export default {
   props: [],
   computed: {
     ...mapState(["vmSchema"]),
-    ...mapGetters(["pages", "dialog"]),
+    ...mapGetters(["pages", "dialogs"]),
     containerStyle() {
       return {
         position: "absolute",
@@ -47,7 +47,7 @@ export default {
     getPageData(id) {
       let data = this.pages.find((ele) => ele.id === id);
       if (!data) {
-        data = this.dialog.find((ele) => ele.id === id);
+        data = this.dialogs.find((ele) => ele.id === id);
       }
       return data;
     },
