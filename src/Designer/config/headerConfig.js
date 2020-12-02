@@ -4,8 +4,10 @@ import iconModule from '../public/icon_module.png'
 import iconOther from '../public/icon_other.png'
 import iconPlugin from '../public/icon_plugin.png'
 // import iconImg from '../public/icon_img.png'
-
-export default [
+import { get } from "@/register";
+import { REG_TITLECONFIG } from "@/const";
+import "../../Component";
+let Constructor ={children:[
   {
     "id": 1,
     "label": "文本",
@@ -387,4 +389,18 @@ export default [
       }
     ]
   }
-]
+]};
+const config = get(REG_TITLECONFIG);
+Object.keys(config).forEach(ele => {
+  let schemas = config[ele];
+  schemas.forEach(ele => {
+    let arr = ele.position.split(".");
+    let o = Constructor;
+    arr.forEach(index=>{
+      o = o.children[index];
+    });
+    o.editConfig = ele;
+    o.label = ele.name;
+  });
+});
+export default Constructor.children;
