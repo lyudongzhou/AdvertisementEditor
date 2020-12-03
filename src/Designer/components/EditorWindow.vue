@@ -1,11 +1,10 @@
 <template>
-    <div class="fly">
+    <div class="fly" :class="[{'hide_fly':isClose},{'show_fly':tabs.length>0&&!isClose}]">
         <el-container>
-            <el-header style="text-align:center;height:30px"
-                ><div style="line-height:30px;">
-                    Editor
-                </div></el-header
-            >
+            <el-header class="editor_header">
+              <span>Editor</span>
+              <i class="el-icon-close" @click="closeSetDialog"></i>
+            </el-header>
             <el-main class="noPadding">
                 <el-collapse v-model="activeNames">
                     <el-collapse-item
@@ -29,29 +28,33 @@
 </template>
 
 <script>
-import { get } from '@/register'
-import { REG_TABS, REG_COMPONENTSSCHEMA, DEFAULTTABS } from '@/const'
-import './designerCmp'
-import { mapGetters } from '../store'
-export default {
-    name: 'editorWin',
-    components: get(REG_TABS),
-    props: [],
-    data() {
-        return {
-            activeNames: [0],
-            tabs: [],
-        }
-    },
-    computed: {
-        ...mapGetters(['currentComponent']),
-    },
-    created() {},
-    mounted() {
-        window.abc = this
-        this.onChangeType(this.currentComponent)
-    },
-    methods: {
+  import { get } from '@/register'
+  import { REG_TABS, REG_COMPONENTSSCHEMA, DEFAULTTABS } from '@/const'
+  import './designerCmp'
+  import { mapGetters } from '../store'
+  export default {
+      name: 'editorWin',
+      components: get(REG_TABS),
+      props: [],
+      data() {
+          return {
+              activeNames: [0],
+              isClose: true,
+              tabs: [],
+          }
+      },
+      computed: {
+          ...mapGetters(['currentComponent']),
+      },
+      created() {},
+      mounted() {
+          window.abc = this
+          this.onChangeType(this.currentComponent)
+      },
+      methods: {
+        closeSetDialog () {
+          this.isClose = true;
+        },
         onChangeType(data) {
             if (!data) {
                 return
@@ -78,13 +81,14 @@ export default {
                     this.tabs.push(ele)
                 })
         },
-    },
-    watch: {
-        currentComponent(data) {
+      },
+      watch: {
+          currentComponent(data) {
+            this.isClose = false;
             this.onChangeType(data)
-        },
-    },
-}
+          },
+      },
+  }
 </script>
 
 <style lang="less" scoped>
@@ -92,10 +96,23 @@ export default {
     background-color: #555555;
     border: 5px solid #666666;
     border-radius: 10px;
+    transition:transform 0.3s ease-out;
     color: snow;
     width:300px;
     height:800px;
     overflow: hidden;
+    .editor_header {
+      position: relative;
+      text-align:center;
+      height:30px;
+      line-height: 30px;
+      i {
+        position: absolute;
+        right: 0;
+        line-height: 30px;
+        cursor: pointer;
+      }
+    }
     .noPadding {
       overflow: hidden;
       padding: 0;
@@ -109,5 +126,11 @@ export default {
         }
       }
     }
+  }
+  .hide_fly {
+    transform:translate3d(-300px,0,0);
+  }
+  .show_fly {
+    transform:translate3d(0,0,0);
   }
 </style>

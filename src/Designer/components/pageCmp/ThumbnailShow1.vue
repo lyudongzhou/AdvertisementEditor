@@ -3,6 +3,7 @@
         <ul>
             <li
                 v-for="(page,index) in pages"
+                :class="page.id===currentPage.id?'list_active':''"
                 :key="page.id"
                 @click="switchCurrentPage(page)"
             >
@@ -29,7 +30,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["pages"]),
+    ...mapGetters(["pages", "currentPage"]),
   },
   created() {},
   mounted() {
@@ -90,6 +91,10 @@ export default {
       }
     }
     li:hover {
+      cursor: pointer;
+      background: #727272;
+    }
+    .list_active {
       cursor: pointer;
       background: #727272;
     }

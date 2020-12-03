@@ -44,7 +44,7 @@ export default {
     PageSetup,
     LayerManager,
     PageManager
-  }
+  },
 }
 </script>
 

@@ -37,7 +37,7 @@
             name: '弹窗'
           }
         ],
-        listActive: 'PopupList'
+        listActive: 'PageList'
       };
     },
     computed: {
