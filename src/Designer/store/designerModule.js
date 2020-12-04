@@ -15,6 +15,8 @@ export default {
       currentPageType: '',
       // 复制的组件
       copyComponent: null,
+      // 当前选中页面/弹框id
+      currentPageId: null,
     };
   },
   getters: {
@@ -31,14 +33,16 @@ export default {
       return state.vmSchema.dialogs || [];
     },
     currentPage(state, getters) {
+      // todo 依赖可能没有收集到
       if (getters.pages && state.currentPageId && state.currentPageType === 'page') {
         return getters.pages.find(({id}) => state.currentPageId === id) || null;
       }
       return null;
     },
     currentDialog(state, getters) {
-      if (getters.dialog && state.currentPageId && state.currentPageType === 'dialog') {
-        return getters.dialog.find(({id}) => state.currentPageId === id) || null;
+      // todo 依赖可能没有收集到
+      if (getters.dialogs && state.currentPageId && state.currentPageType === 'dialog') {
+        return getters.dialogs.find(({id}) => state.currentPageId === id) || null;
       }
       return null;
     },

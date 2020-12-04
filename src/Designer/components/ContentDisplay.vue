@@ -68,8 +68,8 @@
       ...mapState([
         'vmSchema',
         'currentComponentId',
-        'currentPage',
         'opened',
+        'currentPageId'
       ]),
       ...mapGetters(['currentComponent']),
       containerOffset() {
@@ -319,7 +319,7 @@
           v-if="opened"
           ref="render"
           :renderData="vmSchema"
-          :currentPage="currentPage"
+          :currentPage="currentPageId"
           @click="handleClickComponent"
           :designMode="true"
           baseUrl=""

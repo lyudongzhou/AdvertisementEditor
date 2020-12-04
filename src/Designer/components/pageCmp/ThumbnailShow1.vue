@@ -3,7 +3,7 @@
         <ul>
             <li
                 v-for="(page,index) in pages"
-                :class="page.id===currentPage.id?'list_active':''"
+                :class="page.id===currentPageId?'list_active':''"
                 :key="page.id"
                 @click="switchCurrentPage(page)"
             >
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { mapMutations, mapGetters } from "../../store";
+import { mapMutations, mapGetters, mapState } from "../../store";
 import snapShotDisplay from "../snapShotDisplay";
 import manager from "../../manager/snapShot";
 export default {
@@ -30,7 +30,8 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["pages", "currentPage"]),
+    ...mapGetters(["pages"]),
+    ...mapState(["currentPageId"]),
   },
   created() {},
   mounted() {
@@ -43,7 +44,7 @@ export default {
      * @param {Object} page
      */
     switchCurrentPage(page) {
-      this.selectPage(page.id, 'page', 'page');
+      this.selectPage({id: page.id, currentPageType: 'page'});
     },
   },
   watch: {
