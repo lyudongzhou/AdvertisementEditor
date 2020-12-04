@@ -76,6 +76,10 @@ export default {
     eventBus.emit(UPDATE_SELECT_INFO);
   },
   selectPage (state, {id, currentPageType}) {
+    if (id !== state.currentPageId) {
+      // 切换页面重置redo undo
+      getMergeSchemaManager(state).clear();
+    }
     state.currentPageId = id;
     state.currentPageType = currentPageType;
     state.currentType = currentPageType;

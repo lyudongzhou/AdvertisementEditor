@@ -65,6 +65,11 @@ export default class SchemaManager {
     this.stackMap.redoStack.push(snapshotInfo);
   }
 
+  clear() {
+    this.stackMap.redoStack = [];
+    this.stackMap.undoStack = [];
+  }
+
   updateByRedoUndo(snapshotInfo, type) {
     this.update({
       updater: () => {
@@ -142,5 +147,9 @@ const merge = (a, b) => {
       a.undo(...args);
       b.undo(...args);
     },
+    clear(...args) {
+      a.clear(...args);
+      b.clear(...args);
+    }
   };
 };
