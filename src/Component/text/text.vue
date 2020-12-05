@@ -1,20 +1,45 @@
 <template>
     <baseCmp ref="parent" :cmpConfig="cmpConfig">
-        <div>{{ cmpConfig.props.text }}</div>
+        <div :style="publicList">{{ cmpConfig.props.text }}</div>
     </baseCmp>
 </template>
 <script>
-import baseCmp from "../Base.vue";
+import baseCmp from '../Base.vue'
 export default {
-    name: "textCmp",
+    name: 'textCmp',
     components: {
         baseCmp,
     },
-    props: ["cmpConfig"],
+    props: ['cmpConfig'],
     mounted() {
-        this.parent = this.$refs["parent"];
+        this.parent = this.$refs['parent']
     },
-    methods:{
-    }
-};
+    computed: {
+        textStyle() {
+            return this.cmpConfig.props
+        },
+        publicList() {
+            const style = {}
+            Object.keys(this.textStyle).forEach((key) => {
+                switch (key) {
+                    case 'fontFamily':
+                        style['font-family'] = this.textStyle[key]
+                        break
+                    case 'fontWeight':
+                        style['font-weight'] = this.textStyle[key] + 'px'
+                        break
+                    case 'fontStyle':
+                        style['font-style'] = this.textStyle[key]
+                        break
+                    case 'fontSize':
+                        style['font-size'] = this.textStyle[key] + 'px'
+                        break
+                    case 'color':
+                        style['color'] = this.textStyle[key]
+                }
+            })
+            return style
+        },
+    },
+}
 </script>

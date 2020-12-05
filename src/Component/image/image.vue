@@ -7,19 +7,19 @@
     </baseCmp>
 </template>
 <script>
-import baseCmp from "../Base.vue";
-import { mapGetters } from "../../Render/store/";
+import baseCmp from '../Base.vue'
+import { mapGetters } from '../../Render/store/'
 export default {
-    name: "ImageCmp",
+    name: 'ImageCmp',
     components: {
         baseCmp,
     },
     mounted() {
-        this.parent = this.$refs["parent"];
+        this.parent = this.$refs['parent']
     },
     computed: {
-        ...mapGetters(["handleUrl"]),
+        ...mapGetters(['handleUrl']),
     },
-    props: ["cmpConfig"],
-};
+    props: ['cmpConfig'],
+}
 </script>

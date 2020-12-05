@@ -14,7 +14,7 @@
                 <component
                     :is="editor.type"
                     :configData="configData"
-                    :config="editor.target"
+                    :config="editor"
                 ></component>
             </el-form-item>
         </el-form>
