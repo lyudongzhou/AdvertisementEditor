@@ -83,6 +83,7 @@ export default {
     state.currentPageId = id;
     state.currentPageType = currentPageType;
     state.currentType = currentPageType;
+    state.currentComponentId = null;
   },
   updateSchema (state, operateConfig) {
     if (!operateConfig.currentPageType) {
