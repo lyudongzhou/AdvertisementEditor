@@ -1,14 +1,23 @@
 <template lang="html">
   <div class="pageSetup">
-    pageSetup
+    <color-picker></color-picker>
   </div>
 </template>
 
 <script>
+import ColorPicker from './ColorPicker';
+
 export default {
-  name: 'PageSetup'
+  name: 'PageSetup',
+  components: {
+    ColorPicker,
+  },
 }
 </script>
 
 <style lang="less" scoped>
+  .pageSetup {
+    position: relative;
+    // top: 539px;
+  }
 </style>
