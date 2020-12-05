@@ -39,7 +39,12 @@
             "opacity": 1
           },
           "props": {
-            "text": "111"
+            "text": "111",
+            "fontSize": 15,
+            "fontFamily": "微软雅黑",
+            "fontWeight": 15,
+            "fontStyle": "normal",
+            "color": "#0F0F0F"
           },
           "animation": [
             {
@@ -205,15 +210,25 @@
             "opacity": 1
           },
           "props": {
-            "text": "open the dialog 2"
+            "text": "open the dialog 2",
+            "fontSize": 15,
+            "fontFamily": "微软雅黑",
+            "fontWeight": 15,
+            "fontStyle": "normal",
+            "color": "#0F0F0F"
           },
-          "animation": [{
-            "name": "fadeout"
-          }],
+          "animation": [
+            {
+              "name": "fadeout"
+            }
+          ],
           "events": [
             {
               "type": "openTheWindow",
-              "value": {"openId": "弹窗2", "backTime": 2000}
+              "value": {
+                "openId": "弹窗2",
+                "backTime": 2000
+              }
             }
           ],
           "children": []
@@ -232,11 +247,18 @@
             "opacity": 1
           },
           "props": {
-            "text": "dialog 1 -> no event"
+            "text": "dialog 1 -> no event",
+            "fontSize": 15,
+            "fontFamily": "微软雅黑",
+            "fontWeight": 15,
+            "fontStyle": "normal",
+            "color": "#0F0F0F"
           },
-          "animation": [{
-            "name": "fadeout"
-          }],
+          "animation": [
+            {
+              "name": "fadeout"
+            }
+          ],
           "events": [],
           "children": []
         }
@@ -266,7 +288,12 @@
             "opacity": 1
           },
           "props": {
-            "text": "open the dialog 3"
+            "text": "open the dialog 3",
+            "fontSize": 15,
+            "fontFamily": "微软雅黑",
+            "fontWeight": 15,
+            "fontStyle": "normal",
+            "color": "#0F0F0F"
           },
           "animation": [
             {
@@ -279,7 +306,10 @@
           "events": [
             {
               "type": "openTheWindow",
-              "value": {"openId": "弹窗3", "backTime": 2000}
+              "value": {
+                "openId": "弹窗3",
+                "backTime": 2000
+              }
             }
           ],
           "children": []

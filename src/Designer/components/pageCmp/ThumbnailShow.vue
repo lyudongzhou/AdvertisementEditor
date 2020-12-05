@@ -1,7 +1,7 @@
 <template lang="html">
     <div class="thumbnailShow">
         <!-- thumbnailShow -->
-        <div class="hideDom" ref="hideDom" v-for="page in pages" :key="page.id">
+        <div class="hideDom" ref="hideDom">
             <singlePage ref="singlePage" :pageData="page"></singlePage>
         </div>
         <!-- canvas add li -->
@@ -39,6 +39,7 @@ export default {
     updated() {},
     methods: {
         ...mapMutations(['switchPage']),
+        renderOne(pageData) {},
         renderThumbnail(pages) {
             pages.forEach((page, index) => {
                 let hideDomWidth = this.$refs.hideDom[index].offsetWidth,
@@ -70,11 +71,11 @@ export default {
         },
     },
     watch: {
-        // pages(newValue) {
-        //     this.$nextTick(() => {
-        //         // this.renderThumbnail(newValue)
-        //     })
-        // },
+        pages(newValue) {
+            this.$nextTick(() => {
+                this.renderThumbnail(newValue)
+            })
+        },
     },
 }
 </script>

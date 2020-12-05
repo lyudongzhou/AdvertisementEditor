@@ -4,8 +4,8 @@ export default {
   ],
   extraTabs: [
     {
-      type: "basicTab",
-      name: "Extra",
+      type: "imageTab",
+      name: "图片配置",
       children: [
 
       ]

@@ -1,11 +1,13 @@
 <template>
-    <el-input
+    <el-input-number
         v-model="text"
         placeholder="请输入内容"
         @change="onChange"
         @focus="onFocus"
         @input="onInput"
-    ></el-input>
+        :min="config.props.min"
+        :max="config.props.max"
+    ></el-input-number>
 </template>
 
 <script>
@@ -19,14 +21,15 @@ import {
 export default {
     name: 'numberField',
     props: ['configData', 'config'],
+    created() {},
     data() {
         return {
-            text: '',
+            text: 0,
         }
     },
     computed: {
         dataText() {
-            return getPropByPath(this.configData, this.config)
+            return getPropByPath(this.configData, this.config.target)
         },
     },
     methods: {
@@ -35,7 +38,7 @@ export default {
             this.updateSchema({
                 type: type,
                 value: {
-                    [this.config]: this.text,
+                    [this.config.target]: this.text,
                 },
             })
         },
@@ -46,19 +49,23 @@ export default {
             this.changeFun(BEFORE_UPDATE_COMPONENT_PROPS)
         },
         onInput() {
-            this.changeFun(AFTER_UPDATE_COMPONENT_PROPS)
+            if (this.isMounted) {
+                this.changeFun(AFTER_UPDATE_COMPONENT_PROPS)
+            }
         },
     },
     watch: {
         dataText(text) {
-            this.text = text
+            this.text = parseFloat(text)
         },
         configData(data1, data2) {
             console.log('dataConfigChange', data1 === data2)
         },
     },
     mounted() {
-        this.text = getPropByPath(this.configData, this.config)
+        this.isMounted = true
+        this.text = getPropByPath(this.configData, this.config.target)
+        console.log('init', this.text)
     },
 }
 </script>
