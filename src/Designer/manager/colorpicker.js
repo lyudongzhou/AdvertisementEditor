@@ -45,8 +45,8 @@
       this.elem_colorPancel = null;
       this.elem_picker = null;
       this.elem_barPicker1 = null;
-      this.pancelLeft = 0;
-      this.pancelTop = 0;
+      // this.pancelLeft = 0;
+      // this.pancelTop = 0;
       this.downX = 0;
       this.downY = 0;
       this.moveX = 0;
@@ -91,16 +91,16 @@
       var elem = this.bindElem;
       var top = this.elem_colorPanelPicker.offsetTop;
       var left = this.elem_colorPanelPicker.offsetLeft;
-      this.pancelLeft = left + this.elem_colorPalette.clientWidth;
-      this.pancelTop = top + this.bindElem.offsetHeight;
-      util.css(div, {
-        // "position": "absolute",
-        // "display": 'none',
-        // "left": 0 + "px",
-        // "top": 0 + "px"
-      });
-      this.bindMove1(this.elem_colorPancel, this.setPosition, true);
-      this.bindMove(this.elem_barPicker1.parentNode, this.setBar, false);
+      // this.pancelLeft = left + this.elem_colorPalette.clientWidth;
+      // this.pancelTop = top + this.bindElem.offsetHeight;
+      // util.css(div, {
+      //   "position": "absolute",
+      //   "display": 'none',
+      //   "left": 0 + "px",
+      //   "top": 0 + "px"
+      // });
+      this.bindMovePanel(this.elem_colorPancel, this.setPosition, true);
+      this.bindMoveBar(this.elem_barPicker1.parentNode, this.setBar, false);
       this.bindElem.addEventListener("click", function() {
         // _this.show();
       }, false);
@@ -159,12 +159,12 @@
 						<div class="flexbox-fix" style="width:20px;height: 199px;margin-left:3px;">
               <div style="height: 100%; position: relative;">
 								<div style="position: absolute; top: 0px;right: 0px; bottom: 0px; left: 0px;">
-									<div class="hue-horizontal" style="padding: 0px 2px; position: relative; height: 100%;">
+									<div class="hue-horizontal" style="position: relative; height: 100%;">
 										<style>
 											.hue-horizontal {background: linear-gradient(to bottom, #f00 0%, #ff0 17%, #0f0 33%, #0ff 50%, #00f 67%, #f0f 83%, #f00 100%);background: -webkit-linear-gradient(to bottom, #f00 0%, #ff0 17%, #0f0 33%, #0ff 50%, #00f 67%, #f0f 83%, #f00 100%);}
 										</style>
 										<div  class="colorBar-color-picker" style="position: absolute; left: 0%;">
-											<div style="width: 12px; height: 12px; border-radius: 6px; transform: translate(-6px, -1px); background-color: rgb(248, 248, 248); box-shadow: rgba(0, 0, 0, 0.37) 0px 1px 4px 0px;">
+											<div style="width: 20px; height: 5px; background-color: rgb(255, 255, 255); box-shadow: rgba(0, 0, 0, 0.37) 0px 1px 4px 0px;">
 											</div>
 										</div>
 									</div>
@@ -204,15 +204,8 @@
     setPosition(x, y) {
       var LEFT = parseInt(x),
         TOP = parseInt(y);
-        // if(LEFT<0){
-        //   LEFT = 0;
-        // }
-        // LEFT = this.pancel_width;
-        // TOP = this.pancel_height;
       this.pointLeft = Math.max(0, Math.min(LEFT<=0?0:LEFT, this.pancel_width));
       this.pointTop = Math.max(0, Math.min(TOP<=0?0:TOP, this.pancel_height));
-      console.log("reeal",LEFT,TOP);
-      console.log("caculate",this.pointLeft,this.pointTop);
       util.css(this.elem_picker, {
         left: this.pointLeft + "px",
         top: this.pointTop + "px"
@@ -222,21 +215,22 @@
       this.setShowColor();
       this.setValue(this.rgba);
     },
-    setBar: function(elem, x) {
+    setBar: function(elem, x, y) {
       var elem_bar = elem.getElementsByTagName("div")[0],
         rect = elem.getBoundingClientRect(),
-        elem_width = elem.offsetWidth,
-        X = Math.max(0, Math.min(x - rect.x, elem_width));
+        elem_height = elem.offsetHeight,
+        TOP = parseInt(y),
+        Y = Math.max(0, Math.min(TOP<=0?0:TOP, elem_height));
       if (elem_bar === this.elem_barPicker1) {
         util.css(elem_bar, {
-          left: X + "px"
+          top: Y + "px"
         });
-        this.hsb.h = parseInt(360 * X / elem_width);
+        this.hsb.h = parseInt(360 * Y / elem_height);
       } else {
         util.css(elem_bar, {
-          left: X + "px"
+          top: Y + "px"
         });
-        this.rgba.a = X / elem_width;
+        this.rgba.a = Y / elem_height;
       }
       this.setPancelColor(this.hsb.h);
       this.setShowColor();
@@ -295,7 +289,7 @@
       this.setPancelColor(this.hsb.h);
       this.setShowColor();
       util.css(this.elem_barPicker1, {
-        left: this.hsb.h / 360 * (this.elem_barPicker1.parentNode.offsetWidth) + "px"
+        top: this.hsb.h / 360 * (this.elem_barPicker1.parentNode.offsetHeight) + "px"
       });
       var hex = '#' + this.rgbToHex(this.HSBToRGB(this.hsb));
       this.Opt.change(this.bindElem, hex);
@@ -303,7 +297,7 @@
     switch_current_mode: function() {
       this.current_mode = this.current_mode == 'hex' ? 'rgb' : 'hex';
     },
-    bindMove1:function(elem, fn, bool) {
+    bindMovePanel:function(elem, fn, bool) {
       var _this = this;
       elem.addEventListener("mousedown", function(e) {
         _this.downX = e.offsetX;
@@ -312,7 +306,6 @@
         document.addEventListener("mousemove", mousemove, false);
 
         function mousemove(e) {
-          console.log(e.path);
           let bound = _this.elem_colorPancel.getBoundingClientRect()
           _this.moveX = e.clientX-bound.x;
           _this.moveY = e.clientY-bound.y;
@@ -327,20 +320,22 @@
         }
       }, false);
     },
-    bindMove: function(elem, fn, bool) {
+    bindMoveBar: function(elem, fn, bool) {
       var _this = this;
       elem.addEventListener("mousedown", function(e) {
-        _this.downX = e.pageX;
-        _this.downY = e.pageY;
+        _this.downX = e.offsetX;
+        _this.downY = e.offsetY;
         bool ? fn.call(_this, _this.downX, _this.downY) : fn.call(_this, elem, _this.downX, _this.downY);
         document.addEventListener("mousemove", mousemove, false);
 
         function mousemove(e) {
-          _this.moveX = e.pageX;
-          _this.moveY = e.pageY;
+          let bound = elem.getBoundingClientRect();
+          _this.moveX = e.clientX-bound.x;
+          _this.moveY = e.clientY-bound.y;
           bool ? fn.call(_this, _this.moveX, _this.moveY) : fn.call(_this, elem, _this.moveX, _this.moveY);
           e.preventDefault();
         }
+        // console.log(_this.moveX, _this.moveY);
         document.addEventListener("mouseup", mouseup, false);
 
         function mouseup(e) {
