@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import {Colorpicker} from "../../manager/colorpicker";
+import {Colorpicker} from "../../private/colorpicker";
 
 export default {
   name: 'ColorPicker',
@@ -110,12 +110,6 @@ export default {
           display: inline-block;
           cursor: pointer;
         }
-      }
-      .colorpicker-pancel {
-        // background: rgb(255, 255, 255);
-        // box-sizing: initial;
-        // width: 244px;
-        // font-family: Menlo;
       }
     }
     .color_picker {

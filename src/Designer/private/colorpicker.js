@@ -84,29 +84,11 @@
       this.elem_picker = div.getElementsByClassName("pickerBtn")[0];
 			// 左侧调色版
       this.elem_colorPalette = palette;
-      //
-      this.elem_colorPanelPicker = div.getElementsByClassName("color_panel_picker")[0];
 			// 右侧中间取饱和度的滑动按钮
 			this.elem_barPicker1 = div.getElementsByClassName("colorBar-color-picker")[0];
       var elem = this.bindElem;
-      var top = this.elem_colorPanelPicker.offsetTop;
-      var left = this.elem_colorPanelPicker.offsetLeft;
-      // this.pancelLeft = left + this.elem_colorPalette.clientWidth;
-      // this.pancelTop = top + this.bindElem.offsetHeight;
-      // util.css(div, {
-      //   "position": "absolute",
-      //   "display": 'none',
-      //   "left": 0 + "px",
-      //   "top": 0 + "px"
-      // });
       this.bindMovePanel(this.elem_colorPancel, this.setPosition, true);
       this.bindMoveBar(this.elem_barPicker1.parentNode, this.setBar, false);
-      this.bindElem.addEventListener("click", function() {
-        // _this.show();
-      }, false);
-      this.fixedBg.addEventListener("click", function(e) {
-        // _this.hide();
-      }, false)
       this.elem_wrap.addEventListener("input", function(e) {
         var target = e.target,
           value = target.value;
@@ -139,8 +121,8 @@
     },
     render: function() {
       var tpl = `
-					<div class="colorpicker-pancel" style="box-sizing: initial; width: 244px; display:flex;">
-						<div class="color_panel_picker" style="width: 199px; height:199px; padding-bottom: 55%; position: relative; border-radius: 2px 2px 0px 0px; overflow: hidden;">
+					<div style="box-sizing: initial; width: 244px; display:flex;">
+						<div style="width: 199px; height:199px; padding-bottom: 55%; position: relative; border-radius: 2px 2px 0px 0px; overflow: hidden;">
 							<div class="color-pancel" style="position: absolute; top: 0px; right: 0px; bottom: 0px; left: 0px; background: rgb(${this.rgba.r},${this.rgba.g},${this.rgba.b})">
 								<style>
 									.saturation-white {background: -webkit-linear-gradient(to right, #fff, rgba(255,255,255,0));background: linear-gradient(to right, #fff, rgba(255,255,255,0));}
@@ -163,7 +145,7 @@
 										<style>
 											.hue-horizontal {background: linear-gradient(to bottom, #f00 0%, #ff0 17%, #0f0 33%, #0ff 50%, #00f 67%, #f0f 83%, #f00 100%);background: -webkit-linear-gradient(to bottom, #f00 0%, #ff0 17%, #0f0 33%, #0ff 50%, #00f 67%, #f0f 83%, #f00 100%);}
 										</style>
-										<div  class="colorBar-color-picker" style="position: absolute; left: 0%;">
+										<div class="colorBar-color-picker" style="position: absolute; left: 0%;">
 											<div style="width: 20px; height: 5px; background-color: rgb(255, 255, 255); box-shadow: rgba(0, 0, 0, 0.37) 0px 1px 4px 0px;">
 											</div>
 										</div>
@@ -201,7 +183,7 @@
       }
       return current_mode_html;
     },
-    setPosition(x, y) {
+    setPosition: function (x, y) {
       var LEFT = parseInt(x),
         TOP = parseInt(y);
       this.pointLeft = Math.max(0, Math.min(LEFT<=0?0:LEFT, this.pancel_width));
@@ -215,7 +197,7 @@
       this.setShowColor();
       this.setValue(this.rgba);
     },
-    setBar: function(elem, x, y) {
+    setBar: function(elem, y) {
       var elem_bar = elem.getElementsByTagName("div")[0],
         rect = elem.getBoundingClientRect(),
         elem_height = elem.offsetHeight,
@@ -323,19 +305,18 @@
     bindMoveBar: function(elem, fn, bool) {
       var _this = this;
       elem.addEventListener("mousedown", function(e) {
-        _this.downX = e.offsetX;
-        _this.downY = e.offsetY;
-        bool ? fn.call(_this, _this.downX, _this.downY) : fn.call(_this, elem, _this.downX, _this.downY);
+        let rect = e.currentTarget.getBoundingClientRect(),
+            offsetY = e.clientY - rect.top;
+        _this.downY = offsetY;
+        bool ? fn.call(_this, _this.downY) : fn.call(_this, elem, _this.downY);
         document.addEventListener("mousemove", mousemove, false);
 
         function mousemove(e) {
           let bound = elem.getBoundingClientRect();
-          _this.moveX = e.clientX-bound.x;
           _this.moveY = e.clientY-bound.y;
-          bool ? fn.call(_this, _this.moveX, _this.moveY) : fn.call(_this, elem, _this.moveX, _this.moveY);
+          bool ? fn.call(_this, _this.moveY) : fn.call(_this, elem, _this.moveY);
           e.preventDefault();
         }
-        // console.log(_this.moveX, _this.moveY);
         document.addEventListener("mouseup", mouseup, false);
 
         function mouseup(e) {
