@@ -1,4 +1,5 @@
 import { v1 as uuidv1 } from 'uuid';
+import Vue from 'vue';
 
 
 export const clone = obj => JSON.parse(JSON.stringify(obj));
@@ -28,4 +29,12 @@ export function setPropByPath(obj = {}, path = '', value) {
 
 export function getUuid() {
   return uuidv1();
+}
+
+export function switchArrayIndex(array, from, to) {
+  const fromItem = array[from];
+  const toItem = array[to];
+  Vue.set(array, from, toItem);
+  Vue.set(array, to, fromItem);
+  return array;
 }

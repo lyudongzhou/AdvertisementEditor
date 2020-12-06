@@ -22,9 +22,12 @@ export default {
   getters: {
     currentComponent(state, getters) {
       if (state.currentComponentId && state.currentPageType) {
-        return getters.currentContainer.components.find(({id}) => state.currentComponentId === id) || null;
+        return getters.components.find(({id}) => state.currentComponentId === id) || null;
       }
       return null;
+    },
+    components(state, getters) {
+      return getters.currentContainer.components || [];
     },
     pages(state) {
       return state.vmSchema.pages || [];
