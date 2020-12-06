@@ -55,14 +55,19 @@ export default class SchemaManager {
   }
 
   redo() {
-    const snapshotInfo = this.stackMap.redoStack.pop();
-    this.updateByRedoUndo(snapshotInfo, 'redo');
+    if (this.canRedo()) {
+      const snapshotInfo = this.stackMap.redoStack.pop();
+      this.updateByRedoUndo(snapshotInfo, 'redo');
+    }
   }
 
   undo() {
-    const snapshotInfo = this.stackMap.undoStack.pop();
-    this.updateByRedoUndo(snapshotInfo, 'undo');
-    this.stackMap.redoStack.push(snapshotInfo);
+    if (this.canUndo()) {
+      const snapshotInfo = this.stackMap.undoStack.pop();
+      this.updateByRedoUndo(snapshotInfo, 'undo');
+      this.stackMap.redoStack.push(snapshotInfo);
+    }
+    console.info(this.stackMap);
   }
 
   clear() {
