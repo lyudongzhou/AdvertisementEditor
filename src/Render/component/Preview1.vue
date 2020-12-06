@@ -1,8 +1,12 @@
 <template lang="html">
-    <div class="preview">
+    <div class="preview" :style="!designMode ? { overflow: 'hidden' } : {}">
         <div class="mask"></div>
-        <button id="prevBtn" :disabled=isDialog @click="handlePrevPage">上一页</button>
-        <button id="nextBtn" :disabled=isDialog @click="handleNextPage">下一页</button>
+        <button id="prevBtn" :disabled="isDialog" @click="handlePrevPage">
+            上一页
+        </button>
+        <button id="nextBtn" :disabled="isDialog" @click="handleNextPage">
+            下一页
+        </button>
         <div id="pt-main" class="pt-perspective" ref="main">
             <singlePage
                 ref="displayPage"
@@ -21,9 +25,9 @@
 </template>
 
 <script>
-import singlePage from "./Page";
-import { mapState, mapMutations, mapGetters } from "../store";
-import { transition } from "../pageChange/libs/transition";
+import singlePage from './Page'
+import { mapState, mapMutations, mapGetters } from '../store'
+import { transition } from '../pageChange/libs/transition'
 
 export default {
     name: 'preview',
@@ -33,33 +37,28 @@ export default {
             nextData: null,
             isDialog: false,
             clickSwitchPage: null,
-        };
+        }
     },
     props: ['renderData'],
     computed: {
-      ...mapState(['windowStorage']),
-      ...mapGetters(["targetPage", "currentPage", "designMode"]),
-      currentLayout () {
-        return this.findCurrentMessage(this.currentPage).layout;
-      }
+        ...mapState(['windowStorage']),
+        ...mapGetters(['targetPage', 'currentPage', 'designMode']),
+        currentLayout() {
+            return this.findCurrentMessage(this.currentPage).layout
+        },
     },
     components: {
         singlePage,
     },
-    created() {
-    },
+    created() {},
     mounted() {
         if (!this.designMode) {
-            this.beginTime = new Date().getTime();
-            this.automaticCycle();
+            this.beginTime = new Date().getTime()
+            this.automaticCycle()
         }
     },
     methods: {
-        ...mapMutations([
-          "jumpPage",
-          "jumpPageReal",
-          "backPrevDialog",
-        ]),
+        ...mapMutations(['jumpPage', 'jumpPageReal', 'backPrevDialog']),
         /**
          * @description Change page action
          * @author lyuDongzhou
@@ -95,40 +94,41 @@ export default {
          * page timer
          */
         automaticCycle() {
-          if (this.renderData.change.loop) {
-            let singlePagePlayTime = this.renderData.change.singlePagePlayTime;
-            this._timer = setInterval(() => {
-              if (this.beginTime) {
-                let dt = new Date().getTime() - this.beginTime
-                if (dt > singlePagePlayTime) {
-                  this.handleNextPage();
-                  this.beginTime = null
-                }
-              }
-            }, singlePagePlayTime);
-          }
+            if (this.renderData.change.loop) {
+                let singlePagePlayTime = this.renderData.change
+                    .singlePagePlayTime
+                this._timer = setInterval(() => {
+                    if (this.beginTime) {
+                        let dt = new Date().getTime() - this.beginTime
+                        if (dt > singlePagePlayTime) {
+                            this.handleNextPage()
+                            this.beginTime = null
+                        }
+                    }
+                }, singlePagePlayTime)
+            }
         },
         handleNextPage() {
-          let getIndex = this.findCurrentIndex('pages', this.currentPage),
-              pages = this.renderData.pages;
-          if (getIndex+1<pages.length) {
-            this.jumpPage(pages[getIndex+1].id);
-          } else if (this.renderData.change.loop) {
-            // loop
-            this.jumpPage(pages[0].id);
-            this.clickSwitchPage = 'next';
-          }
+            let getIndex = this.findCurrentIndex('pages', this.currentPage),
+                pages = this.renderData.pages
+            if (getIndex + 1 < pages.length) {
+                this.jumpPage(pages[getIndex + 1].id)
+            } else if (this.renderData.change.loop) {
+                // loop
+                this.jumpPage(pages[0].id)
+                this.clickSwitchPage = 'next'
+            }
         },
         handlePrevPage() {
-          let getIndex = this.findCurrentIndex('pages', this.currentPage),
-              pages = this.renderData.pages;
-          if (getIndex-1>=0) {
-            this.jumpPage(pages[getIndex-1].id);
-          } else if (this.renderData.change.loop) {
-            // loop
-            this.jumpPage(pages[pages.length-1].id);
-            this.clickSwitchPage = 'prev';
-          }
+            let getIndex = this.findCurrentIndex('pages', this.currentPage),
+                pages = this.renderData.pages
+            if (getIndex - 1 >= 0) {
+                this.jumpPage(pages[getIndex - 1].id)
+            } else if (this.renderData.change.loop) {
+                // loop
+                this.jumpPage(pages[pages.length - 1].id)
+                this.clickSwitchPage = 'prev'
+            }
         },
         getCmp(id) {
             let page = this.$refs['displayPage']
@@ -143,10 +143,14 @@ export default {
          * dialog->dialog使用
          */
         findStorageIndex(dialogId) {
-          return this.windowStorage.findIndex(item=>item.toId===dialogId);
+            return this.windowStorage.findIndex(
+                (item) => item.toId === dialogId
+            )
         },
         findStorageMessage(next, old) {
-          return this.windowStorage.findIndex(item=>item.toId===next&&item.fromId===old);
+            return this.windowStorage.findIndex(
+                (item) => item.toId === next && item.fromId === old
+            )
         },
         /**
          * 获取currentPage在pages或者dialogs的下标
@@ -192,83 +196,87 @@ export default {
          * 切页的方向
          * page->page || page->dialog || dialog->dialog || dialog->page
          */
-        judgeDirection (next, old) {
-          let oldType  = this.findCurrentMessage(old).type,
-              nextType = this.findCurrentMessage(next).type,
-              isPrev   = false;
-          if (oldType === nextType) {
-            if (nextType === 'pages') {
-              // TODO: page->page -> only click prevBtn isPrev=true
-              if (this.clickSwitchPage) {
-                isPrev = this.clickSwitchPage==='prev'?true:false;
-              }
+        judgeDirection(next, old) {
+            let oldType = this.findCurrentMessage(old).type,
+                nextType = this.findCurrentMessage(next).type,
+                isPrev = false
+            if (oldType === nextType) {
+                if (nextType === 'pages') {
+                    // TODO: page->page -> only click prevBtn isPrev=true
+                    if (this.clickSwitchPage) {
+                        isPrev = this.clickSwitchPage === 'prev' ? true : false
+                    }
+                } else {
+                    // dialog->dialog
+                    if (
+                        this.windowStorage[this.windowStorage.length - 1]
+                            .toId === next &&
+                        this.windowStorage[this.windowStorage.length - 1]
+                            .fromId !== old
+                    ) {
+                        isPrev = true
+                    }
+                }
             } else {
-              // dialog->dialog
-              if (this.windowStorage[this.windowStorage.length-1].toId === next &&
-                  this.windowStorage[this.windowStorage.length-1].fromId !== old) {
-                isPrev = true;
-              }
+                if (nextType === 'pages') {
+                    // dialog->page
+                    if (this.windowStorage.length === 0) {
+                        // back the form page
+                        isPrev = true
+                    } else {
+                        // go the to page
+                        isPrev = false
+                    }
+                } else {
+                    // page->dialog must be next
+                    isPrev = false
+                }
             }
-          } else {
-            if (nextType==='pages') {
-              // dialog->page
-              if (this.windowStorage.length===0) {
-                // back the form page
-                isPrev = true;
-              } else {
-                // go the to page
-                isPrev = false;
-              }
-            } else {
-              // page->dialog must be next
-              isPrev = false;
-            }
-          }
-          return isPrev;
-        }
+            return isPrev
+        },
     },
     watch: {
         /**
          * @description Watch the varible targetPage for change current page.
          */
         targetPage(next, old) {
-          clearInterval(this._timer);
-          if (next === this.currentPage) {
-              this.currentState = 2;
-              return;
-          }
-          this.beginTime = null;
-          let findCurrentMessage = this.findCurrentMessage(next);
-          this.nextData  = findCurrentMessage.layout;
-          this.isDialog = findCurrentMessage.type === 'dialogs';
-          this.currentState = 1;
-          this.$nextTick(() => {
-            let isPrev = this.judgeDirection(next, old);
-            this.action(isPrev).then(() => {
-              this.clickSwitchPage = null;
-              this.jumpPageReal(next);
-              this.$nextTick(() => {
-                this.nextIndex = null;
-                this.currentState = 2;
-                this.beginTime = new Date().getTime();
-                let nextType  = this.findCurrentMessage(next).type;
-                if (nextType === 'pages') {
-                  // auto change page
-                  this.automaticCycle();
-                } else {
-                  // auto back prev dialog
-                  let msg = this.windowStorage;
-                  if (msg.length>0) {
-                    this._timer = setInterval(() => {
-                      this.jumpPage(msg[msg.length-1].fromId);
-                      this.backPrevDialog();
-                    }, msg[msg.length-1].backTime);
-                  }
-                }
-              });
-            });
-          });
-        }
+            clearInterval(this._timer)
+            if (next === this.currentPage) {
+                this.currentState = 2
+                return
+            }
+            this.beginTime = null
+            let findCurrentMessage = this.findCurrentMessage(next)
+            this.nextData = findCurrentMessage.layout
+            this.isDialog = findCurrentMessage.type === 'dialogs'
+            this.currentState = 1
+            this.$nextTick(() => {
+                let isPrev = this.judgeDirection(next, old)
+                this.action(isPrev).then(() => {
+                    this.clickSwitchPage = null
+                    this.jumpPageReal(next)
+                    this.$nextTick(() => {
+                        this.nextIndex = null
+                        this.currentState = 2
+                        this.beginTime = new Date().getTime()
+                        let nextType = this.findCurrentMessage(next).type
+                        if (nextType === 'pages') {
+                            // auto change page
+                            this.automaticCycle()
+                        } else {
+                            // auto back prev dialog
+                            let msg = this.windowStorage
+                            if (msg.length > 0) {
+                                this._timer = setInterval(() => {
+                                    this.jumpPage(msg[msg.length - 1].fromId)
+                                    this.backPrevDialog()
+                                }, msg[msg.length - 1].backTime)
+                            }
+                        }
+                    })
+                })
+            })
+        },
     },
 }
 </script>
@@ -288,7 +296,6 @@ export default {
         width: 100%;
         height: 100%;
         position: absolute;
-        overflow: hidden;
         left: 0;
         top: 0;
         .pt-page {
@@ -297,7 +304,6 @@ export default {
             right: 0;
             bottom: 0;
             left: 0;
-            overflow: hidden;
             display: none;
             z-index: 0;
         }
