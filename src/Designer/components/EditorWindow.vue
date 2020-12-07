@@ -1,10 +1,7 @@
 <template>
     <div
         class="fly"
-        :class="[
-            { hide_fly: isClose },
-            { show_fly: tabs.length > 0 && !isClose },
-        ]"
+        v-if="!isClose"
     >
         <el-container>
             <el-header class="editor_header">
@@ -89,7 +86,7 @@ export default {
     },
     watch: {
         currentComponent(data) {
-            this.isClose = false
+            this.isClose = data?false:true;
             this.onChangeType(data)
         },
     },
@@ -131,11 +128,5 @@ export default {
             }
         }
     }
-}
-.hide_fly {
-    transform: translate3d(-300px, 0, 0);
-}
-.show_fly {
-    transform: translate3d(0, 0, 0);
 }
 </style>

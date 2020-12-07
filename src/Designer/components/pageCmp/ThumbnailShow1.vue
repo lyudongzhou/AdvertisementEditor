@@ -11,17 +11,21 @@
                 <p class="list_thumbnail">
                     <snapShotDisplay :id="page.id"></snapShotDisplay>
                 </p>
+                <span class="add_page el-icon-plus" @click="addPage"></span>
             </li>
         </ul>
     </div>
 </template>
 
 <script>
-import { mapMutations, mapGetters, mapState } from '../../store'
-import snapShotDisplay from '../snapShotDisplay'
-import manager from '../../manager/snapShot'
+import { mapMutations, mapGetters, mapState } from '../../store';
+import snapShotDisplay from '../snapShotDisplay';
+import manager from '../../manager/snapShot';
+import schemaMixin from '../../mixin/schemaMixin';
+
 export default {
     name: 'ThumbnailShow',
+    mixins: [schemaMixin],
     components: {
         snapShotDisplay,
     },
@@ -45,6 +49,9 @@ export default {
             manager.addTask(this.currentPageId)
             this.selectPage({ id: page.id, currentPageType: 'page' })
         },
+        addPage () {
+          this.$$addPage('page');
+        }
     },
     watch: {
         // pages(newValue) {
@@ -68,9 +75,8 @@ export default {
             width: 100%;
             height: 210px;
             display: flex;
-            p {
-                margin-top: 21px;
-            }
+            position: relative;
+            align-items: center;
             .list_index {
                 width: 30px;
                 height: 30px;
@@ -82,16 +88,37 @@ export default {
                 font-family: PingFangSC-Regular, PingFang SC;
                 font-weight: 400;
                 color: #999999;
-                margin: 64px 38px 95px 31px;
+                margin: 0 38px 0 31px;
             }
             .list_thumbnail {
                 width: 124px;
                 height: 157px;
             }
+            >span {
+              position: absolute;
+              width: 30px;
+              height: 30px;
+              border-radius: 50%;
+              left: 146px;
+              top: 163px;
+              font-size: 20px;
+              background: #ffffff;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              color: #000000;
+              font-weight: bold;
+            }
+            .add_page {
+              display: none;
+            }
         }
         li:hover {
             cursor: pointer;
             background: #727272;
+            .add_page {
+              display: flex;
+            }
         }
         .list_active {
             cursor: pointer;

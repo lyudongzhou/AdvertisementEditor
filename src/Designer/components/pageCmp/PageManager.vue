@@ -1,9 +1,3 @@
-<!--
- * @Author: LyuDongzhou
- * @Date: 2020-11-30 04:01:05
- * @LastEditTime: 2020-11-30 06:55:51
- * @Description: file content
--->
 <template lang="html">
   <div class="pageManager">
     <ThumbnailShow></ThumbnailShow>

@@ -10,18 +10,21 @@
                 <p class="list_window">
                     <snapShotDisplay :id="dialog.id"></snapShotDisplay>
                 </p>
+                <span class="add_dialog el-icon-plus" @click="addDialog"></span>
             </li>
         </ul>
     </div>
 </template>
 
 <script>
-import { mapMutations, mapGetters, mapState } from '../../store'
-import snapShotDisplay from '../snapShotDisplay'
-import manager from '../../manager/snapShot'
+import { mapMutations, mapGetters, mapState } from '../../store';
+import snapShotDisplay from '../snapShotDisplay';
+import manager from '../../manager/snapShot';
+import schemaMixin from '../../mixin/schemaMixin';
 
 export default {
     name: 'PopupList',
+    mixins: [schemaMixin],
     components: {
         snapShotDisplay,
     },
@@ -39,6 +42,9 @@ export default {
             manager.addTask(this.currentPageId)
             this.selectPage({ id: dialog.id, currentPageType: 'dialog' })
         },
+        addDialog () {
+          this.$$addPage('dialog');
+        }
     },
     watch: {
         // dialog (newValue) {
@@ -54,6 +60,7 @@ export default {
 .popupList {
     width: 100%;
     height: 100%;
+    overflow: auto;
     > ul {
         width: 100%;
         height: 100%;
@@ -63,6 +70,7 @@ export default {
             width: 100%;
             height: 210px;
             display: flex;
+            position: relative;
             p {
                 margin-top: 21px;
             }
@@ -83,10 +91,31 @@ export default {
                 width: 124px;
                 height: 157px;
             }
+            >span {
+              position: absolute;
+              width: 30px;
+              height: 30px;
+              border-radius: 50%;
+              left: 146px;
+              top: 163px;
+              font-size: 20px;
+              background: #ffffff;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              color: #000000;
+              font-weight: bold;
+            }
+            .add_dialog {
+              display: none;
+            }
         }
         li:hover {
             cursor: pointer;
             background: #727272;
+            .add_dialog {
+              display: flex;
+            }
         }
     }
 }
