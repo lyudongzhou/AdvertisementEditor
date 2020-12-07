@@ -60,14 +60,14 @@ export default {
   computed: {
     ...mapGetters([
       'currentPage'
-    ])
+    ]),
   },
   mounted () {
     Colorpicker.create({
       el: this.$refs['color_picker'],
       bodyDom: this.$refs['color_warp'],
       palette: this.$refs['color_palette'],
-      color: "#000fff",
+      color: this.currentPage && this.currentPage.container && this.currentPage.container.backGround?this.currentPage.container.backGround.value:"rgb(0, 0, 0)",
       change: (elem, hex) => {
         elem.style.backgroundColor = hex;
         if (this.currentPage && this.currentPage.container && this.currentPage.container.backGround) {

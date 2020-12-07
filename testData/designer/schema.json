@@ -21,7 +21,7 @@
       "container": {
         "backGround": {
           "type": "color",
-          "value": "lightcyan"
+          "value": "#b4a7d6"
         }
       },
       "components": [
