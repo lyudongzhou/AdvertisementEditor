@@ -1,4 +1,5 @@
 export default {
+  name: '文本',
   notSupport: [
 
   ],

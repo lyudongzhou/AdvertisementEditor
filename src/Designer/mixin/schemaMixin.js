@@ -1,6 +1,8 @@
-import {clone, getUuid} from '../../Utils/utils';
+import {clone, getPropByPath, getUuid} from '../../Utils/utils';
 import {mapGetters, mapState, mapMutations} from '../store/index';
-import {ADD_COMPONENT} from '../constant/schema';
+import {ADD_COMPONENT, ADD_PAGE} from '../constant/schema';
+import {get} from '@/register';
+import {REG_COMPONENTSSCHEMA} from '@/const';
 
 function executeGetter(name, ...args) {
   return mapGetters([name])[name].call(this, ...args);
@@ -14,6 +16,27 @@ function getFromState(name) {
   return mapState([name])[name].call(this);
 }
 
+const getNextName = (array, prefix = '组件') => {
+  const reg = new RegExp(`^${prefix}(\\d+)$`);
+  let countArray = [];
+  array.forEach(it => {
+    const match = it.name.match(reg);
+    if (match) {
+      countArray.push(Number(match[1]));
+    }
+  });
+  const {length} = countArray;
+  if (!length) {
+    return `${prefix}1`;
+  }
+  countArray.sort((a, b) => a - b);
+  for (let i = 0; i < length; i++) {
+    if (i + 1 !== countArray[i]) {
+      return `${prefix}${i + 1}`;
+    }
+  }
+  return `${prefix}${length + 1}`;
+};
 
 /**
  * 用于操作schema的组件逻辑复用
@@ -22,18 +45,19 @@ function getFromState(name) {
 export default {
   methods: {
     $$addNewComponent(base) {
+      base = clone(base);
       if (!base.layoutConfig) {
         base.layoutConfig = {};
       }
+      // z-index
       base.layoutConfig.zIndex = executeGetter.call(this, 'currentMaxIndex') + 1;
-      if (!base.layoutConfig.height || !base.layoutConfig.width) {
-        // todo 找组件协议，初始化组件的高宽
-        base.layoutConfig.height = 100;
-        base.layoutConfig.width = 100;
-      }
-      // todo 初始化props
+      // name
+      const prefix = getPropByPath(get(REG_COMPONENTSSCHEMA), `${base.type}.name`);
+      const components = executeGetter.call(this, 'components');
+      base.name = getNextName(components, prefix);
       const component = createComponent(base);
-      executeMutations.call(this, 'updateSchema', {type: ADD_COMPONENT, value: component});
+
+      executeMutations.call(this, 'updateSchema', {type: ADD_COMPONENT, value: component, targetId: component.id});
     },
     $$pasteComponent() {
       const base = clone(getFromState.call(this, 'copyComponent'));
@@ -47,25 +71,47 @@ export default {
       }
       executeMutations.call(this, 'copyComponent', clone(component));
     },
-    // $$addPage(pageType, options) {
-    //
-    // }
-  }
-}
+    $$addPage(pageType, base = {}) {
+      let container;
+      let prefix;
+      if (pageType === 'dialog') {
+        container = executeGetter.call(this, 'dialogs');
+        prefix = '弹框';
+      } else {
+        container = executeGetter.call(this, 'pages');
+        prefix = '页面';
+      }
+      // name
+      base.name = getNextName(container, prefix);
+      const page = createPage(pageType, base);
+
+      executeMutations.call(this, 'updateSchema', {type: ADD_PAGE, value: page, targetId: page.id});
+    },
+  },
+};
 
 const createComponent = (base) => {
   return {
-    props: {
-    },
+    props: {},
     animation: [],
-    events: [
-    ],
+    events: [],
     ...base,
     id: getUuid(),
     layoutConfig: {
+      ...base.layoutConfig,
+      rotation: 0,
       top: 0,
       left: 0,
-      ...base.layoutConfig,
     },
+  };
+};
+
+const createPage = (pageType, base) => {
+  return {
+    container: {
+      backGround: {},
+    },
+    ...base,
+    id: getUuid(),
   };
 };

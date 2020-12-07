@@ -1,7 +1,7 @@
 /*
  * @Author: LyuDongzhou
  * @Date: 2020-12-07 01:13:50
- * @LastEditTime: 2020-12-07 02:01:07
+ * @LastEditTime: 2020-12-07 11:02:58
  * @Description: file content
  */
 import mutations from './mutations';
@@ -35,6 +35,9 @@ export default {
         return getters.currentContainer.components.find(({ id }) => state.currentComponentId === id) || null;
       }
       return null;
+    },
+    components(state, getters) {
+      return getters.currentContainer.components || [];
     },
     pages(state) {
       return state.vmSchema.pages || [];

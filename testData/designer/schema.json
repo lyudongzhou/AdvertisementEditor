@@ -62,7 +62,7 @@
           "name": "图片1",
           "type": "ImageCmp",
           "layoutConfig": {
-            "zIndex": 1,
+            "zIndex": 2,
             "top": 200,
             "left": 200,
             "rotation": 3.141592653589793,
