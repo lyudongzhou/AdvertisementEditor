@@ -388,7 +388,7 @@
     // bottom: 0;
 
     background: #282828;
-    overflow: auto;
+    // overflow: auto;
     z-index: 2;
     -moz-user-select: none;
     -webkit-user-select: none;

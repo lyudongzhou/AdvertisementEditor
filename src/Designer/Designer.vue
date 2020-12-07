@@ -15,7 +15,7 @@
       <el-aside width="50px">
         <designer-operator></designer-operator>
       </el-aside>
-      <el-aside width="298px">
+      <el-aside style="width:298px;overflow:inherit;">
         <PageFrame></PageFrame>
       </el-aside>
     </el-container>

@@ -65,7 +65,7 @@ export default {
 <style lang="less" scoped>
 .thumbnailShow {
     width: 100%;
-    height: 100%;
+    height: auto;
     > ul {
         width: 100%;
         height: 100%;

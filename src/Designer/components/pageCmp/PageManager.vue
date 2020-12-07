@@ -22,6 +22,13 @@ export default {
   .pageManager {
     width: 100%;
     height: 100%;
+    overflow: scroll;
+    flex: 1;
+    ::-webkit-scrollbar {
+      display: none; /* Chrome Safari */
+    }
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */
     ul {
       width: 100%;
       display: flex;

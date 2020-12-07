@@ -37,7 +37,7 @@ export default {
           name: '页面管理'
         }
       ],
-      listActive: 'PageManager'
+      listActive: 'PageSetup'
     }
   },
   components: {
@@ -51,10 +51,15 @@ export default {
 <style lang="less" scoped>
   .pageList {
     width: 100%;
-    overflow: auto;
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
     ul {
       width: 100%;
       display: flex;
+      height: 76px;
+      line-height: 76px;
       li {
         width: 90px;
         height: 40px;
