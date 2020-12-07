@@ -12,6 +12,7 @@
 
 <script>
 import {Colorpicker} from "../../private/colorpicker";
+import { mapGetters } from '../../store';
 
 export default {
   name: 'ColorPicker',
@@ -56,6 +57,11 @@ export default {
       ],
     }
   },
+  computed: {
+    ...mapGetters([
+      'currentPage'
+    ])
+  },
   mounted () {
     Colorpicker.create({
       el: this.$refs['color_picker'],
@@ -64,6 +70,9 @@ export default {
       color: "#000fff",
       change: (elem, hex) => {
         elem.style.backgroundColor = hex;
+        if (this.currentPage && this.currentPage.container && this.currentPage.container.backGround) {
+          this.currentPage.container.backGround.value = hex;
+        }
       }
     })
   }
