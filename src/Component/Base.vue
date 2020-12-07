@@ -48,8 +48,8 @@ export default {
                     case "opacity":
                         style[key] = this.layoutConfig[key];
                         break;
-                    case "z-index":
-                        style[key] = this.layoutConfig[key];
+                    case "zIndex":
+                        style['z-index'] = this.layoutConfig[key];
                         break;
                     default:
                         style[key] = `${this.layoutConfig[key]}px`;

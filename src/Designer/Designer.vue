@@ -4,7 +4,6 @@
       <designer-header></designer-header>
     </el-header>
     <el-container class="main-container">
-
       <el-aside width="200px">
         <editor></editor>
       </el-aside>
@@ -20,45 +19,53 @@
         <PageFrame></PageFrame>
       </el-aside>
     </el-container>
+    <singlePagePreview></singlePagePreview>
     <pageSnapshot></pageSnapshot>
   </el-container>
 </template>
 
 <script>
-import DesignerHeader from './components/DesignerHeader.vue';
-import PageFrame from './components/PageFrame.vue';
-import ContentDisplay from './components/ContentDisplay.vue';
-import DesignerOperator from './components/DesignerOperator.vue';
-import Editor from './components/Editor.vue';
+import DesignerHeader from "./components/DesignerHeader.vue";
+import PageFrame from "./components/PageFrame.vue";
+import ContentDisplay from "./components/ContentDisplay.vue";
+import DesignerOperator from "./components/DesignerOperator.vue";
+import Editor from "./components/Editor.vue";
 import pageSnapshot from "./components/pageSnapshot.vue";
-import {mapMutations} from './store';
-
+import { mapMutations } from "./store";
+import singlePagePreview from "./components/preView";
+import { mapState } from "./store";
 export default {
-  name: 'designer',
+  name: "designer",
   components: {
     DesignerHeader,
     PageFrame,
     ContentDisplay,
     DesignerOperator,
     Editor,
-    pageSnapshot
+    pageSnapshot,
+    singlePagePreview,
   },
-  mounted () {
+  computed: {
+    ...mapState(["previewing"]),
+  },
+  mounted() {},
+  data() {
+    return {};
   },
   methods: {
     openProject(schema) {
       this.resetSchema(schema);
     },
-    ...mapMutations(['resetSchema']),
-  }
+    ...mapMutations(["resetSchema"]),
+  },
 };
 </script>
 
 <style lang="less">
-  .main-container {
-    height: calc(100vh - 55px);
-    .no-padding {
-      position: relative;
-    }
+.main-container {
+  height: calc(100vh - 55px);
+  .no-padding {
+    position: relative;
   }
+}
 </style>

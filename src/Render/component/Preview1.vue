@@ -53,6 +53,7 @@ export default {
     created() {},
     mounted() {
         if (!this.designMode) {
+            this.currentState = 2;
             this.beginTime = new Date().getTime()
             this.automaticCycle()
         }

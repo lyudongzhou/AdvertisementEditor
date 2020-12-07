@@ -1,6 +1,6 @@
 const regMap = {};
 export function register(namespace, obj) {
-    if (!regMap[namespace]) {
+  if (!regMap[namespace]) {
         regMap[namespace] = {};
     }
     if (obj.type === undefined) {

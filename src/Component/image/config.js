@@ -1,4 +1,5 @@
 export default {
+  name: '图片',
   notSupport: [
 
   ],

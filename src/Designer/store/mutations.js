@@ -121,5 +121,15 @@ export default {
   },
   copyComponent(state, copyComponent) {
     state.copyComponent = copyComponent;
+  },
+  /**
+   * @description: 打开或者关闭单页预览需要先设置total再设置previewing
+   * @param {*} state store state
+   * @param {Boolean} para open or close 
+   * @return {undefined}
+   */
+  setPreviewState(state,{previewTotal = false,previewing}){
+    state.previewTotal = previewTotal;
+    state.previewing = previewing;
   }
 };

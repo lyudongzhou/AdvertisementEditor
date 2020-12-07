@@ -22,7 +22,7 @@ import {
   UPDATING_COMPONENT_PROPS,
   AFTER_UPDATE_COMPONENT_PROPS
 } from '../constant/schema';
-import { setPropByPath } from '../../Utils/utils';
+import {setPropByPath, switchArrayIndex} from '../../Utils/utils';
 import {
   COMMAND_SELECT_COMPONENT,
   COMMAND_SELECT_CONTAINER,
@@ -31,6 +31,8 @@ import {
   COMMAND_UPDATE_SELECT_ITEM,
 } from '../constant/base';
 import {getMergeSchemaManager} from './schemaManager';
+
+const getPageKey = currentPageType => currentPageType === 'page' ? 'pages' : 'dialogs';
 
 const getComponent = (schema, config) => {
   const page = getPage(schema, config);
@@ -43,7 +45,7 @@ const getComponent = (schema, config) => {
 
 const getPage = (schema, config) => {
   const {currentPageId, currentPageType} = config;
-  return (schema[currentPageType === 'page' ? 'pages' : 'dialogs'] || []).find(({id}) => id === currentPageId) || null;
+  return (schema[getPageKey(currentPageType)] || []).find(({id}) => id === currentPageId) || null;
 };
 
 // updater
@@ -53,6 +55,52 @@ const generateComponentUpdater = targetPath => (schema, config) => {
     path = `${targetPath ? targetPath + '.' : ''}${path}`;
     setPropByPath(component, path, value);
   });
+};
+
+const generateSwitchIndexUpdater = (type = 'switch') => (schema, config) => {
+  const currentPage = getPage(schema, config);
+  const components = currentPage ? (currentPage.components || []) : [];
+  let newIndex;
+  let oldIndex;
+  if (type === 'switch') {
+    newIndex = config.newIndex;
+    oldIndex = config.oldIndex;
+  } else {
+    const { targetId } = config;
+    oldIndex = components.findIndex(({ id }) => id === targetId);
+    if (type === 'top') {
+      let maxZIndex = -1;
+      newIndex = -1;
+      components.forEach((component, index) => {
+        const zIndex = component.layoutConfig.zIndex;
+        if (maxZIndex < zIndex) {
+          maxZIndex = zIndex;
+          newIndex = index;
+        }
+      })
+    } else if (type === 'bottom') {
+      let minIndex = Infinity;
+      newIndex = -1;
+      components.forEach((component, index) => {
+        const zIndex = component.layoutConfig.zIndex;
+        if (minIndex > zIndex) {
+          minIndex = zIndex;
+          newIndex = index;
+        }
+      })
+    }
+  }
+  doSwitchIndex(components, newIndex, oldIndex);
+};
+
+const doSwitchIndex = (components, newIndex, oldIndex) => {
+  const targetLayoutConfig = components[newIndex].layoutConfig;
+  const changeLayoutConfig = components[oldIndex].layoutConfig;
+  const {zIndex: fromIndex} = targetLayoutConfig;
+  const {zIndex: toIndex} = changeLayoutConfig;
+  switchArrayIndex(components, oldIndex, newIndex);
+  targetLayoutConfig.zIndex = toIndex;
+  changeLayoutConfig.zIndex = fromIndex;
 };
 
 // 更新组件
@@ -121,7 +169,7 @@ export default {
     handler: commitHandler,
     updater: (schema, config) => {
       const page = getPage(schema, config);
-      page.components.push(config.value);
+      page.components.unshift(config.value);
     },
     after: [COMMAND_SELECT_COMPONENT, COMMAND_UPDATE_SELECT_ITEM],
   },
@@ -142,19 +190,31 @@ export default {
   [ADD_PAGE]: {
     handler: commitHandler,
     updater: (schema, config) => {
-      schema.pages.push(config.value);
+      const { currentPageType } = config;
+      const key = getPageKey(currentPageType);
+      schema[key].push(config.value);
     },
     after: [COMMAND_SELECT_PAGE],
   },
   [DELETE_PAGE]: {
     handler: commitHandler,
     updater: (schema, config) => {
-      const { targetId } = config;
-      schema.pages = schema.pages.filter(({ id }) => id !== targetId);
+      const { targetId, currentPageType } = config;
+      const key = getPageKey(currentPageType);
+      schema[key] = schema[key].filter(({ id }) => id !== targetId);
     },
     after: [COMMAND_SELECT_SIBLING_PAGE],
   },
-  [SWITCH_INDEX]: {},
-  [UPDATE_INDEX_TO_TOP]: {},
-  [UPDATE_INDEX_TO_BOTTOM]: {},
+  [SWITCH_INDEX]: {
+    handler: commitHandler,
+    updater: generateSwitchIndexUpdater(),
+  },
+  [UPDATE_INDEX_TO_TOP]: {
+    handler: commitHandler,
+    updater: generateSwitchIndexUpdater('top'),
+  },
+  [UPDATE_INDEX_TO_BOTTOM]: {
+    handler: commitHandler,
+    updater: generateSwitchIndexUpdater('bottom'),
+  },
 };

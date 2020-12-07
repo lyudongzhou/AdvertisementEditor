@@ -1,5 +1,11 @@
+/*
+ * @Author: LyuDongzhou
+ * @Date: 2020-12-07 01:13:50
+ * @LastEditTime: 2020-12-07 11:02:58
+ * @Description: file content
+ */
 import mutations from './mutations';
-import {getPropByPath} from '../../Utils/utils';
+import { getPropByPath } from '../../Utils/utils';
 
 export default {
   namespaced: true,
@@ -17,14 +23,21 @@ export default {
       copyComponent: null,
       // 当前选中页面/弹框id
       currentPageId: null,
+      /**
+       * @description: 单页预览
+       */
+      previewing: false
     };
   },
   getters: {
     currentComponent(state, getters) {
       if (state.currentComponentId && state.currentPageType) {
-        return getters.currentContainer.components.find(({id}) => state.currentComponentId === id) || null;
+        return getters.currentContainer.components.find(({ id }) => state.currentComponentId === id) || null;
       }
       return null;
+    },
+    components(state, getters) {
+      return getters.currentContainer.components || [];
     },
     pages(state) {
       return state.vmSchema.pages || [];
@@ -35,14 +48,14 @@ export default {
     currentPage(state, getters) {
       // todo 依赖可能没有收集到
       if (getters.pages && state.currentPageId && state.currentPageType === 'page') {
-        return getters.pages.find(({id}) => state.currentPageId === id) || null;
+        return getters.pages.find(({ id }) => state.currentPageId === id) || null;
       }
       return null;
     },
     currentDialog(state, getters) {
       // todo 依赖可能没有收集到
       if (getters.dialogs && state.currentPageId && state.currentPageType === 'dialog') {
-        return getters.dialogs.find(({id}) => state.currentPageId === id) || null;
+        return getters.dialogs.find(({ id }) => state.currentPageId === id) || null;
       }
       return null;
     },

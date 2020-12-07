@@ -39,12 +39,7 @@
             "opacity": 1
           },
           "props": {
-            "text": "111",
-            "fontSize": 15,
-            "fontFamily": "微软雅黑",
-            "fontWeight": 15,
-            "fontStyle": "normal",
-            "color": "#0F0F0F"
+            "text": "111"
           },
           "animation": [
             {
@@ -67,7 +62,7 @@
           "name": "图片1",
           "type": "ImageCmp",
           "layoutConfig": {
-            "zIndex": 1,
+            "zIndex": 2,
             "top": 200,
             "left": 200,
             "rotation": 3.141592653589793,
@@ -191,75 +186,34 @@
       "id": "弹窗1",
       "container": {
         "backGround": {
-          "type": "color",
-          "value": "#EFEFEF"
+          "type": "image",
+          "value": "images/Koala.jpg"
         }
       },
       "components": [
         {
-          "id": 1,
-          "name": "按钮1",
-          "type": "textCmp",
+          "id": 5,
+          "name": "按钮2",
+          "type": "ImageCmp",
           "layoutConfig": {
             "zIndex": 1,
             "top": 100,
             "left": 100,
             "rotation": 3.141592653589793,
-            "width": 100,
-            "height": 100,
+            "width": 1,
+            "height": 1,
             "opacity": 1
           },
           "props": {
-            "text": "open the dialog 2",
-            "fontSize": 15,
-            "fontFamily": "微软雅黑",
-            "fontWeight": 15,
-            "fontStyle": "normal",
-            "color": "#0F0F0F"
+            "bgUrl": "images/Koala.jpg"
           },
-          "animation": [
-            {
-              "name": "fadeout"
-            }
-          ],
+          "animation": [],
           "events": [
             {
-              "type": "openTheWindow",
-              "value": {
-                "openId": "弹窗2",
-                "backTime": 2000
-              }
+              "type": "prePage",
+              "value": ""
             }
           ],
-          "children": []
-        },
-        {
-          "id": 2,
-          "name": "按钮2",
-          "type": "textCmp",
-          "layoutConfig": {
-            "zIndex": 1,
-            "top": 300,
-            "left": 300,
-            "rotation": 3.141592653589793,
-            "width": 100,
-            "height": 100,
-            "opacity": 1
-          },
-          "props": {
-            "text": "dialog 1 -> no event",
-            "fontSize": 15,
-            "fontFamily": "微软雅黑",
-            "fontWeight": 15,
-            "fontStyle": "normal",
-            "color": "#0F0F0F"
-          },
-          "animation": [
-            {
-              "name": "fadeout"
-            }
-          ],
-          "events": [],
           "children": []
         }
       ]
@@ -270,14 +224,14 @@
       "container": {
         "backGround": {
           "type": "color",
-          "value": "#356454"
+          "value": "#ABCDEF"
         }
       },
       "components": [
         {
-          "id": 1,
+          "id": 2,
           "name": "图片1",
-          "type": "textCmp",
+          "type": "ImageCmp",
           "layoutConfig": {
             "zIndex": 1,
             "top": 200,
@@ -288,16 +242,11 @@
             "opacity": 1
           },
           "props": {
-            "text": "open the dialog 3",
-            "fontSize": 15,
-            "fontFamily": "微软雅黑",
-            "fontWeight": 15,
-            "fontStyle": "normal",
-            "color": "#0F0F0F"
+            "bgUrl": "images/Koala.jpg"
           },
           "animation": [
             {
-              "name": "fadetop",
+              "type": "shaking",
               "duration": 100,
               "delay": 0,
               "times": 2
@@ -305,11 +254,8 @@
           ],
           "events": [
             {
-              "type": "openTheWindow",
-              "value": {
-                "openId": "弹窗3",
-                "backTime": 2000
-              }
+              "type": "nextPage",
+              "value": ""
             }
           ],
           "children": []
