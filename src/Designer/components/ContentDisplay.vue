@@ -386,7 +386,8 @@
     // left: 200px;
     // right: 219px;
     // bottom: 0;
-    background-color: #d0cfd8;
+
+    background: #282828;
     overflow: auto;
     z-index: 2;
     -moz-user-select: none;

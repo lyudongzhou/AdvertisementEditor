@@ -12,7 +12,7 @@
         <content-display></content-display>
       </el-main>
 
-      <el-aside width="20px">
+      <el-aside width="50px">
         <designer-operator></designer-operator>
       </el-aside>
       <el-aside width="298px">
