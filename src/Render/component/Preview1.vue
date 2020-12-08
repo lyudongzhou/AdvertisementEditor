@@ -241,6 +241,7 @@ export default {
          * @description Watch the varible targetPage for change current page.
          */
         targetPage(next, old) {
+            console.log("targetChange");
             clearInterval(this._timer)
             if (next === this.currentPage) {
                 this.currentState = 2

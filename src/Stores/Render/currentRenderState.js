@@ -4,8 +4,7 @@
  * @LastEditTime: 2020-12-07 04:03:05
  * @Description: file content
  */
-import actions from './actions';
-
+//!!!!如果修改了store的结构，需对应修改Designer里的previewStore结构
 const state = {
   schema: null,
   pageCount: 0,

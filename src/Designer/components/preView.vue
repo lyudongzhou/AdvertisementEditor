@@ -5,47 +5,66 @@
  * @Description: file content
 -->
 <template>
-  <el-dialog v-if="isShow" :visible.sync="isShow">
-    <render
-      :v-if="currentPageId"
-      :renderData="vmSchema"
-      :currentPage="currentPageId"
-      :singlePagePreview="!previewTotal"
-      baseUrl=""
-    ></render>
-  </el-dialog>
+    <el-dialog v-if="isShow" :visible.sync="isShow"
+        ><div ref="preview"></div
+    ></el-dialog>
 </template>
-
 
 <script>
 import render from "../../Render/render";
 import { mapState, mapMutations } from "../store";
+import Vue from "vue";
+import previewStore from "../store/previewStore";
 export default {
-  data() {
-    return {
-      isShow: false,
-    };
-  },
-  components: { render },
-  computed: {
-    ...mapState(["vmSchema", "currentPageId", "previewing","previewTotal"]),
-  },
-  watch: {
-    previewing(data) {
-        console.log("show");
-      this.isShow = data;
+    data() {
+        return {
+            isShow: false,
+        };
     },
-    isShow(value) {
-      if (!value) {
-        this.setPreviewState({previewTotal:false,previewing:false});
-      }
+    components: {},
+    computed: {
+        ...mapState([
+            "vmSchema",
+            "currentPageId",
+            "previewing",
+            "previewTotal",
+        ]),
     },
-  },
-  methods: {
-    ...mapMutations(["setPreviewState"]),
-  },
+    watch: {
+        previewing(data) {
+            this.isShow = data;
+            this.$nextTick(() => {
+                new Vue({
+                    el: this.$refs["preview"],
+                    render: (h) => {
+                      let currentPage = this.currentPageId;
+                        return h(render, {
+                            props: {
+                                renderData: this.vmSchema,
+                                currentPage: currentPage,
+                                singlePagePreview: !this.previewTotal,
+                                baseUrl:""
+                            }
+                        });
+                    },
+                    store:previewStore
+                });
+            });
+        },
+        isShow(value) {
+            if (!value) {
+                this.setPreviewState({
+                    previewTotal: false,
+                    previewing: false,
+                });
+            }
+        },
+    },
+    mounted() {},
+    methods: {
+        ...mapMutations(["setPreviewState"]),
+    },
 };
 </script>
 
-<style>
-</style>
+<style></style>

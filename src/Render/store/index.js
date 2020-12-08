@@ -14,5 +14,4 @@ export const renderModules = {
 export const {mapState,mapActions,mapMutations,mapGetters} = createNamespacedHelpers('currentRenderState');
 
 const store = new Vuex.Store({modules: renderModules});
-window.store = store;
 export default store

@@ -89,6 +89,7 @@ export default {
     ) {
       this.$refs.bgm.play();
     }
+    window.abccc = this;
   },
   methods: {
     ...mapMutations([
