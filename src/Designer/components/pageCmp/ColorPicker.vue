@@ -12,7 +12,7 @@
 
 <script>
 import {Colorpicker} from "../../private/colorpicker";
-import { mapGetters } from '../../store';
+import { mapGetters, mapMutations } from '../../store';
 
 export default {
   name: 'ColorPicker',
@@ -63,18 +63,41 @@ export default {
     ]),
   },
   mounted () {
-    Colorpicker.create({
+    this._colorPicker = Colorpicker.create({
       el: this.$refs['color_picker'],
       bodyDom: this.$refs['color_warp'],
       palette: this.$refs['color_palette'],
       color: this.currentPage && this.currentPage.container && this.currentPage.container.backGround?this.currentPage.container.backGround.value:"rgb(0, 0, 0)",
-      change: (elem, hex) => {
-        elem.style.backgroundColor = hex;
-        if (this.currentPage && this.currentPage.container && this.currentPage.container.backGround) {
-          this.currentPage.container.backGround.value = hex;
-        }
-      }
+      down: () => {
+        this.updateSchema({
+          type: "beforeupdatePage"
+        });
+      },
+      move: (hex) => {
+        this.updateSchema({
+          type: "updatingPage",
+          value: {["value"]:hex},
+        });
+      },
+      up: (hex) => {
+        this.updateSchema({
+          type: "afterPage",
+          value: {["value"]:hex},
+        });
+      },
+      change: () => {},
     })
+  },
+  methods: {
+    ...mapMutations([
+      'updateSchema',
+    ])
+  },
+  watch: {
+    currentPage (value) {
+      console.log(value);
+      this._colorPicker.setColorByInput(value.container.backGround.value);
+    }
   }
 }
 </script>

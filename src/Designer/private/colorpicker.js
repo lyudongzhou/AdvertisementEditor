@@ -115,6 +115,9 @@
               _this.setColorByInput(colorStr)
               break;
           }
+          var hex = '#' + _this.rgbToHex(_this.HSBToRGB(_this.hsb));
+          _this.Opt.down(hex);
+          _this.Opt.up(hex);
         }
       }, false);
       (color != '' && this.setColorByInput(color));
@@ -284,6 +287,9 @@
       elem.addEventListener("mousedown", function(e) {
         _this.downX = e.offsetX;
         _this.downY = e.offsetY;
+
+        _this.Opt.down();
+
         bool ? fn.call(_this, _this.downX, _this.downY) : fn.call(_this, elem, _this.downX, _this.downY);
         document.addEventListener("mousemove", mousemove, false);
 
@@ -292,6 +298,10 @@
           _this.moveX = e.clientX-bound.x;
           _this.moveY = e.clientY-bound.y;
           bool ? fn.call(_this, _this.moveX, _this.moveY) : fn.call(_this, elem, _this.moveX, _this.moveY);
+
+          var hex = '#' + _this.rgbToHex(_this.HSBToRGB(_this.hsb));
+          _this.Opt.move(hex);
+
           e.preventDefault();
         }
         document.addEventListener("mouseup", mouseup, false);
@@ -299,6 +309,8 @@
         function mouseup(e) {
           document.removeEventListener("mousemove", mousemove, false)
           document.removeEventListener("mouseup", mouseup, false)
+          var hex = '#' + _this.rgbToHex(_this.HSBToRGB(_this.hsb));
+          _this.Opt.up(hex);
         }
       }, false);
     },
@@ -309,17 +321,24 @@
             offsetY = e.clientY - rect.top;
         _this.downY = offsetY;
         bool ? fn.call(_this, _this.downY) : fn.call(_this, elem, _this.downY);
+        _this.Opt.down();
+
         document.addEventListener("mousemove", mousemove, false);
 
         function mousemove(e) {
           let bound = elem.getBoundingClientRect();
           _this.moveY = e.clientY-bound.y;
           bool ? fn.call(_this, _this.moveY) : fn.call(_this, elem, _this.moveY);
+          var hex = '#' + _this.rgbToHex(_this.HSBToRGB(_this.hsb));
+          _this.Opt.move(hex);
+
           e.preventDefault();
         }
         document.addEventListener("mouseup", mouseup, false);
 
         function mouseup(e) {
+          var hex = '#' + _this.rgbToHex(_this.HSBToRGB(_this.hsb));
+          _this.Opt.up(hex);
           document.removeEventListener("mousemove", mousemove, false)
           document.removeEventListener("mouseup", mouseup, false)
         }

@@ -60,6 +60,14 @@ const generateComponentUpdater = targetPath => (schema, config) => {
   });
 };
 
+// update page
+const generatePageUpdater = targetPath => (schema, config) => {
+  const page = getPage(schema, config);
+  Object.entries(config.value).forEach(([path, value]) => {
+    path = `${targetPath ? targetPath + '.' : ''}${path}`;
+    setPropByPath(page, path, value);
+  });
+};
 const generateSwitchIndexUpdater = (type = 'switch') => (schema, config) => {
   const currentPage = getPage(schema, config);
   const components = currentPage ? (currentPage.components || []) : [];
@@ -105,7 +113,8 @@ const doSwitchIndex = (components, newIndex, oldIndex) => {
   targetLayoutConfig.zIndex = toIndex;
   changeLayoutConfig.zIndex = fromIndex;
 };
-
+//更新背景色
+const updatePageColor = generatePageUpdater("container.backGround");
 // 更新组件
 const updateComponent = generateComponentUpdater('');
 
@@ -129,6 +138,17 @@ const commitHandler = generateHandler(({manager, operateConfig}) => manager.comm
 const updateHandler = generateHandler(({vmSchemaManager, operateConfig}) => vmSchemaManager.update(operateConfig));
 
 export default {
+  beforeupdatePage: {
+    handler: snapshotHandler
+  },
+  updatingPage: {
+    handler: updateHandler,
+    updater: updatePageColor,
+  },
+  afterPage: {
+    handler: commitHandler,
+    updater: updatePageColor,
+  },
   [AUTO_BEFORE_PROP]:{
     handler: snapshotHandler
   },

@@ -97,7 +97,7 @@
       "container": {
         "backGround": {
           "type": "color",
-          "value": "lightgreen"
+          "value": "#abcdef"
         }
       },
       "components": [
