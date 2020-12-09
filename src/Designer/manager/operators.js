@@ -20,7 +20,10 @@ import {
 
   BEFORE_UPDATE_COMPONENT_PROPS,
   UPDATING_COMPONENT_PROPS,
-  AFTER_UPDATE_COMPONENT_PROPS
+  AFTER_UPDATE_COMPONENT_PROPS,
+  AUTO_BEFORE_PROP,
+  AUTO_UPDATING_PROP,
+  AUTO_AFTER_PROP,
 } from '../constant/schema';
 import {setPropByPath, switchArrayIndex} from '../../Utils/utils';
 import {
@@ -126,6 +129,19 @@ const commitHandler = generateHandler(({manager, operateConfig}) => manager.comm
 const updateHandler = generateHandler(({vmSchemaManager, operateConfig}) => vmSchemaManager.update(operateConfig));
 
 export default {
+  [AUTO_BEFORE_PROP]:{
+    handler: snapshotHandler
+  },
+  [AUTO_UPDATING_PROP]:{
+    handler: updateHandler,
+    updater: updateComponent,
+    after: [COMMAND_UPDATE_SELECT_ITEM],
+  },
+  [AUTO_AFTER_PROP]:{
+    handler: commitHandler,
+    updater: updateComponent,
+    after: [COMMAND_UPDATE_SELECT_ITEM],
+  },
   [BEFORE_UPDATE_COMPONENT_PROPS]: {
     handler: snapshotHandler,
   },

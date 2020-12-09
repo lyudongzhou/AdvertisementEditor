@@ -1,3 +1,9 @@
+/*
+ * @Author: LyuDongzhou
+ * @Date: 2020-11-30 04:01:05
+ * @LastEditTime: 2020-12-09 02:28:39
+ * @Description: file content
+ */
 // 新增页面
 export const ADD_PAGE = 'ADD_PAGE';
 // 删除页面
@@ -26,3 +32,7 @@ export const UPDATE_INDEX_TO_BOTTOM = 'UPDATE_INDEX_TO_BOTTOM';
 export const BEFORE_UPDATE_COMPONENT_PROPS = "BEFORE_UPDATE_COMPONENT_PROPS"
 export const UPDATING_COMPONENT_PROPS = "UPDATING_COMPONENT_PROPS"
 export const AFTER_UPDATE_COMPONENT_PROPS = "AFTER_UPDATE_COMPONENT_PROPS"
+//自动刷新属性
+export const AUTO_BEFORE_PROP = "AUTO_BEFORE_PROP";
+export const AUTO_UPDATING_PROP = "AUTO_UPDATING_PROP";
+export const AUTO_AFTER_PROP = "AUTO_AFTER_PROP";

@@ -1,16 +1,7 @@
 import Vuex from 'vuex';
 import Vue from "vue";
 import { createNamespacedHelpers } from 'vuex';
-const state = {
-    schema: null,
-    pageCount: 0,
-    currentPage: "1",//当前页面ID
-    targetPage: "1",//目标页面ID
-    designMode: false,
-    baseUrl: '',
-    windowStorage: [], // 页面路径存储，弹窗返回使用
-    singlePagePreview: false,
-};
+
 const mutations = {
     setSchema(store, schema) {
         store.schema = schema;
@@ -147,17 +138,27 @@ const getters = {
 };
 //创建VueX对象
 Vue.use(Vuex);
-
-export const renderModules = {
-    currentRenderState: {
-        namespaced: true,
-        state,
-        mutations,
-        getters,
-    }
-};
-
 export const { mapState, mapActions, mapMutations, mapGetters } = createNamespacedHelpers('currentRenderState');
 
-const store = new Vuex.Store({ modules: renderModules });
-export default store
+
+export default function getNewStore(){
+    const state = {
+        schema: null,
+        pageCount: 0,
+        currentPage: "1",//当前页面ID
+        targetPage: "1",//目标页面ID
+        designMode: false,
+        baseUrl: '',
+        windowStorage: [], // 页面路径存储，弹窗返回使用
+        singlePagePreview: false,
+    };
+    const renderModules = {
+        currentRenderState: {
+            namespaced: true,
+            state,
+            mutations,
+            getters,
+        }
+    }
+    return new Vuex.Store({ modules: renderModules });
+}

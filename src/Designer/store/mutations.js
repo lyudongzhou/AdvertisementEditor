@@ -98,7 +98,6 @@ export default {
     if (!operateConfig.targetId) {
       operateConfig.targetId = state.currentComponentId;
     }
-
     const {handler, after = []} = operatorMap[operateConfig.type];
 
     // 执行操作

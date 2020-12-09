@@ -1,73 +1,95 @@
+<!--
+ * @Author: LyuDongzhou
+ * @Date: 2020-12-07 01:13:50
+ * @LastEditTime: 2020-12-09 03:07:37
+ * @Description: file content
+-->
 <template>
-    <el-input-number
-        v-model="text"
-        placeholder="请输入内容"
-        @change="onChange"
-        @focus="onFocus"
-        @input="onInput"
-        :min="config.props.min"
-        :max="config.props.max"
-    ></el-input-number>
+  <el-input-number
+    v-model="text"
+    placeholder="请输入内容"
+    @change="onChange"
+    :min="config.props.min"
+    :max="config.props.max"
+  ></el-input-number>
 </template>
 
 <script>
-import { getPropByPath } from '@/utils'
-import { mapMutations } from '../../../../store'
-import {
-    BEFORE_UPDATE_COMPONENT_PROPS,
-    UPDATING_COMPONENT_PROPS,
-    AFTER_UPDATE_COMPONENT_PROPS,
-} from '../../../../constant/schema'
+import { getPropByPath } from "@/utils";
+import { mapMutations, mapState } from "../../../../store";
+import Throttle from "../../../../manager/updateThrottle";
 export default {
-    name: 'numberField',
-    props: ['configData', 'config'],
-    created() {},
-    data() {
-        return {
-            text: 0,
-        }
+  name: "numberField",
+  props: ["configData", "config"],
+  created() {},
+  data() {
+    return {
+      text: 0,
+      isNew: false,
+    };
+  },
+  computed: {
+    ...mapState(["currentComponentId"]),
+    dataText() {
+      return getPropByPath(this.configData, this.config.target);
     },
-    computed: {
-        dataText() {
-            return getPropByPath(this.configData, this.config.target)
+  },
+  methods: {
+    ...mapMutations(["updateSchema"]),
+    changeFun(type) {
+      this.updateSchema({
+        type: type,
+        value: {
+          [this.config.target]: this.text,
         },
+      });
     },
-    methods: {
-        ...mapMutations(['updateSchema']),
-        changeFun(type) {
-            this.updateSchema({
-                type: type,
-                value: {
-                    [this.config.target]: this.text,
-                },
-            })
-        },
-        onChange() {
-            this.changeFun(UPDATING_COMPONENT_PROPS)
-        },
-        onFocus() {
-            this.changeFun(BEFORE_UPDATE_COMPONENT_PROPS)
-        },
-        onInput() {
-            if (this.isMounted) {
-                this.changeFun(AFTER_UPDATE_COMPONENT_PROPS)
-            }
-        },
+    // onBlur() {
+    //   console.log("blur");
+    //   this.changeFun(AFTER_UPDATE_COMPONENT_PROPS);
+    // },
+    onChange() {
+      Throttle.update(this.config.target, this.text);
+      //   console.log("change");
+      //   UPDATE_COMPONENT_PROPS;
+      //   this.updateSchema({
+      //     type: window.isCommit ? "myCommit" : "myUpdate",
+      //     value: {
+      //       [this.config.target]: this.text,
+      //     },
+      //   });
+
+      //   this.changeFun(UPDATE_COMPONENT_PROPS);
     },
-    watch: {
-        dataText(text) {
-            this.text = parseFloat(text)
-        },
-        configData(data1, data2) {
-            console.log('dataConfigChange', data1 === data2)
-        },
+    // onFocus() {
+    //   console.log("focus");
+    //   this.changeFun(BEFORE_UPDATE_COMPONENT_PROPS);
+    // },
+    // onInput() {
+    //   if (this.isMounted && !this.isNew) {
+    //     this.isNew = false;
+    //     console.log("input");
+    //     this.changeFun(AFTER_UPDATE_COMPONENT_PROPS);
+    //   }
+    // },
+  },
+  watch: {
+    currentComponentId() {
+      console.log("currentComponentId");
+      this.isNew = true;
     },
-    mounted() {
-        this.isMounted = true
-        this.text = getPropByPath(this.configData, this.config.target)
-        console.log('init', this.text)
+    dataText(text) {
+      this.text = parseFloat(text);
     },
-}
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.isMounted = true;
+    });
+    this.text = getPropByPath(this.configData, this.config.target);
+    console.log("mounted");
+  },
+};
 </script>
 
 <style></style>

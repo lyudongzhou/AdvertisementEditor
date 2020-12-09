@@ -4,7 +4,7 @@
             <el-select
                 v-model="fontFamily"
                 placeholder="请选择"
-                @change="onInput('props.fontFamily', fontFamily)"
+                @change="onChange('props.fontFamily', fontFamily)"
             >
                 <el-option
                     v-for="item in fontFamilies"
@@ -19,13 +19,13 @@
             <el-radio
                 v-model="fontStyle"
                 label="normal"
-                @change="onInput('props.fontStyle', fontStyle)"
+                @change="onChange('props.fontStyle', fontStyle)"
                 >正常</el-radio
             >
             <el-radio
                 v-model="fontStyle"
                 label="italic"
-                @change="onInput('props.fontStyle', fontStyle)"
+                @change="onChange('props.fontStyle', fontStyle)"
                 >倾斜</el-radio
             >
         </el-form-item>
@@ -46,12 +46,7 @@
 
 <script>
 import { getPropByPath } from '@/utils'
-import { mapMutations } from '../../../../store'
-import {
-    BEFORE_UPDATE_COMPONENT_PROPS,
-    UPDATING_COMPONENT_PROPS,
-    AFTER_UPDATE_COMPONENT_PROPS,
-} from '../../../../constant/schema'
+import Throttle from "../../../../manager/updateThrottle";
 import numberField from '../numberField/numberField'
 import colorPicker from '../vcolorpicker/vcolorpicker'
 export default {
@@ -87,26 +82,9 @@ export default {
         },
     },
     methods: {
-        ...mapMutations(['updateSchema']),
-        changeFun(type, target, value) {
-            this.updateSchema({
-                type: type,
-                value: {
-                    [target]: value,
-                },
-            })
-        },
         onChange(target, value) {
-            console.log('onChange')
-            this.changeFun(UPDATING_COMPONENT_PROPS, target, value)
-        },
-        onFocus(target, value) {
-            this.changeFun(BEFORE_UPDATE_COMPONENT_PROPS, target, value)
-        },
-        onInput(target, value) {
-            if (this.isMounted) {
-                this.changeFun(AFTER_UPDATE_COMPONENT_PROPS, target, value)
-            }
+            console.log('onChange',value)
+            Throttle.update(target,value);
         },
     },
     watch: {

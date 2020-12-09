@@ -15,6 +15,7 @@
   import { SCALE_STEP } from "../constant/base";
   import { getVmSchemaManager } from "../manager/schemaManager";
   import { mapMutations} from "../store";
+  import updateThrottle from "../manager/updateThrottle";
 
   export default {
     components: {},
@@ -23,6 +24,13 @@
       return {};
     },
     computed: {
+      canUndo1(){
+        return updateThrottle.canUndo();
+      },
+      canUndo2(){
+        const vmSchemaManager = getVmSchemaManager();
+        return vmSchemaManager.canUndo();
+      },
       operators() {
         const vmSchemaManager = getVmSchemaManager();
         return [
@@ -30,7 +38,7 @@
             icon: "el-icon-top-left",
             key: "undo",
             label: "撤销",
-            disabled: !vmSchemaManager.canUndo(),
+            disabled: !(this.canUndo1||this.canUndo2),
           },
           {
             icon: "el-icon-top-right",
@@ -58,9 +66,11 @@
             this.$event.emit(CHANGE_SCALE, -SCALE_STEP);
             break;
           case "undo":
+            updateThrottle.flush();
             this.undo();
             break;
           case "redo":
+            updateThrottle.flush();
             this.redo();
             break;
           case "preview":
