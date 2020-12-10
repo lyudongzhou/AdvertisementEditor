@@ -14,9 +14,19 @@ export default {
     }
   },
   created() {
-    this.$axios.get("/schema").then(({data}) => {
-      this.$refs.designer.openProject(data);
-    })
+    const urlSearchParams = new URLSearchParams(location.search);
+    // todo remove testCode
+    const id = urlSearchParams.get('id') || 1;
+    const templateId = urlSearchParams.get('templateId');
+    if (!id && templateId) {
+      this.$axios.get('/template/get/id', {templateId: id}).then(({data}) => {
+        this.$refs.designer.openProject(data.bodyJson);
+      });
+    } else if (id) {
+      this.$axios.get('/program/get/id', {programId: id}).then(({data}) => {
+        this.$refs.designer.openProject(data.programData);
+      });
+    }
   },
   mounted () {
   },
