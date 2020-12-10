@@ -1,12 +1,15 @@
 <template>
   <div class="flex-column them-dark-bg full-height them-dark-text">
-    <i
-      v-for="config in operators"
-      :class="config.icon"
-      :title="config.label"
-      :key="config.key"
-      @click="handleClick(config.key, config.disabled)"
-    ></i>
+    <el-tooltip
+        v-for="config in operators"
+        :content="config.label" placement="left"
+        :key="config.key"
+    >
+      <i :class="config.icon"
+         @click="handleClick(config.key, config.disabled)"
+      ></i>
+    </el-tooltip>
+
   </div>
 </template>
 
@@ -76,6 +79,7 @@
 <style lang="less" scoped>
   .flex-column {
     background: #4C4C4C;
+    cursor: pointer;
     i {
       display: inline-block;
       width: 50px;
