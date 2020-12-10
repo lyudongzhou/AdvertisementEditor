@@ -40,6 +40,7 @@ export default class SchemaManager {
     this.execute(operateConfig);
     this.stackMap.redoStack = [];
     this.stackMap.undoStack.push(this.snapshotInfo);
+    this.snapshotInfo = null;
   }
 
   update(operateConfig) {
