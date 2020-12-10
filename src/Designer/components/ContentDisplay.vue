@@ -360,19 +360,24 @@
     <div>
       <!--辅助线-->
     </div>
-    <editorWin
-        class="editWin"
-    ></editorWin>
+    <vue-draggable-resizable class="editWin" :resizable="false" :parent="true" :y="50" :h="805" :w="305">
+      <editorWin></editorWin>
+    </vue-draggable-resizable>
+
   </div>
 </template>
 
 <style lang="less" scoped>
   .editWin {
     position: absolute;
-    left: 0px;
-    top: 50px;
+    left: 0;
+    top: 0;
     bottom: 0;
     right: 0;
+
+    &.vdr {
+      border: none;
+    }
   }
 
   .work-space {
