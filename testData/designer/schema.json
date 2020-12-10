@@ -39,7 +39,12 @@
             "opacity": 1
           },
           "props": {
-            "text": "111"
+            "text": "111",
+            "fontFamily":"宋体",
+            "fontWeight":10,
+            "fontStyle":"normal",
+            "fontSize":30,
+            "color":"#FF00FF"
           },
           "animation": [
             {

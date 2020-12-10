@@ -45,13 +45,15 @@
 </template>
 
 <script>
-import { getPropByPath } from '@/utils'
-import Throttle from "../../../../manager/updateThrottle";
-import numberField from '../numberField/numberField'
-import colorPicker from '../vcolorpicker/vcolorpicker'
+import { getPropByPath } from "@/utils";
+// import Throttle from "../../../../manager/updateThrottle";
+import numberField from "../numberField/numberField";
+import colorPicker from "../vcolorpicker/vcolorpicker";
+import {UPDATE_COMPONENT_PROPS} from "../../../../constant/schema";
+import {mapMutations} from "../../../../store";
 export default {
-    name: 'textStyle',
-    props: ['configData'],
+    name: "textStyle",
+    props: ["configData"],
     created() {},
     components: {
         numberField,
@@ -59,55 +61,62 @@ export default {
     },
     data() {
         return {
-            fontFamily: '微软雅黑',
+            fontFamily: "微软雅黑",
             fontFamilies: [
                 {
-                    value: '微软雅黑',
-                    label: '微软雅黑',
+                    value: "微软雅黑",
+                    label: "微软雅黑",
                 },
                 {
-                    value: '黑体',
-                    label: '黑体',
+                    value: "黑体",
+                    label: "黑体",
                 },
             ],
-            fontStyle: 'normal',
-        }
+            fontStyle: "normal",
+        };
     },
     computed: {
         dataFontFamily() {
-            return getPropByPath(this.configData, 'props.fontFamily')
+            return getPropByPath(this.configData, "props.fontFamily");
         },
         dataFontStyle() {
-            return getPropByPath(this.configData, 'props.fontStyle')
+            return getPropByPath(this.configData, "props.fontStyle");
         },
     },
     methods: {
-        onChange(target, value) {
-            console.log('onChange',value)
-            Throttle.update(target,value);
+        ...mapMutations(["updateSchema"]),
+        changeFun(type,path,value) {
+            this.updateSchema({
+                type: type,
+                value: {
+                    [path]: value,
+                },
+            });
+        },
+        onChange(path, value) {
+            this.changeFun(UPDATE_COMPONENT_PROPS,path,value);
+            // console.log('onChange',value)
+            // Throttle.update(target,value);
         },
     },
     watch: {
         text() {
-            console.log('textChange')
+            console.log("textChange");
         },
         dataFontStyle(text) {
-            this.fontStyle = text
+            this.fontStyle = text;
         },
         dataFontFamily(text) {
-            this.fontFamily = text
-        },
-        configData(data1, data2) {
-            console.log('dataConfigChange', data1 === data2)
+            this.fontFamily = text;
         },
     },
     mounted() {
-        this.isMounted = true
-        this.fontFamily = this.dataFontFamily
-        this.fontStyle = this.dataFontStyle
-        console.log('init', this.text)
+        this.isMounted = true;
+        this.fontFamily = this.dataFontFamily;
+        this.fontStyle = this.dataFontStyle;
+        console.log("init", this.text);
     },
-}
+};
 </script>
 
 <style></style>

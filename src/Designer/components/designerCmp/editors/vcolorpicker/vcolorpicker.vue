@@ -1,8 +1,7 @@
 <template>
     <el-color-picker
         v-model="color"
-        @active-change="onChange"
-        @change="onInput"
+        @change="onChange"
     ></el-color-picker>
 </template>
 
@@ -10,9 +9,7 @@
 import { getPropByPath } from '@/utils'
 import { mapMutations } from '../../../../store'
 import {
-    BEFORE_UPDATE_COMPONENT_PROPS,
-    UPDATING_COMPONENT_PROPS,
-    AFTER_UPDATE_COMPONENT_PROPS,
+    UPDATE_COMPONENT_PROPS
 } from '../../../../constant/schema'
 export default {
     name: 'vcolorpicker',
@@ -47,15 +44,9 @@ export default {
             })
         },
         onChange() {
-            this.onFocus()
-            this.changeFun(UPDATING_COMPONENT_PROPS)
-        },
-        onFocus() {
-            this.changeFun(BEFORE_UPDATE_COMPONENT_PROPS)
-        },
-        onInput() {
+            console.log("change");
             if (this.isMounted) {
-                this.changeFun(AFTER_UPDATE_COMPONENT_PROPS)
+                this.changeFun(UPDATE_COMPONENT_PROPS)
             }
         },
     },
