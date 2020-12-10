@@ -15,10 +15,14 @@ export default {
         baseCmp,
     },
     mounted() {
+        console.log("mounted");
         this.parent = this.$refs['parent']
     },
     computed: {
         ...mapGetters(['handleUrl']),
+    },
+    beforeDestroy(){
+        console.log("destroy");
     },
     props: ['cmpConfig'],
 }

@@ -27,7 +27,7 @@
 <script>
 // import ImageCmp from "../Component/Image.vue";
 // import singlePage from "./component/Page";
-import preview from "./component/Preview1";
+import preview from "./component/Preview";
 import pipe from "./pipe";
 import { mapGetters, mapMutations } from "./store";
 export default {
@@ -54,6 +54,7 @@ export default {
   watch: {
     renderData(data) {
       this.setSchema(data);
+      console.log("change");
     },
     pageCount(data) {
       this.pageCountChange(data);

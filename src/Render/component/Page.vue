@@ -7,8 +7,8 @@
 <template>
     <ul :style="fmtStyle(this.pageData)" ref="page" :key="pageData.id">
         <component
-            v-for="(cmp, index) in pageData.components"
-            :key="index"
+            v-for="(cmp) in pageData.components"
+            v-bind:key="cmp.id"
             :is="cmp.type"
             :cmpConfig="cmp"
             :ref="cmp.id"
@@ -32,11 +32,15 @@ export default {
         return {};
     },
     mounted() {
+        window.aaa = this.pageData.components;
     },
     created(){
     },
     computed: {
-        ...mapGetters(['handleUrl'])
+        ...mapGetters(['handleUrl']),
+        test(){
+            return this.pageData.components;
+        }
     },
     watch: {
       pageState(data) {

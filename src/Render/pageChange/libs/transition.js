@@ -338,7 +338,6 @@
         var $nextPage = this.option.$pages.eq(this.option.current).addClass('pt-page-current'),
             outClass = animateWork.outClass, inClass = animateWork.inClass;
         $currPage.addClass(outClass).on('webkitAnimationEnd', function () {
-          console.log('end currentPage');
             $currPage.off('webkitAnimationEnd');
             self.option.endCurrPage = true;
             if (self.option.endNextPage) {
@@ -347,7 +346,6 @@
         });
 
         $nextPage.addClass(inClass).on('webkitAnimationEnd', function () {
-          console.log('end nextPage');
             $nextPage.off('webkitAnimationEnd');
             self.option.endNextPage = true;
             if (self.option.endCurrPage) {

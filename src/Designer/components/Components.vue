@@ -49,7 +49,8 @@
     },
     methods: {
       addCmp (config) {
-        this.$$addNewComponent({type: config.type});
+        console.log(config);
+        this.$$addNewComponent(config.editConfig.defaultSchema);
       }
     }
   }

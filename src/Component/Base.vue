@@ -14,13 +14,13 @@ import pipe from "../Render/pipe";
 import { mapActions } from "../Render/store";
 import animationDispatcher from "./animations/";
 import "./events";
-import {get} from "@/register";
-import {REG_EVENTS} from "@/const";
+import { get } from "@/register";
+import { REG_EVENTS } from "@/const";
 const eventMap = get(REG_EVENTS);
 
 export default {
     name: "baseCmp",
-    props: ["cmpConfig", "pageState",],
+    props: ["cmpConfig", "pageState"],
     data() {
         return {
             animationStyle: {
@@ -49,7 +49,7 @@ export default {
                         style[key] = this.layoutConfig[key];
                         break;
                     case "zIndex":
-                        style['z-index'] = this.layoutConfig[key];
+                        style["z-index"] = this.layoutConfig[key];
                         break;
                     default:
                         style[key] = `${this.layoutConfig[key]}px`;
@@ -80,34 +80,33 @@ export default {
         },
     },
     created() {},
-    mounted() {
-    },
+    mounted() {},
     methods: {
-      ...mapActions([]),
-      dispatchEvent(type, e) {
-          if (!this.$store.state.currentRenderState.designMode) {
-              this.cmpConfig.events.forEach((ele) => {
-                  if (
-                      eventMap[ele.type] &&
-                      eventMap[ele.type].eventKey === type
-                  ) {
-                      eventMap[ele.type].method.call(
-                          this,
-                          ele.value,
-                          e,
-                          this,
-                      );
-                  }
-              });
-          } else if (type === "click") {
-              pipe.emit("click", this, this.cmpConfig.id);
-          }
-      },
-      idleAction(isForce) {
-          if (!this.$store.state.currentRenderState.designMode || isForce) {
-              animationDispatcher(this.cmpConfig, this.animationStyle);
-          }
-      },
+        ...mapActions([]),
+        dispatchEvent(type, e) {
+            if (!this.$store.state.currentRenderState.designMode) {
+                this.cmpConfig.events.forEach((ele) => {
+                    if (
+                        eventMap[ele.type] &&
+                        eventMap[ele.type].eventKey === type
+                    ) {
+                        eventMap[ele.type].method.call(
+                            this,
+                            ele.value,
+                            e,
+                            this
+                        );
+                    }
+                });
+            } else if (type === "click") {
+                pipe.emit("click", this, this.cmpConfig.id);
+            }
+        },
+        idleAction(isForce) {
+            if (!this.$store.state.currentRenderState.designMode || isForce) {
+                animationDispatcher(this.cmpConfig, this.animationStyle);
+            }
+        },
     },
 };
 </script>

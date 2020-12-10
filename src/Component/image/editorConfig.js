@@ -11,6 +11,10 @@ export default [
         "position": "1",
         defaultSchema: {
             "type": "ImageCmp",
+            "layoutConfig":{
+                "width":300,
+                "height":300
+            },
             "props": {
                 "bgUrl": "images/Koala.jpg"
             },
