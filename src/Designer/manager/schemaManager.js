@@ -4,8 +4,6 @@
 import {clone} from '../../Utils/utils';
 import Vue from 'vue';
 import operatorMap from './operators';
-import {AUTO_BEFORE_PROP,AUTO_UPDATING_PROP,AUTO_AFTER_PROP} from "../constant/schema"; 
-import updateThrottle from "./updateThrottle";
 export default class SchemaManager {
 
   static defaultConfig = {};
@@ -36,21 +34,14 @@ export default class SchemaManager {
     if (!this.snapshotInfo) {
       this.snapshot(operateConfig);
     }
-    if([AUTO_BEFORE_PROP,AUTO_UPDATING_PROP,AUTO_AFTER_PROP].indexOf(operateConfig.type)===-1){
-      updateThrottle.flush();
-    }
     this.execute(operateConfig);
     this.stackMap.redoStack = [];
     this.stackMap.undoStack.push(this.snapshotInfo);
-    console.log(this.stackMap);
   }
 
   update(operateConfig) {
     const schema = this.getSchema();
     const updater = operateConfig.updater || operatorMap[operateConfig.type].updater;
-    if([AUTO_BEFORE_PROP,AUTO_UPDATING_PROP,AUTO_AFTER_PROP].indexOf(operateConfig.type)===-1){
-      updateThrottle.flush();
-    }
     updater(schema, operateConfig);
   }
 
@@ -66,6 +57,7 @@ export default class SchemaManager {
     if (this.canRedo()) {
       const snapshotInfo = this.stackMap.redoStack.pop();
       this.updateByRedoUndo(snapshotInfo, 'redo');
+      this.stackMap.undoStack.push(snapshotInfo);
     }
   }
 
@@ -75,7 +67,6 @@ export default class SchemaManager {
       this.updateByRedoUndo(snapshotInfo, 'undo');
       this.stackMap.redoStack.push(snapshotInfo);
     }
-    console.info(this.stackMap);
   }
 
   clear() {
@@ -103,9 +94,6 @@ export default class SchemaManager {
    * 记录当前状态
    */
   snapshot(operateConfig) {
-    if([AUTO_BEFORE_PROP,AUTO_UPDATING_PROP,AUTO_AFTER_PROP].indexOf(operateConfig.type)===-1){
-      updateThrottle.flush();
-    }
     this.snapshotInfo = this.buildSnapshot(operateConfig);
   }
 
