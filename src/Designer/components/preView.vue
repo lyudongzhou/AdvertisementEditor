@@ -23,7 +23,7 @@ export default {
   },
   components: {},
   computed: {
-    ...mapState(["vmSchema", "currentPageId", "previewing", "previewTotal"]),
+    ...mapState(["schema", "currentPageId", "previewing", "previewTotal"]),
   },
   watch: {
     previewing(data) {
@@ -53,7 +53,7 @@ export default {
           let currentPage = this.currentPageId;
           return h(render, {
             props: {
-              renderData: this.vmSchema,
+              renderData: this.schema,
               currentPage: currentPage,
               singlePagePreview: !this.previewTotal,
               baseUrl: "",

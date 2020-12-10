@@ -26,13 +26,13 @@ export default {
   },
   props: [],
   computed: {
-    ...mapState(["vmSchema"]),
+    ...mapState(["schema"]),
     ...mapGetters(["pages", "dialogs"]),
     containerStyle() {
       return {
         position: "absolute",
-        width: this.vmSchema ? this.vmSchema.container.width + "px" : 0,
-        height: this.vmSchema ? this.vmSchema.container.height + "px" : 0,
+        width: this.schema ? this.schema.container.width + "px" : 0,
+        height: this.schema ? this.schema.container.height + "px" : 0,
       };
     },
   },
@@ -63,8 +63,8 @@ export default {
           let currentPage = this.$refs.page;
           currentPage
             .screenShots({
-              width: this.vmSchema.container.width,
-              height: this.vmSchema.container.height,
+              width: this.schema.container.width,
+              height: this.schema.container.height,
             })
             .then((canvas) => {
               let data = null;

@@ -66,7 +66,7 @@ export default {
   props: ["configData", "config"],
   mounted() {},
   computed: {
-    ...mapState(["vmSchema"]),
+    ...mapState(["schema"]),
   },
   methods: {
     handleClick(type) {
@@ -77,7 +77,7 @@ export default {
         case "top50":
           updateThrottle.update(
             "layoutConfig.top",
-            this.vmSchema.container.height * 0.5 -
+            this.schema.container.height * 0.5 -
               0.5 * this.configData.layoutConfig.height,
             true
           );
@@ -85,7 +85,7 @@ export default {
         case "top100":
           updateThrottle.update(
             "layoutConfig.top",
-            this.vmSchema.container.height -
+            this.schema.container.height -
               this.configData.layoutConfig.height,
             true
           );
@@ -97,7 +97,7 @@ export default {
           updateThrottle.update(
             "layoutConfig.left",
             0.5 *
-              (this.vmSchema.container.width -
+              (this.schema.container.width -
                 this.configData.layoutConfig.width),
             true
           );
@@ -105,7 +105,7 @@ export default {
         case "left100":
           updateThrottle.update(
             "layoutConfig.left",
-            this.vmSchema.container.width - this.configData.layoutConfig.width,
+            this.schema.container.width - this.configData.layoutConfig.width,
             true
           );
           break;

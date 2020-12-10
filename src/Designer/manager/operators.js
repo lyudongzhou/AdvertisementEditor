@@ -33,7 +33,7 @@ import {
   COMMAND_SELECT_SIBLING_PAGE,
   COMMAND_UPDATE_SELECT_ITEM,
 } from '../constant/base';
-import {getMergeSchemaManager} from './schemaManager';
+import {getSchemaManager} from './schemaManager';
 
 const getPageKey = currentPageType => currentPageType === 'page' ? 'pages' : 'dialogs';
 
@@ -123,19 +123,18 @@ const updateComponentLayout = generateComponentUpdater('layoutConfig');
 
 // handler
 const generateHandler = (fn) => (state, operateConfig) => {
-  const manager = getMergeSchemaManager(state);
-  const { schemaManager, vmSchemaManager } = manager;
-  fn({manager, schemaManager, vmSchemaManager, state, operateConfig});
+  const manager = getSchemaManager(state);
+  fn({manager, state, operateConfig});
 };
 
 // 快照
-const snapshotHandler = generateHandler(({vmSchemaManager, operateConfig}) => vmSchemaManager.snapshot(operateConfig));
+const snapshotHandler = generateHandler(({manager, operateConfig}) => manager.snapshot(operateConfig));
 
 // 提交操作（生成redo undo）
 const commitHandler = generateHandler(({manager, operateConfig}) => manager.commit(operateConfig));
 
 // 更新视图
-const updateHandler = generateHandler(({vmSchemaManager, operateConfig}) => vmSchemaManager.update(operateConfig));
+const updateHandler = generateHandler(({manager, operateConfig}) => manager.update(operateConfig));
 
 export default {
   beforeupdatePage: {
