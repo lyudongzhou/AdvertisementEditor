@@ -66,7 +66,7 @@
     },
     computed: {
       ...mapState([
-        'vmSchema',
+        'schema',
         'currentComponentId',
         'opened',
         'currentPageId'
@@ -116,11 +116,11 @@
       contentStyle() {
         return {
           width: warpUnit(
-            this.scaleValue * this.vmSchema.container.width +
+            this.scaleValue * this.schema.container.width +
             CONTENT_OFFSET * 2,
           ),
           height: warpUnit(
-            this.scaleValue * this.vmSchema.container.height +
+            this.scaleValue * this.schema.container.height +
             CONTENT_OFFSET * 2,
           ),
         };
@@ -130,8 +130,8 @@
           width,
           height,
         } = this.$refs.workspace.getBoundingClientRect();
-        const originWidth = this.vmSchema.container.width;
-        const originHeight = this.vmSchema.container.height;
+        const originWidth = this.schema.container.width;
+        const originHeight = this.schema.container.height;
         const maxWidth = width - CONTENT_OFFSET * 2;
         const maxHeight = height - CONTENT_OFFSET * 2;
         return {
@@ -318,7 +318,7 @@
       <render
           v-if="opened"
           ref="render"
-          :renderData="vmSchema"
+          :renderData="schema"
           :currentPage="currentPageId"
           @click="handleClickComponent"
           :designMode="true"

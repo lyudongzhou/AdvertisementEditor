@@ -12,7 +12,6 @@ export default {
   state() {
     return {
       schema: {},
-      vmSchema: {},
       currentComponentId: null,
       opened: false,
       // 当前选中对象的类型： component、page、dialog
@@ -40,10 +39,10 @@ export default {
       return getters.currentContainer.components || [];
     },
     pages(state) {
-      return state.vmSchema.pages || [];
+      return state.schema.pages || [];
     },
     dialogs(state) {
-      return state.vmSchema.dialogs || [];
+      return state.schema.dialogs || [];
     },
     currentPage(state, getters) {
       // todo 依赖可能没有收集到

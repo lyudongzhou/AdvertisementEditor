@@ -1,5 +1,5 @@
 import {clone, getPropByPath} from '../../Utils/utils';
-import { getMergeSchemaManager } from '../manager/schemaManager';
+import { getSchemaManager } from '../manager/schemaManager';
 import { eventBus } from '../plugin/event';
 import { UPDATE_SELECT_INFO } from '../constant/event';
 import operatorMap from '../manager/operators';
@@ -55,14 +55,13 @@ const afterCommandMap = {
     const {currentPageType} = operateConfig;
     state.currentPageType = currentPageType;
     state.currentType = currentPageType;
-    state.currentPageId = getPropByPath(state.vmSchema, `${currentPageType === 'page' ? 'pages' : 'dialogs'}[0].id`, null);
+    state.currentPageId = getPropByPath(state.schema, `${currentPageType === 'page' ? 'pages' : 'dialogs'}[0].id`, null);
   },
 };
 
 export default {
   resetSchema (state, schema) {
     state.schema = clone(schema);
-    state.vmSchema = clone(schema);
     state.currentPageId = getPropByPath(schema, 'pages[0].id', null);
     state.currentPageType = 'page';
     state.currentType = 'page';
@@ -78,7 +77,7 @@ export default {
   selectPage (state, {id, currentPageType}) {
     if (id !== state.currentPageId) {
       // 切换页面重置redo undo
-      getMergeSchemaManager(state).clear();
+      getSchemaManager(state).clear();
     }
     state.currentPageId = id;
     state.currentPageType = currentPageType;
@@ -109,14 +108,14 @@ export default {
     })
   },
   redo (state) {
-    const manager = getMergeSchemaManager(state);
+    const manager = getSchemaManager(state);
     manager.redo();
-    eventBus.emit(UPDATE_SELECT_INFO);
+    afterCommandMap[COMMAND_UPDATE_SELECT_ITEM]();
   },
   undo (state) {
-    const manager = getMergeSchemaManager(state);
+    const manager = getSchemaManager(state);
     manager.undo();
-    eventBus.emit(UPDATE_SELECT_INFO);
+    afterCommandMap[COMMAND_UPDATE_SELECT_ITEM]();
   },
   copyComponent(state, copyComponent) {
     state.copyComponent = copyComponent;

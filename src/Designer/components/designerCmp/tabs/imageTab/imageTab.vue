@@ -22,7 +22,7 @@ export default {
     props: ['configData', 'config'],
     mounted() {},
     computed: {
-        // ...mapState(['vmSchema']),
+        // ...mapState(['schema']),
     },
     methods: {},
     data() {
