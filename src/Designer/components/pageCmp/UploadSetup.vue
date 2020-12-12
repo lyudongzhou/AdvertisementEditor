@@ -24,7 +24,7 @@ export default {
   methods: {
     openUploadDialog (bool) {
       this.isOpen = bool;
-    }
+    },
   }
 }
 </script>

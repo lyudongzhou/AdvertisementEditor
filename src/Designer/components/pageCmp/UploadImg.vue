@@ -1,13 +1,10 @@
 <template lang="html">
   <div class="upload_img">
     <div class="upload">
-      <el-upload
-        class="upload-demo"
-        action="https://jsonplaceholder.typicode.com/posts/"
-        multiple
-        :limit="3">
-        <button class="pub_btn">上传</button>
-      </el-upload>
+      <label class="upload_text pub_btn" for="avatar">上传图片</label>
+      <input type="file" class="upload_input"
+             id="avatar" name="avatar"
+             accept="image/png, image/jpeg">
     </div>
     <div class="upload_detail">
       <div class="detail_top">
@@ -17,27 +14,68 @@
           <span class="el-icon-search search_icon"></span>
         </p>
       </div>
-      <div class="content"></div>
+      <div class="content">
+        <ul>
+          <li class="img_list" :class="{'check_list':checkImgs.indexOf(img.bgUrl)>-1}" v-for="(img,index) in local" :key="index" @click="checkImg(img.bgUrl)">
+            <div class="identification" v-if="checkImgs.indexOf(img.bgUrl)>-1">
+              <span class="check_img"></span>
+              <i class="el-icon-check check_icon"></i>
+            </div>
+            <img :src="img.bgUrl" ref="img" />
+          </li>
+        </ul>
+      </div>
       <div class="detail_operation">
-        <button class="pub_btn" @click="cancelDialog">取消</button>
-        <button class="pub_btn">确定</button>
+        <button class="pub_btn" @click="handleCancel">取消</button>
+        <button class="pub_btn" @click="handleConfirm">确定</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+  import { mapMutations } from '../../store';
+
   export default {
     name: 'uploadImg',
     props: ['showDialog'],
     data() {
       return {
+        local: [
+          {
+            bgUrl: "images/Koala.jpg",
+          }
+        ], // TODO: 改为服务器获取到的数据
+        checkImgs: [],
       };
     },
-    mounted () {},
+    mounted () {
+    },
+    computed: {
+    },
     methods: {
-      cancelDialog () {
+      ...mapMutations([
+        'updateSchema',
+      ]),
+      handleCancel () {
         this.$emit('showDialog', false);
+      },
+      checkImg (url) {
+        this.checkImgs.shift();
+        this.checkImgs.push(url);
+      },
+      handleConfirm () {
+        this.$emit('showDialog', false);
+        this.updateSchema({
+          type: "beforeupdatePage"
+        });
+        this.updateSchema({
+          type: "afterPage",
+          value: {
+            ['type']: 'image',
+            ["value"]: this.checkImgs[0]
+          },
+        });
       }
     },
   }
@@ -81,8 +119,17 @@
       height: 70px;
       border-bottom: 1px solid #EFEFEF;
       box-sizing: border-box;
-      .upload-demo {
+      .upload_text {
+        display: inline-block;
         margin: 16px 0 0 33px;
+      }
+      .upload_input {
+        font-size: 16px;
+        right: 0;
+        top: 0;
+        opacity: 0;
+        filter: alpha(opacity=0);
+        cursor: pointer;
       }
     }
     .upload_detail {
@@ -132,6 +179,51 @@
       }
       .content {
         flex: 1;
+        .img_list {
+          width: 100px;
+          height: 100px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+          position: relative;
+          img {
+            width: 100%;
+            height: auto;
+          }
+          .identification {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 40px;
+            height: 40px;
+            text-align: right;
+            .check_img {
+              position: absolute;
+              top: 0;
+              right: 0;
+              width: 0;
+              height: 0;
+              border-top: 40px solid #3c822e;
+              border-left: 40px solid transparent;
+              display: block;
+              content: "";
+              color: #ffffff;
+            }
+            .check_icon {
+              position: absolute;
+              right: 0;
+              top: 0;
+              font-weight: 800;
+              font-size: 20px;
+              color: #FFFFFF;
+            }
+          }
+        }
+        .check_list {
+          border: 1px solid green;
+          box-sizing: border-box;
+        }
       }
       .detail_operation {
         width: 100%;

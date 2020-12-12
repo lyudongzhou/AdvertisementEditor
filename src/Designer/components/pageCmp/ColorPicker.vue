@@ -82,7 +82,10 @@ export default {
       up: (hex) => {
         this.updateSchema({
           type: "afterPage",
-          value: {["value"]:hex},
+          value: {
+            ["type"]: "color",
+            ["value"]:hex,
+          },
         });
       },
       change: () => {},
@@ -95,7 +98,6 @@ export default {
   },
   watch: {
     currentPage (value) {
-      console.log(value);
       this._colorPicker.setColorByInput(value.container.backGround.value);
     }
   }
