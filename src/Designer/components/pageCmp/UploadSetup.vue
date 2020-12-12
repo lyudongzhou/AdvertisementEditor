@@ -2,7 +2,7 @@
   <div class="upload_setup">
     <div class="add_img el-icon-plus" @click="openUploadDialog=true"></div>
     <button class="add_img_btn" @click="openUploadDialog=true">添加图片</button>
-    <upload-img v-if="openUploadDialog"></upload-img>
+    <upload-img v-if="openUploadDialog" :isShow="openUploadDialog"></upload-img>
   </div>
 </template>
 
