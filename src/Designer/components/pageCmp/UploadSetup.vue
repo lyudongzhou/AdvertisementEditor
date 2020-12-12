@@ -1,8 +1,8 @@
 <template lang="html">
   <div class="upload_setup">
-    <div class="add_img el-icon-plus" @click="openUploadDialog=true"></div>
-    <button class="add_img_btn" @click="openUploadDialog=true">添加图片</button>
-    <upload-img v-if="openUploadDialog" :isShow="openUploadDialog"></upload-img>
+    <div class="add_img el-icon-plus" @click="openUploadDialog(true)"></div>
+    <button class="add_img_btn" @click="openUploadDialog(true)">添加图片</button>
+    <upload-img v-if="isOpen" @showDialog="openUploadDialog"></upload-img>
   </div>
 </template>
 
@@ -13,13 +13,18 @@ export default {
   name: 'uploadSetup',
   data () {
     return {
-      openUploadDialog: false,
+      isOpen: false,
     }
   },
   components: {
     UploadImg
   },
+  mounted () {
+  },
   methods: {
+    openUploadDialog (bool) {
+      this.isOpen = bool;
+    }
   }
 }
 </script>

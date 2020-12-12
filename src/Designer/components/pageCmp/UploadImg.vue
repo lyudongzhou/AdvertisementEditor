@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="upload_img" v-if="isShowDialog">
+  <div class="upload_img">
     <div class="upload">
       <el-upload
         class="upload-demo"
@@ -19,7 +19,7 @@
       </div>
       <div class="content"></div>
       <div class="detail_operation">
-        <button class="pub_btn" @click="isShowDialog=false">取消</button>
+        <button class="pub_btn" @click="cancelDialog">取消</button>
         <button class="pub_btn">确定</button>
       </div>
     </div>
@@ -29,13 +29,16 @@
 <script>
   export default {
     name: 'uploadImg',
-    props: ['isShow'],
+    props: ['showDialog'],
     data() {
       return {
-        isShowDialog: this.isShow
       };
     },
+    mounted () {},
     methods: {
+      cancelDialog () {
+        this.$emit('showDialog', false);
+      }
     },
   }
 </script>
