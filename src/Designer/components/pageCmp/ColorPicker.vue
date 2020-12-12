@@ -122,7 +122,7 @@ export default {
       // width: 244px;
       height: auto;
       height: auto;
-      z-index: 100;
+      z-index: 2;
       display: flex;
       flex-direction: column;
       .color_palette {
