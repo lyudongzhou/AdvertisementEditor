@@ -391,6 +391,7 @@ let Constructor ={children:[
   }
 ]};
 const config = get(REG_TITLECONFIG);
+console.log(config);
 Object.keys(config).forEach(ele => {
   let schemas = config[ele];
   schemas.forEach(ele => {

@@ -1,3 +1,9 @@
+/*
+ * @Author: LyuDongzhou
+ * @Date: 2020-12-13 01:56:42
+ * @LastEditTime: 2020-12-13 18:05:24
+ * @Description: file content
+ */
 const fs = require("fs");
 const path = require("path");
 const express = require('express');
@@ -42,5 +48,11 @@ router.get('/template/get/id', (req, res) => {
   let result = fs.readFileSync(path.resolve(__dirname, "../testData/designer/schema.json"), 'utf8');
   res.send(createSuccessResult({bodyJson: JSON.parse(result)}));
 });
-
+const bodyParser  = require("body-parser");;
+var jsonParser = bodyParser.json();
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
+router.post("/test",urlencodedParser,(req,res)=>{
+  console.log(req.body);
+  res.end();
+});
 module.exports = router;

@@ -1,10 +1,16 @@
+<!--
+ * @Author: LyuDongzhou
+ * @Date: 2020-12-08 22:50:37
+ * @LastEditTime: 2020-12-13 15:59:13
+ * @Description: file content
+-->
 <template>
   <el-container class="full-height">
     <el-header class="no-padding" height="55px">
       <designer-header></designer-header>
     </el-header>
     <el-container class="main-container">
-      <el-aside width="200px">
+      <el-aside width="300px">
         <editor></editor>
       </el-aside>
 
