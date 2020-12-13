@@ -98,7 +98,9 @@ export default {
   },
   watch: {
     currentPage (value) {
-      this._colorPicker.setColorByInput(value.container.backGround.value);
+      if (value.container.backGround.type === 'color') {
+        this._colorPicker.setColorByInput(value.container.backGround.value);
+      }
     }
   }
 }
