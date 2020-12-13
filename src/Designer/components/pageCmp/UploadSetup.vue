@@ -1,12 +1,12 @@
 <template lang="html">
   <div class="upload_setup">
-    <div class="add_img" @click="openUploadDialog(true, showImg)">
+    <div class="add_img" @click="openUploadDialog(true, bgImg)">
       <i class="el-icon-plus" v-if="!bgImg"></i>
       <img v-else :src="bgImg" alt="" />
     </div>
     <div class="buttons">
       <button class="add_img_btn del_img_btn" v-if="bgImg" @click="showImg=null">删除图片</button>
-      <button class="add_img_btn" @click="openUploadDialog(true, showImg)">{{bgImg?'替换图片':'添加图片'}}</button>
+      <button class="add_img_btn" @click="openUploadDialog(true, bgImg)">{{bgImg?'替换图片':'添加图片'}}</button>
     </div>
     <upload-img v-if="isOpen" @showDialog="openUploadDialog"></upload-img>
   </div>
@@ -34,10 +34,10 @@ export default {
         if (bg.type==='image') {
           return this.currentPage.container.backGround.value;
         } else {
-          return false;
+          return null;
         }
       } else {
-        return false;
+        return null;
       }
     }
   },
