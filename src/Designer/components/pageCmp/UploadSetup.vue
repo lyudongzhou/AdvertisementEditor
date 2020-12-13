@@ -13,7 +13,7 @@ export default {
   name: 'uploadSetup',
   data () {
     return {
-      isOpen: false,
+      isOpen: true,
     }
   },
   components: {

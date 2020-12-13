@@ -4,6 +4,7 @@
       <label class="upload_text pub_btn" for="avatar">上传图片</label>
       <input type="file" class="upload_input"
              id="avatar" name="avatar"
+             @change="uploadImg"
              accept="image/png, image/jpeg">
     </div>
     <div class="upload_detail">
@@ -16,12 +17,12 @@
       </div>
       <div class="content">
         <ul>
-          <li class="img_list" :class="{'check_list':checkImgs.indexOf(img.bgUrl)>-1}" v-for="(img,index) in local" :key="index" @click="checkImg(img.bgUrl)">
-            <div class="identification" v-if="checkImgs.indexOf(img.bgUrl)>-1">
+          <li class="img_list" :class="{'check_list':checkImgs.indexOf(img.fileUrl)>-1}" v-for="(img,index) in resources" :key="index" @click="checkImg(img.fileUrl)">
+            <div class="identification" v-if="checkImgs.indexOf(img.fileUrl)>-1">
               <span class="check_img"></span>
               <i class="el-icon-check check_icon"></i>
             </div>
-            <img :src="img.bgUrl" ref="img" />
+            <img :src="img.fileUrl" ref="img" />
           </li>
         </ul>
       </div>
@@ -41,11 +42,7 @@
     props: ['showDialog'],
     data() {
       return {
-        local: [
-          {
-            bgUrl: "images/Koala.jpg",
-          }
-        ], // TODO: 改为服务器获取到的数据
+        resources: [],
         checkImgs: [],
       };
     },
@@ -57,6 +54,31 @@
       ...mapMutations([
         'updateSchema',
       ]),
+      uploadImg (e) {
+        let formData = new FormData(),
+            file = e.target.files[0];
+        formData.append("file", file);
+        formData.append("type", 1);
+        formData.append("cateforyId", 1);
+        formData.append("fileName", file.name);
+        this.$axios.post("/res/upload", formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }).then(() => {
+          this.$axios.get("/res/get", {
+            type: 2,
+            userId: 1
+          }).then((res) => {
+            this.resources.length = 0;
+            let category = res.data.category;
+            category.forEach(child => {
+              let resources = child.resources;
+              this.resources.push(resources);
+            })
+          })
+        })
+      },
       handleCancel () {
         this.$emit('showDialog', false);
       },
