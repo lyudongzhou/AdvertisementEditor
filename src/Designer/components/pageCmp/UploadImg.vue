@@ -35,8 +35,6 @@
 </template>
 
 <script>
-  import { mapMutations } from '../../store';
-
   export default {
     name: 'uploadImg',
     props: ['showDialog'],
@@ -46,14 +44,14 @@
         checkImgs: [],
       };
     },
+    created () {
+      this.getImgResources();
+    },
     mounted () {
     },
     computed: {
     },
     methods: {
-      ...mapMutations([
-        'updateSchema',
-      ]),
       uploadImg (e) {
         let formData = new FormData(),
             file = e.target.files[0];
@@ -66,16 +64,20 @@
             'Content-Type': 'multipart/form-data'
           }
         }).then(() => {
-          this.$axios.get("/res/get", {
-            type: 2,
-            userId: 1
-          }).then((res) => {
-            this.resources.length = 0;
-            let category = res.data.category;
-            category.forEach(child => {
-              let resources = child.resources;
-              this.resources.push(resources);
-            })
+          this.getImgResources();
+        })
+      },
+      // 获取图片资源
+      getImgResources () {
+        this.$axios.get("/res/get", {
+          type: 2,
+          userId: 1
+        }).then((res) => {
+          this.resources.length = 0;
+          let category = res.data.category;
+          category.forEach(child => {
+            let resources = child.resources;
+            this.resources.push(resources);
           })
         })
       },
@@ -87,17 +89,7 @@
         this.checkImgs.push(url);
       },
       handleConfirm () {
-        this.$emit('showDialog', false);
-        this.updateSchema({
-          type: "beforeupdatePage"
-        });
-        this.updateSchema({
-          type: "afterPage",
-          value: {
-            ['type']: 'image',
-            ["value"]: this.checkImgs[0]
-          },
-        });
+        this.$emit('showDialog', false, this.checkImgs[0]);
       }
     },
   }
