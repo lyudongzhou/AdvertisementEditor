@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import ThumbnailShow from './ThumbnailShow1.vue';
+import ThumbnailShow from './ThumbnailShow.vue';
 
 export default {
   name: 'PageManager',

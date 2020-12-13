@@ -1,81 +1,63 @@
 <template lang="html">
     <div class="thumbnailShow">
-        <!-- thumbnailShow -->
-        <div class="hideDom" ref="hideDom">
-            <singlePage ref="singlePage" :pageData="page"></singlePage>
-        </div>
-        <!-- canvas add li -->
         <ul>
             <li
-                v-for="page in pages"
+                v-for="(page, index) in pages"
+                :class="page.id === currentPageId ? 'list_active' : ''"
                 :key="page.id"
                 @click="switchCurrentPage(page)"
             >
-                <p class="list_index">{{ page.id }}</p>
-                <p class="list_thumbnail" ref="listThumbnail"></p>
+                <p class="list_index">{{ index + 1 }}</p>
+                <p class="list_thumbnail">
+                    <snapShotDisplay :id="page.id"></snapShotDisplay>
+                </p>
+                <span class="add_page el-icon-plus" @click="addPage"></span>
             </li>
         </ul>
     </div>
 </template>
 
 <script>
-import { mapMutations, mapGetters } from '../../store'
-import singlePage from '../../../Render/component/Page.vue'
+import { mapMutations, mapGetters, mapState } from '../../store';
+import snapShotDisplay from '../snapShotDisplay';
+import manager from '../../manager/snapShot';
+import schemaMixin from '../../mixin/schemaMixin';
 
 export default {
     name: 'ThumbnailShow',
+    mixins: [schemaMixin],
     components: {
-        singlePage,
+        snapShotDisplay,
+    },
+    data() {
+        return {}
     },
     computed: {
         ...mapGetters(['pages']),
+        ...mapState(['currentPageId']),
     },
     created() {},
-    mounted() {
-        if (this.pages.length > 0) {
-            this.renderThumbnail(this.pages)
-        }
-    },
+    mounted() {},
     updated() {},
     methods: {
-        ...mapMutations(['switchPage']),
-        renderOne(pageData) {},
-        renderThumbnail(pages) {
-            pages.forEach((page, index) => {
-                let hideDomWidth = this.$refs.hideDom[index].offsetWidth,
-                    hideDomHeight = this.$refs.hideDom[index].offsetHeight,
-                    offsetWidth = 124,
-                    offsetHeight = 157,
-                    scaleX = offsetWidth / hideDomWidth,
-                    scaleY = offsetHeight / hideDomHeight
-                let currentPage = this.$refs.singlePage[index]
-                currentPage
-                    .screenShots({
-                        width: this.$refs.hideDom[index].offsetWidth,
-                        height: this.$refs.hideDom[index].offsetHeight,
-                    })
-                    .then((canvas) => {
-                        canvas.style.transform = `scale(${scaleX}, ${scaleY})`
-                        canvas.style['transform-origin'] = '0 0'
-                        this.$refs.listThumbnail[index].appendChild(canvas)
-                        this.$refs.hideDom[index].style.display = 'none'
-                    })
-            })
-        },
+        ...mapMutations(['selectPage']),
         /**
          * 点击缩略图切换页面
          * @param {Object} page
          */
         switchCurrentPage(page) {
-            this.switchPage(page)
+            manager.addTask(this.currentPageId)
+            this.selectPage({ id: page.id, currentPageType: 'page' })
         },
+        addPage () {
+          this.$$addPage('page');
+        }
     },
     watch: {
-        pages(newValue) {
-            this.$nextTick(() => {
-                this.renderThumbnail(newValue)
-            })
-        },
+        // pages(newValue) {
+        //   newValue.forEach((ele) => {
+        //   });
+        // },
     },
 }
 </script>
@@ -83,14 +65,7 @@ export default {
 <style lang="less" scoped>
 .thumbnailShow {
     width: 100%;
-    height: 100%;
-    .hideDom {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        top: 1000px;
-        left: 0;
-    }
+    height: auto;
     > ul {
         width: 100%;
         height: 100%;
@@ -100,9 +75,8 @@ export default {
             width: 100%;
             height: 210px;
             display: flex;
-            p {
-                margin-top: 21px;
-            }
+            position: relative;
+            align-items: center;
             .list_index {
                 width: 30px;
                 height: 30px;
@@ -114,14 +88,39 @@ export default {
                 font-family: PingFangSC-Regular, PingFang SC;
                 font-weight: 400;
                 color: #999999;
-                margin: 64px 38px 95px 31px;
+                margin: 0 38px 0 31px;
             }
             .list_thumbnail {
                 width: 124px;
                 height: 157px;
             }
+            >span {
+              position: absolute;
+              width: 30px;
+              height: 30px;
+              border-radius: 50%;
+              left: 146px;
+              top: 163px;
+              font-size: 20px;
+              background: #ffffff;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              color: #000000;
+              font-weight: bold;
+            }
+            .add_page {
+              display: none;
+            }
         }
         li:hover {
+            cursor: pointer;
+            background: #727272;
+            .add_page {
+              display: flex;
+            }
+        }
+        .list_active {
             cursor: pointer;
             background: #727272;
         }
