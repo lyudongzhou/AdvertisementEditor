@@ -1,7 +1,7 @@
 <!--
  * @Author: LyuDongzhou
  * @Date: 2020-12-07 01:13:50
- * @LastEditTime: 2020-12-13 19:11:41
+ * @LastEditTime: 2020-12-13 20:29:34
  * @Description: file content
 -->
 <script>
@@ -41,7 +41,7 @@ export default {
       <el-header style="padding: 0px">
         <el-container>
           <el-header style="padding: 0px">
-            <el-tabs v-model="activeName" type="card">
+            <el-tabs type="card">
               <el-tab-pane
                 label="机构"
                 name="first"
