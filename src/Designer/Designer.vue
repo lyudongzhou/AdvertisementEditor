@@ -1,7 +1,7 @@
 <!--
  * @Author: LyuDongzhou
  * @Date: 2020-12-08 22:50:37
- * @LastEditTime: 2020-12-13 15:59:13
+ * @LastEditTime: 2020-12-17 02:39:25
  * @Description: file content
 -->
 <template>
@@ -10,7 +10,7 @@
       <designer-header></designer-header>
     </el-header>
     <el-container class="main-container">
-      <el-aside width="300px">
+      <el-aside width="270px">
         <editor></editor>
       </el-aside>
 
