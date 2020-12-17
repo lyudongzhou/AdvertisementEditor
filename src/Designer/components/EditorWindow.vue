@@ -1,6 +1,5 @@
 <template>
-    <div
-        class="fly"
+    <vue-draggable-resizable class="editWin fly" :resizable="false" :parent="true" :y="50" :h="805" :w="305"
         v-if="!isClose"
     >
         <el-container>
@@ -27,17 +26,18 @@
                 </el-collapse>
             </el-main>
         </el-container>
-    </div>
+    </vue-draggable-resizable>
 </template>
 
 <script>
 import { get } from '@/register'
 import { REG_TABS, REG_COMPONENTSSCHEMA, DEFAULTTABS } from '@/const'
 import './designerCmp'
+import VueDraggableResizable from 'vue-draggable-resizable';
 import { mapGetters } from '../store'
 export default {
     name: 'editorWin',
-    components: get(REG_TABS),
+    components: {...get(REG_TABS), VueDraggableResizable},
     props: [],
     data() {
         return {
@@ -98,7 +98,7 @@ export default {
     background-color: #555555;
     border: 5px solid #666666;
     border-radius: 10px;
-    transition: transform 0.3s ease-out;
+    /*transition: transform 0.3s ease-out;*/
     color: snow;
     width: 300px;
     height: 800px;
@@ -126,6 +126,17 @@ export default {
                 padding: 10px;
                 background-color: #cccccc;
             }
+        }
+    }
+    .editWin {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        right: 0;
+
+        &.vdr {
+            border: none;
         }
     }
 }

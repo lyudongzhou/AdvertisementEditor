@@ -360,9 +360,7 @@
     <div>
       <!--辅助线-->
     </div>
-    <vue-draggable-resizable class="editWin" :resizable="false" :parent="true" :y="50" :h="805" :w="305">
-      <editorWin></editorWin>
-    </vue-draggable-resizable>
+    <editorWin></editorWin>
 
   </div>
 </template>
