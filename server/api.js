@@ -52,29 +52,6 @@ const uploadSuccessResult = data => {
   };
 };
 
-const getSuccessResult = data => {
-  return {
-    "code": 0,
-    "data": {
-      "errorCode": 0,
-      "errorMessage": "",
-      ...data,
-      "category": [
-        {
-          "resources": {
-            "fileId": 1,
-            "fileUrl": "http://localhost:8080/images/Koala.jpg",
-            "fileName": "Koala",
-            "fileSize": "0"
-          }
-        }
-      ],
-    },
-    "msg": "",
-    "success": true
-  }
-}
-
 const realResource = generateFakeResourcesData();
 const realImage = [];
 const realVideo = [];
@@ -97,6 +74,7 @@ realResource.forEach(ele => {
   }
 });
 console.log(realImage.length, realVideo.length, realAudio.length, realDocument.length);
+
 function generateFakeResourcesData() {
   function getRandomResource() {
     return trueRes[parseInt(Math.random() * trueRes.length)];

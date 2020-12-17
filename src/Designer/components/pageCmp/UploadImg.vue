@@ -15,17 +15,19 @@
           <span class="el-icon-search search_icon"></span>
         </p>
       </div>
-      <div class="content">
-        <ul>
-          <li class="img_list" :class="{'check_list':checkImgs.indexOf(img.fileUrl)>-1}" v-for="(img,index) in resources" :key="index" @click="checkImg(img.fileUrl)">
-            <div class="identification" v-if="checkImgs.indexOf(img.fileUrl)>-1">
+      <ul class="content infinite-list"
+          v-infinite-scroll="getImgResources"
+          infinite-scroll-disabled="connotLoad"
+          infinite-scroll-distance=100
+          style="overflow:auto">
+          <li class="img_list" :class="{'check_list':checkImg&&checkImg.resId===img.resId}" v-for="(img,index) in resources" :key="index" @click="checkImg=img">
+            <div class="identification" v-if="checkImg&&checkImg.resId===img.resId">
               <span class="check_img"></span>
               <i class="el-icon-check check_icon"></i>
             </div>
-            <img :src="img.fileUrl" ref="img" />
+            <img :src="img.resUrl" ref="img" />
           </li>
         </ul>
-      </div>
       <div class="detail_operation">
         <button class="pub_btn" @click="handleCancel">取消</button>
         <button class="pub_btn" @click="handleConfirm">确定</button>
@@ -41,15 +43,27 @@
     data() {
       return {
         resources: [],
-        checkImgs: [],
+        checkImg: null,
+        userId: 1,
+        resType: 1,
+        currentPage: 1,
+        size: 50,
+        total: null,
+        isLoading: false,
       };
     },
     created () {
-      this.getImgResources();
     },
     mounted () {
     },
     computed: {
+      connotLoad () {
+        if (this.total === null) {
+          return this.isLoading;
+        } else {
+          return (this.isLoading || this.size*this.currentPage-this.size>=this.total);
+        }
+      }
     },
     methods: {
       uploadImg (e) {
@@ -64,32 +78,30 @@
             'Content-Type': 'multipart/form-data'
           }
         }).then(() => {
-          this.getImgResources();
+          // 获取最新资源
         })
       },
       // 获取图片资源
       getImgResources () {
+        this.isLoading = true;
         this.$axios.get("/res/get", {
-          type: 2,
-          userId: 1
+          resType: this.resType,
+          userId: this.userId,
+          current: this.currentPage,
+          size: this.size,
         }).then((res) => {
-          this.resources.length = 0;
-          let category = res.data.category;
-          category.forEach(child => {
-            let resources = child.resources;
-            this.resources.push(resources);
-          })
+          this.total = res.data.total;
+          let resources = res.data.resources;
+          this.resources.push(...resources);
+          this.currentPage++;
+          this.isLoading = false;
         })
       },
       handleCancel () {
         this.$emit('showDialog', false);
       },
-      checkImg (url) {
-        this.checkImgs.shift();
-        this.checkImgs.push(url);
-      },
       handleConfirm () {
-        this.$emit('showDialog', false, this.checkImgs[0]);
+        this.$emit('showDialog', false, this.checkImg.resUrl);
       }
     },
   }
@@ -192,7 +204,10 @@
         }
       }
       .content {
-        flex: 1;
+        // flex: 1;
+        height: 340px;
+        display: flex;
+        flex-flow:row wrap;
         .img_list {
           width: 100px;
           height: 100px;
@@ -201,9 +216,11 @@
           align-items: center;
           cursor: pointer;
           position: relative;
+          margin: 5px 5px 0;
+          overflow: hidden;
           img {
-            width: 100%;
-            height: auto;
+            width: auto;
+            height: 100%;
           }
           .identification {
             position: absolute;
@@ -233,10 +250,10 @@
               color: #FFFFFF;
             }
           }
-        }
-        .check_list {
-          border: 1px solid green;
-          box-sizing: border-box;
+          .check_list {
+            border: 1px solid green;
+            box-sizing: border-box;
+          }
         }
       }
       .detail_operation {
