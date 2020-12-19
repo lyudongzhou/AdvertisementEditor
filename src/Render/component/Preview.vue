@@ -1,28 +1,28 @@
 <template lang="html">
-    <div class="preview" :style="!designMode ? { overflow: 'hidden' } : {}">
-        <div class="mask"></div>
-        <button id="prevBtn" :disabled="isDialog" @click="handlePrevPage">
-            上一页
-        </button>
-        <button id="nextBtn" :disabled="isDialog" @click="handleNextPage">
-            下一页
-        </button>
-        <div id="pt-main" class="pt-perspective" ref="main">
-            <singlePage
-                v-if="currentLayout"
-                ref="displayPage"
-                class="pt-page pt-page-current"
-                :pageData="currentLayout"
-                :pageState="currentState"
-            ></singlePage>
-            <singlePage
-                v-if="nextData !== null"
-                ref="nextPage"
-                class="pt-page"
-                :pageData="nextData"
-            ></singlePage>
-        </div>
-    </div>
+  <div class="preview" :style="!designMode ? { overflow: 'hidden' } : {}">
+    <div class="mask"></div>
+    <button id="prevBtn" v-if="!designMode" @click="handlePrevPage">
+      上一页
+    </button>
+    <button id="nextBtn" v-if="!designMode" @click="handleNextPage">
+      下一页
+    </button>
+    <div id="pt-main" class="pt-perspective" ref="main">
+          <singlePage
+              v-if="currentLayout"
+              ref="displayPage"
+              class="pt-page pt-page-current"
+              :pageData="currentLayout"
+              :pageState="currentState"
+          ></singlePage>
+          <singlePage
+              v-if="nextData !== null"
+              ref="nextPage"
+              class="pt-page"
+              :pageData="nextData"
+          ></singlePage>
+      </div>
+  </div>
 </template>
 
 <script>
@@ -51,12 +51,11 @@ export default {
     components: {
         singlePage,
     },
-    created() {},
     mounted() {
         if (!this.designMode) {
             this.currentState = 2;
-            this.beginTime = new Date().getTime()
-            this.automaticCycle()
+            this.beginTime = new Date().getTime();
+            this.automaticCycle();
         }
     },
     methods: {
@@ -84,7 +83,7 @@ export default {
                         !isPrev
                             ? this.renderData.change.type
                             : this.renderData.change.type + 1
-                    )
+                    );
                 } else {
                     reject()
                 }
@@ -98,13 +97,13 @@ export default {
         automaticCycle() {
             if (this.renderData.change.loop) {
                 let singlePagePlayTime = this.renderData.change
-                    .singlePagePlayTime
+                    .singlePagePlayTime;
                 this._timer = setInterval(() => {
                     if (this.beginTime) {
-                        let dt = new Date().getTime() - this.beginTime
+                        let dt = new Date().getTime() - this.beginTime;
                         if (dt > singlePagePlayTime) {
-                            this.handleNextPage()
-                            this.beginTime = null
+                            this.handleNextPage();
+                            this.beginTime = null;
                         }
                     }
                 }, singlePagePlayTime)
@@ -112,30 +111,30 @@ export default {
         },
         handleNextPage() {
             let getIndex = this.findCurrentIndex('pages', this.currentPage),
-                pages = this.renderData.pages
+                pages = this.renderData.pages;
             if (getIndex + 1 < pages.length) {
-                this.jumpPage(pages[getIndex + 1].id)
+                this.jumpPage(pages[getIndex + 1].id);
             } else if (this.renderData.change.loop) {
                 // loop
-                this.jumpPage(pages[0].id)
-                this.clickSwitchPage = 'next'
+                this.jumpPage(pages[0].id);
+                this.clickSwitchPage = 'next';
             }
         },
         handlePrevPage() {
             let getIndex = this.findCurrentIndex('pages', this.currentPage),
                 pages = this.renderData.pages
             if (getIndex - 1 >= 0) {
-                this.jumpPage(pages[getIndex - 1].id)
+                this.jumpPage(pages[getIndex - 1].id);
             } else if (this.renderData.change.loop) {
                 // loop
-                this.jumpPage(pages[pages.length - 1].id)
-                this.clickSwitchPage = 'prev'
+                this.jumpPage(pages[pages.length - 1].id);
+                this.clickSwitchPage = 'prev';
             }
         },
         getCmp(id) {
-            let page = this.$refs['displayPage']
+            let page = this.$refs['displayPage'];
             if (page) {
-                return page.getCmp(id)
+                return page.getCmp(id);
             } else {
                 return
             }
@@ -159,11 +158,11 @@ export default {
          * @return {Number Index}
          */
         findCurrentIndex(chooice, useId) {
-            let getIndex
+            let getIndex;
             this.renderData[chooice].some((child, index) => {
                 if (child.id === useId) {
-                    getIndex = index
-                    return true
+                    getIndex = index;
+                    return true;
                 }
             })
             return getIndex
@@ -177,16 +176,16 @@ export default {
             let layout, type
             this.renderData.pages.some((page) => {
                 if (page.id === useId) {
-                    type = 'pages'
-                    layout = page
-                    return true
+                    type = 'pages';
+                    layout = page;
+                    return true;
                 }
             })
             this.renderData.dialogs.some((dialog) => {
                 if (dialog.id === useId) {
-                    type = 'dialogs'
-                    layout = dialog
-                    return true
+                    type = 'dialogs';
+                    layout = dialog;
+                    return true;
                 }
             })
             return {
@@ -206,17 +205,17 @@ export default {
                 if (nextType === 'pages') {
                     // TODO: page->page -> only click prevBtn isPrev=true
                     if (this.clickSwitchPage) {
-                        isPrev = this.clickSwitchPage === 'prev' ? true : false
+                        isPrev = this.clickSwitchPage === 'prev' ? true : false;
                     }
                 } else {
                     // dialog->dialog
-                    if (
+                    if (this.windowStorage.length>0 &&
                         this.windowStorage[this.windowStorage.length - 1]
                             .toId === next &&
                         this.windowStorage[this.windowStorage.length - 1]
                             .fromId !== old
                     ) {
-                        isPrev = true
+                        isPrev = true;
                     }
                 }
             } else {
@@ -224,17 +223,17 @@ export default {
                     // dialog->page
                     if (this.windowStorage.length === 0) {
                         // back the form page
-                        isPrev = true
+                        isPrev = true;
                     } else {
                         // go the to page
-                        isPrev = false
+                        isPrev = false;
                     }
                 } else {
                     // page->dialog must be next
-                    isPrev = false
+                    isPrev = false;
                 }
             }
-            return isPrev
+            return isPrev;
         },
     },
     watch: {
@@ -245,14 +244,14 @@ export default {
             console.log("targetChange");
             clearInterval(this._timer)
             if (next === this.currentPage) {
-                this.currentState = 2
-                return
+                this.currentState = 2;
+                return;
             }
             this.beginTime = null
             let findCurrentMessage = this.findCurrentMessage(next)
-            this.nextData = findCurrentMessage.layout
-            this.isDialog = findCurrentMessage.type === 'dialogs'
-            this.currentState = 1
+            this.nextData = findCurrentMessage.layout;
+            this.isDialog = findCurrentMessage.type === 'dialogs';
+            this.currentState = 1;
             this.$nextTick(() => {
                 let isPrev = this.judgeDirection(next, old)
                 this.action(isPrev).then(() => {
@@ -294,6 +293,15 @@ export default {
         height: 100%;
         /*background: black;*/
         opacity: 0.3;
+    }
+    button {
+      position: absolute;
+      right: 0;
+      top: 0;
+      z-index: 2;
+    }
+    #nextBtn {
+      margin-top: 40px;
     }
     .pt-perspective {
         width: 100%;
