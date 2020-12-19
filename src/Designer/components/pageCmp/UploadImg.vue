@@ -11,7 +11,7 @@
       <div class="detail_top">
         <button class="pub_btn collect">我的收藏</button>
         <p class="search">
-          <input type="text" name="" value="" placeholder="请输入文件名">
+          <input type="text" v-model="searchFile" placeholder="请输入文件名">
           <span class="el-icon-search search_icon"></span>
         </p>
       </div>
@@ -20,12 +20,14 @@
           infinite-scroll-disabled="connotLoad"
           infinite-scroll-distance=100
           style="overflow:auto">
-          <li class="img_list" :class="{'check_list':checkImg&&checkImg.resId===img.resId}" v-for="(img,index) in resources" :key="index" @click="checkImg=img">
+          <li class="img_list" :class="{'check_list':checkImg&&checkImg.resId===img.resId}"
+              v-for="(img,index) in handleSearchFile" :key="index" @click="checkImg=img">
             <div class="identification" v-if="checkImg&&checkImg.resId===img.resId">
               <span class="check_img"></span>
               <i class="el-icon-check check_icon"></i>
             </div>
             <img :src="img.resUrl" ref="img" />
+            <span class="img_name">{{img.resName}}</span>
           </li>
         </ul>
       <div class="detail_operation">
@@ -50,6 +52,7 @@
         size: 50,
         total: null,
         isLoading: false,
+        searchFile: '',
       };
     },
     created () {
@@ -63,7 +66,17 @@
         } else {
           return (this.isLoading || this.size*this.currentPage-this.size>=this.total);
         }
-      }
+      },
+      handleSearchFile () {
+        let searchFile = this.searchFile.toLowerCase(),
+            resources = this.resources;
+        resources = resources.filter(child => {
+          if (child.resName.toLowerCase().indexOf(searchFile)>-1) {
+            return child;
+          }
+        })
+        return resources;
+      },
     },
     methods: {
       uploadImg (e) {
@@ -102,7 +115,7 @@
       },
       handleConfirm () {
         this.$emit('showDialog', false, this.checkImg.resUrl);
-      }
+      },
     },
   }
 </script>
@@ -208,19 +221,27 @@
         height: 340px;
         display: flex;
         flex-flow:row wrap;
+        margin-top: 10px;
         .img_list {
           width: 100px;
           height: 100px;
           display: flex;
+          flex-direction: column;
           justify-content: center;
           align-items: center;
           cursor: pointer;
           position: relative;
           margin: 5px 5px 0;
           overflow: hidden;
+          border: 1px solid #ccc;
+          box-sizing: border-box;
           img {
             width: auto;
-            height: 100%;
+            height: 85%;
+          }
+          .img_name {
+            line-height: initial;
+            font-size: 10px;
           }
           .identification {
             position: absolute;
