@@ -37,7 +37,6 @@
       editorWin,
     },
     created() {
-      window.display = this;
       // scale变化，选择款需要同步变化
       this.$event.on(CHANGE_SCALE, (addition) => {
         // todo 弹框处理
@@ -52,6 +51,9 @@
         this.updateSelectItemInfo();
       });
     },
+    mounted() {
+      this.workspaceWidth = document.querySelector('.work-space').offsetWidth
+    },
     destroyed() {
     },
     data() {
@@ -60,6 +62,7 @@
         selectItemInfo: null,
         draging: false,
         resizing: false,
+        workspaceWidth: 0,
       };
     },
     computed: {
@@ -336,7 +339,7 @@
     <div>
       <!--辅助线-->
     </div>
-    <editorWin></editorWin>
+    <editorWin :parentWidth="workspaceWidth"></editorWin>
 
   </div>
 </template>

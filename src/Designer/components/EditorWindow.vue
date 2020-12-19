@@ -1,6 +1,14 @@
 <template>
-    <vue-draggable-resizable class="editWin fly" :resizable="false" :parent="true" :y="50" :h="805" :w="305"
+    <vue-draggable-resizable
+        class="editWin fly"
+        :resizable="false"
+        :parent="true"
+        :y="50"
+        :x="initialPosition.x"
+        :h="805"
+        :w="305"
         v-if="!isClose"
+        dragHandle=".editor_header"
     >
         <el-container>
             <el-header class="editor_header">
@@ -38,7 +46,7 @@ import { mapGetters } from '../store'
 export default {
     name: 'editorWin',
     components: {...get(REG_TABS), VueDraggableResizable},
-    props: [],
+    props: ['parentWidth'],
     data() {
         return {
             activeNames: [0],
@@ -48,6 +56,9 @@ export default {
     },
     computed: {
         ...mapGetters(['currentComponent']),
+          initialPosition() {
+              return {x: this.parentWidth - 315}
+          }
     },
     created() {},
     mounted() {
