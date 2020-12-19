@@ -139,7 +139,7 @@ export default {
             }
         }
     }
-    .editWin {
+    &.editWin {
         position: absolute;
         left: 0;
         top: 0;

@@ -345,25 +345,28 @@
 </template>
 
 <style lang="less" scoped>
-  .editWin {
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    right: 0;
+  /*.editWin {*/
+    /*position: absolute;*/
+    /*left: 0;*/
+    /*top: 0;*/
+    /*bottom: 0;*/
+    /*right: 0;*/
 
-    &.vdr {
-      border: none;
-    }
-  }
+    /*&.vdr {*/
+      /*border: none;*/
+    /*}*/
+  /*}*/
 
   .work-space {
     /*position: relative;*/
     /*user-select: none;*/
     /*height: 100%;*/
     position: absolute;
-    width: 100%;
-    height: 100%;
+    min-width: 100%;
+    min-height: 100%;
+    overflow: hidden;
+    /*width: 100%;*/
+    /*height: 100%;*/
     // top: 40px;
     // left: 200px;
     // right: 219px;
