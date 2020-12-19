@@ -4,12 +4,14 @@ const getUserId = () => 1;
 
 const instance = axios.create({
   baseURL: '/api',
+  headers: {'Content-Type': 'application/json;charset=UTF-8'},
   transformRequest: [
     function handleUserId(data) {
       data = data || {};
       data.userId = getUserId();
       return data;
-    }
+    },
+    ...axios.defaults.transformRequest,
   ]
 });
 // 添加请求拦截器

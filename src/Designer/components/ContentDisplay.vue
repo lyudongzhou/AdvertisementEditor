@@ -52,7 +52,9 @@
       });
     },
     mounted() {
-      this.workspaceWidth = document.querySelector('.work-space').offsetWidth
+      const workspaceDom = this.$refs.workspace;
+      this.workspaceWidth = workspaceDom.offsetWidth
+
     },
     destroyed() {
     },
@@ -63,6 +65,7 @@
         draging: false,
         resizing: false,
         workspaceWidth: 0,
+//        selectItemContainerStyle: {},
       };
     },
     computed: {
@@ -73,6 +76,14 @@
         'currentPageId'
       ]),
       ...mapGetters(['currentComponent', 'isComponentLocked']),
+      selectItemContainerStyle() {
+        const workspaceDom = this.$refs.workspace;
+        console.info(workspaceDom.offsetWidth);
+        return {
+          width: workspaceDom.offsetWidth / this.scaleValue + 'px',
+          height: workspaceDom.offsetHeight / this.scaleValue + 'px',
+        };
+      },
       isCurrentComponentLocked() {
         return this.isComponentLocked(this.currentComponentId);
       },
@@ -310,7 +321,7 @@
         v-if="currentComponentId"
         class="select-item-container"
         ref="selectItemContainer"
-        :style="{transform: `scale(${scaleValue})`}"
+        :style="{transform: `scale(${scaleValue})`, width: selectItemContainerStyle.width, height: selectItemContainerStyle.height}"
     >
       <!--选中框-->
       <vue-draggable-resizable
@@ -391,8 +402,8 @@
       position: absolute;
       left: 0;
       top: 0;
-      bottom: 0;
-      right: 0;
+      /*bottom: 0;*/
+      /*right: 0;*/
 
       .select-item {
         pointer-events: auto;

@@ -27,6 +27,7 @@ export default {
        */
       previewing: false,
       lockState: {},
+      projectId: '',
     };
   },
   getters: {

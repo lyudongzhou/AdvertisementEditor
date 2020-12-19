@@ -145,4 +145,7 @@ export default {
     state.lockState[state.currentPageId][componentId] = !locked;
     state.lockState = {...state.lockState};
   },
+  setProjectId(state, id) {
+    state.projectId = id;
+  }
 };
