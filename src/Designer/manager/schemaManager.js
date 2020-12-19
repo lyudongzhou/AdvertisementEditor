@@ -46,7 +46,7 @@ export default class SchemaManager {
   update(operateConfig) {
     const schema = this.getSchema();
     const updater = operateConfig.updater || operatorMap[operateConfig.type].updater;
-    updater(schema, operateConfig);
+    updater(schema, operateConfig, this.setSchema);
   }
 
   /**

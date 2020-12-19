@@ -21,12 +21,16 @@ import {
   BEFORE_UPDATE_COMPONENT_PROPS,
   UPDATING_COMPONENT_PROPS,
   AFTER_UPDATE_COMPONENT_PROPS,
+
   AUTO_BEFORE_PROP,
   AUTO_UPDATING_PROP,
   AUTO_AFTER_PROP,
+
+  UPDATE_SCHEMA,
 } from '../constant/schema';
 import {setPropByPath, switchArrayIndex} from '../../Utils/utils';
 import {
+  COMMAND_CLEAR_CURRENT_TARGET,
   COMMAND_SELECT_COMPONENT,
   COMMAND_SELECT_CONTAINER,
   COMMAND_SELECT_PAGE,
@@ -251,5 +255,10 @@ export default {
   [UPDATE_INDEX_TO_BOTTOM]: {
     handler: commitHandler,
     updater: generateSwitchIndexUpdater('bottom'),
+  },
+  [UPDATE_SCHEMA]: {
+    handler: commitHandler,
+    updater: (schema, operateConfig, setSchema) => setSchema(operateConfig.value),
+    after: [COMMAND_CLEAR_CURRENT_TARGET],
   },
 };

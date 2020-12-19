@@ -10,6 +10,17 @@
       ></i>
     </el-tooltip>
 
+    <el-dialog
+        title="请确认"
+        :visible.sync="dialogVisible"
+        width="30%"
+        >
+      <span>请确认是否清空</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="clearSchema();dialogVisible = false">确 定</el-button>
+        <el-button @click="dialogVisible = false">取 消</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -17,13 +28,16 @@
   import { CHANGE_SCALE } from "../constant/event";
   import { SCALE_STEP } from "../constant/base";
   import { getSchemaManager } from "../manager/schemaManager";
-  import { mapMutations} from "../store";
+  import { mapMutations, mapState} from "../store";
+  import {UPDATE_SCHEMA} from '../constant/schema';
 
   export default {
     components: {},
     created() {},
     data() {
-      return {};
+      return {
+        dialogVisible: false,
+      };
     },
     computed: {
       operators() {
@@ -47,6 +61,7 @@
           { icon: "el-icon-delete", key: "clear", label: "清空" },
         ];
       },
+      ...mapState(['schema']),
     },
     methods: {
       handleClick(key, disabled) {
@@ -66,12 +81,35 @@
           case "redo":
             this.redo();
             break;
+          case "clear": {
+            this.dialogVisible = true;
+
+            break;
+          }
           case "preview":
             this.setPreviewState({previewTotal:false,previewing:true});
             break;
         }
       },
-      ...mapMutations(["redo", "undo","setPreviewState"]),
+      clearSchema() {
+        const oldSchema = this.schema;
+        const schema = {
+          version: oldSchema.version,
+          description: oldSchema.description,
+          container: {
+            height: oldSchema.container.height,
+            width: oldSchema.container.width,
+          },
+          change: {},
+          pages: [],
+          dialogs: [],
+        };
+        this.updateSchema({
+          type: UPDATE_SCHEMA,
+          value: schema,
+        });
+      },
+      ...mapMutations(["redo", "undo","setPreviewState", 'updateSchema']),
     },
   };
 </script>

@@ -32,7 +32,6 @@ export default {
         return {};
     },
     mounted() {
-        window.aaa = this.pageData.components;
     },
     created(){
     },
@@ -44,7 +43,7 @@ export default {
     },
     watch: {
       pageState(data) {
-        if (data === 2) {
+        if (data === 2 && this.pageData) {
           this.pageData.components.forEach((ele) => {
               this.$refs[ele.id][0].parent.idleAction();
           });
