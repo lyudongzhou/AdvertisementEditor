@@ -47,9 +47,6 @@ const afterCommandMap = {
     state.currentPageType = state.currentType;
   },
   [COMMAND_CLEAR_CURRENT_TARGET](state) {
-    state.currentPageId = '';
-    state.currentType = null;
-    state.currentPageType = null;
     state.currentComponentId = null;
   },
   /**
