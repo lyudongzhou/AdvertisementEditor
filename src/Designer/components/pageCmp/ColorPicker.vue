@@ -13,6 +13,7 @@
 <script>
 import {Colorpicker} from "../../private/colorpicker";
 import { mapGetters, mapMutations } from '../../store';
+import {getPropByPath} from '@/utils';
 
 export default {
   name: 'ColorPicker',
@@ -98,7 +99,7 @@ export default {
   },
   watch: {
     currentPage (value) {
-      if (value.container.backGround.type === 'color') {
+      if (getPropByPath(value, 'container.backGround.type') === 'color') {
         this._colorPicker.setColorByInput(value.container.backGround.value);
       }
     }

@@ -12,7 +12,7 @@
       height: renderData.container.height + 'px',
     }"
   >
-    <audio ref="bgm" :src="handleUrl(renderData.container.bgm.src)"></audio>
+    <audio ref="bgm" :src="handleUrl(getPropByPath(renderData, 'container.bgm.src'))"></audio>
     <!-- <singlePage
             :pageData="renderData.pages[currentIndex]"
             :pageIndex="currentIndex"
@@ -30,6 +30,7 @@
 import preview from "./component/Preview";
 import pipe from "./pipe";
 import { mapGetters, mapMutations } from "./store";
+import { getPropByPath } from "@/utils";
 export default {
   name: "app",
   props: [
@@ -101,6 +102,9 @@ export default {
       "setBaseUrl",
       "setSinglePagePreview",
     ]),
+    getPropByPath(...args) {
+      return getPropByPath(...args);
+    },
     getCmp(id) {
       return this.$refs["preview"].getCmp(id);
     },

@@ -9,6 +9,7 @@
         </button>
         <div id="pt-main" class="pt-perspective" ref="main">
             <singlePage
+                v-if="currentLayout"
                 ref="displayPage"
                 class="pt-page pt-page-current"
                 :pageData="currentLayout"
@@ -291,7 +292,7 @@ export default {
     .mask {
         width: 100%;
         height: 100%;
-        background: black;
+        /*background: black;*/
         opacity: 0.3;
     }
     .pt-perspective {

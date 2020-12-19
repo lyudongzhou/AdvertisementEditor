@@ -31,7 +31,7 @@ export default {
   getters: {
     currentComponent(state, getters) {
       if (state.currentComponentId && state.currentPageType) {
-        return getters.currentContainer.components.find(({ id }) => state.currentComponentId === id) || null;
+        return getters.components.find(({ id }) => state.currentComponentId === id) || null;
       }
       return null;
     },
@@ -64,7 +64,7 @@ export default {
         page: getters.currentPage,
         dialog: getters.currentDialog,
       };
-      return containerMap[state.currentPageType];
+      return containerMap[state.currentPageType] || [];
     },
     currentMaxIndex(state, getters) {
       return Math.max(...getPropByPath(getters, 'currentContainer.components', []).map(component => component.layoutConfig.zIndex)) || 0;

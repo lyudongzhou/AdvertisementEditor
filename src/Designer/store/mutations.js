@@ -9,6 +9,7 @@ import {
   COMMAND_SELECT_CONTAINER,
   COMMAND_SELECT_PAGE,
   COMMAND_SELECT_SIBLING_PAGE,
+  COMMAND_CLEAR_CURRENT_TARGET,
 } from '../constant/base';
 
 const afterCommandMap = {
@@ -45,6 +46,12 @@ const afterCommandMap = {
     state.currentType = operateConfig.currentType;
     state.currentPageType = state.currentType;
   },
+  [COMMAND_CLEAR_CURRENT_TARGET](state) {
+    state.currentPageId = '';
+    state.currentType = null;
+    state.currentPageType = null;
+    state.currentComponentId = null;
+  },
   /**
    * 选择兄弟容器
    *
@@ -68,6 +75,8 @@ export default {
     // state.currentComponent = state.currentPage.components[0];
     // state.currentComponentId = state.currentComponent.id;
     state.opened = true;
+    // 清空之前的记录
+    getSchemaManager(state).clear();
   },
   selectComponent (state, componentId) {
     state.currentComponentId = componentId;
