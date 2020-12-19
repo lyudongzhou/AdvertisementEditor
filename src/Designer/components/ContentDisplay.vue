@@ -30,8 +30,6 @@
 
   const warpUnit = (value, unit = 'px') => `${value}${unit}`;
 
-  const calculateRealValue = (value, scale) => Math.floor(value / scale);
-
   export default {
     components: {
       render,
@@ -72,20 +70,7 @@
         'currentPageId'
       ]),
       ...mapGetters(['currentComponent']),
-      containerOffset() {
-        const {
-          top,
-          left,
-        } = this.$refs.renderContainer.getBoundingClientRect();
-        const {
-          top: selectItemContainerTop,
-          left: selectItemContainerLeft,
-        } = this.$refs.selectItemContainer.getBoundingClientRect();
-        return {
-          top: top - selectItemContainerTop,
-          left: left - selectItemContainerLeft,
-        };
-      },
+
       selectItemLayoutInfo() {
         const {top, left, width, height} = getPropByPath(
           this.selectItemInfo,
@@ -224,38 +209,28 @@
             const dom = this.$refs.render.getCmp(
               this.currentComponentId,
             ).$el;
-            const {
-              top,
-              left,
-              height,
-              width,
-            } = dom.getBoundingClientRect();
-            const {
-              top: containerTop,
-              left: containerLeft,
-            } = this.$refs.workspace.getBoundingClientRect();
+            const container = this.$refs.renderContainer;
+
             this.selectItemInfo = {
               position: {
-                height: height,
-                width: width,
-                top: top - containerTop,
-                left: left - containerLeft,
+                height: dom.offsetHeight,
+                width: dom.offsetWidth,
+                top: (dom.offsetTop + container.offsetTop / this.scaleValue),
+                left: (dom.offsetLeft + container.offsetLeft / this.scaleValue),
               },
             };
           });
         }
       },
       commitDragMutation(left, top, type) {
-        const {top: offsetTop, left: offsetLeft} = this.containerOffset;
+        const container = this.$refs.renderContainer;
         this.updateSchema({
           type,
           value: {
-            left: calculateRealValue(left - offsetLeft, this.scaleValue),
-            top: calculateRealValue(top - offsetTop, this.scaleValue),
+            left: left - container.offsetLeft / this.scaleValue,
+            top: top - container.offsetTop / this.scaleValue,
           },
         });
-        //        this.selectItemInfo.position.left = left;
-        //        this.selectItemInfo.position.top = top;
       },
       onDragStart() {
         this.updateSchema({
@@ -273,14 +248,14 @@
         }
       },
       commitResizeMutation(left, top, width, height, type) {
-        const {top: offsetTop, left: offsetLeft} = this.containerOffset;
+        const container = this.$refs.renderContainer;
         this.updateSchema({
           type,
           value: {
-            left: calculateRealValue(left - offsetLeft, this.scaleValue),
-            top: calculateRealValue(top - offsetTop, this.scaleValue),
-            width: calculateRealValue(width, this.scaleValue),
-            height: calculateRealValue(height, this.scaleValue),
+            left: left - container.offsetLeft / this.scaleValue,
+            top: top - container.offsetTop / this.scaleValue,
+            width,
+            height,
           },
         });
       },
@@ -330,6 +305,7 @@
         v-if="currentComponentId"
         class="select-item-container"
         ref="selectItemContainer"
+        :style="{transform: `scale(${scaleValue})`}"
     >
       <!--选中框-->
       <vue-draggable-resizable
@@ -401,6 +377,7 @@
       position: absolute;
     }
     .select-item-container {
+      transform-origin: left top;
       pointer-events: none;
       position: absolute;
       left: 0;
