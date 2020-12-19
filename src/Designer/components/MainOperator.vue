@@ -31,10 +31,41 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div class="main-operator">
     <el-button @click="handlePreview">预览</el-button>
     <el-button @click="submitProject" type="button">提交</el-button>
-    <el-button>一键发布</el-button>
-    <el-button>退出</el-button>
+    <el-button plain>发布</el-button>
+    <el-button plain>退出</el-button>
   </div>
 </template>
+
+
+<style lang="less">
+  .main-operator {
+
+    line-height: 55px;
+
+    .el-button {
+      height: 36px;
+      background: #6E6F71;
+      color: #fff;
+      border-radius: 5px;
+      border: none;
+      &:hover, &:active, &:focus {
+        background: #6E6F71;
+        color: #fff;
+        opacity: .8;
+      }
+
+      &.is-plain {
+        background: #ECECEC;
+        color: #333;
+        &:hover, &:active, &:focus {
+          background: #ECECEC;
+          color: #333;
+          opacity: .8;
+        }
+      }
+    }
+  }
+</style>
