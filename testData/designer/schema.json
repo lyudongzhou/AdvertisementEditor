@@ -36,7 +36,8 @@
             "rotation": 31.41592653589793,
             "width": 100,
             "height": 100,
-            "opacity": 1
+            "opacity": 1,
+            "hidden": false
           },
           "props": {
             "text": "111",
@@ -73,7 +74,8 @@
             "rotation": 3.141592653589793,
             "width": 200,
             "height": 200,
-            "opacity": 1
+            "opacity": 1,
+            "hidden": false
           },
           "props": {
             "bgUrl": "images/Koala.jpg"

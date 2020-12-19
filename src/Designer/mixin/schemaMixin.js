@@ -99,6 +99,7 @@ const createComponent = (base) => {
     id: getUuid(),
     layoutConfig: {
       ...base.layoutConfig,
+      hidden: false,
       rotation: 0,
       top: 0,
       left: 0,

@@ -4,7 +4,7 @@
         :style="publicList"
         @click="dispatchEvent('click', arguments[0])"
     >
-        <div :style="animationStyleComputed">
+        <div :style="animationAndHiddenStyleComputed">
             <slot></slot>
         </div>
     </li>
@@ -57,7 +57,7 @@ export default {
             });
             return style;
         },
-        animationStyleComputed() {
+        animationAndHiddenStyleComputed() {
             const style = {
                 position: "absolute",
                 width: "100%",
@@ -76,6 +76,9 @@ export default {
                         style[key] = `${o[key]}px`;
                 }
             });
+              if (this.layoutConfig.hidden) {
+                style.display = 'none';
+              }
             return style;
         },
     },

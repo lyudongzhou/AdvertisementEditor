@@ -72,8 +72,10 @@
         'opened',
         'currentPageId'
       ]),
-      ...mapGetters(['currentComponent']),
-
+      ...mapGetters(['currentComponent', 'isComponentLocked']),
+      isCurrentComponentLocked() {
+        return this.isComponentLocked(this.currentComponentId);
+      },
       selectItemLayoutInfo() {
         const {top, left, width, height} = getPropByPath(
           this.selectItemInfo,
@@ -316,6 +318,7 @@
                     transform: `translate(${selectItemLayoutInfo.x}px, ${selectItemLayoutInfo.y}px) rotate(${selectItemLayoutInfo.rotation}deg)`,
                 }"
           class="select-item"
+          :draggable="!isCurrentComponentLocked"
           :active="true"
           :preventDeactivation="true"
           :parent="true"
