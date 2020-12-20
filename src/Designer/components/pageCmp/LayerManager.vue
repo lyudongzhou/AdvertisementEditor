@@ -1,21 +1,22 @@
 <script>
   import {mapGetters, mapMutations, mapState} from '../../store';
   import draggable from 'vuedraggable';
-  import {DELETE_COMPONENT, SWITCH_INDEX} from '../../constant/schema';
+  import {DELETE_COMPONENT, SWITCH_INDEX, UPDATE_COMPONENT_PROPS} from '../../constant/schema';
   import schemaMixin from '../../mixin/schemaMixin';
+  import {getPropByPath} from '@/utils';
 
   export default {
     name: 'LayerManager',
     mixins: [schemaMixin],
     computed: {
-      ...mapGetters(['components', 'currentComponent']),
+      ...mapGetters(['components', 'currentComponent', 'isComponentLocked', 'components']),
       ...mapState(['currentComponentId']),
     },
     components: {
       draggable,
     },
     methods: {
-      ...mapMutations(['selectComponent', 'updateSchema']),
+      ...mapMutations(['selectComponent', 'updateSchema', 'toggleComponentLockState']),
       handleComponentClick(componentId) {
         this.selectComponent(componentId);
       },
@@ -39,6 +40,24 @@
           return;
         }
         this.$$addNewComponent(this.currentComponent)
+      },
+      toggleComponentVisibleState(componentId) {
+        this.updateSchema({
+          type: UPDATE_COMPONENT_PROPS,
+          targetId: componentId,
+          value: {
+            'layoutConfig.hidden': !this.getComponentVisibleState(componentId),
+          }
+        });
+      },
+      getVisibleIconClass(componentId) {
+        return this.getComponentVisibleState(componentId) ? 'el-icon-view slash' : 'el-icon-view'
+      },
+      getComponentVisibleState(componentId) {
+        return getPropByPath(this.components.find(({id}) => id === componentId) || {}, 'layoutConfig.hidden');
+      },
+      getLockIconClass(componentId) {
+        return this.isComponentLocked(componentId) ? 'el-icon-lock' : 'el-icon-unlock';
       }
     },
   };
@@ -61,7 +80,11 @@
         :class="['component-item', {activate: component.id === currentComponentId}]"
         :key="component.id"
         @click="handleComponentClick(component.id)"
-      >{{component.name}}</div>
+      >
+        <i :class="getLockIconClass(component.id)" @click.stop="toggleComponentLockState({componentId: component.id})"></i>
+        <i :class="getVisibleIconClass(component.id)" @click.stop="toggleComponentVisibleState(component.id)"></i>
+        {{component.name}}
+      </div>
     </draggable>
 
   </div>
@@ -86,6 +109,9 @@
       &:hover,
       &.activate {
         opacity: 1;
+      }
+      > i:not(:first-child) {
+        margin-left: 5px;
       }
     }
 
@@ -114,6 +140,16 @@
           opacity: .3;
           cursor: not-allowed;
         }
+      }
+    }
+    .slash {
+      position: relative;
+      &::after {
+        content: '\\';
+        display: inline-block;
+        position: absolute;
+        transform: rotate(80deg);
+        left: 5px;
       }
     }
   }

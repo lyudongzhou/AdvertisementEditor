@@ -16,8 +16,8 @@ module.exports = {
       jQuery: "jquery",
       "windows.jQuery": "jquery",
     }),
-    // new webpack.DefinePlugin({
-    //   PRODUCTION:!(process.env.BuildType === "development")
-    // })
+    new webpack.DefinePlugin({
+      PRODUCTION:!(process.env.BuildType === "development")
+    })
   ],
 };

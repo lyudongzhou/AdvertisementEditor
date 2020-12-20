@@ -74,6 +74,7 @@ export default {
     state.opened = true;
     // 清空之前的记录
     getSchemaManager(state).clear();
+    state.lockState = {};
   },
   selectComponent (state, componentId) {
     state.currentComponentId = componentId;
@@ -135,5 +136,16 @@ export default {
   setPreviewState(state,{previewTotal = false,previewing}){
     state.previewTotal = previewTotal;
     state.previewing = previewing;
+  },
+  toggleComponentLockState(state, {componentId}) {
+    const locked = getPropByPath(state.lockState, `${state.currentPageId}.${componentId}`);
+    if (!state.lockState[state.currentPageId]) {
+      state.lockState[state.currentPageId] = {};
+    }
+    state.lockState[state.currentPageId][componentId] = !locked;
+    state.lockState = {...state.lockState};
+  },
+  setProjectId(state, id) {
+    state.projectId = id;
   }
 };

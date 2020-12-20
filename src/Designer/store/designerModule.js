@@ -25,7 +25,9 @@ export default {
       /**
        * @description: 单页预览
        */
-      previewing: false
+      previewing: false,
+      lockState: {},
+      projectId: '',
     };
   },
   getters: {
@@ -34,6 +36,13 @@ export default {
         return getters.components.find(({ id }) => state.currentComponentId === id) || null;
       }
       return null;
+    },
+    isComponentLocked(state) {
+      return componentId => {
+        if (componentId && state.lockState) {
+          return getPropByPath(state.lockState, `${state.currentPageId}.${componentId}`)
+        }
+      }
     },
     components(state, getters) {
       return getters.currentContainer.components || [];
@@ -64,7 +73,7 @@ export default {
         page: getters.currentPage,
         dialog: getters.currentDialog,
       };
-      return containerMap[state.currentPageType] || [];
+      return containerMap[state.currentPageType] || {};
     },
     currentMaxIndex(state, getters) {
       return Math.max(...getPropByPath(getters, 'currentContainer.components', []).map(component => component.layoutConfig.zIndex)) || 0;
