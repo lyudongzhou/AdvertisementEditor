@@ -1,9 +1,3 @@
-/*
- * @Author: LyuDongzhou
- * @Date: 2020-12-13 01:56:42
- * @LastEditTime: 2020-12-17 06:44:33
- * @Description: file content
- */
 const fs = require("fs");
 const path = require("path");
 const express = require('express');
@@ -53,6 +47,7 @@ const uploadSuccessResult = data => {
 };
 
 const realResource = generateFakeResourcesData();
+const realProgramResource = getProgramResources();
 const realImage = [];
 const realVideo = [];
 const realAudio = [];
@@ -73,7 +68,7 @@ realResource.forEach(ele => {
       break;
   }
 });
-console.log(realImage.length, realVideo.length, realAudio.length, realDocument.length);
+// console.log(realImage.length, realVideo.length, realAudio.length, realDocument.length);
 
 function generateFakeResourcesData() {
   function getRandomResource() {
@@ -83,6 +78,149 @@ function generateFakeResourcesData() {
     { resName: "file", resType: 1, resUrl: "http://localhost:8080/images/Koala.jpg" },
     { resName: "image", resType: 1, resUrl: "http://localhost:8080/images/Jellyfish.jpg" },
     { resName: "audio", resType: 3, resUrl: "http://localhost:8080/audios/audio.mp3" },
+  ];
+  var aResults = [];
+  for (var i = 0; i < 100; i++) {
+    var res = getRandomResource();
+    res.resId = i;
+    aResults.push(res);
+  }
+  return aResults;
+}
+
+function getProgramResources() {
+  function getRandomResource() {
+    return trueRes[parseInt(Math.random() * trueRes.length)];
+  }
+  const trueRes = [
+    {
+      "id" :10,
+      "name":"节目1",
+      "pages" : 10,
+      "thumbnail":"http://localhost:8080/images/Koala.jpg",
+      "bodyJson": {
+        "version": "1.0",
+        "description": "",
+        "container": {
+          "width": 1000,
+          "height": 700,
+          "bgm": {
+            "autoPlay": true,
+            "src": "audios/audio.mp3"
+          }
+        },
+        "change": {
+          "type": 3,
+          "loop": true,
+          "singlePagePlayTime": 2000
+        },
+        "pages": [
+          {
+            "name": "页面3",
+            "id": "3",
+            "container": {
+              "backGround": {
+                "type": "color",
+                "value": "#EFEFEF"
+              }
+            },
+            "components": [
+              {
+                "id": 2,
+                "name": "图片1",
+                "type": "ImageCmp",
+                "layoutConfig": {
+                  "zIndex": 1,
+                  "top": 200,
+                  "left": 200,
+                  "rotation": 3.141592653589793,
+                  "width": 200,
+                  "height": 200,
+                  "opacity": 1
+                },
+                "props": {
+                  "bgUrl": "images/Koala.jpg"
+                },
+                "animation": [
+                  {
+                    "type": "shaking",
+                    "duration": 100,
+                    "delay": 0,
+                    "times": 2
+                  }
+                ],
+                "events": [
+                  {
+                    "type": "nextPage",
+                    "value": ""
+                  }
+                ],
+                "children": []
+              }
+            ]
+          }
+        ],
+        "dialogs": []
+      },
+    },
+    {
+      "id" : 11,
+      "name":"节目2",
+      "pages" : 10,
+      "thumbnail":"http://localhost:8080/images/Jellyfish.jpg",
+      "bodyJson": {
+        "version": "1.0",
+        "description": "",
+        "container": {
+          "width": 1000,
+          "height": 700,
+          "bgm": {
+            "autoPlay": true,
+            "src": "audios/audio.mp3"
+          }
+        },
+        "change": {
+          "type": 3,
+          "loop": true,
+          "singlePagePlayTime": 2000
+        },
+        "pages": [
+          {
+            "name": "页面3",
+            "id": "3",
+            "container": {
+              "backGround": {
+                "type": "color",
+                "value": "#EFEFEF"
+              }
+            },
+            "components": [
+              {
+                "id": 2,
+                "name": "图片1",
+                "type": "ImageCmp",
+                "layoutConfig": {
+                  "zIndex": 1,
+                  "top": 200,
+                  "left": 200,
+                  "rotation": 3.141592653589793,
+                  "width": 200,
+                  "height": 200,
+                  "opacity": 1
+                },
+                "props": {
+                  "bgUrl": "images/Jellyfish.jpg"
+                },
+                "animation": [],
+                "events": [],
+                "children": []
+              }
+            ]
+          }
+        ],
+        "dialogs": []
+      },
+    }
   ];
   var aResults = [];
   for (var i = 0; i < 100; i++) {
@@ -148,6 +286,16 @@ router.get('/res/get', (req, res) => {
       total = realResource.length;
 
   }
+  res.send({ resources: aResponse, size, total: total });
+})
+
+router.get('/program/list', (req, res) => {
+  let size = parseInt(req.query.size);
+  let start = (parseInt(req.query.current) - 1) * size;
+  let aResponse;
+  let total;
+  aResponse = realProgramResource.slice(start, start + size);
+  total = realProgramResource.length;
   res.send({ resources: aResponse, size, total: total });
 })
 

@@ -1,9 +1,3 @@
-<!--
- * @Author: LyuDongzhou
- * @Date: 2020-12-17 02:57:42
- * @LastEditTime: 2020-12-17 06:16:52
- * @Description: file content
--->
 <template>
   <div class="sortContainer" @mouseleave="$emit('mouse-leave')">
     <div

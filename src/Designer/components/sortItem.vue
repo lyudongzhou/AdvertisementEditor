@@ -1,9 +1,3 @@
-<!--
- * @Author: LyuDongzhou
- * @Date: 2020-12-17 02:44:19
- * @LastEditTime: 2020-12-17 04:11:31
- * @Description: file content
--->
 <template>
   <div>
     <div class="sortItems">
@@ -40,4 +34,3 @@ export default {
   color: white;
 }
 </style>>
-

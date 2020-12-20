@@ -1,37 +1,27 @@
 <template>
   <el-container style="height: 100%; background-color: #4d4d4d">
     <el-aside width="70px">
-      <div
-        :class="{ typeSwitch: true, active: typeSwitch === 1 }"
-        @click="typeSwitch = 1"
-      >
-        素材
-      </div>
-      <div
-        :class="{ typeSwitch: true, active: typeSwitch === 2 }"
-        @click="typeSwitch = 2"
-      >
-        节目
+      <!-- 素材、节目 -->
+      <div v-for="list in typeList" :key="list.id"
+           :class="{typeSwitch: true, active: typeSwitch === list.id }"
+           @click="typeSwitch=list.id">
+        {{list.name}}
       </div>
     </el-aside>
-    <el-container style="width: 200px" v-if="typeSwitch === 1">
+    <!-- <el-container style="width: 200px" v-if="typeSwitch === 1"> -->
+    <el-container style="width: 200px">
       <el-header style="padding: 0px; height: 150px">
         <el-container>
+          <!-- 机构、商城 -->
           <el-header style="height: 40px; padding: 0px; display: flex">
-            <div
-              :class="{ switch_list: true, active: sortConfig.type === 1 }"
-              @click="onSortConfigChange(3, 1)"
-            >
-              机构
-            </div>
-            <div
-              :class="{ switch_list: true, active: sortConfig.type === 2 }"
-              @click="onSortConfigChange(3, 2)"
-            >
-              商城
+            <div v-for="list in switchList" :key="list.id"
+                 :class="{ switch_list: true, active: sortConfig.type === list.id }"
+                 @click="onSortConfigChange(3, list.id)">
+              {{list.name}}
             </div>
           </el-header>
           <el-main style="padding: 0">
+            <!-- search input -->
             <el-input
               placeholder="搜索素材"
               v-model="searchText"
@@ -40,16 +30,20 @@
             >
               <i slot="suffix" class="el-input__icon el-icon-search"></i>
             </el-input>
+            <!-- 类型、排序、价格 -->
             <sortItem @sort-click="onSortClick"></sortItem>
           </el-main>
         </el-container>
       </el-header>
       <el-main style="padding: 0">
-        <resources :sortConfig="sortConfig"></resources>
+        <!-- resource content -->
+        <resources
+         :sortConfig="sortConfig"
+         :typeSwitch="typeSwitch"></resources>
       </el-main>
     </el-container>
     <sortPanel
-      v-if="sortPanelShow&& typeSwitch === 1"
+      v-if="sortPanelShow"
       :select="fmtSelect()"
       :style="sortPosition"
       :sortType="sortType"
@@ -62,16 +56,37 @@
 import resources from "./resources";
 import sortItem from "./sortItem";
 import sortPanel from "./sortPanel";
+
 export default {
   data() {
     return {
-      typeSwitch:2,
+      typeList: [
+        {
+          id: 1,
+          name: "素材",
+        },
+        {
+          id: 2,
+          name: "节目",
+        }
+      ],
+      typeSwitch: 2,
+      switchList: [
+        {
+          id: 1,
+          name: "机构",
+        },
+        {
+          id: 2,
+          name: "商城",
+        }
+      ],
       isCollapse: true,
       sortType: null,
       searchText: "",
       sortConfig: {
         searchText: "",
-        type: 1,
+        type: 1, // 机构1商城2
         resType: 0,
         orderType: 0,
         priceType: 1,
@@ -84,7 +99,11 @@ export default {
       sortPanelShow: false,
     };
   },
-  components: { resources, sortItem, sortPanel },
+  components: {
+    resources,
+    sortItem,
+    sortPanel,
+  },
   methods: {
     caculateSortType(index) {
       let type = "resType";
@@ -116,6 +135,7 @@ export default {
     handleClose(key, keyPath) {
       console.log(key, keyPath);
     },
+    // 类型排序价格菜单栏是否需要折叠起来
     onSortClick(type) {
       if (type !== this.sortType) {
         this.sortPanelShow = true;

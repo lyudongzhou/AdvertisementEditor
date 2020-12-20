@@ -55,7 +55,6 @@ export default {
   watch: {
     renderData(data) {
       this.setSchema(data);
-      console.log("change");
     },
     pageCount(data) {
       this.pageCountChange(data);
@@ -68,7 +67,7 @@ export default {
     },
   },
   created() {
-    console.log(this.singlePagePreview);
+    // console.log(this.singlePagePreview);
     this.setSinglePagePreview(this.singlePagePreview);
     this.pageCountChange(this.pageCount);
     this.setBaseUrl(this.baseUrl);

@@ -65,6 +65,7 @@ const afterCommandMap = {
 
 export default {
   resetSchema (state, schema) {
+    console.log(schema);
     state.schema = clone(schema);
     state.currentPageId = getPropByPath(schema, 'pages[0].id', null);
     state.currentPageType = 'page';
@@ -130,7 +131,7 @@ export default {
   /**
    * @description: 打开或者关闭单页预览需要先设置total再设置previewing
    * @param {*} state store state
-   * @param {Boolean} para open or close 
+   * @param {Boolean} para open or close
    * @return {undefined}
    */
   setPreviewState(state,{previewTotal = false,previewing}){
