@@ -1,7 +1,7 @@
 <!--
  * @Author: LyuDongzhou
  * @Date: 2020-12-02 23:43:21
- * @LastEditTime: 2020-12-07 03:44:46
+ * @LastEditTime: 2020-12-21 00:19:36
  * @Description: file content
 -->
 <template>
@@ -68,6 +68,7 @@ export default {
   },
   created() {
     // console.log(this.singlePagePreview);
+    this.setCurrentPage(this.currentPage);
     this.setSinglePagePreview(this.singlePagePreview);
     this.pageCountChange(this.pageCount);
     this.setBaseUrl(this.baseUrl);
@@ -90,7 +91,6 @@ export default {
     ) {
       this.$refs.bgm.play();
     }
-    window.abccc = this;
   },
   methods: {
     ...mapMutations([
@@ -99,6 +99,7 @@ export default {
       "jumpPageImmediately",
       "setDesignMode",
       "setBaseUrl",
+      "setCurrentPage",
       "setSinglePagePreview",
     ]),
     getPropByPath(...args) {

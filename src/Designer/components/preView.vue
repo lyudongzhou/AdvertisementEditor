@@ -1,13 +1,13 @@
 <!--
  * @Author: LyuDongzhou
  * @Date: 2020-12-07 01:15:30
- * @LastEditTime: 2020-12-08 23:06:40
+ * @LastEditTime: 2020-12-21 02:18:40
  * @Description: file content
 -->
 <template>
-  <el-dialog v-if="isShow" :visible.sync="isShow"
-    ><div ref="preview"></div
-  ></el-dialog>
+  <div v-if="isShow" style="position: absolute; z-index: 10">
+    <div ref="preview" style="width: 100%; height: 100%"></div>
+  </div>
 </template>
 
 <script>
@@ -27,40 +27,49 @@ export default {
   },
   watch: {
     previewing(data) {
+      console.log("preview",data);
       this.isShow = data;
-      this.$nextTick(() => {
-        this.renderPreview();
-      });
+      // if (this.isShow) {
+        this.$nextTick(() => {
+          this.renderPreview();
+        });
+      // }
     },
     isShow(value) {
       if (!value) {
         this.setPreviewState({
-          previewTotal: false,
           previewing: false,
         });
       }
     },
   },
-  mounted() {},
+  mounted() {
+    this.isShow = true;
+    this.renderPreview();
+  },
   methods: {
     ...mapMutations(["setPreviewState"]),
     renderPreview() {
       this.previewInstance && this.previewInstance.$destroy();
       console.log(this.currentPageId);
-      this.previewInstance = new Vue({
-        el: this.$refs["preview"],
-        render: (h) => {
-          let currentPage = this.currentPageId;
-          return h(render, {
-            props: {
-              renderData: this.schema,
-              currentPage: currentPage,
-              singlePagePreview: !this.previewTotal,
-              baseUrl: "",
-            },
-          });
-        },
-        store: previewStore(),
+      let me = this;
+      this.$nextTick(() => {
+        this.previewInstance = new Vue({
+          el: this.$refs["preview"],
+          render: (h) => {
+            let currentPage = this.currentPageId;
+            console.log(me.previewTotal);
+            return h(render, {
+              props: {
+                renderData: this.schema,
+                currentPage: currentPage,
+                singlePagePreview: !this.previewTotal,
+                baseUrl: "",
+              },
+            });
+          },
+          store: previewStore(),
+        });
       });
     },
   },

@@ -1,7 +1,7 @@
 /*
  * @Author: LyuDongzhou
  * @Date: 2020-12-07 01:13:50
- * @LastEditTime: 2020-12-07 11:02:58
+ * @LastEditTime: 2020-12-21 02:13:00
  * @Description: file content
  */
 import mutations from './mutations';
@@ -22,6 +22,7 @@ export default {
       copyComponent: null,
       // 当前选中页面/弹框id
       currentPageId: null,
+      previewTotal:false,
       /**
        * @description: 单页预览
        */
