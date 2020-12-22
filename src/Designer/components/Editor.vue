@@ -31,7 +31,7 @@
               <i slot="suffix" class="el-input__icon el-icon-search"></i>
             </el-input>
             <!-- 类型、排序、价格 -->
-            <sortItem @sort-click="onSortClick"></sortItem>
+            <sortItem :typeSwitch="typeSwitch" @sort-click="onSortClick"></sortItem>
           </el-main>
         </el-container>
       </el-header>
@@ -70,7 +70,7 @@ export default {
           name: "节目",
         }
       ],
-      typeSwitch: 2,
+      typeSwitch: 1,
       switchList: [
         {
           id: 1,

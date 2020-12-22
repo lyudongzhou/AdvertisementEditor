@@ -78,28 +78,29 @@ export default {
   },
   created() {
     this.currentPage = 1;
-    this.loadCount = 30;
+    this.loadCount = 20;
     this.getResources().then((res) => {
       this.generateLoadFun(res);
+      this.loadCount = 10;
+      this.load();
     });
-    // this.currentPage = 2;
-    // this.loadCount = 10;
   },
   methods: {
     ...mapMutations(["resetSchema"]),
     reload() {
       this.total = undefined;
       this.currentPage = 1;
-      this.loadCount = 30;
+      this.loadCount = 20;
       while (this.data.length) {
         this.data.pop();
       }
       this.loadId++;
       this.getResources().then((res) => {
         this.generateLoadFun(res);
+        this.loadCount = 10;
+        this.load();
       });
       // this.currentPage = 2;
-      // this.loadCount = 30;
     },
     caculatePara() {
       let para = {};
@@ -150,8 +151,8 @@ export default {
       }
     },
     getResources() {
+      this.isLoading = true;
       return new Promise (resolve=>{
-        this.isLoading = true;
         if (this.typeSwitch===1) {
           this.$axios.get("/res/get", this.fmtParams(this.caculatePara()))
           .then((res) =>resolve(res));
@@ -165,7 +166,7 @@ export default {
       resType = 0,
       userId = 0,
       current = 1,
-      size = 30,
+      size = 20,
       orderType = 0,
       priceType = 1,
       type = 1,

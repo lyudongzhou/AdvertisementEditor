@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="sortItems">
-      <div class="sortItem" @click="$emit('sort-click',0)">类型<i class="el-icon-arrow-down"></i></div>
+      <div class="sortItem" v-if="typeSwitch===1" @click="$emit('sort-click',0)">类型<i class="el-icon-arrow-down"></i></div>
       <div class="sortItem" @click="$emit('sort-click',1)">排序<i class="el-icon-arrow-down"></i></div>
       <div class="sortItem" @click="$emit('sort-click',2)">价格<i class="el-icon-arrow-down"></i></div>
     </div>
@@ -17,6 +17,7 @@ export default {
       priceType: 1,
     };
   },
+  props: ['typeSwitch'],
 };
 </script>
 
