@@ -3,6 +3,9 @@ import Vue from "vue";
 import { createNamespacedHelpers } from 'vuex';
 
 const mutations = {
+    setCurrentPage(store, pageId) {
+        store.currentPage = pageId;
+    },
     setSchema(store, schema) {
         store.schema = schema;
     },
@@ -141,7 +144,7 @@ Vue.use(Vuex);
 export const { mapState, mapActions, mapMutations, mapGetters } = createNamespacedHelpers('currentRenderState');
 
 
-export default function getNewStore(){
+export default function getNewStore() {
     const state = {
         schema: null,
         pageCount: 0,

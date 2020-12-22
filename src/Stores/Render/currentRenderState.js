@@ -1,7 +1,7 @@
 /*
  * @Author: LyuDongzhou
  * @Date: 2020-11-30 04:01:05
- * @LastEditTime: 2020-12-07 04:03:05
+ * @LastEditTime: 2020-12-21 00:18:46
  * @Description: file content
  */
 //!!!!如果修改了store的结构，需对应修改Designer里的previewStore结构
@@ -18,6 +18,9 @@ const state = {
 const mutations = {
   setSchema(store, schema) {
     store.schema = schema;
+  },
+  setCurrentPage(store,pageId){
+    store.currentPage = pageId;
   },
   setSinglePagePreview(store, prop) {
     store.singlePagePreview = prop;
