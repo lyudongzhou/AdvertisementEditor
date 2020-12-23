@@ -1,8 +1,23 @@
-import iconText from '../public/icon_text.png'
-import iconVedio from '../public/icon_vedio.png'
-import iconModule from '../public/icon_module.png'
-import iconOther from '../public/icon_other.png'
-import iconPlugin from '../public/icon_plugin.png'
+import iconText from '../public/icon_text.png';
+import iconVedio from '../public/icon_vedio.png';
+import iconModule from '../public/icon_module.png';
+import iconOther from '../public/icon_other.png';
+import iconPlugin from '../public/icon_plugin.png';
+import barChart from '../public/bar_chart.png';
+import clock from '../public/clock.png';
+import countDown from '../public/count_down.png';
+import date from '../public/date.png';
+import inform from '../public/inform.png';
+import isTiming from '../public/is_timing.png';
+import lineChart from '../public/line_chart.png';
+import lineCode from '../public/line_code.png';
+import link from '../public/link.png';
+import mix from '../public/mix.png';
+import pieChart from '../public/pie_chart.png';
+import qrcode from '../public/qrcode.png';
+import subTitle from '../public/sub_title.png';
+import weather from '../public/weather.png';
+import week from '../public/week.png';
 // import iconImg from '../public/icon_img.png'
 import { get } from "@/register";
 import { REG_TITLECONFIG } from "@/const";
@@ -43,43 +58,31 @@ let Constructor ={children:[
             "id": 1,
             "label": "混播",
             "type": "mix_sowing",
-            "icon": "/icon_mix_sowing.png"
+            "icon": mix
           },
           {
             "id": 2,
             "label": "文档",
             "type": "document",
-            "icon": "/icon_document.png"
+            "icon": mix
           },
           {
             "id": 3,
             "label": "按钮",
             "type": "BtnCmp",
-            "icon": "/icon_button.png"
+            "icon": mix
           },
           {
             "id": 4,
             "label": "网页",
             "type": "webpage",
-            "icon": "/icon_webpage.png"
+            "icon": link
           },
           {
             "id": 5,
-            "label": "本地网页",
-            "type": "local_webpage",
-            "icon": "/icon_local_webpage.png"
-          },
-          {
-            "id": 6,
             "label": "二维码",
             "type": "qrcode",
-            "icon": "/icon_qrcode.png"
-          },
-          {
-            "id": 7,
-            "label": "相册",
-            "type": "album",
-            "icon": "/icon_album.png"
+            "icon": qrcode
           }
         ]
       },
@@ -91,25 +94,25 @@ let Constructor ={children:[
             "id": 1,
             "label": "时间",
             "type": "time",
-            "icon": "/icon_time.png"
+            "icon": clock
           },
           {
             "id": 2,
             "label": "日期",
             "type": "document",
-            "icon": "/icon_document.png"
+            "icon": date
           },
           {
             "id": 3,
             "label": "周",
             "type": "week",
-            "icon": "/icon_week.png"
+            "icon": week
           },
           {
             "id": 4,
             "label": "星期",
             "type": "weekday",
-            "icon": "/icon_weekday.png"
+            "icon": date
           }
         ]
       },
@@ -121,19 +124,19 @@ let Constructor ={children:[
             "id": 1,
             "label": "倒计时",
             "type": "countdown",
-            "icon": "/icon_countdown.png"
+            "icon": countDown
           },
           {
             "id": 2,
             "label": "正计时",
             "type": "timing",
-            "icon": "/icon_timing.png"
+            "icon": isTiming
           },
           {
             "id": 3,
             "label": "计时器",
             "type": "timer",
-            "icon": "/icon_timer.png"
+            "icon": isTiming
           }
         ]
       },
@@ -145,13 +148,13 @@ let Constructor ={children:[
             "id": 1,
             "label": "通知",
             "type": "inform",
-            "icon": "/icon_inform.png"
+            "icon": inform
           },
           {
             "id": 2,
             "label": "字幕",
             "type": "caption",
-            "icon": "/icon_caption.png"
+            "icon": subTitle
           }
         ]
       },
@@ -163,31 +166,31 @@ let Constructor ={children:[
             "id": 1,
             "label": "实时预报",
             "type": "real_time_forecast",
-            "icon": "/icon_real_time_forecast.png"
+            "icon": weather
           },
           {
             "id": 2,
             "label": "24小时预报",
             "type": "oneday_forecast",
-            "icon": "/icon_oneday_forecast.png"
+            "icon": weather
           },
           {
             "id": 3,
             "label": "7天预报",
             "type": "weekday_forecast",
-            "icon": "/icon_weekday_forecast.png"
+            "icon": weather
           },
           {
             "id": 4,
-            "label": "生活指数",
+            "label": "生活指南",
             "type": "index_live",
-            "icon": "/icon_index_live.png"
+            "icon": weather
           },
           {
             "id": 5,
             "label": "空气质量指数",
             "type": "index_air",
-            "icon": "/icon_index_air.png"
+            "icon": weather
           }
         ]
       },
@@ -199,25 +202,25 @@ let Constructor ={children:[
             "id": 1,
             "label": "饼图",
             "type": "pie",
-            "icon": "/icon_pie.png"
+            "icon": pieChart
           },
           {
             "id": 2,
             "label": "折线图",
             "type": "line_chart",
-            "icon": "/icon_line_chart.png"
+            "icon": lineChart
           },
           {
             "id": 3,
             "label": "柱形图",
             "type": "column_chart",
-            "icon": "/icon_column_chart.png"
+            "icon": barChart
           },
           {
             "id": 4,
             "label": "条形图",
             "type": "bar_chart",
-            "icon": "/icon_bar_chart.png"
+            "icon": lineCode
           }
         ]
       }

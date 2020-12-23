@@ -6,14 +6,13 @@
           <i><img :src="config.icon" alt="" /></i>
           <span>{{config.label}}</span>
           <div class="frame" ref="frame">
-            <div class="arrow"></div>
+            <!-- <div class="arrow"></div> -->
             <div class="frame_content">
               <div class="list" v-for="msg in config.children" :key="msg.id">
                 <p class="frame_title">{{msg.label}}</p>
                 <ol class="frame_list">
                   <li v-for="child in msg.children" :key="child.id" @click="addCmp(child)">
-                    <i class="el-icon-s-platform"></i>
-                    <!-- <i><img :src="child.icon" /></i> -->
+                    <i><img :src="child.icon" /></i>
                     <span>{{child.label}}</span>
                   </li>
                 </ol>
@@ -98,39 +97,40 @@
               width: auto;
               height: auto;
               position: absolute;
-              top: 10px;
               transform: translateX(-50%);
               left: 50%;
-              background: #ffffff;
               text-align: center;
-              border: 1px solid #666;
-              box-sizing: border-box;
-              .list:not(:last-child) {
-                .frame_title {
-                  border-bottom: 1px solid #999;
-                }
-              }
+              display: flex;
+              font-size: 16px;
+              font-family: PingFangSC-Medium, PingFang SC;
+              font-weight: 500;
+              color: #000000;
+              background: #FFFFFF;
+              box-shadow: 0px 5px 10px 0px rgba(178, 178, 178, 0.5);
               .list {
                 width: auto;
-                height: 50px;
-                line-height: 50px;
-                display: flex;
+                padding: 0 10px 0 39px;
                 .frame_title {
                   width: 100px;
-                  height: 100%;
                   color: #000;
-                  background: #ccc;
                   box-sizing: border-box;
+                  padding: 19px 0 17px 0;
+                  text-align: left;
                 }
                 .frame_list {
                   color: #666;
                   display: flex;
+                  flex-direction: column;
                   >li {
-                    width: 120px;
+                    padding: 7px 0;
                     font-size: 14px;
                     text-align: left;
+                    white-space: nowrap;
                     >i {
-                      padding: 0 10px 0 10px;
+                      display: inline-block;
+                      width: 30px;
+                      vertical-align: middle;
+                      text-align: center;
                     }
                     >span {
                       font-weight: bold;

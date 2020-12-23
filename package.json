@@ -49,6 +49,7 @@
     "copy-webpack-plugin": "^6.3.2",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
+    "vue-qr": "^2.3.0",
     "vue-template-compiler": "^2.6.11",
     "webpack-merge": "^5.4.0"
   },

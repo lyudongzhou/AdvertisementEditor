@@ -28,7 +28,7 @@ export default [{
     }
 }, {
     position: "3.0.0",
-    name: "TESTTEXT",
+    name: "混播",
     defaultSchema: {
         "name": "按钮1",
         "type": "textCmp",
