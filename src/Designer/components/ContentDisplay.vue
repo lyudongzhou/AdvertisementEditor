@@ -67,6 +67,7 @@
         draging: false,
         resizing: false,
         workspaceWidth: 0,
+        rotateActive: false,
 //        selectItemContainerStyle: {},
       };
     },
@@ -145,6 +146,9 @@
           maxWidth,
           maxHeight,
         };
+      },
+      rotateGuideItemStyle() {
+        return {width: warpUnit(Math.sqrt(Math.pow(this.selectItemLayoutInfo.h, 2) + Math.pow(this.selectItemLayoutInfo.w, 2)) * 1.2)}
       },
       engineContainerStyle() {
         if (!this.opened) {
@@ -291,9 +295,9 @@
           this.commitResizeMutation(left, top, width, height, AFTER_UPDATE_COMPONENT_SIZE);
         }
       },
-      getSelectItem() {
-        console.info(111, this.$refs.selectItem);
-        return this.$refs.selectItem;
+      rotateActiveChange(active) {
+        console.info(active);
+        this.rotateActive = active;
       },
       ...mapMutations(['selectComponent', 'updateSchema']),
     },
@@ -352,7 +356,13 @@
           @dragstop="dragStop"
           @resizestop="resizeStop"
       >
-        <rotate-oprate @getParentDom="getSelectItem"></rotate-oprate>
+        <rotate-oprate :active="rotateActive" @activeChange="rotateActiveChange"></rotate-oprate>
+        <div class="rotate-guide" v-if="rotateActive" :style="{transform: `translate(-50%, -50%) rotate(-${selectItemLayoutInfo.rotation}deg)`}">
+          <div v-for="n in 4"
+               class="rotate-guide-item"
+               :key="n"
+               :style="[{transform: `rotate(${n * 45}deg)`}, rotateGuideItemStyle]"></div>
+        </div>
       </vue-draggable-resizable>
     </div>
 
@@ -413,6 +423,15 @@
 
       .ae-select-item {
         pointer-events: auto;
+      }
+    }
+
+    .rotate-guide {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      .rotate-guide-item {
+        border: 1px dashed #333;
       }
     }
 

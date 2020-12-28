@@ -1,5 +1,5 @@
 <template>
-  <div class="rotate" @mousedown="handleMouseDown" ref="dom">
+  <div class="rotate" @mousedown="handleMouseDown">
     <i class="el-icon-refresh"></i>
   </div>
 </template>
@@ -15,13 +15,11 @@
   const ROTATE_SET = Array.from(new Array(9), (_, i) => i * 45);
 
   export default {
-    data() {
-      return {
-        active: false,
-      };
+    props: {
+      active: Boolean,
     },
     computed: {
-      ...mapGetters(['currentComponent'])
+      ...mapGetters(['currentComponent']),
     },
     mounted() {
       document.addEventListener('mousemove', this.handleMouseMove)
@@ -45,8 +43,10 @@
         });
       },
       handleMouseDown(e) {
-        this.active = true;
+//        this.active = true;
+        this.$emit('activeChange', true);
         const { clientX, clientY } = e;
+        // 注意直接取了parent，如果层级变化可能会出问题
         const t = this.$parent.$el.getBoundingClientRect(),
           cx = t.left + t.width / 2,
           cy = t.top + t.height / 2,
@@ -67,7 +67,7 @@
             }
           });
         }
-        this.active = false;
+        this.$emit('activeChange', false);
       },
       calculateRotate(e) {
         const {clientX, clientY} = e;
@@ -80,7 +80,10 @@
         r = r % 360;
         r = r < 0 ? r + 360 : r;
         const result = Math.floor(r);
-        const find = ROTATE_SET.find(x => Math.abs(result - x) < 5)
+        let find = ROTATE_SET.find(x => Math.abs(result - x) < 5);
+        if (find === 360) {
+          find = 0;
+        }
         return find === undefined ? result : find;
       },
       ...mapMutations(['updateSchema']),
@@ -110,4 +113,11 @@
     /*top: 0;*/
     /*}*/
   }
+  .rotate-guide {
+    position: absolute;
+    .rotate-guide-item {
+      border: 1px solid;
+    }
+  }
+
 </style>
