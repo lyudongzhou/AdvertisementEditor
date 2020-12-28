@@ -232,17 +232,17 @@ function getProgramResources() {
 }
 
 router.get('/testSchema', (req, res) => {
-  let result = fs.readFileSync(path.resolve(__dirname, "../testData/schema.json"), 'utf8');
+  let result = fs.readFileSync(path.resolve(__dirname, "./testData/schema.json"), 'utf8');
   res.send(result)
 });
 router.get('/program/get/id', (req, res) => {
-  let result = fs.readFileSync(path.resolve(__dirname, `../testData/designer/${req.query.programId}.json`), 'utf8');
+  let result = fs.readFileSync(path.resolve(__dirname, `./testData/designer/${req.query.programId}.json`), 'utf8');
   res.send(createSuccessResult({ programData: JSON.parse(result) }))
 });
 
 router.post('/program/update', (req, res) => {
   const {id, programData} = req.body;
-  fs.writeFileSync(path.resolve(__dirname, `../testData/designer/${id}.json`), JSON.stringify(programData, null, 4));
+  fs.writeFileSync(path.resolve(__dirname, `./testData/designer/${id}.json`), JSON.stringify(programData, null, 4));
   res.send(createSuccessResult({}))
 });
 
@@ -251,7 +251,7 @@ router.post('/program/add', (req, res) => {
 });
 
 router.get('/template/get/id', (req, res) => {
-  let result = fs.readFileSync(path.resolve(__dirname, "../testData/designer/schema.json"), 'utf8');
+  let result = fs.readFileSync(path.resolve(__dirname, "./testData/designer/schema.json"), 'utf8');
   res.send(createSuccessResult({ bodyJson: JSON.parse(result) }));
 });
 
