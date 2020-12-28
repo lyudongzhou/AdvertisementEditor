@@ -11,6 +11,7 @@
     UPDATING_COMPONENT_POSITION,
   } from '../constant/schema';
   import {mapMutations, mapGetters} from '../store';
+  import {ROTATE_ADSORBENT_VALUE} from '../constant/base';
 
   const ROTATE_SET = Array.from(new Array(9), (_, i) => i * 45);
 
@@ -80,7 +81,7 @@
         r = r % 360;
         r = r < 0 ? r + 360 : r;
         const result = Math.floor(r);
-        let find = ROTATE_SET.find(x => Math.abs(result - x) < 5);
+        let find = ROTATE_SET.find(x => Math.abs(result - x) < ROTATE_ADSORBENT_VALUE);
         if (find === 360) {
           find = 0;
         }
