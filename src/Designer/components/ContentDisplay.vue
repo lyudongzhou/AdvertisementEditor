@@ -226,13 +226,12 @@
               this.currentComponentId,
             ).$el;
             const container = this.$refs.renderContainer;
-
             this.selectItemInfo = {
               position: {
-                height: dom.offsetHeight,
-                width: dom.offsetWidth,
-                top: (dom.offsetTop + container.offsetTop / this.scaleValue),
-                left: (dom.offsetLeft + container.offsetLeft / this.scaleValue),
+                height: dom.offsetHeight * this.scaleValue,
+                width: dom.offsetWidth * this.scaleValue,
+                top: (dom.offsetTop * this.scaleValue + container.offsetTop),
+                left: (dom.offsetLeft * this.scaleValue + container.offsetLeft),
               },
             };
           });
@@ -243,8 +242,8 @@
         this.updateSchema({
           type,
           value: {
-            left: left - container.offsetLeft / this.scaleValue,
-            top: top - container.offsetTop / this.scaleValue,
+            left: (left - container.offsetLeft) / this.scaleValue,
+            top: (top - container.offsetTop) / this.scaleValue,
           },
         });
       },
@@ -268,10 +267,10 @@
         this.updateSchema({
           type,
           value: {
-            left: left - container.offsetLeft / this.scaleValue,
-            top: top - container.offsetTop / this.scaleValue,
-            width,
-            height,
+            left: (left - container.offsetLeft) / this.scaleValue,
+            top: (top - container.offsetTop) / this.scaleValue,
+            width: width / this.scaleValue,
+            height: height / this.scaleValue,
           },
         });
       },
@@ -318,15 +317,15 @@
     </div>
 
     <div
+        :key="scaleValue"
         v-if="currentComponentId"
         class="select-item-container"
         ref="selectItemContainer"
-        :style="{transform: `scale(${scaleValue})`, width: selectItemContainerStyle.width, height: selectItemContainerStyle.height}"
     >
       <!--选中框-->
       <vue-draggable-resizable
           :style="{
-                    transform: `translate(${selectItemLayoutInfo.x}px, ${selectItemLayoutInfo.y}px) rotate(${selectItemLayoutInfo.rotation}deg)`,
+                    transform: `translate(${selectItemLayoutInfo.x}px, ${selectItemLayoutInfo.y}px) rotate(${selectItemLayoutInfo.rotation}deg)`
                 }"
           class="select-item"
           :draggable="!isCurrentComponentLocked"
@@ -402,8 +401,8 @@
       position: absolute;
       left: 0;
       top: 0;
-      /*bottom: 0;*/
-      /*right: 0;*/
+      bottom: 0;
+      right: 0;
 
       .select-item {
         pointer-events: auto;
