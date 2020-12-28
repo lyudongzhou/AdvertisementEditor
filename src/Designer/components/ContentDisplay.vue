@@ -5,6 +5,7 @@
   import VueDraggableResizable from 'vue-draggable-resizable';
   import 'vue-draggable-resizable/dist/VueDraggableResizable.css';
   import editorWin from './EditorWindow';
+  import RotateOperate from './RotateOperate';
   import Vue from 'vue';
   import {CHANGE_SCALE, UPDATE_SELECT_INFO} from '../constant/event';
   import {CONTENT_OFFSET} from '../constant/base';
@@ -35,6 +36,7 @@
       render,
       VueDraggableResizable,
       editorWin,
+      RotateOprate: RotateOperate,
     },
     created() {
       // scale变化，选择款需要同步变化
@@ -289,7 +291,10 @@
           this.commitResizeMutation(left, top, width, height, AFTER_UPDATE_COMPONENT_SIZE);
         }
       },
-
+      getSelectItem() {
+        console.info(111, this.$refs.selectItem);
+        return this.$refs.selectItem;
+      },
       ...mapMutations(['selectComponent', 'updateSchema']),
     },
   };
@@ -327,7 +332,8 @@
           :style="{
                     transform: `translate(${selectItemLayoutInfo.x}px, ${selectItemLayoutInfo.y}px) rotate(${selectItemLayoutInfo.rotation}deg)`
                 }"
-          class="select-item"
+          ref="selectItem"
+          class="ae-select-item"
           :draggable="!isCurrentComponentLocked"
           :active="true"
           :preventDeactivation="true"
@@ -338,6 +344,7 @@
           :y="selectItemLayoutInfo.y"
           :h="selectItemLayoutInfo.h"
           :w="selectItemLayoutInfo.w"
+          drag-cancel=".rotate"
           @dragging="onDrag"
           :onDragStart="onDragStart"
           :onResizeStart="onResizeStart"
@@ -345,7 +352,7 @@
           @dragstop="dragStop"
           @resizestop="resizeStop"
       >
-        <div class="test"></div>
+        <rotate-oprate @getParentDom="getSelectItem"></rotate-oprate>
       </vue-draggable-resizable>
     </div>
 
@@ -404,29 +411,10 @@
       bottom: 0;
       right: 0;
 
-      .select-item {
+      .ae-select-item {
         pointer-events: auto;
       }
     }
 
-    .test {
-      position: absolute;
-      top: -30px;
-      width: 10px;
-      height: 10px;
-      border-radius: 10px;
-      background-color: aqua;
-      left: 50%;
-      transform: translateX(-50%);
-      &:after {
-        content: '';
-        display: block;
-        border-left: 1px solid aqua;
-        position: absolute;
-        left: 50%;
-        bottom: -20px;
-        top: 0;
-      }
-    }
   }
 </style>
