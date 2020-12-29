@@ -32,7 +32,7 @@
 <script>
   import headConfig from '../config/headerConfig';
   import schemaMixin from '../mixin/schemaMixin';
-
+// console.log(headConfig);
   export default {
     name: 'components',
     mixins: [schemaMixin],
