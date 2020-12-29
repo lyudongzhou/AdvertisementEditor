@@ -110,8 +110,12 @@ const createComponent = (base) => {
 const createPage = (pageType, base) => {
   return {
     container: {
-      backGround: {},
+      backGround: {
+        type: "color",
+        value: "#ffffff"
+      },
     },
+    components: [],
     ...base,
     id: getUuid(),
   };
