@@ -1,5 +1,11 @@
 <template>
     <el-form ref="form" label-width="50px" size="mini" label-position="left">
+      <el-form-item label="文本">
+          <textFiled
+              :configData="configData"
+              :config="{ props: {}, target: 'props.text' }"
+          ></textFiled>
+      </el-form-item>
         <el-form-item label="字体">
             <el-select
                 v-model="fontFamily"
@@ -48,6 +54,7 @@
 import { getPropByPath } from "@/utils";
 // import Throttle from "../../../../manager/updateThrottle";
 import numberField from "../numberField/numberField";
+import textFiled from "../textFiled/textFiled";
 import colorPicker from "../vcolorpicker/vcolorpicker";
 import {UPDATE_COMPONENT_PROPS} from "../../../../constant/schema";
 import {mapMutations} from "../../../../store";
@@ -56,8 +63,9 @@ export default {
     props: ["configData"],
     created() {},
     components: {
-        numberField,
-        colorPicker,
+      numberField,
+      textFiled,
+      colorPicker,
     },
     data() {
         return {
