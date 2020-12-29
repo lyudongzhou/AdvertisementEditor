@@ -1,0 +1,26 @@
+<template lang="html">
+  <baseCmp :cmpConfig="cmpConfig">
+    <vue-qr :text="cmpConfig.props.text"
+            :size="cmpConfig.layoutConfig.width"></vue-qr>
+  </baseCmp>
+</template>
+
+<script>
+import baseCmp from '../Base.vue';
+import vueQr from 'vue-qr';
+
+export default {
+  name: 'qrcodeCmp',
+  props: ['cmpConfig'],
+  components: {
+    baseCmp,
+    vueQr,
+  },
+  computed: {},
+  mounted() {
+  },
+}
+</script>
+
+<style lang="less" scoped>
+</style>
