@@ -208,7 +208,6 @@ export default {
   mounted() {
     this.$nextTick(() => {
       this.isReady = true;
-      window.testt = this;
     });
   },
   data() {

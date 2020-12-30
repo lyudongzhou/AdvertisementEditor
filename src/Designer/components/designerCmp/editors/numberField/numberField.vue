@@ -57,7 +57,6 @@ export default {
         //   this.changeFun(AFTER_UPDATE_COMPONENT_PROPS);
         // },
         onChange() {
-            console.log("change");
             // Throttle.update(this.config.target, this.text);
             //   console.log("change");
             //   UPDATE_COMPONENT_PROPS;
@@ -71,12 +70,10 @@ export default {
             this.changeFun(UPDATING_COMPONENT_PROPS);
         },
         onFocus() {
-            console.log("focus");
             this.changeFun(BEFORE_UPDATE_COMPONENT_PROPS);
             this.beforeValue = this.dataText;
         },
         onBlur() {
-            console.log("blur");
 
             if (this.beforeValue !== this.dataText) {
                 this.changeFun(AFTER_UPDATE_COMPONENT_PROPS);
@@ -92,7 +89,6 @@ export default {
     },
     watch: {
         currentComponentId() {
-            console.log("currentComponentId");
             this.isNew = true;
         },
         dataText(text) {
@@ -104,7 +100,6 @@ export default {
             this.isMounted = true;
         });
         this.text = getPropByPath(this.configData, this.config.target);
-        console.log("mounted");
     },
 };
 </script>

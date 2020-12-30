@@ -65,7 +65,6 @@ const afterCommandMap = {
 
 export default {
   resetSchema (state, schema) {
-    console.log(schema);
     state.schema = clone(schema);
     state.currentPageId = getPropByPath(schema, 'pages[0].id', null);
     state.currentPageType = 'page';
@@ -93,7 +92,6 @@ export default {
     state.currentComponentId = null;
   },
   updateSchema (state, operateConfig) {
-    console.log("update",operateConfig);
     if (!operateConfig.currentPageType) {
       operateConfig.currentPageType = state.currentPageType;
     }
