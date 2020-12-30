@@ -1,7 +1,13 @@
 <script>
   import {mapGetters, mapMutations, mapState} from '../../store';
   import draggable from 'vuedraggable';
-  import {DELETE_COMPONENT, SWITCH_INDEX, UPDATE_COMPONENT_PROPS} from '../../constant/schema';
+  import {
+    DELETE_COMPONENT,
+    SWITCH_INDEX,
+    UPDATE_COMPONENT_PROPS,
+    UPDATE_INDEX_TO_BOTTOM,
+    UPDATE_INDEX_TO_TOP,
+  } from '../../constant/schema';
   import schemaMixin from '../../mixin/schemaMixin';
   import {getPropByPath} from '@/utils';
 
@@ -58,7 +64,17 @@
       },
       getLockIconClass(componentId) {
         return this.isComponentLocked(componentId) ? 'el-icon-lock' : 'el-icon-unlock';
-      }
+      },
+      indexTop() {
+        this.updateSchema({
+          type: UPDATE_INDEX_TO_TOP,
+        });
+      },
+      indexBottom() {
+        this.updateSchema({
+          type: UPDATE_INDEX_TO_BOTTOM,
+        });
+      },
     },
   };
 </script>
@@ -66,6 +82,14 @@
 <template lang="html">
   <div class="layerManager">
     <div class="operate-container">
+      <el-tooltip content="置顶" placement="top">
+        <div :class="['operate-btn', {disabled: !currentComponentId}]" @click="indexTop"><i class="el-icon-top"></i>置顶</div>
+      </el-tooltip>
+
+      <el-tooltip content="置底" placement="top">
+        <div :class="['operate-btn', {disabled: !currentComponentId}]" @click="indexBottom"><i class="el-icon-bottom"></i>置底</div>
+      </el-tooltip>
+
       <el-tooltip content="复制" placement="top">
         <div :class="['operate-btn', {disabled: !currentComponentId}]" @click="copy"><i class="el-icon-document-copy"></i>复制</div>
       </el-tooltip>
@@ -124,7 +148,7 @@
           margin-right: 5px;
         }
         &:not(:last-child) {
-          margin-right: 10px;
+          margin-right: 8px;
         }
         display: inline-block;
         cursor: pointer;

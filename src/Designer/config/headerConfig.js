@@ -247,18 +247,6 @@ let Constructor ={children:[
             "label": "表单",
             "type": "form",
             "icon": "/icon_form.png"
-          },
-          {
-            "id": 3,
-            "label": "抽奖",
-            "type": "lucky_draw",
-            "icon": "/icon_lucky_draw.png"
-          },
-          {
-            "id": 4,
-            "label": "电子货架",
-            "type": "e_shelf",
-            "icon": "/icon_e_shelf.png"
           }
         ]
       }

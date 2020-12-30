@@ -5,6 +5,7 @@
   import VueDraggableResizable from 'vue-draggable-resizable';
   import 'vue-draggable-resizable/dist/VueDraggableResizable.css';
   import editorWin from './EditorWindow';
+  import RotateOperate from './RotateOperate';
   import Vue from 'vue';
   import {CHANGE_SCALE, UPDATE_SELECT_INFO} from '../constant/event';
   import {CONTENT_OFFSET} from '../constant/base';
@@ -35,6 +36,7 @@
       render,
       VueDraggableResizable,
       editorWin,
+      RotateOprate: RotateOperate,
     },
     created() {
       // scale变化，选择款需要同步变化
@@ -65,6 +67,7 @@
         draging: false,
         resizing: false,
         workspaceWidth: 0,
+        rotateActive: false,
 //        selectItemContainerStyle: {},
       };
     },
@@ -143,6 +146,9 @@
           maxWidth,
           maxHeight,
         };
+      },
+      rotateGuideItemStyle() {
+        return {width: warpUnit(Math.sqrt(Math.pow(this.selectItemLayoutInfo.h, 2) + Math.pow(this.selectItemLayoutInfo.w, 2)) * 1.2)}
       },
       engineContainerStyle() {
         if (!this.opened) {
@@ -226,13 +232,12 @@
               this.currentComponentId,
             ).$el;
             const container = this.$refs.renderContainer;
-
             this.selectItemInfo = {
               position: {
-                height: dom.offsetHeight,
-                width: dom.offsetWidth,
-                top: (dom.offsetTop + container.offsetTop / this.scaleValue),
-                left: (dom.offsetLeft + container.offsetLeft / this.scaleValue),
+                height: dom.offsetHeight * this.scaleValue,
+                width: dom.offsetWidth * this.scaleValue,
+                top: (dom.offsetTop * this.scaleValue + container.offsetTop),
+                left: (dom.offsetLeft * this.scaleValue + container.offsetLeft),
               },
             };
           });
@@ -243,8 +248,8 @@
         this.updateSchema({
           type,
           value: {
-            left: left - container.offsetLeft / this.scaleValue,
-            top: top - container.offsetTop / this.scaleValue,
+            left: (left - container.offsetLeft) / this.scaleValue,
+            top: (top - container.offsetTop) / this.scaleValue,
           },
         });
       },
@@ -268,10 +273,10 @@
         this.updateSchema({
           type,
           value: {
-            left: left - container.offsetLeft / this.scaleValue,
-            top: top - container.offsetTop / this.scaleValue,
-            width,
-            height,
+            left: (left - container.offsetLeft) / this.scaleValue,
+            top: (top - container.offsetTop) / this.scaleValue,
+            width: width / this.scaleValue,
+            height: height / this.scaleValue,
           },
         });
       },
@@ -290,7 +295,10 @@
           this.commitResizeMutation(left, top, width, height, AFTER_UPDATE_COMPONENT_SIZE);
         }
       },
-
+      rotateActiveChange(active) {
+        console.info(active);
+        this.rotateActive = active;
+      },
       ...mapMutations(['selectComponent', 'updateSchema']),
     },
   };
@@ -318,17 +326,18 @@
     </div>
 
     <div
+        :key="scaleValue"
         v-if="currentComponentId"
         class="select-item-container"
         ref="selectItemContainer"
-        :style="{transform: `scale(${scaleValue})`, width: selectItemContainerStyle.width, height: selectItemContainerStyle.height}"
     >
       <!--选中框-->
       <vue-draggable-resizable
           :style="{
-                    transform: `translate(${selectItemLayoutInfo.x}px, ${selectItemLayoutInfo.y}px) rotate(${selectItemLayoutInfo.rotation}deg)`,
+                    transform: `translate(${selectItemLayoutInfo.x}px, ${selectItemLayoutInfo.y}px) rotate(${selectItemLayoutInfo.rotation}deg)`
                 }"
-          class="select-item"
+          ref="selectItem"
+          class="ae-select-item"
           :draggable="!isCurrentComponentLocked"
           :active="true"
           :preventDeactivation="true"
@@ -339,6 +348,7 @@
           :y="selectItemLayoutInfo.y"
           :h="selectItemLayoutInfo.h"
           :w="selectItemLayoutInfo.w"
+          drag-cancel=".rotate"
           @dragging="onDrag"
           :onDragStart="onDragStart"
           :onResizeStart="onResizeStart"
@@ -346,7 +356,13 @@
           @dragstop="dragStop"
           @resizestop="resizeStop"
       >
-        <div class="test"></div>
+        <rotate-oprate :active="rotateActive" @activeChange="rotateActiveChange"></rotate-oprate>
+        <div class="rotate-guide" v-if="rotateActive" :style="{transform: `translate(-50%, -50%) rotate(-${selectItemLayoutInfo.rotation}deg)`}">
+          <div v-for="n in 4"
+               class="rotate-guide-item"
+               :key="n"
+               :style="[{transform: `rotate(${n * 45}deg)`}, rotateGuideItemStyle]"></div>
+        </div>
       </vue-draggable-resizable>
     </div>
 
@@ -402,32 +418,22 @@
       position: absolute;
       left: 0;
       top: 0;
-      /*bottom: 0;*/
-      /*right: 0;*/
+      bottom: 0;
+      right: 0;
 
-      .select-item {
+      .ae-select-item {
         pointer-events: auto;
       }
     }
 
-    .test {
+    .rotate-guide {
       position: absolute;
-      top: -30px;
-      width: 10px;
-      height: 10px;
-      border-radius: 10px;
-      background-color: aqua;
       left: 50%;
-      transform: translateX(-50%);
-      &:after {
-        content: '';
-        display: block;
-        border-left: 1px solid aqua;
-        position: absolute;
-        left: 50%;
-        bottom: -20px;
-        top: 0;
+      top: 50%;
+      .rotate-guide-item {
+        border: 1px dashed #333;
       }
     }
+
   }
 </style>
