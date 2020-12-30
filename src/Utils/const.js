@@ -9,5 +9,9 @@ export const DEFAULTTABS = [
   {
     type: "layoutTab",
     name: "位置与尺寸"
+  },
+  {
+    type:"eventTab",
+    name:"互动事件"
   }
 ];

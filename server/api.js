@@ -112,7 +112,7 @@ function getProgramResources() {
         "change": {
           "type": 3,
           "loop": true,
-          "singlePagePlayTime": 2000
+          "singlePagePlayTime": 20000
         },
         "pages": [
           {

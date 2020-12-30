@@ -99,6 +99,7 @@ export default {
     automaticCycle() {
       if (this.renderData.change.loop) {
         let singlePagePlayTime = this.renderData.change.singlePagePlayTime;
+        console.log(singlePagePlayTime,"qqqqqq");
         this._timer = setInterval(() => {
           if (this.beginTime) {
             let dt = new Date().getTime() - this.beginTime;

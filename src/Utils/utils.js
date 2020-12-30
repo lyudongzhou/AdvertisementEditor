@@ -21,7 +21,8 @@ export function setPropByPath(obj = {}, path = '', value) {
     .split('.')
     .reduce((p, c, index, {length}) => {
       if (length === index + 1) {
-        p[c] = value;
+        Vue.set( p, c, value )
+        // p[c] = value;
       }
       return p[c]
     }, obj);

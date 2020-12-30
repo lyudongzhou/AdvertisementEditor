@@ -93,6 +93,7 @@ export default {
     state.currentComponentId = null;
   },
   updateSchema (state, operateConfig) {
+    console.log("update",operateConfig);
     if (!operateConfig.currentPageType) {
       operateConfig.currentPageType = state.currentPageType;
     }

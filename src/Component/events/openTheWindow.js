@@ -8,9 +8,23 @@ register(REG_EVENTS, {
           vm.$store.commit("currentRenderState/addWindowData", {
             toId: eventProps.openId,
             backTime: eventProps.backTime,
-            type: 'dialogs'
+            type: 'pages'
           });
           vm.$store.commit("currentRenderState/jumpPage", eventProps.openId);
         }
     }
+});
+register(REG_EVENTS, {
+  type: "openTheDialog",
+  payload: {
+      eventKey: "click",
+      method(eventProps, eventObj, vm) {
+        vm.$store.commit("currentRenderState/addWindowData", {
+          toId: eventProps.openId,
+          backTime: eventProps.backTime,
+          type: 'dialogs'
+        });
+        vm.$store.commit("currentRenderState/jumpPage", eventProps.openId);
+      }
+  }
 });
