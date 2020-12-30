@@ -11,6 +11,10 @@ export const DEFAULTTABS = [
     name: "位置与尺寸"
   },
   {
+    type:"animateTab",
+    name:"动画"
+  },
+  {
     type:"eventTab",
     name:"互动事件"
   }

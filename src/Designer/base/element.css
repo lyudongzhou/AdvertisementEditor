@@ -10,4 +10,5 @@
 }
 .el-collapse-item__wrap {
     border-bottom: 0;
+    background-color: transparent;
 }

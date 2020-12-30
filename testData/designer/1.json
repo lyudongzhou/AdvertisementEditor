@@ -31,7 +31,7 @@
                     },
                     "animation": [
                         {
-                            "type": "shaking",
+                            "type": "enfromtop",
                             "duration": 100,
                             "delay": 0,
                             "times": 2
@@ -81,12 +81,7 @@
                         "color": "#FF00FF"
                     },
                     "animation": [
-                        {
-                            "type": "shaking",
-                            "duration": 100,
-                            "delay": 0,
-                            "times": 1
-                        }
+                        
                     ],
                     "events": [
                         {
@@ -114,12 +109,7 @@
                         "bgUrl": "images/Koala.jpg"
                     },
                     "animation": [
-                        {
-                            "type": "shaking",
-                            "duration": 100,
-                            "delay": 0,
-                            "times": 2
-                        }
+                        
                     ],
                     "events": [
                         {
@@ -158,12 +148,7 @@
                         "bgUrl": "images/Koala.jpg"
                     },
                     "animation": [
-                        {
-                            "type": "shaking",
-                            "duration": 100,
-                            "delay": 0,
-                            "times": 2
-                        }
+                        
                     ],
                     "events": [
                         {
@@ -202,12 +187,7 @@
                         "bgUrl": "images/Koala.jpg"
                     },
                     "animation": [
-                        {
-                            "type": "shaking",
-                            "duration": 100,
-                            "delay": 0,
-                            "times": 2
-                        }
+                        
                     ],
                     "events": [
                         {
@@ -285,12 +265,7 @@
                         "bgUrl": "images/Koala.jpg"
                     },
                     "animation": [
-                        {
-                            "type": "shaking",
-                            "duration": 100,
-                            "delay": 0,
-                            "times": 2
-                        }
+                        
                     ],
                     "events": [
                         {

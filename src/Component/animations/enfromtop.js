@@ -2,7 +2,7 @@ import { TweenMax, Power3 } from "gsap";
 import { register } from "@/register";
 import {REG_ANIMATIONS} from "@/const";
 register(REG_ANIMATIONS,{
-    type: "fromtop",
+    type: "enfromtop",
     payload(cmpConfig, { duration, delay, times }) {
         const begin = cmpConfig.top;
         const o = {
