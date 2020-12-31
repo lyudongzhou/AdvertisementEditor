@@ -2,7 +2,7 @@
     <el-input
         v-model="text"
         placeholder="请输入内容"
-        @change="onChange"
+        @input="onChange"
         @focus="onFocus"
         @blur="onBlur"
     ></el-input>
