@@ -12,3 +12,6 @@
     border-bottom: 0;
     background-color: transparent;
 }
+.el-collapse-item__arrow{
+    display: none;
+}

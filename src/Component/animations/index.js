@@ -2,7 +2,7 @@ import { get } from "@/register";
 import {REG_ANIMATIONS} from "@/const";
 //register animation instance
 import "./fadeout";
-import "./enfromtop";
+import "./enfrom";
 import "./shaking";
 const animations = get(REG_ANIMATIONS);
 export default function (cmpConfig, obj) {

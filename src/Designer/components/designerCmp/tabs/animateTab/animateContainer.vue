@@ -82,6 +82,22 @@ export default {
               css: "enfromleft",
               name: "从左淡入",
             },
+            {
+              css: "enfromtopjump",
+              name: "从上弹入",
+            },
+            {
+              css: "enfromrightjump",
+              name: "从右弹入",
+            },
+            {
+              css: "enfrombottonjump",
+              name: "从下弹入",
+            },
+            {
+              css: "enfromleftjump",
+              name: "从左弹入",
+            },
           ],
         },
         {
@@ -98,7 +114,7 @@ export default {
   },
   computed: {
     select() {
-      return this.configData.type;
+      return this.configData.animation[this.index].type;
     },
   },
   created() {
@@ -127,6 +143,9 @@ export default {
         value: {
           [`animation.${this.index}.type`]: css,
         },
+      });
+      this.$event.emit("currentComponentOperate", function (vm) {
+        vm.$refs.parent.idleAction(true);
       });
     },
     fmtStyle() {
@@ -178,12 +197,17 @@ export default {
 .caculateHover(enfromtop,-180px,-120px);
 .caculateHover(enfromright,-60px,-120px);
 .caculateHover(enfrombotton,-120px,-120px);
-.caculateHover(enfromleft, -120px,0px);
+.caculateHover(enfromleft, 0px,-120px);
+.caculateHover(enfromtopjump,-180px,-180px);
+.caculateHover(enfromrightjump,-60px,-180px);
+.caculateHover(enfrombottonjump,-120px,-180px);
+.caculateHover(enfromleftjump,0px,-180px);
 .animateContainer {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   height:350px;
+  align-content: flex-start;
 }
 .animateIcon {
   width: 40px;

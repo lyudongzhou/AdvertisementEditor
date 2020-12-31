@@ -11,6 +11,7 @@ export default {
   namespaced: true,
   state() {
     return {
+      currentComponentOperator:null,
       schema: {},
       currentComponentId: null,
       opened: false,

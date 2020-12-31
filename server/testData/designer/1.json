@@ -27,7 +27,7 @@
             "components": [
                 {
                     "props": {
-                        "text": "文本",
+                        "text": "文本1",
                         "fontFamily": "微软雅黑",
                         "fontWeight": 10,
                         "fontStyle": "normal",
@@ -54,7 +54,14 @@
                     "props": {
                         "bgUrl": "images/Koala.jpg"
                     },
-                    "animation": [],
+                    "animation": [
+                        {
+                            "type": "enfromtop",
+                            "duration": 100,
+                            "delay": 0,
+                            "times": 2
+                        }
+                    ],
                     "events": [],
                     "type": "ImageCmp",
                     "layoutConfig": {

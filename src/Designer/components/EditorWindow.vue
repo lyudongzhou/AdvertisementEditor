@@ -16,7 +16,7 @@
                 <i class="el-icon-close" @click="closeSetDialog"></i>
             </el-header>
             <el-main class="noPadding">
-                <el-collapse v-model="activeNames">
+                <el-collapse v-model="activeNames" accordion>
                     <el-collapse-item
                         v-for="(tab, index) in tabs"
                         :key="index"

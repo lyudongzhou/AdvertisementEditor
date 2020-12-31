@@ -55,7 +55,11 @@
     },
     mounted() {
       const workspaceDom = this.$refs.workspace;
-      this.workspaceWidth = workspaceDom.offsetWidth
+      this.workspaceWidth = workspaceDom.offsetWidth;
+      this.$event.on("currentComponentOperate",(fn)=>{
+        fn(this.$refs.render.getCmp(this.currentComponentId));
+        // console.log(fn,this.$refs.render.getCmp(this.currentComponentId));
+      });
 
     },
     destroyed() {
