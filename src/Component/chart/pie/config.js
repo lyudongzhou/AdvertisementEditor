@@ -5,9 +5,14 @@ export default {
   ],
   extraTabs: [
     {
-      type: "basicTab",
+      type: "chartTab",
       name: "饼图配置",
-      children: []
+      target: {
+        "switch": "props.legend.show"
+      },
+      children: [
+
+      ]
     }
   ]
 };

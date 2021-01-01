@@ -1,15 +1,8 @@
-<!--
- * @Author: LyuDongzhou
- * @Date: 2020-12-08 22:50:37
- * @LastEditTime: 2020-12-21 02:13:17
- * @Description: file content
--->
 <template>
   <div>
     <el-container
       class="full-height"
-      :style="{ filter: `blur(${previewing ? 30 : 0}px)` }"
-    >
+      :style="{ filter: `blur(${previewing ? 30 : 0}px)` }">
       <el-header class="no-padding" height="55px">
         <designer-header></designer-header>
       </el-header>
@@ -28,6 +21,7 @@
         <el-aside style="width: 298px; overflow: inherit">
           <PageFrame></PageFrame>
         </el-aside>
+        <edit-window></edit-window>
       </el-container>
     </el-container>
     <!-- <singlePagePreview></singlePagePreview> -->
@@ -45,6 +39,7 @@ import Editor from "./components/Editor.vue";
 import pageSnapshot from "./components/pageSnapshot.vue";
 import { mapMutations } from "./store";
 import totalPreview from "./components/totalPreview";
+import EditWindow from "./components/EditWindow.vue";
 // import singlePagePreview from "./components/preView";
 import { mapState } from "./store";
 export default {
@@ -56,6 +51,7 @@ export default {
     DesignerOperator,
     Editor,
     pageSnapshot,
+    EditWindow,
     // singlePagePreview,
     totalPreview,
   },

@@ -23,9 +23,12 @@ export default [
             "type": "pie",
             "radius": "55%",
             "data": [
-                {"value": "40", "name": "直接访问"},
-                {"value": "60", "name": "搜索引擎"}
-            ]
+              {"value": "40", "name": "直接访问"},
+              {"value": "60", "name": "搜索引擎"}
+            ],
+            "label": {
+              "formatter": "{c}"
+            }
           }
         ]
       },
