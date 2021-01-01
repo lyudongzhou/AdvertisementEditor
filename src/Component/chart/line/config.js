@@ -5,8 +5,15 @@ export default {
   ],
   extraTabs: [
     {
-      type: "basicTab",
+      type: "chartTab",
       name: "折线图配置",
+      target: {
+        "switch": "props.legend.show",
+        "data": {
+          "th": "props.series",
+          "td": "props.xAxis.data"
+        },
+      },
       children: []
     }
   ]

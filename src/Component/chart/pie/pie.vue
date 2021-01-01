@@ -16,7 +16,6 @@ export default {
   },
   data () {
     return {
-      // myChart: echarts.init(this.$refs.chart),
     }
   },
   computed: {

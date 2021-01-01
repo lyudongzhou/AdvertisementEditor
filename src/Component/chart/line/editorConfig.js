@@ -9,33 +9,32 @@ export default [
         "height": 500
       },
       "props": {
-        "legend": {
-          "show": true,
-          "data": ['A','B']
-        },
         "grid": {
           "width": 200,
           "height":200
         },
+        "legend": {
+          "show": true
+        },
         "xAxis": {
           "type": 'category',
-          "data": ['邮件营销', '搜索引擎']
+          "data": ['Mon', 'Tue']
         },
         "yAxis": {
-          "type": 'value',
+          "type": 'value'
         },
         "series": [
           {
-            "name": 'A',
-            "type": 'line',
-            "data": [934, 1290, 1330, 1600]
+            "name": "A",
+            "data": [1200, 200],
+            "type": 'line'
           },
           {
-            "name": 'B',
-            "type": 'line',
-            "data": [120, 90, 230, 210, 0]
+            "name": "B",
+            "data": [1000, 400],
+            "type": 'line'
           }
-        ],
+        ]
       },
       "animation": [],
       "events": [],

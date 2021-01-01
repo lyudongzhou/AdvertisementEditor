@@ -11,7 +11,6 @@ export default [
       "props": {
         "legend": {
           "show": true,
-          "data": ["直接访问", "搜索引擎"]
         },
         "grid": {
           "width": 200,

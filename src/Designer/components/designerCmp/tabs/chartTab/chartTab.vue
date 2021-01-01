@@ -53,7 +53,23 @@
         this.changeFun(AFTER_UPDATE_COMPONENT_PROPS);
       },
       editData () {
-        this.$event.emit('edit-window', this.configData);
+        let data = this.config.target.data,
+            th = data.th?data.th.split('.'):data.th,
+            td = data.td?data.td.split('.'):data.td,
+            thData, tdData;
+        if (th) {
+          thData = this.configData;
+          th.forEach(every=>{
+            thData = thData[every];
+          })
+        }
+        if (td) {
+          tdData = this.configData;
+          td.forEach(every=>{
+            tdData = tdData[every];
+          })
+        }
+        this.$event.emit('edit-window', thData, tdData);
       },
     }
   }
