@@ -47,6 +47,7 @@
     "concurrently": "^5.3.0",
     "connect-multiparty": "^2.2.0",
     "copy-webpack-plugin": "^6.3.2",
+    "echarts": "^5.0.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
     "vue-qr": "^2.3.0",

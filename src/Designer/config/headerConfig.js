@@ -201,25 +201,25 @@ let Constructor ={children:[
           {
             "id": 1,
             "label": "饼图",
-            "type": "pie",
+            "type": "pieChartCmp",
             "icon": pieChart
           },
           {
             "id": 2,
             "label": "折线图",
-            "type": "line_chart",
+            "type": "lineChartCmp",
             "icon": lineChart
           },
           {
             "id": 3,
             "label": "柱形图",
-            "type": "column_chart",
+            "type": "columnChartCmp",
             "icon": barChart
           },
           {
             "id": 4,
             "label": "条形图",
-            "type": "bar_chart",
+            "type": "barChartCmp",
             "icon": lineCode
           }
         ]

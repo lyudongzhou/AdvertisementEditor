@@ -4,3 +4,4 @@ import "./imageTab";
 import "./textTab";
 import "./eventTab";
 import "./animateTab";
+import "./chartTab";
