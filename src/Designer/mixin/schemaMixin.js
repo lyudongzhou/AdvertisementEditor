@@ -47,8 +47,29 @@ export default {
     $$addNewComponent(base) {
       base = clone(base);
       if (!base.layoutConfig) {
-        base.layoutConfig = {};
+        base.layoutConfig = {
+
+        };
       }
+      base.layoutConfig = Object.assign({
+        "width": 100,
+        "height": 30,
+        "hidden": false,
+        "rotation": 0,
+        "top": 0,
+        "left": 0,
+        "opacity":1,
+        pivotX: 0,
+        pivotY: 0,
+        scaleX: 1,
+        scaleY: 1,
+        aniRotation: 0,
+        skewX: 0,
+        skewY: 0,
+        positionX: 0,
+        positionY: 0,
+        alpha: 1,
+    },base.layoutConfig);
       // z-index
       base.layoutConfig.zIndex = executeGetter.call(this, 'currentMaxIndex') + 1;
       // name
@@ -56,7 +77,7 @@ export default {
       const components = executeGetter.call(this, 'components');
       base.name = getNextName(components, prefix);
       const component = createComponent(base);
-
+      console.log(component);
       executeMutations.call(this, 'updateSchema', {type: ADD_COMPONENT, value: component, targetId: component.id});
     },
     $$pasteComponent() {

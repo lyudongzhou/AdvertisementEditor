@@ -2,11 +2,11 @@
     <div class="basic_tab">
         <el-form
             ref="form"
-            label-width="50px"
+            label-width="80px"
             size="mini"
             label-position="left"
         >
-            <el-button-group>
+            <el-button-group style="width:100%;display:flex;justify-content:center;padding-bottom:20px">
                 <el-button
                     type="primary"
                     icon="el-icon-edit"
@@ -53,6 +53,7 @@
                     :is="editor.type"
                     :configData="configData"
                     :config="editor"
+                    style="width:200px"
                 ></component>
             </el-form-item>
         </el-form>
@@ -134,6 +135,12 @@ export default {
                     type: "numberField",
                 },
                 {
+                    label: "Y",
+                    props: {},
+                    target: "layoutConfig.top",
+                    type: "numberField",
+                },
+                {
                     label: "宽度",
                     props: {
                         min: 1,
@@ -153,6 +160,11 @@ export default {
                 },
                 {
                     label: "旋转",
+                    props: {},
+                    target: "layoutConfig.rotation",
+                    type: "numberField",
+                },{
+                    label: "不透明度",
                     props: {},
                     target: "layoutConfig.rotation",
                     type: "numberField",

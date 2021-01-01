@@ -12,34 +12,39 @@
     </ul>
     <div v-for="(panel, i) in panelConfig" :key="i">
       <ul class="animateContainer" v-if="i === activeTab">
-        <li
-          v-for="(layoutConfig, index) in panel.types"
-          :key="index"
-          class="animateItem"
-        >
-          <div
-            :class="fmtClass(layoutConfig.css)"
-            :style="fmtStyle(layoutConfig)"
-            @click="changeSelect(layoutConfig.css)"
-          ></div>
-          <div>{{ layoutConfig.name }}</div>
-        </li>
+        <div style="display: flex; flex-wrap: wrap">
+          <li
+            v-for="(layoutConfig, index) in panel.types"
+            :key="index"
+            class="animateItem"
+          >
+            <div
+              :class="fmtClass(layoutConfig.css)"
+              :style="fmtStyle(layoutConfig)"
+              @click="changeSelect(layoutConfig.css)"
+            ></div>
+            <div>{{ layoutConfig.name }}</div>
+          </li>
+        </div>
       </ul>
     </div>
-    <el-form
+    <el-form label-width="50px" size="mini"
       ><el-form-item label="时间">
         <numberField
+          style="width: 200px"
           :configData="configData"
           :config="{ props: {}, target: `animation.${index}.duration` }"
         ></numberField> </el-form-item
       ><el-form-item label="延迟">
         <numberField
+          style="width: 200px"
           :configData="configData"
           :config="{ props: {}, target: `animation.${index}.delay` }"
         ></numberField>
       </el-form-item>
       <el-form-item label="次数">
         <numberField
+          style="width: 200px"
           :configData="configData"
           :config="{ props: {}, target: `animation.${index}.times` }"
         ></numberField> </el-form-item
@@ -98,18 +103,99 @@ export default {
               css: "enfromleftjump",
               name: "从左弹入",
             },
+            {
+              css: "encenterbounds",
+              name: "中心弹入",
+            },
+            {
+              css: "encenterscale",
+              name: "中心放大",
+            },
+            {
+              css: "enrollin",
+              name: "翻滚进入",
+            },
+            {
+              css: "enlightspeedin",
+              name: "光速进入",
+            },
+            {
+              css: "enmagic",
+              name: "魔幻进入",
+            },
+            {
+              css: "ensmallbound",
+              name: "缩小弹入",
+            },
+            {
+              css: "enroutate",
+              name: "旋转进入",
+            },
+            {
+              css: "enfade",
+              name: "淡入",
+            },
           ],
         },
         {
           name: "强调",
-          types: [],
+          types: [
+            {
+              css: "stroll",
+              name: "2D旋转",
+            },
+            {
+              css: "stshake",
+              name: "抖动",
+            },
+            {
+              css: "stleftrightfloat",
+              name: "左右浮动",
+            },
+            {
+              css: "stupdownfloat",
+              name: "上下浮动",
+            },
+            {
+              css: "stshine",
+              name: "闪烁",
+            },
+            {
+              css: "stleftrightbound",
+              name: "左右摆动",
+            },
+            {
+              css: "stq",
+              name: "Q弹晃动",
+            },
+          ],
         },
         {
           name: "退出",
-          types: [],
+          types: [
+            {
+              css: "qttotop",
+              name: "向上淡出",
+            },
+            {
+              css: "qttoright",
+              name: "向右淡出",
+            },
+            {
+              css: "qttobotton",
+              name: "向下淡出",
+            },
+            {
+              css: "qttoleft",
+              name: "向左淡出",
+            },
+            {
+              css: "qtfadeout",
+              name: "淡出",
+            },
+          ],
         },
       ],
-      //   select: "enfromtop",
     };
   },
   computed: {
@@ -198,10 +284,37 @@ export default {
 .caculateHover(enfromright,-60px,-120px);
 .caculateHover(enfrombotton,-120px,-120px);
 .caculateHover(enfromleft, 0px,-120px);
+
 .caculateHover(enfromtopjump,-180px,-180px);
 .caculateHover(enfromrightjump,-60px,-180px);
 .caculateHover(enfrombottonjump,-120px,-180px);
 .caculateHover(enfromleftjump,0px,-180px);
+
+.caculateHover(encenterbounds,-120px,0px);
+.caculateHover(encenterscale,0px,-60px);
+.caculateHover(enrollin,-240px,-120px);
+.caculateHover(enlightspeedin,0px,-240px);
+
+.caculateHover(enmagic,-480px,-120px);
+.caculateHover(ensmallbound,-180px,0px);
+.caculateHover(enroutate,-180px,-60px);
+.caculateHover(enfade,-60px,0px);
+
+.caculateHover(stroll,-180px,-240px);
+.caculateHover(stshake,-540px,-180px);
+.caculateHover(stleftrightfloat,-360px,-120px);
+.caculateHover(stupdownfloat,-540px,-180px);
+
+.caculateHover(stshine,-420px,-120px);
+.caculateHover(stleftrightbound,-300px,-240px);
+.caculateHover(stq,-240px,-180px);
+
+.caculateHover(qttotop,-120px,-120px);
+.caculateHover(qttoright,0px,-120px);
+.caculateHover(qttobotton,-180px,-120px);
+.caculateHover(qttoleft,-60px,-120px);
+.caculateHover(qtfadeout,-60px,0px);
+
 .animateContainer {
   display: flex;
   flex-wrap: wrap;
@@ -214,8 +327,9 @@ export default {
   height: 40px;
 }
 .animateItem {
+  width:70px;
     font-size: 10px;
-  margin: 5px 10px;
+  margin: 5px 0;
   display: flex;
   align-items: center;
   flex-direction: column;

@@ -1,19 +1,19 @@
 <template>
   <ul class="list">
     <li
-      :class="{ select: 0 === dataCurrentSelect }"
+      :class="{ checkItem:true,select: 0 === dataCurrentSelect }"
       @click="onChangeCurrentSelect(0)"
     >
       无效果
     </li>
     <li
-      :class="{ select: 1 === dataCurrentSelect }"
+      :class="{ checkItem:true,select: 1 === dataCurrentSelect }"
       @click="onChangeCurrentSelect(1)"
     >
       打开弹窗
     </li>
     <li
-      :class="{ select: 2 === dataCurrentSelect }"
+      :class="{ checkItem:true,select: 2 === dataCurrentSelect }"
       @click="onChangeCurrentSelect(2)"
     >
       跳转页面
@@ -24,6 +24,7 @@
     >
       <span>无接触返回时长</span>
       <el-input
+      size="mini"
         v-show="!dialogChecked"
         v-model="dataDialogBackTime"
         style="width: 50px"
@@ -397,6 +398,9 @@ export default {
     width: 85px;
     height: 85px;
     margin-left: 10px;
+    background: darkgray;
+    border-radius: 4px;
+    padding:10px;
   }
 
   li:hover {

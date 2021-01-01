@@ -1,13 +1,11 @@
 <template>
-    <li
-        class="moveItem"
-        :style="publicList"
-        @click="dispatchEvent('click', arguments[0])"
-    >
-        <div :style="animationAndHiddenStyleComputed">
-            <slot></slot>
-        </div>
-    </li>
+  <li
+    class="moveItem"
+    :style="publicList"
+    @click="dispatchEvent('click', arguments[0])"
+  >
+    <slot></slot>
+  </li>
 </template>
 <script>
 import pipe from "../Render/pipe";
@@ -17,105 +15,95 @@ import "./events";
 import { get } from "@/register";
 import { REG_EVENTS } from "@/const";
 const eventMap = get(REG_EVENTS);
-
+import Matrix from "./math/Matrix";
+// import {PerspectiveCamera} from "@/math/Camera";
+// const ma = new Matrix4();
+// console.log(ma);
 export default {
-    name: "baseCmp",
-    props: ["cmpConfig", "pageState"],
-    data() {
-        return {
-            animationStyle: {
-                left: 0,
-                top: 0,
-                scale: 1,
-                rotation: 0,
-                opacity: 1,
-            },
-        };
+  name: "baseCmp",
+  props: ["cmpConfig", "pageState"],
+  data() {
+    return {};
+  },
+  computed: {
+    layoutConfig() {
+      return this.cmpConfig.layoutConfig;
     },
-    computed: {
-        layoutConfig() {
-            return this.cmpConfig.layoutConfig;
-        },
-        publicList() {
-            const style = {};
-            Object.keys(this.layoutConfig).forEach((key) => {
-                switch (key) {
-                    case "rotation":
-                        style[
-                            "transform"
-                        ] = `rotate(${this.layoutConfig.rotation}deg)`;
-                        break;
-                    case "opacity":
-                        style[key] = this.layoutConfig[key];
-                        break;
-                    case "zIndex":
-                        style["z-index"] = this.layoutConfig[key];
-                        break;
-                    default:
-                        style[key] = `${this.layoutConfig[key]}px`;
-                }
-            });
-            return style;
-        },
-        animationAndHiddenStyleComputed() {
-            const style = {
-                position: "absolute",
-                width: "100%",
-                height: "100%",
-            };
-            let o = this.animationStyle;
-            Object.keys(o).forEach((key) => {
-                switch (key) {
-                    case "rotation":
-                        style["transform"] = `rotate(${o.rotation}deg)`;
-                        break;
-                    case "opacity":
-                        style[key] = o[key];
-                        break;
-                    default:
-                        style[key] = `${o[key]}px`;
-                }
-            });
-              if (this.layoutConfig.hidden) {
-                style.display = 'none';
-              }
-            return style;
-        },
+    publicList() {
+      const style = { opacity: 1 };
+      let ma = new Matrix();
+      let config = this.layoutConfig;
+      const {
+        positionX = 0,
+        positionY = 0,
+        pivotX = 0,
+        pivotY = 0,
+        scaleX = 1,
+        scaleY = 1,
+        aniRotation = 0,
+        skewX = 0,
+        skewY = 0,
+      } = this.layoutConfig;
+      ma.setTransform(
+        positionX,
+        positionY,
+        pivotX,
+        pivotY,
+        scaleX,
+        scaleY,
+        aniRotation,
+        skewX,
+        skewY
+      );
+      Object.keys(config).forEach((key) => {
+        switch (key) {
+          case "rotation":
+            style["transform"] = `rotate(${
+              config.rotation
+            }deg) matrix(${ma.toCssArray().join(",")})`;
+            break;
+          case "opacity":
+            style[key] *= config[key];
+            break;
+          case "alpha":
+            style["opacity"] *= config[key];
+            break;
+          case "zIndex":
+            style["z-index"] = config[key];
+            break;
+          default:
+            style[key] = `${config[key]}px`;
+        }
+      });
+      return style;
     },
-    created() {},
-    mounted() {},
-    methods: {
-        ...mapActions([]),
-        dispatchEvent(type, e) {
-            if (!this.$store.state.currentRenderState.designMode) {
-                this.cmpConfig.events.forEach((ele) => {
-                    if (
-                        eventMap[ele.type] &&
-                        eventMap[ele.type].eventKey === type
-                    ) {
-                        eventMap[ele.type].method.call(
-                            this,
-                            ele.value,
-                            e,
-                            this
-                        );
-                    }
-                });
-            } else if (type === "click") {
-                pipe.emit("click", this, this.cmpConfig.id);
-            }
-        },
-        idleAction(isForce) {
-            if (!this.$store.state.currentRenderState.designMode || isForce) {
-                animationDispatcher(this.cmpConfig, this.animationStyle);
-            }
-        },
+  },
+  created() {},
+  mounted() {},
+  methods: {
+    ...mapActions([]),
+    dispatchEvent(type, e) {
+      if (!this.$store.state.currentRenderState.designMode) {
+        this.cmpConfig.events.forEach((ele) => {
+          if (eventMap[ele.type] && eventMap[ele.type].eventKey === type) {
+            eventMap[ele.type].method.call(this, ele.value, e, this);
+          }
+        });
+      } else if (type === "click") {
+        pipe.emit("click", this, this.cmpConfig.id);
+      }
     },
+    idleAction(isForce) {
+      if (!this.$store.state.currentRenderState.designMode || isForce) {
+        animationDispatcher(this.cmpConfig, this.layoutConfig, this);
+      }
+    },
+  },
 };
 </script>
 <style scoped>
 .moveItem {
-    display: flex;
-    position: absolute;
+  display: flex;
+  position: absolute;
 }
 </style>

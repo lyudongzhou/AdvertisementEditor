@@ -45,7 +45,18 @@
                         "hidden": false,
                         "rotation": 0,
                         "top": 0,
-                        "left": 0
+                        "left": 0,
+                        "pivotX": 0,
+                        "pivotY": 0,
+                        "scaleX": 1,
+                        "scaleY": 1,
+                        "aniRotation": 0,
+                        "skewX": 0,
+                        "skewY": 0,
+                        "positionX":0,
+                        "positionY":0,
+                        "opacity":1,
+                        "alpha":1
                     },
                     "children": [],
                     "id": "345600d0-4658-11eb-a3ca-bb193d389b3f"
@@ -57,7 +68,7 @@
                     "animation": [
                         {
                             "type": "enfromtop",
-                            "duration": 100,
+                            "duration": 1,
                             "delay": 0,
                             "times": 2
                         }
@@ -71,7 +82,18 @@
                         "hidden": false,
                         "rotation": 0,
                         "top": 100.99999999999999,
-                        "left": 262
+                        "left": 262,
+                        "pivotX": 0,
+                        "pivotY": 0,
+                        "scaleX": 1,
+                        "scaleY": 1,
+                        "aniRotation": 0,
+                        "skewX": 0,
+                        "skewY": 0,
+                        "positionX":0,
+                        "positionY":0,
+                        "opacity":1,
+                        "alpha":1
                     },
                     "children": [],
                     "name": "图片1",
@@ -91,7 +113,18 @@
                         "hidden": false,
                         "rotation": 0,
                         "top": 117.99999999999999,
-                        "left": 472
+                        "left": 472,
+                        "pivotX": 0,
+                        "pivotY": 0,
+                        "scaleX": 1,
+                        "scaleY": 1,
+                        "aniRotation": 0,
+                        "skewX": 0,
+                        "skewY": 0,
+                        "positionX":0,
+                        "positionY":0,
+                        "opacity":1,
+                        "alpha":1
                     },
                     "children": [],
                     "name": "图片2",
@@ -117,7 +150,18 @@
                         "hidden": false,
                         "rotation": 0,
                         "top": 64,
-                        "left": 45
+                        "left": 45,
+                        "pivotX": 0,
+                        "pivotY": 0,
+                        "scaleX": 1,
+                        "scaleY": 1,
+                        "aniRotation": 0,
+                        "skewX": 0,
+                        "skewY": 0,
+                        "positionX":0,
+                        "positionY":0,
+                        "opacity":1,
+                        "alpha":1
                     },
                     "children": [],
                     "id": "82348070-4657-11eb-a3ca-bb193d389b3f"

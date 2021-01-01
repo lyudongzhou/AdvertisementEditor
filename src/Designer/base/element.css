@@ -3,6 +3,7 @@
 }
 .el-collapse-item__header {
     background-color: transparent;
+    padding: 0 10px;
 }
 .el-collapse {
     border-top: 0;
