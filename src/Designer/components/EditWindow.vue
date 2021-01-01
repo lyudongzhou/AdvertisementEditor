@@ -3,37 +3,39 @@
     <div class="title">编辑图表数据</div>
     <div class="content">
       <div class="data_operation">
-        <button class="add_operation" v-if="thData">添加行</button>
+        <button class="add_operation" v-if="thData" @click="addRow">添加行</button>
         <button v-if="thData">删除行</button>
-        <button class="add_operation">添加列</button>
+        <button class="add_operation" @click="addColumn">添加列</button>
         <button>删除列</button>
       </div>
-      <table>
-        <tr>
-          <th></th>
-          <th class="list" v-for="(name,index) in tdData" :key="index">
-            <input :value="name.name||name"
-                    @input="changeValue(tdData,index,'name.name')"/>
-          </th>
-        </tr>
-        <tr v-if="thData==null">
-          <td>0</td>
-          <td v-for="(name,index) in tdData" :key="index">
-            <input type="number" :value="name.value"
-                   @input="changeValue(tdData,index,'name.value')"/>
-          </td>
-        </tr>
-        <tr v-else v-for="(serie,index) in thData" :key="index">
-          <td class="list">
-            <input :value="serie.name"
-                   @input="changeValue(thData,index,'name')"/>
-          </td>
-          <td v-for="(data,ind) in serie.data" :key="ind">
-            <input type="number" :value="data"
-                   @input="changeValue(thData,ind,'data.ind')"/>
-          </td>
-        </tr>
-      </table>
+      <div class="table">
+        <table>
+          <tr>
+            <th></th>
+            <th class="list" v-for="(name,index) in tdData" :key="index">
+              <input :value="name.name||name"
+                      @input="changeValue(tdData,index,'name.name')" />
+            </th>
+          </tr>
+          <tr v-if="thData==null">
+            <td>0</td>
+            <td v-for="(name,index) in tdData" :key="index">
+              <input type="number" :value="name.value"
+                     @input="changeValue(tdData,index,'name.value')" />
+            </td>
+          </tr>
+          <tr v-else v-for="(serie,index) in thData" :key="index">
+            <td class="list">
+              <input :value="serie.name"
+                     @input="changeValue(thData,index,'name')" />
+            </td>
+            <td v-for="(data,ind) in serie.data" :key="ind">
+              <input type="number" :value="data"
+                     @input="changeValue(thData,ind,'data.ind')" />
+            </td>
+          </tr>
+        </table>
+      </div>
     </div>
     <div class="buttons">
       <button class="cancel" @click="thData=null;tdData=null">取消</button>
@@ -72,6 +74,30 @@
           }
         })
       },
+      addColumn () {
+        let data = !this.thData?{
+          value: 0,
+          name: '图表'
+        }:'图表';
+        this.tdData.push(data);
+        if (this.thData) {
+          this.thData.forEach(every=>{
+            every.data.push(0);
+          })
+        }
+      },
+      addRow () {
+        let arr = [];
+        for (let i=0;i<this.tdData.length;i++) {
+          arr.push(i);
+        }
+        let data = {
+          name: "c",
+          data: arr,
+          type: 'line'
+        };
+        this.thData.push(data);
+      }
     },
     watch: {
     }
@@ -105,7 +131,10 @@
     }
     .content {
       flex: 1;
-      margin-left: 37px;
+      margin: 0 20px 0 37px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
       .data_operation {
         display: flex;
         button {
@@ -128,9 +157,17 @@
           color: #1391FF;
         }
       }
-      table {
+      .table {
         overflow: scroll;
         width: 95%;
+        ::-webkit-scrollbar {
+          display: none; /* Chrome Safari */
+        }
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE 10+ */
+        table {
+          width: 100%;
+        }
         tr {
           width: 100%;
           display: flex;
@@ -147,6 +184,7 @@
             font-family: PingFangSC-Regular, PingFang SC;
             font-weight: 400;
             color: #333333;
+            min-width: 100px;
           }
           .list {
             background: #F2F2F2;
