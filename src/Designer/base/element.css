@@ -2,8 +2,11 @@
     padding-bottom: 0;
 }
 .el-collapse-item__header {
+    height:40px;
     background-color: transparent;
     padding: 0 10px;
+    color:white;
+    border-bottom:1px solid #373737;
 }
 .el-collapse {
     border-top: 0;
@@ -13,6 +16,24 @@
     border-bottom: 0;
     background-color: transparent;
 }
-.el-collapse-item__arrow{
-    display: none;
+.el-form-item__label{
+    display: block;
+    color: white;
+    float:none;
+}
+.el-form-item--mini.el-form-item, .el-form-item--small.el-form-item {
+    margin-bottom: 15px;
+}
+.el-form-item--mini .el-form-item__label{
+    line-height: normal;
+    margin-bottom: 15px;
+}
+.el-input__inner{
+    background-color: #9B9B9B;
+    color: white;
+    border: 0;
+}
+.el-input-number .el-input__inner{
+    text-align: left;
+    background-color: #9B9B9B;
 }

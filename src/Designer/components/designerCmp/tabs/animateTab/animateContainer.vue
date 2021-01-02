@@ -12,7 +12,7 @@
     </ul>
     <div v-for="(panel, i) in panelConfig" :key="i">
       <ul class="animateContainer" v-if="i === activeTab">
-        <div style="display: flex; flex-wrap: wrap">
+        <div style="display: flex; flex-wrap: wrap;width:100%">
           <li
             v-for="(layoutConfig, index) in panel.types"
             :key="index"
@@ -28,23 +28,23 @@
         </div>
       </ul>
     </div>
-    <el-form label-width="50px" size="mini"
-      ><el-form-item label="时间">
+    <el-form size="mini" class="aniform"
+      ><el-form-item label="时间" style="width:100%">
         <numberField
-          style="width: 200px"
+          style="width: 100%"
           :configData="configData"
           :config="{ props: {}, target: `animation.${index}.duration` }"
         ></numberField> </el-form-item
       ><el-form-item label="延迟">
         <numberField
-          style="width: 200px"
+          style="width: 100%"
           :configData="configData"
           :config="{ props: {}, target: `animation.${index}.delay` }"
         ></numberField>
       </el-form-item>
       <el-form-item label="次数">
         <numberField
-          style="width: 200px"
+          style="width: 100%"
           :configData="configData"
           :config="{ props: {}, target: `animation.${index}.times` }"
         ></numberField> </el-form-item
@@ -251,22 +251,33 @@ export default {
 </script>
 
 <style scoped lang="less">
+@deep: ~">>>";
+@{deep} .aniform{
+  padding: 16px 26px;
+  .el-form-item__label{
+    text-align: left;
+  }
+}
 .switchPanelContainer{
     display: flex;
     flex-direction: row;
     justify-content: center;
 }
 .switchPanelItem{
-    padding: 5px 10px;
-    width: 32%;
-    text-align: center;
-    border-radius: 4px;
+  padding: 5px 10px;
+  width: 32%;
+  text-align: center;
+  width: 80px;
+  height: 30px;
+  color:white;
+  border-radius: 5px;
+
 }
 .select.switchPanelItem{
-    background-color: gray;
+  background: #117EDD;
 }
 .switchPanelItem:hover{
-    background-color: gray;
+  background: #117EDD;
 }
 @dy:-360px;
 .caculateHover(@className,@x,@y){
@@ -327,8 +338,9 @@ export default {
   height: 40px;
 }
 .animateItem {
-  width:70px;
-    font-size: 10px;
+  color: white;
+  width:25%;
+  font-size: 10px;
   margin: 5px 0;
   display: flex;
   align-items: center;

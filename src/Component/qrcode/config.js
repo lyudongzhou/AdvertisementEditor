@@ -9,7 +9,7 @@ export default {
       name: "二维码配置",
       children: [
         {
-          "type": "textFiled",
+          "type": "textField",
           "target": "props.text",
           "label": "二维码地址",
           "props": {},

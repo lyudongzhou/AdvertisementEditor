@@ -1,120 +1,126 @@
 <template>
-  <ul class="list">
-    <li
-      :class="{ checkItem:true,select: 0 === dataCurrentSelect }"
-      @click="onChangeCurrentSelect(0)"
-    >
-      无效果
-    </li>
-    <li
-      :class="{ checkItem:true,select: 1 === dataCurrentSelect }"
-      @click="onChangeCurrentSelect(1)"
-    >
-      打开弹窗
-    </li>
-    <li
-      :class="{ checkItem:true,select: 2 === dataCurrentSelect }"
-      @click="onChangeCurrentSelect(2)"
-    >
-      跳转页面
-    </li>
-    <div
-      v-show="dataCurrentSelect === 1"
-      style="margin-top: 10px; color: black"
-    >
-      <span>无接触返回时长</span>
-      <el-input
-      size="mini"
-        v-show="!dialogChecked"
-        v-model="dataDialogBackTime"
-        style="width: 50px"
-      ></el-input>
-      <span v-show="!dialogChecked">秒</span>
-      <el-checkbox v-model="dialogChecked">自动计算</el-checkbox>
-    </div>
-    <div
-      v-show="dataCurrentSelect === 1"
-      style="margin-top: 10px; color: black"
-    >
-      <el-select
-        size="small"
-        v-model="dataDialogValue"
-        placeholder="请选择跳转的页面"
-        filterable
-        style="width: 100%"
-        :clearable="true"
+  <div class="container">
+    <div class="title">点击事件</div>
+    <ul class="list">
+      <li
+        :class="{ checkItem: true, select: 0 === dataCurrentSelect }"
+        @click="onChangeCurrentSelect(0)"
       >
-        <el-option
-          v-for="item in dialogs"
-          :key="item.id"
-          :label="item.name"
-          :value="item.id"
-          style="
-            height: 100px;
-            width: 300px;
-            display: flex;
-            justify-content: left;
-            align-items: center;
-          "
+      
+        无效果
+      </li>
+      <li
+        :class="{ checkItem: true, select: 1 === dataCurrentSelect }"
+        @click="onChangeCurrentSelect(1)"
+      >
+      <img :src="opendialogIcon">
+        打开弹窗
+      </li>
+      <li
+        :class="{ checkItem: true, select: 2 === dataCurrentSelect }"
+        @click="onChangeCurrentSelect(2)"
+      >
+      <img :src="openwindowIcon">
+        跳转页面
+      </li>
+      <div
+        v-show="dataCurrentSelect === 1"
+        style="margin-top: 10px; color: white"
+      >
+        <span>无接触返回时长</span>
+        <el-input
+          size="mini"
+          v-show="!dialogChecked"
+          v-model="dataDialogBackTime"
+          style="width: 50px"
+        ></el-input>
+        <span v-show="!dialogChecked">秒</span>
+        <el-checkbox v-model="dialogChecked" style="color:white">自动计算</el-checkbox>
+      </div>
+      <div
+        v-show="dataCurrentSelect === 1"
+        style="margin-top: 10px; color: black"
+      >
+        <el-select
+          size="small"
+          v-model="dataDialogValue"
+          placeholder="请选择跳转的页面"
+          filterable
+          style="width: 100%"
+          :clearable="true"
         >
-          <span style="float: left; color: black">{{ item.name }}</span>
-          <span
+          <el-option
+            v-for="item in dialogs"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id"
             style="
-              display: inline-block;
-              width: 200px;
-              height: 90px;
-              margin-left: 10px;
+              height: 100px;
+              width: 300px;
+              display: flex;
+              justify-content: left;
+              align-items: center;
             "
-            ><snapShotDisplay :id="item.id"></snapShotDisplay
-          ></span>
-        </el-option>
-      </el-select>
-    </div>
-    <div
-      v-show="dataCurrentSelect === 2"
-      style="margin-top: 10px; color: black"
-    >
-      <span
-        style="display: inline-block; width: 50px; text-align: center"
-        :class="caculatePageClass()"
-        @click="onChangeWindowNextPage(true)"
-        >下一页</span
+          >
+            <span style="float: left; color: black">{{ item.name }}</span>
+            <span
+              style="
+                display: inline-block;
+                width: 200px;
+                height: 90px;
+                margin-left: 10px;
+              "
+              ><snapShotDisplay :id="item.id"></snapShotDisplay
+            ></span>
+          </el-option>
+        </el-select>
+      </div>
+      <div
+        v-show="dataCurrentSelect === 2"
+        style="margin-top: 10px; color: black"
       >
-      <el-select
-        size="small"
-        v-model="dataWindowValue"
-        placeholder="请选择跳转的页面"
-        filterable
-        style="width: 70%; margin-left: 10px"
-        :clearable="true"
-      >
-        <el-option
-          v-for="item in pages"
-          :key="item.id"
-          :label="item.name"
-          :value="item.id"
-          style="
-            height: 100px;
-            width: 300px;
-            display: flex;
-            justify-content: left;
-            align-items: center;
-          "
+        <span
+          style="display: inline-block; width: 50px; text-align: center"
+          :class="caculatePageClass()"
+          @click="onChangeWindowNextPage(true)"
+          >下一页</span
         >
-          <span style="float: left; color: black">{{ item.name }}</span>
-          <span
+        <el-select
+          size="small"
+          v-model="dataWindowValue"
+          placeholder="请选择跳转的页面"
+          filterable
+          style="width: 70%; margin-left: 10px"
+          :clearable="true"
+        >
+          <el-option
+            v-for="item in pages"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id"
             style="
-              display: inline-block;
-              width: 200px;
-              height: 90px;
-              margin-left: 10px;
+              height: 100px;
+              width: 300px;
+              display: flex;
+              justify-content: left;
+              align-items: center;
             "
-            ><snapShotDisplay :id="item.id"></snapShotDisplay
-          ></span>
-        </el-option>
-      </el-select>
-    </div>
-  </ul>
+          >
+            <span style="float: left; color: black">{{ item.name }}</span>
+            <span
+              style="
+                display: inline-block;
+                width: 200px;
+                height: 90px;
+                margin-left: 10px;
+              "
+              ><snapShotDisplay :id="item.id" :useCache="true"></snapShotDisplay
+            ></span>
+          </el-option>
+        </el-select>
+      </div>
+    </ul>
+  </div>
 </template>
 
 <script>
@@ -125,6 +131,9 @@ import { mapGetters, mapMutations } from "../../../../store";
 import snapShotDisplay from "../../../snapShotDisplay";
 import { UPDATE_COMPONENT_PROPS } from "../../../../constant/schema";
 import { getPropByPath } from "@/utils";
+import opendialogIcon from "../../../../public/opendialog.png"
+import openwindowIcon from "../../../../public/openwindow.png"
+// import opendialogIcon from "../../../../public/opendialog.png"
 export default {
   name: "eventTab",
   components: {
@@ -132,6 +141,10 @@ export default {
     snapShotDisplay,
   },
   props: ["configData", "config"],
+  created(){
+    this.opendialogIcon = opendialogIcon;
+    this.openwindowIcon = openwindowIcon;
+  },
   computed: {
     ...mapGetters(["pages", "dialogs"]),
     dataCurrentSelect() {
@@ -379,6 +392,18 @@ export default {
 </script>
 
 <style lang="less" scope>
+.selectIcon{
+  width: 50px;
+  height: 50px;
+}
+.title {
+  color: white;
+  font-size: 16px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #ffffff;
+  line-height: 22px;
+}
 .nextPage {
   color: black;
   background-color: white;
@@ -387,27 +412,34 @@ export default {
   color: white;
   background-color: gray;
 }
+.container {
+  padding: 16px 13px 16px 21px;
+}
 .list {
   display: flex;
   flex-wrap: wrap;
   color: white;
-  background-color: #aeaeae;
+  background-color: transparent;
 }
 .list {
   li {
-    width: 85px;
-    height: 85px;
-    margin-left: 10px;
-    background: darkgray;
-    border-radius: 4px;
-    padding:10px;
+    width: 78px;
+    height: 78px;
+    background: #545454;
+    border-radius: 5px;
+    border: 1px solid #979797;
+    margin: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
   }
 
   li:hover {
-    background-color: gray;
+    background: #999999;
   }
   li.select {
-    background-color: gray;
+    background: #999999;
   }
 }
 .basic_tab {

@@ -1,4 +1,4 @@
 import "./vcolorpicker";
 import "./numberField";
-import "./textFiled";
+import "./textField";
 import "./textStyle";

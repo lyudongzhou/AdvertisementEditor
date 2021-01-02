@@ -8,7 +8,7 @@
 import manager from "../manager/snapShot";
 export default {
   name: "snapShotDisplay",
-  props: ["id","isRefresh"],
+  props: ["id","useCache"],
   data() {
     return { data: "",loading:true };
   },

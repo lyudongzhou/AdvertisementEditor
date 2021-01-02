@@ -8,7 +8,7 @@ export const REG_TITLECONFIG = "REG_TITLECONFIG";
 export const DEFAULTTABS = [
   {
     type: "layoutTab",
-    name: "位置与尺寸"
+    name: "基础"
   },
   {
     type:"animateTab",
