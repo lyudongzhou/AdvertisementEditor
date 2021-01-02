@@ -21,7 +21,7 @@
         <el-aside style="width: 298px; overflow: inherit">
           <PageFrame></PageFrame>
         </el-aside>
-        <edit-window></edit-window>
+        <edit-chart-window></edit-chart-window>
       </el-container>
     </el-container>
     <!-- <singlePagePreview></singlePagePreview> -->
@@ -39,7 +39,7 @@ import Editor from "./components/Editor.vue";
 import pageSnapshot from "./components/pageSnapshot.vue";
 import { mapMutations } from "./store";
 import totalPreview from "./components/totalPreview";
-import EditWindow from "./components/EditWindow.vue";
+import EditChartWindow from "./components/EditChartWindow.vue";
 // import singlePagePreview from "./components/preView";
 import { mapState } from "./store";
 export default {
@@ -51,7 +51,7 @@ export default {
     DesignerOperator,
     Editor,
     pageSnapshot,
-    EditWindow,
+    EditChartWindow,
     // singlePagePreview,
     totalPreview,
   },
