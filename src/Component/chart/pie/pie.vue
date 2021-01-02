@@ -23,13 +23,18 @@ export default {
       return `width:${this.cmpConfig.layoutConfig.width}px;
               height:${this.cmpConfig.layoutConfig.height}px`;
     },
-    option () {
-      let option = this.cmpConfig.props;
-      Object.assign(option, {grid: {
-        width: this.cmpConfig.layoutConfig.width,
-        height: this.cmpConfig.layoutConfig.height,
-      }});
-      return option;
+    option: {
+      get () {
+        let option = this.cmpConfig.props;
+        Object.assign(option, {grid: {
+          width: this.cmpConfig.layoutConfig.width,
+          height: this.cmpConfig.layoutConfig.height,
+        }});
+        return option;
+      },
+      set () {
+        this.myChart.setOption(this.option);
+      }
     }
   },
   mounted() {
@@ -43,6 +48,9 @@ export default {
     'option.legend.show' () {
       this.myChart.setOption(this.option);
     },
+    cmpConfig () {
+      this.myChart.setOption(this.option);
+    }
   }
 }
 </script>

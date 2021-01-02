@@ -1,10 +1,9 @@
 <template>
   <div class="chart_tab">
     <div>
-
-      <div :class="show?'show':'hide'" class="show_legend">
+      <div :class="configData.props.legend.show?'show':'hide'" class="show_legend">
         <span>提示图例</span>
-        <button @click="switchLegend">{{show?'ON':'OFF'}}</button>
+        <button @click="switchLegend">{{configData.props.legend.show?'ON':'OFF'}}</button>
       </div>
       <div class="chart_operation">
         <p>图表数据</p>
@@ -32,14 +31,19 @@
     data() {
       return {
         show: true,
+        thData: null,
+        tdData: null,
       }
     },
     mounted () {
-      console.log(this.configData, this.config);
+      this.$event.on('CORRECTCHARTWINDOW', (th,td)=>{
+        this.changeChartData(BEFORE_UPDATE_COMPONENT_PROPS,this.thData,this.tdData);
+        this.changeChartData(AFTER_UPDATE_COMPONENT_PROPS,th,td);
+      });
     },
     methods: {
       ...mapMutations(["updateSchema"]),
-      changeFun (type) {
+      changeSwitch (type) {
         this.updateSchema({
           type: type,
           value: {
@@ -47,10 +51,19 @@
           },
         });
       },
+      changeChartData (type,th,td) {
+        this.updateSchema({
+          type: type,
+          value: {
+            [this.config.target.data.th]: th,
+            [this.config.target.data.td]: td,
+          },
+        });
+      },
       switchLegend () {
-        this.changeFun(BEFORE_UPDATE_COMPONENT_PROPS);
+        this.changeSwitch(BEFORE_UPDATE_COMPONENT_PROPS);
         this.show = !this.show;
-        this.changeFun(AFTER_UPDATE_COMPONENT_PROPS);
+        this.changeSwitch(AFTER_UPDATE_COMPONENT_PROPS);
       },
       editData () {
         let data = this.config.target.data,
@@ -58,18 +71,20 @@
             td = data.td?data.td.split('.'):data.td,
             thData, tdData;
         if (th) {
-          thData = this.configData;
+          thData = JSON.parse(JSON.stringify(this.configData));
           th.forEach(every=>{
             thData = thData[every];
           })
         }
         if (td) {
-          tdData = this.configData;
+          tdData = JSON.parse(JSON.stringify(this.configData));
           td.forEach(every=>{
             tdData = tdData[every];
           })
         }
-        this.$event.emit('edit-window', thData, tdData);
+        this.thData = thData?JSON.parse(JSON.stringify(thData)):thData;
+        this.tdData = tdData?JSON.parse(JSON.stringify(tdData)):tdData;
+        this.$event.emit('EDITCHARTWINDOW', thData, tdData);
       },
     }
   }
@@ -80,6 +95,7 @@
     >div {
       width: 80%;
       margin: 0 auto;
+      color: #fff;
       .show_legend {
         width: 100%;
         height: 30px;
@@ -124,8 +140,9 @@
           background: none;
           outline: none;
           border-radius: 4px;
-          border: 1px solid;
+          border: 1px solid #fff;
           cursor: pointer;
+          color: #fff;
         }
       }
     }
