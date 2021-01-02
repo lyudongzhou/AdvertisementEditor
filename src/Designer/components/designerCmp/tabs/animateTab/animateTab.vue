@@ -95,6 +95,9 @@ export default {
 
 <style scoped lang="less">
 @deep: ~">>>";
+.fly.tabInner{
+  padding: 0;
+}
 .configBtnContainer {
   display: flex;
   justify-content: center;

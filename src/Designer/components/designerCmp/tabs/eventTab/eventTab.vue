@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
+  <div class="eventContainer">
     <div class="title">点击事件</div>
-    <ul class="list">
+    <ul class="eventTabList">
       <li
         :class="{ checkItem: true, select: 0 === dataCurrentSelect }"
         @click="onChangeCurrentSelect(0)"
@@ -412,16 +412,16 @@ export default {
   color: white;
   background-color: gray;
 }
-.container {
+.eventContainer {
   padding: 16px 13px 16px 21px;
 }
-.list {
+.eventTabList {
   display: flex;
   flex-wrap: wrap;
   color: white;
   background-color: transparent;
 }
-.list {
+.eventTabList {
   li {
     width: 78px;
     height: 78px;
