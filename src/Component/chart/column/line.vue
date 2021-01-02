@@ -16,7 +16,7 @@ export default {
   },
   computed: {
     getSize () {
-      return `width:${this.cmpConfig.layoutConfig.widht}px;
+      return `width:${this.cmpConfig.layoutConfig.width}px;
               height:${this.cmpConfig.layoutConfig.height}px`;
     }
   },
