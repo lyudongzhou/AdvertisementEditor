@@ -30,7 +30,9 @@ export default {
       return this.cmpConfig.layoutConfig;
     },
     publicList() {
-      const style = { opacity: 1 };
+      const style = {
+        opacity: 1,
+      };
       let ma = new Matrix();
       let config = this.layoutConfig;
       const {
@@ -71,6 +73,12 @@ export default {
           case "zIndex":
             style["z-index"] = config[key];
             break;
+          case "border-color":
+            style["border-color"] = config[key];
+            break;
+          case "border-style":
+            style["border-style"] = config[key];
+            break;
           default:
             style[key] = `${config[key]}px`;
         }
@@ -105,5 +113,7 @@ export default {
 .moveItem {
   display: flex;
   position: absolute;
+  border-style: solid;
+  overflow: hidden;
 }
 </style>

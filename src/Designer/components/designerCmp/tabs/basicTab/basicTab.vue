@@ -2,19 +2,21 @@
     <div class="basic_tab">
         <el-form
             ref="form"
-            label-width="50px"
             size="mini"
             label-position="left"
+            style="width:100%"
         >
             <el-form-item
                 :label="editor.label"
                 v-for="(editor, index) in editors"
                 :key="index"
+                style="width:100%"
             >
                 <component
                     :is="editor.type"
                     :configData="configData"
                     :config="editor"
+                    style="width:100%"
                 ></component>
             </el-form-item>
         </el-form>

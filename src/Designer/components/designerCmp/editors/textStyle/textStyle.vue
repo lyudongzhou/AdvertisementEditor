@@ -1,5 +1,5 @@
 <template>
-    <el-form ref="form" label-width="50px" size="mini" label-position="left">
+    <el-form ref="form" style="width:100%" size="mini" label-position="left">
       <el-form-item label="文本">
           <textField
               :configData="configData"
@@ -11,6 +11,7 @@
                 v-model="fontFamily"
                 placeholder="请选择"
                 @change="onChange('props.fontFamily', fontFamily)"
+                style="width:100%"
             >
                 <el-option
                     v-for="item in fontFamilies"
@@ -37,12 +38,14 @@
         </el-form-item>
         <el-form-item label="字号">
             <numberField
+            style="width:100%"
                 :configData="configData"
                 :config="{ props: {}, target: 'props.fontSize' }"
             ></numberField>
         </el-form-item>
         <el-form-item label="颜色">
             <colorPicker
+            style="width:100%"
                 :configData="configData"
                 :config="{ props: {}, target: 'props.color' }"
             ></colorPicker>

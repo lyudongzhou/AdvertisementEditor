@@ -6,118 +6,124 @@
         :class="{ checkItem: true, select: 0 === dataCurrentSelect }"
         @click="onChangeCurrentSelect(0)"
       >
-      
         无效果
       </li>
       <li
         :class="{ checkItem: true, select: 1 === dataCurrentSelect }"
         @click="onChangeCurrentSelect(1)"
       >
-      <img :src="opendialogIcon">
+        <img :src="opendialogIcon" />
         打开弹窗
       </li>
       <li
         :class="{ checkItem: true, select: 2 === dataCurrentSelect }"
         @click="onChangeCurrentSelect(2)"
       >
-      <img :src="openwindowIcon">
+        <img :src="openwindowIcon" />
         跳转页面
       </li>
-      <div
-        v-show="dataCurrentSelect === 1"
-        style="margin-top: 10px; color: white"
-      >
-        <span>无接触返回时长</span>
-        <el-input
-          size="mini"
-          v-show="!dialogChecked"
-          v-model="dataDialogBackTime"
-          style="width: 50px"
-        ></el-input>
-        <span v-show="!dialogChecked">秒</span>
-        <el-checkbox v-model="dialogChecked" style="color:white">自动计算</el-checkbox>
-      </div>
-      <div
-        v-show="dataCurrentSelect === 1"
-        style="margin-top: 10px; color: black"
-      >
-        <el-select
-          size="small"
-          v-model="dataDialogValue"
-          placeholder="请选择跳转的页面"
-          filterable
-          style="width: 100%"
-          :clearable="true"
+      <div>
+        <div
+          v-show="dataCurrentSelect === 1"
+          style="margin-top: 10px; color: white"
         >
-          <el-option
-            v-for="item in dialogs"
-            :key="item.id"
-            :label="item.name"
-            :value="item.id"
-            style="
-              height: 100px;
-              width: 300px;
-              display: flex;
-              justify-content: left;
-              align-items: center;
-            "
+          <span>无接触返回时长</span>
+          <el-input
+            size="mini"
+            v-show="!dialogChecked"
+            v-model="dataDialogBackTime"
+            style="width: 50px"
+          ></el-input>
+          <span v-show="!dialogChecked">秒</span>
+          <el-checkbox v-model="dialogChecked" style="color: white"
+            >自动计算</el-checkbox
           >
-            <span style="float: left; color: black">{{ item.name }}</span>
-            <span
-              style="
-                display: inline-block;
-                width: 200px;
-                height: 90px;
-                margin-left: 10px;
-              "
-              ><snapShotDisplay :id="item.id"></snapShotDisplay
-            ></span>
-          </el-option>
-        </el-select>
-      </div>
-      <div
-        v-show="dataCurrentSelect === 2"
-        style="margin-top: 10px; color: black"
-      >
-        <span
-          style="display: inline-block; width: 50px; text-align: center"
-          :class="caculatePageClass()"
-          @click="onChangeWindowNextPage(true)"
-          >下一页</span
+        </div>
+        <div
+          v-show="dataCurrentSelect === 1"
+          style="margin-top: 10px; color: black"
         >
-        <el-select
-          size="small"
-          v-model="dataWindowValue"
-          placeholder="请选择跳转的页面"
-          filterable
-          style="width: 70%; margin-left: 10px"
-          :clearable="true"
-        >
-          <el-option
-            v-for="item in pages"
-            :key="item.id"
-            :label="item.name"
-            :value="item.id"
-            style="
-              height: 100px;
-              width: 300px;
-              display: flex;
-              justify-content: left;
-              align-items: center;
-            "
+          <el-select
+            size="small"
+            v-model="dataDialogValue"
+            placeholder="请选择跳转的页面"
+            filterable
+            style="width: 100%"
+            :clearable="true"
           >
-            <span style="float: left; color: black">{{ item.name }}</span>
-            <span
+            <el-option
+              v-for="item in dialogs"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
               style="
-                display: inline-block;
-                width: 200px;
-                height: 90px;
-                margin-left: 10px;
+                height: 100px;
+                width: 300px;
+                display: flex;
+                justify-content: left;
+                align-items: center;
               "
-              ><snapShotDisplay :id="item.id" :useCache="true"></snapShotDisplay
-            ></span>
-          </el-option>
-        </el-select>
+            >
+              <span style="float: left; color: black">{{ item.name }}</span>
+              <span
+                style="
+                  display: inline-block;
+                  width: 200px;
+                  height: 90px;
+                  margin-left: 10px;
+                "
+                ><snapShotDisplay :id="item.id"></snapShotDisplay
+              ></span>
+            </el-option>
+          </el-select>
+        </div>
+        <div
+          v-show="dataCurrentSelect === 2"
+          style="margin-top: 10px; color: black"
+        >
+          <span
+            style="display: inline-block; width: 50px; text-align: center"
+            :class="caculatePageClass()"
+            @click="onChangeWindowNextPage(true)"
+            >下一页</span
+          >
+          <el-select
+            size="small"
+            v-model="dataWindowValue"
+            placeholder="请选择跳转的页面"
+            filterable
+            style="width: 70%; margin-left: 10px"
+            :clearable="true"
+          >
+            <el-option
+              v-for="item in pages"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
+              style="
+                height: 100px;
+                width: 300px;
+                display: flex;
+                justify-content: left;
+                align-items: center;
+              "
+            >
+              <span style="float: left; color: black">{{ item.name }}</span>
+              <span
+                style="
+                  display: inline-block;
+                  width: 200px;
+                  height: 90px;
+                  margin-left: 10px;
+                "
+                ><snapShotDisplay
+                  :id="item.id"
+                  :useCache="true"
+                ></snapShotDisplay
+              ></span>
+            </el-option>
+          </el-select>
+        </div>
       </div>
     </ul>
   </div>
@@ -131,8 +137,8 @@ import { mapGetters, mapMutations } from "../../../../store";
 import snapShotDisplay from "../../../snapShotDisplay";
 import { UPDATE_COMPONENT_PROPS } from "../../../../constant/schema";
 import { getPropByPath } from "@/utils";
-import opendialogIcon from "../../../../public/opendialog.png"
-import openwindowIcon from "../../../../public/openwindow.png"
+import opendialogIcon from "../../../../public/opendialog.png";
+import openwindowIcon from "../../../../public/openwindow.png";
 // import opendialogIcon from "../../../../public/opendialog.png"
 export default {
   name: "eventTab",
@@ -141,7 +147,7 @@ export default {
     snapShotDisplay,
   },
   props: ["configData", "config"],
-  created(){
+  created() {
     this.opendialogIcon = opendialogIcon;
     this.openwindowIcon = openwindowIcon;
   },
@@ -392,7 +398,7 @@ export default {
 </script>
 
 <style lang="less" scope>
-.selectIcon{
+.selectIcon {
   width: 50px;
   height: 50px;
 }

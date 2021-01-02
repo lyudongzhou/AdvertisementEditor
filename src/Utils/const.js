@@ -8,14 +8,38 @@ export const REG_TITLECONFIG = "REG_TITLECONFIG";
 export const DEFAULTTABS = [
   {
     type: "layoutTab",
-    name: "基础"
+    name: "基础",
   },
   {
-    type:"animateTab",
-    name:"动画"
+    type: "animateTab",
+    name: "动画",
   },
   {
-    type:"eventTab",
-    name:"互动事件"
-  }
+    type: "eventTab",
+    name: "互动事件",
+  },
+  {
+    type: "basicTab",
+    name: "边框",
+    children: [
+      {
+        type: "numberField",
+        target: "layoutConfig.border-width",
+        label: "边框尺寸",
+        props: {},
+      },
+      {
+        type: "vcolorpicker",
+        target: "layoutConfig.border-color",
+        label: "边框颜色",
+        props: {},
+      },
+      {
+        type: "numberField",
+        target: "layoutConfig.border-radius",
+        label: "边框弧度",
+        props: {},
+      },
+    ],
+  },
 ];
