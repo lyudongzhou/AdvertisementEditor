@@ -5,7 +5,8 @@
       <div v-for="list in typeList" :key="list.id"
            :class="{typeSwitch: true, active: typeSwitch === list.id }"
            @click="typeSwitch=list.id">
-        {{list.name}}
+          <img :src="list.icon" class="typeSwitchIcon">
+          <div>{{list.name}}</div>
       </div>
     </el-aside>
     <!-- <el-container style="width: 200px" v-if="typeSwitch === 1"> -->
@@ -56,7 +57,8 @@
 import resources from "./resources";
 import sortItem from "./sortItem";
 import sortPanel from "./sortPanel";
-
+import resourceIcon from "../public/resource.png";
+import programIcon from "../public/program.png"
 export default {
   data() {
     return {
@@ -64,10 +66,12 @@ export default {
         {
           id: 1,
           name: "素材",
+          icon:resourceIcon
         },
         {
           id: 2,
           name: "节目",
+          icon:programIcon
         }
       ],
       typeSwitch: 1,
@@ -179,14 +183,25 @@ export default {
 </script>
 
 <style scoped>
+.typeSwitchIcon{
+  width:40px;
+  height:40px;
+  margin-bottom: 5px;
+}
 .typeSwitch {
   width: 70px;
+  height:70px;
   background-color: #424242;
   text-align: center;
-  line-height: 70px;
+  /* line-height: 70px; */
   color: #b5b5b5;
   cursor: default;
   border: 1px solid #383838;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .typeSwitch.active {
   background-color: #535353;
@@ -198,6 +213,9 @@ export default {
   color: white;
   cursor: pointer;
 }
+/* .typeSwitchItem{
+
+} */
 .switch_list {
   width: 100px;
   background-color: #424242;
