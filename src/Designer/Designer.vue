@@ -26,6 +26,7 @@
     </el-container>
     <!-- <singlePagePreview></singlePagePreview> -->
     <pageSnapshot></pageSnapshot>
+    <resourceDialg></resourceDialg>
     <totalPreview></totalPreview>
   </div>
 </template>
@@ -37,6 +38,7 @@ import ContentDisplay from "./components/ContentDisplay.vue";
 import DesignerOperator from "./components/DesignerOperator.vue";
 import Editor from "./components/Editor.vue";
 import pageSnapshot from "./components/pageSnapshot.vue";
+import resourceDialg from "./components/pageCmp/UploadFile";
 import { mapMutations } from "./store";
 import totalPreview from "./components/totalPreview";
 import EditWindow from "./components/EditWindow.vue";
@@ -54,6 +56,7 @@ export default {
     EditWindow,
     // singlePagePreview,
     totalPreview,
+    resourceDialg
   },
   computed: {
     ...mapState(["previewing"]),
