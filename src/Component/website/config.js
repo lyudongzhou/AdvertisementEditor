@@ -11,7 +11,7 @@ export default {
         {
           "type": "textField",
           "target": "props.text",
-          "label": "网址",
+          "label": "网页地址",
           "props": {},
         }
       ]
