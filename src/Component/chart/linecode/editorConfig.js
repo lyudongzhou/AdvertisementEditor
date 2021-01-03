@@ -1,12 +1,12 @@
 export default [
   {
-    name: "折线图",
-    position: "3.5.1",
+    name: "柱状图",
+    position: "3.5.3",
     defaultSchema: {
-      "type": "lineChartCmp",
+      "type": "linecodeChartCmp",
       "layoutConfig": {
-        "width": 500,
-        "height": 500
+        "width": 400,
+        "height": 400
       },
       "props": {
         "grid": {
@@ -17,22 +17,22 @@ export default [
           "show": true
         },
         "xAxis": {
-          "type": 'category',
-          "data": ['Mon', 'Tue']
+          "type": 'value'
         },
         "yAxis": {
-          "type": 'value'
+          "type": 'category',
+          "data": ['Mon', 'Tue', 'Wed']
         },
         "series": [
           {
             "name": "A",
-            "data": [1200, 200],
-            "type": 'line'
+            "data": [120, 200, 150],
+            "type": 'bar'
           },
           {
             "name": "B",
-            "data": [1000, 400],
-            "type": 'line'
+            "data": [70, 110, 130],
+            "type": 'bar'
           }
         ]
       },
