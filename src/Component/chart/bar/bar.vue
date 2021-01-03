@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import {getPropByPath} from '@/utils';
 import baseCmp from '../../Base.vue';
 let echarts = require('echarts');
 
@@ -18,6 +19,15 @@ export default {
     getSize () {
       return `width:${this.cmpConfig.layoutConfig.width}px;
               height:${this.cmpConfig.layoutConfig.height}px`;
+    },
+    switchShow () {
+      return getPropByPath(this.cmpConfig, 'props.legend.show');
+    },
+    chartTHData () {
+      return getPropByPath(this.cmpConfig, 'props.series');
+    },
+    chartTDData () {
+      return getPropByPath(this.cmpConfig, 'props.xAxis.data');
     },
     option: {
       get () {
@@ -35,10 +45,13 @@ export default {
   },
   watch: {
     // 图例
-    'option.legend.show' () {
+    switchShow () {
       this.myChart.setOption(this.option);
     },
-    cmpConfig () {
+    chartTHData () {
+      this.myChart.setOption(this.option);
+    },
+    chartTDData () {
       this.myChart.setOption(this.option);
     }
   }
