@@ -1,17 +1,17 @@
 export default {
-  name: '网页',
+  name: '二维码',
   notSupport: [
 
   ],
   extraTabs: [
     {
       type: "basicTab",
-      name: "网页配置",
+      name: "二维码配置",
       children: [
         {
           "type": "textField",
           "target": "props.text",
-          "label": "网址",
+          "label": "二维码地址",
           "props": {},
         }
       ]
