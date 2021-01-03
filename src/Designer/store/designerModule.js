@@ -6,6 +6,7 @@
  */
 import mutations from './mutations';
 import { getPropByPath } from '../../Utils/utils';
+import {DEFAULT_GRID_GUIDE_OFFSET} from '../constant/base';
 
 export default {
   namespaced: true,
@@ -80,6 +81,14 @@ export default {
     currentMaxIndex(state, getters) {
       return Math.max(...getPropByPath(getters, 'currentContainer.components', []).map(component => component.layoutConfig.zIndex)) || 0;
     },
+    gridGuideHozSet(state) {
+      const height = getPropByPath(state.schema || {}, 'container.height', 0);
+      return Array.from(new Array(Math.ceil(height / DEFAULT_GRID_GUIDE_OFFSET)), (_, i) => i * DEFAULT_GRID_GUIDE_OFFSET);
+    },
+    gridGuideVerSet(state) {
+      const width = getPropByPath(state.schema || {}, 'container.width', 0);
+      return Array.from(new Array(Math.ceil(width / DEFAULT_GRID_GUIDE_OFFSET)), (_, i) => i * DEFAULT_GRID_GUIDE_OFFSET);
+    }
   },
   mutations,
 };
