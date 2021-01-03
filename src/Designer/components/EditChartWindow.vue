@@ -93,7 +93,7 @@
         let data = {
           name: "c",
           data: arr,
-          type: 'line'
+          type: this.thData[0].type
         };
         this.thData.push(data);
       },

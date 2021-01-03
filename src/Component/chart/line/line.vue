@@ -22,10 +22,6 @@ export default {
     option: {
       get () {
         let option = this.cmpConfig.props;
-        Object.assign(option, {grid: {
-          width: this.cmpConfig.layoutConfig.width,
-          height: this.cmpConfig.layoutConfig.height,
-        }});
         return option;
       },
       set () {

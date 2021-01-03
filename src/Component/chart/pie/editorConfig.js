@@ -13,8 +13,8 @@ export default [
           "show": true,
         },
         "grid": {
-          "width": 200,
-          "height": 200
+          "width": 'auto',
+          "height": 'auto'
         },
         "series": [
           {

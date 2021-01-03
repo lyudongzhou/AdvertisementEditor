@@ -9,14 +9,10 @@ import baseCmp from '../../Base.vue';
 let echarts = require('echarts');
 
 export default {
-  name: 'pieChartCmp',
+  name: 'linecodeChartCmp',
   props: ['cmpConfig'],
   components: {
     baseCmp,
-  },
-  data () {
-    return {
-    }
   },
   computed: {
     getSize () {
@@ -26,22 +22,16 @@ export default {
     option: {
       get () {
         let option = this.cmpConfig.props;
-        // Object.assign(option, {grid: {
-        //   width: this.cmpConfig.layoutConfig.width,
-        //   height: this.cmpConfig.layoutConfig.height,
-        // }});
         return option;
       },
       set () {
         this.myChart.setOption(this.option);
       }
-    }
+    },
   },
   mounted() {
     this.myChart = echarts.init(this.$refs.chart);
     this.myChart.setOption(this.option);
-  },
-  methods: {
   },
   watch: {
     // 图例
