@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @contextmenu.prevent="onContextmenu">
     <el-container
       class="full-height"
       :style="{ filter: `blur(${previewing ? 30 : 0}px)` }">
@@ -67,6 +67,7 @@ export default {
       this.resetSchema(schema);
     },
     ...mapMutations(["resetSchema"]),
+    onContextmenu() {},
   },
 };
 </script>

@@ -3,6 +3,7 @@
     class="moveItem"
     :style="publicList"
     @click="dispatchEvent('click', arguments[0])"
+    @click.right="dispatchEvent('rightClick', $event)"
   >
     <slot></slot>
   </li>
@@ -99,6 +100,8 @@ export default {
         });
       } else if (type === "click") {
         pipe.emit("click", this, this.cmpConfig.id);
+      } else if (type === 'rightClick') {
+        pipe.emit("rightClick", this, this.cmpConfig.id, e);
       }
     },
     idleAction(isForce) {

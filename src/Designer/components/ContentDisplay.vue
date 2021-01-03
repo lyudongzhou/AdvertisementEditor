@@ -17,7 +17,11 @@
     BEFORE_UPDATE_COMPONENT_POSITION,
     UPDATING_COMPONENT_POSITION,
     AFTER_UPDATE_COMPONENT_POSITION,
+    DELETE_COMPONENT,
+    UPDATE_INDEX_TO_BOTTOM,
+    UPDATE_INDEX_TO_TOP,
   } from '../constant/schema';
+  import schemaMixin from '../mixin/schemaMixin';
 
   const getScaleValue = (originValue, maxValue) => {
     if (maxValue >= originValue) {
@@ -53,6 +57,7 @@
         this.updateSelectItemInfo();
       });
     },
+    mixins: [schemaMixin],
     mounted() {
       const workspaceDom = this.$refs.workspace;
       this.workspaceWidth = workspaceDom.offsetWidth;
@@ -88,7 +93,8 @@
         'schema',
         'currentComponentId',
         'opened',
-        'currentPageId'
+        'currentPageId',
+        'copyComponent',
       ]),
       ...mapGetters(['currentComponent', 'isComponentLocked', 'gridGuideHozSet', 'gridGuideVerSet']),
       selectItemContainerStyle() {
@@ -241,6 +247,12 @@
       },
       handleClickComponent(ref, componentId) {
         this.selectComponent(componentId);
+      },
+      handleRightClickComponent(ref, componentId, event) {
+        this.selectComponent(componentId);
+        event.stopPropagation();
+        event.preventDefault();
+        Vue.nextTick(() => this.onContextmenu(true, event));
       },
       updateSelectItemInfo() {
         if (this.currentComponentId) {
@@ -408,6 +420,66 @@
       rotateActiveChange(active) {
         this.rotateActive = active;
       },
+      onContextmenu(isComponent, event) {
+        this.$contextmenu({
+          items: [
+            {
+              label: "复制",
+              disabled: !isComponent,
+              icon: 'el-icon-copy-document',
+              onClick: () => {
+                this.$$copyComponent();
+              }
+            },
+            {
+              label: "粘贴",
+              disabled: !this.copyComponent,
+              icon: 'el-icon-document-copy',
+              onClick: () => {
+                this.$$pasteComponent();
+              }
+            },
+            {
+              label: "删除",
+              disabled: !isComponent,
+              icon: 'el-icon-delete',
+              onClick: () => {
+                this.updateSchema({
+                  type: DELETE_COMPONENT,
+                });
+              }
+            },
+            {
+              label: "置顶",
+              disabled: !isComponent,
+              icon: 'el-icon-top',
+              onClick: () => {
+                this.updateSchema({
+                  type: UPDATE_INDEX_TO_TOP,
+                });
+              }
+            },
+            {
+              label: "置底",
+              disabled: !isComponent,
+              icon: 'el-icon-bottom',
+              onClick: () => {
+                this.updateSchema({
+                  type: UPDATE_INDEX_TO_BOTTOM,
+                });
+              }
+            }
+
+          ],
+          event,
+          //x: event.clientX,
+          //y: event.clientY,
+          customClass: "custom-class",
+          zIndex: 3,
+          minWidth: 230
+        });
+        return false;
+      },
       ...mapMutations(['selectComponent', 'updateSchema']),
     },
   };
@@ -422,6 +494,7 @@
         class="engine-design-mode"
         ref="renderContainer"
         :style="engineContainerStyle"
+        @contextmenu="onContextmenu(false, $event)"
     >
       <render
           v-if="opened"
@@ -429,6 +502,7 @@
           :renderData="schema"
           :currentPage="currentPageId"
           @click="handleClickComponent"
+          @rightClick="handleRightClickComponent"
           :designMode="true"
           baseUrl=""
       ></render>
@@ -446,7 +520,6 @@
         v-if="currentComponentId"
         class="select-item-container"
         ref="selectItemContainer"
-        @mousemove.capture="mousemove"
     >
       <!--选中框-->
       <vue-draggable-resizable
@@ -473,6 +546,7 @@
           @dragstop="dragStop"
           @resizestop="resizeStop"
       >
+        <div :style="{width: '100%', height: '100%'}" @contextmenu="onContextmenu(true, $event)"></div>
         <rotate-operate :active="rotateActive" @activeChange="rotateActiveChange"></rotate-operate>
         <div class="rotate-guide" v-if="rotateActive" :style="{transform: `translate(-50%, -50%) rotate(-${selectItemLayoutInfo.rotation}deg)`}">
           <div v-for="n in 4"
