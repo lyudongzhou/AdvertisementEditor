@@ -80,8 +80,11 @@ export default {
       console.log(component);
       executeMutations.call(this, 'updateSchema', {type: ADD_COMPONENT, value: component, targetId: component.id});
     },
-    $$pasteComponent() {
-      const base = clone(getFromState.call(this, 'copyComponent'));
+    $$pasteComponent(baseLayout) {
+      let base = clone(getFromState.call(this, 'copyComponent'));
+      if (baseLayout) {
+        base.layoutConfig = {...base.layoutConfig, ...baseLayout};
+      }
       this.$$addNewComponent(base);
     },
     $$copyComponent() {

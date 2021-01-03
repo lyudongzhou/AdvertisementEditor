@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @contextmenu.prevent="onContextmenu">
     <el-container
       class="full-height"
       :style="{ filter: `blur(${previewing ? 30 : 0}px)` }">
@@ -21,7 +21,7 @@
         <el-aside style="width: 298px; overflow: inherit">
           <PageFrame></PageFrame>
         </el-aside>
-        <edit-window></edit-window>
+        <edit-chart-window></edit-chart-window>
       </el-container>
     </el-container>
     <!-- <singlePagePreview></singlePagePreview> -->
@@ -41,7 +41,7 @@ import pageSnapshot from "./components/pageSnapshot.vue";
 import resourceDialg from "./components/pageCmp/UploadFile";
 import { mapMutations } from "./store";
 import totalPreview from "./components/totalPreview";
-import EditWindow from "./components/EditWindow.vue";
+import EditChartWindow from "./components/EditChartWindow.vue";
 // import singlePagePreview from "./components/preView";
 import { mapState } from "./store";
 export default {
@@ -53,7 +53,7 @@ export default {
     DesignerOperator,
     Editor,
     pageSnapshot,
-    EditWindow,
+    EditChartWindow,
     // singlePagePreview,
     totalPreview,
     resourceDialg
@@ -70,6 +70,7 @@ export default {
       this.resetSchema(schema);
     },
     ...mapMutations(["resetSchema"]),
+    onContextmenu() {},
   },
 };
 </script>

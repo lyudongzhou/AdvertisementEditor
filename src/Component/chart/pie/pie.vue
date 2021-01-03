@@ -6,6 +6,7 @@
 
 <script>
 import baseCmp from '../../Base.vue';
+import { getPropByPath } from "@/utils";
 let echarts = require('echarts');
 
 export default {
@@ -23,13 +24,24 @@ export default {
       return `width:${this.cmpConfig.layoutConfig.width}px;
               height:${this.cmpConfig.layoutConfig.height}px`;
     },
-    option () {
-      let option = this.cmpConfig.props;
-      Object.assign(option, {grid: {
-        width: this.cmpConfig.layoutConfig.width,
-        height: this.cmpConfig.layoutConfig.height,
-      }});
-      return option;
+    switchShow () {
+      return getPropByPath(this.cmpConfig, 'props.legend.show');
+    },
+    chartTHData () {
+      return getPropByPath(this.cmpConfig, 'props.series[0].data');
+    },
+    option: {
+      get () {
+        let option = this.cmpConfig.props;
+        // Object.assign(option, {grid: {
+        //   width: this.cmpConfig.layoutConfig.width,
+        //   height: this.cmpConfig.layoutConfig.height,
+        // }});
+        return option;
+      },
+      set () {
+        this.myChart.setOption(this.option);
+      }
     }
   },
   mounted() {
@@ -40,7 +52,10 @@ export default {
   },
   watch: {
     // 图例
-    'option.legend.show' () {
+    switchShow () {
+      this.myChart.setOption(this.option);
+    },
+    chartTHData () {
       this.myChart.setOption(this.option);
     },
   }

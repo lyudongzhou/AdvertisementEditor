@@ -10,7 +10,7 @@ import baseCmp from '../../Base.vue';
 let echarts = require('echarts');
 
 export default {
-  name: 'lineChartCmp',
+  name: 'linecodeChartCmp',
   props: ['cmpConfig'],
   components: {
     baseCmp,

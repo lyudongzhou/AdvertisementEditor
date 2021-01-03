@@ -11,12 +11,14 @@ import store from './store';
 import handleRenderDep from './renderDep';
 import Event from './plugin/event';
 import http from './plugin/http';
+import ContextMenu from "vue-contextmenujs"
 
 Vue.config.productionTip = false;
 
 Vue.use(ElementUI);
 Vue.use(Event);
 Vue.use(http);
+Vue.use(ContextMenu);
 // 处理render依赖
 handleRenderDep({ Vue, store });
 new Vue({

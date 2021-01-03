@@ -1,52 +1,59 @@
 <template lang="html">
-  <div class="edit_window" v-if="thData||tdData">
+  <div class="edit_chart_window" v-if="thData||tdData">
     <div class="title">编辑图表数据</div>
     <div class="content">
       <div class="data_operation">
         <button class="add_operation" v-if="thData" @click="addRow">添加行</button>
-        <button v-if="thData">删除行</button>
+        <button v-if="thData" @click="removeRow">删除行</button>
         <button class="add_operation" @click="addColumn">添加列</button>
-        <button>删除列</button>
+        <button @click="removeColumn">删除列</button>
       </div>
       <div class="table">
         <table>
           <tr>
             <th></th>
             <th class="list" v-for="(name,index) in tdData" :key="index">
+              <!-- {{tdData[index]}} -->
               <input :value="name.name||name"
-                      @input="changeValue(tdData,index,'name.name')" />
+                     @focus="handleFocus('currentTD', [tdData[index]])"
+                     @input="name.name?changeValue(tdData[index],'name'):changeValue(tdData,index)" />
             </th>
           </tr>
+          <!-- 饼图 -->
           <tr v-if="thData==null">
-            <td>0</td>
+            <td class="list">0</td>
             <td v-for="(name,index) in tdData" :key="index">
               <input type="number" :value="name.value"
-                     @input="changeValue(tdData,index,'name.value')" />
+                     @focus="handleFocus('currentTD',[tdData[index]])"
+                     @input="changeValue(tdData[index], 'value')" />
             </td>
           </tr>
+          <!-- other -->
           <tr v-else v-for="(serie,index) in thData" :key="index">
             <td class="list">
               <input :value="serie.name"
-                     @input="changeValue(thData,index,'name')" />
+                     @focus="handleFocus('currentTH',[thData[index]])"
+                     @input="changeValue(thData[index], 'name')" />
             </td>
             <td v-for="(data,ind) in serie.data" :key="ind">
               <input type="number" :value="data"
-                     @input="changeValue(thData,ind,'data.ind')" />
+                     @focus="handleFocus('currentTH,currentTD', [thData[index],tdData[ind]])"
+                     @input="changeValue(thData[index].data, ind)" />
             </td>
           </tr>
         </table>
       </div>
     </div>
     <div class="buttons">
-      <button class="cancel" @click="thData=null;tdData=null">取消</button>
-      <button class="correct">确定</button>
+      <button class="cancel" @click="handleCancle">取消</button>
+      <button class="correct" @click="handleCorrect">确定</button>
     </div>
   </div>
 </template>
 
 <script>
   export default {
-    name: 'editWindow',
+    name: 'editChartWindow',
     data () {
       return {
         thData: null,
@@ -56,23 +63,15 @@
       }
     },
     mounted () {
-      this.$event.on('edit-window', (thData, tdData) => {
+      this.$event.on('EDITCHARTWINDOW', (thData, tdData) => {
         this.thData = thData;
         this.tdData = tdData;
       })
     },
     methods: {
-      changeValue (targetData, index, path) {
-        let value = event.currentTarget.value,
-            arr   = path.split('.'),
-            data  = targetData[index];
-        arr.forEach(every=>{
-          if (data.constructor === Object) {
-            data = data[every];
-          } else {
-            data = value;
-          }
-        })
+      changeValue (targetData, key) {
+        let value = event.currentTarget.value;
+        this.$set(targetData, key, value);
       },
       addColumn () {
         let data = !this.thData?{
@@ -94,10 +93,47 @@
         let data = {
           name: "c",
           data: arr,
-          type: 'line'
+          type: this.thData[0].type
         };
         this.thData.push(data);
-      }
+      },
+      removeRow () {
+        if (this.currentTH&&this.thData.length>1) {
+          this.thData.splice(this.thData.findIndex(item=>item===this.currentTH), 1);
+          this.currentTH = null;
+        }
+      },
+      removeColumn () {
+        let findIndex = this.tdData.findIndex(item=>item===this.currentTD);
+        if (this.tdData.length>1) {
+          if (this.currentTD) {
+            // 饼图
+            this.tdData.splice(findIndex, 1);
+            this.currentTD = null;
+            if (this.thData) {
+              // other,需要删除series的数据
+              this.thData.forEach(child=>{
+                child.data.splice(findIndex, 1);
+              })
+            }
+          }
+        }
+      },
+      handleCancle () {
+        this.thData = null;
+        this.tdData = null
+      },
+      handleCorrect () {
+        this.$event.emit('CORRECTCHARTWINDOW', this.thData, this.tdData);
+        this.handleCancle();
+      },
+      // check current operation
+      handleFocus (data,value) {
+        let obj=data.split(',');
+        obj.forEach((child,index)=>{
+          this[child] = value[index];
+        })
+      },
     },
     watch: {
     }
@@ -105,7 +141,7 @@
 </script>
 
 <style lang="less" scoped>
-  .edit_window {
+  .edit_chart_window {
     width: 900px;
     height: 523px;
     position: absolute;
