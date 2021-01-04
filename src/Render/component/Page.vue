@@ -45,7 +45,7 @@ export default {
       pageState(data) {
         if (data === 2 && this.pageData) {
           this.pageData.components.forEach((ele) => {
-              this.$refs[ele.id][0].parent.idleAction();
+              this.$refs[ele.id][0].$children[0].idleAction();
           });
         }
       }

@@ -8,7 +8,7 @@
 import baseCmp from "../Base.vue";
 
 export default {
-  name: "websiteCmp",
+  name: "documentCmp",
   props: ["cmpConfig"],
   components: {
     baseCmp,
@@ -19,20 +19,23 @@ export default {
     }
   },
   watch:{
-    "cmpConfig.props.text"(value){
-      if(this.checkUrl(value)){
-        this.url = value;
-      }
+    "cmpConfig.props.url"(value){
+      console.log(value);
+      this.url = value;
+      // if(this.checkUrl(value)){
+      //   console.log("checked");
+        
+      // }
     }
   },
   methods:{
-    checkUrl(value){
-      return /^(https?:\/\/(([a-zA-Z0-9]+-?)+[a-zA-Z0-9]+\.)+[a-zA-Z]+)(:\d+)?(\/.*)?(\?.*)?(#.*)?$/.test(value);
-    }
+    // checkUrl(value){
+    //   return /^(https?:\/\/(([a-zA-Z0-9]+-?)+[a-zA-Z0-9]+\.)+[a-zA-Z]+)(:\d+)?(\/.*)?(\?.*)?(#.*)?$/.test(value);
+    // }
   },
   computed: {},
   mounted() {
-    this.url = this.cmpConfig.props.text;
+    this.url = this.cmpConfig.props.url;
   },
 };
 </script>

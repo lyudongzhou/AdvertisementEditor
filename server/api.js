@@ -68,7 +68,7 @@ realResource.forEach(ele => {
       break;
   }
 });
-// console.log(realImage.length, realVideo.length, realAudio.length, realDocument.length);
+console.log(realImage.length, realVideo.length, realAudio.length, realDocument.length);
 
 function generateFakeResourcesData() {
   function getRandomResource() {
@@ -78,6 +78,7 @@ function generateFakeResourcesData() {
     { resName: "file", resType: 1, resUrl: "http://localhost:8080/images/Koala.jpg" },
     { resName: "image", resType: 1, resUrl: "http://localhost:8080/images/Jellyfish.jpg" },
     { resName: "audio", resType: 3, resUrl: "http://localhost:8080/audios/audio.mp3" },
+    {resName:"document",resType:4,resUrl:"http://localhost:8080/document/document.pdf"}
   ];
   var aResults = [];
   for (var i = 0; i < 100; i++) {
