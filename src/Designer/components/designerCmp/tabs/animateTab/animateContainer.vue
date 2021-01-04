@@ -231,7 +231,7 @@ export default {
         },
       });
       this.$event.emit("currentComponentOperate", function (vm) {
-        vm.$refs.parent.idleAction(true);
+        vm.$children[0].idleAction(true)
       });
     },
     fmtStyle() {

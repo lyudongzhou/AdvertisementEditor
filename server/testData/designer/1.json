@@ -53,10 +53,10 @@
                         "aniRotation": 0,
                         "skewX": 0,
                         "skewY": 0,
-                        "positionX":0,
-                        "positionY":0,
-                        "opacity":1,
-                        "alpha":1
+                        "positionX": 0,
+                        "positionY": 0,
+                        "opacity": 1,
+                        "alpha": 1
                     },
                     "children": [],
                     "id": "345600d0-4658-11eb-a3ca-bb193d389b3f"
@@ -81,8 +81,8 @@
                         "zIndex": 4,
                         "hidden": false,
                         "rotation": 0,
-                        "top": 100.99999999999999,
-                        "left": 262,
+                        "top": 200,
+                        "left": 82,
                         "pivotX": 0,
                         "pivotY": 0,
                         "scaleX": 1,
@@ -90,13 +90,13 @@
                         "aniRotation": 0,
                         "skewX": 0,
                         "skewY": 0,
-                        "positionX":0,
-                        "positionY":0,
-                        "opacity":1,
-                        "alpha":1
+                        "positionX": 0,
+                        "positionY": 0,
+                        "opacity": 1,
+                        "alpha": 1
                     },
                     "children": [],
-                    "name": "图片1",
+                    "name": "图2212",
                     "id": "c648f020-4657-11eb-a3ca-bb193d389b3f"
                 },
                 {
@@ -121,10 +121,10 @@
                         "aniRotation": 0,
                         "skewX": 0,
                         "skewY": 0,
-                        "positionX":0,
-                        "positionY":0,
-                        "opacity":1,
-                        "alpha":1
+                        "positionX": 0,
+                        "positionY": 0,
+                        "opacity": 1,
+                        "alpha": 1
                     },
                     "children": [],
                     "name": "图片2",
@@ -158,10 +158,10 @@
                         "aniRotation": 0,
                         "skewX": 0,
                         "skewY": 0,
-                        "positionX":0,
-                        "positionY":0,
-                        "opacity":1,
-                        "alpha":1
+                        "positionX": 0,
+                        "positionY": 0,
+                        "opacity": 1,
+                        "alpha": 1
                     },
                     "children": [],
                     "id": "82348070-4657-11eb-a3ca-bb193d389b3f"
