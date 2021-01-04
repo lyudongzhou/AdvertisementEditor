@@ -98,7 +98,7 @@
         <div :class="['operate-btn', {disabled: !currentComponentId}]" @click="remove"><i class="el-icon-delete"></i>删除</div>
       </el-tooltip>
     </div>
-    <draggable :value="components" @change="handleOrderChange">
+    <draggable :value="components" @change="handleOrderChange" class="components-container">
       <div
         v-for="component in components"
         :class="['component-item', {activate: component.id === currentComponentId}]"
@@ -175,6 +175,11 @@
         transform: rotate(80deg);
         left: 5px;
       }
+    }
+
+    .components-container {
+      height: calc(100vh - 210px);
+      overflow: auto;
     }
   }
 </style>

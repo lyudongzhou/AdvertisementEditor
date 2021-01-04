@@ -45,9 +45,8 @@
         </el-form-item>
         <el-form-item label="颜色">
             <colorPicker
-            style="width:100%"
                 :configData="configData"
-                :config="{ props: {}, target: 'props.color' }"
+                :config="colorpickerConfig"
             ></colorPicker>
         </el-form-item>
     </el-form>
@@ -58,7 +57,7 @@ import { getPropByPath } from "@/utils";
 // import Throttle from "../../../../manager/updateThrottle";
 import numberField from "../numberField/numberField";
 import textField from "../textField/textField";
-import colorPicker from "../vcolorpicker/vcolorpicker";
+import colorPicker from "../colorpickerFiled/colorpickerFiled";
 import {UPDATE_COMPONENT_PROPS} from "../../../../constant/schema";
 import {mapMutations} from "../../../../store";
 export default {
@@ -71,20 +70,31 @@ export default {
       colorPicker,
     },
     data() {
-        return {
-            fontFamily: "微软雅黑",
-            fontFamilies: [
-                {
-                    value: "微软雅黑",
-                    label: "微软雅黑",
-                },
-                {
-                    value: "黑体",
-                    label: "黑体",
-                },
-            ],
-            fontStyle: "normal",
-        };
+      return {
+        fontFamily: "微软雅黑",
+        fontFamilies: [
+          {
+            value: "微软雅黑",
+            label: "微软雅黑",
+          },
+          {
+            value: "黑体",
+            label: "黑体",
+          },
+        ],
+        fontStyle: "normal",
+        colorpickerConfig: {
+          "target": "props.color",
+          "props": {
+            "changeType": "cmp",
+            "type": {
+              "before": "BEFORE_UPDATE_COMPONENT_PROPS",
+              "update": "UPDATING_COMPONENT_PROPS",
+              "after": "AFTER_UPDATE_COMPONENT_PROPS"
+            }
+          },
+        },
+      };
     },
     computed: {
         dataFontFamily() {
