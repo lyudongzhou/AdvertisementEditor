@@ -166,7 +166,7 @@ export default {
         {
           label: "不透明度",
           props: {},
-          target: "layoutConfig.rotation",
+          target: "layoutConfig.opacity",
           type: "numberField",
         },
       ],
