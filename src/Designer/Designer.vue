@@ -28,6 +28,7 @@
     <pageSnapshot></pageSnapshot>
     <resourceDialg></resourceDialg>
     <totalPreview></totalPreview>
+    <key-map></key-map>
   </div>
 </template>
 
@@ -42,6 +43,7 @@ import resourceDialg from "./components/pageCmp/UploadFile";
 import { mapMutations } from "./store";
 import totalPreview from "./components/totalPreview";
 import EditChartWindow from "./components/EditChartWindow.vue";
+import KeyMap from "./components/KeyMap.vue";
 // import singlePagePreview from "./components/preView";
 import { mapState } from "./store";
 export default {
@@ -56,7 +58,8 @@ export default {
     EditChartWindow,
     // singlePagePreview,
     totalPreview,
-    resourceDialg
+    resourceDialg,
+    KeyMap,
   },
   computed: {
     ...mapState(["previewing"]),

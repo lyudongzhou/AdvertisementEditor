@@ -122,8 +122,20 @@ export default {
   },
   undo (state) {
     const manager = getSchemaManager(state);
-    manager.undo();
-    afterCommandMap[COMMAND_UPDATE_SELECT_ITEM]();
+    const lastOperate = manager.undo();
+    if (lastOperate) {
+      const type = lastOperate.type;
+      console.info(type);
+      if (operatorMap[type] && operatorMap[type].undoAfter) {
+        operatorMap[type].undoAfter.forEach(command => {
+          afterCommandMap[command](state, lastOperate);
+        });
+      } else {
+        afterCommandMap[COMMAND_UPDATE_SELECT_ITEM]();
+      }
+    } else {
+      afterCommandMap[COMMAND_UPDATE_SELECT_ITEM]();
+    }
   },
   copyComponent(state, copyComponent) {
     state.copyComponent = copyComponent;

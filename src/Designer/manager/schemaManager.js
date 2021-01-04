@@ -55,6 +55,7 @@ export default class SchemaManager {
   execute(operateConfig) {
     this.update(operateConfig);
     this.snapshotInfo.to = clone(this.getSchema());
+    this.lastOperate = operateConfig;
   }
 
   redo() {
@@ -70,12 +71,14 @@ export default class SchemaManager {
       const snapshotInfo = this.stackMap.undoStack.pop();
       this.updateByRedoUndo(snapshotInfo, 'undo');
       this.stackMap.redoStack.push(snapshotInfo);
+      return this.lastOperate;
     }
   }
 
   clear() {
     this.stackMap.redoStack = [];
     this.stackMap.undoStack = [];
+    this.lastOperate = null;
   }
 
   updateByRedoUndo(snapshotInfo, type) {
@@ -84,6 +87,7 @@ export default class SchemaManager {
         this.setSchema(clone(snapshotInfo[type === 'redo' ? 'to' : 'from']));
       },
     });
+    this.lastOperate = snapshotInfo.operateConfig;
   }
 
   canRedo() {
@@ -102,9 +106,8 @@ export default class SchemaManager {
   }
 
   buildSnapshot(operateConfig) {
-    const {type} = operateConfig;
     return {
-      originType: type,
+      operateConfig,
       from: clone(this.getSchema()),
     };
   }
