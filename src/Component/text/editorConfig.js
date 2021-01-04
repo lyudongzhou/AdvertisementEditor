@@ -20,7 +20,10 @@ export default [{
             "fontWeight": 10,
             "fontStyle": "normal",
             "fontSize": 30,
-            "color": "#000000"
+            "color": {
+              "type": "color",
+              "value": "#000000"
+            }
         },
         "animation": [],
         "events": [],
@@ -42,7 +45,10 @@ export default [{
             "fontWeight": 10,
             "fontStyle": "normal",
             "fontSize": 30,
-            "color": "#000000"
+            "color": {
+              "type": "color",
+              "value": "#000000"
+            }
         },
         "animation": [],
         "events": [],
