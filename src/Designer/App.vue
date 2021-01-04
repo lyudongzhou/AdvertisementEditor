@@ -8,14 +8,22 @@ import {SUBMIT_PROJECT} from './constant/event';
 import {mapMutations} from './store/index';
 import {clone} from '@/utils';
 
+/*eslint no-unused-vars: ["error", { "args": "none" }]*/
 const resourceVisitor = {
   component: (schema, context) => {
     if (schema.type === 'ImageCmp') {
       context.resource.add(schema.props.bgUrl);
     }
+    // todo 其他组件
   },
-  container() {
-
+  container(schema, context) {
+    // todo 处理对应资源
+  },
+  page(schema, context) {
+    // todo 处理对应资源
+  },
+  dialog(schema, context) {
+    // todo 处理对应资源
   },
 };
 
