@@ -82,6 +82,9 @@ export default {
     },
     $$pasteComponent(baseLayout) {
       let base = clone(getFromState.call(this, 'copyComponent'));
+      if (!base) {
+        return;
+      }
       if (baseLayout) {
         base.layoutConfig = {...base.layoutConfig, ...baseLayout};
       }

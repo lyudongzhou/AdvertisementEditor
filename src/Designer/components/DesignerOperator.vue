@@ -46,13 +46,13 @@
           {
             icon: "el-icon-top-left",
             key: "undo",
-            label: "撤销",
+            label: "撤销(ctrl+z)",
             disabled: !schemaManager.canUndo(),
           },
           {
             icon: "el-icon-top-right",
             key: "redo",
-            label: "恢复",
+            label: "恢复(ctrl+y)",
             disabled: !schemaManager.canRedo(),
           },
           { icon: "el-icon-zoom-in", key: "zoomIn", label: "放大" },

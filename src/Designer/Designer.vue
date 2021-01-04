@@ -27,6 +27,7 @@
     <!-- <singlePagePreview></singlePagePreview> -->
     <pageSnapshot></pageSnapshot>
     <totalPreview></totalPreview>
+    <key-map></key-map>
   </div>
 </template>
 
@@ -40,6 +41,7 @@ import pageSnapshot from "./components/pageSnapshot.vue";
 import { mapMutations } from "./store";
 import totalPreview from "./components/totalPreview";
 import EditChartWindow from "./components/EditChartWindow.vue";
+import KeyMap from "./components/KeyMap.vue";
 // import singlePagePreview from "./components/preView";
 import { mapState } from "./store";
 export default {
@@ -54,6 +56,7 @@ export default {
     EditChartWindow,
     // singlePagePreview,
     totalPreview,
+    KeyMap,
   },
   computed: {
     ...mapState(["previewing"]),

@@ -211,6 +211,7 @@ export default {
       page.components.unshift(config.value);
     },
     after: [COMMAND_SELECT_COMPONENT, COMMAND_UPDATE_SELECT_ITEM],
+    undoAfter: [COMMAND_SELECT_CONTAINER, COMMAND_UPDATE_SELECT_ITEM],
   },
   [DELETE_COMPONENT]: {
     handler: commitHandler,
@@ -234,6 +235,7 @@ export default {
       schema[key].push(config.value);
     },
     after: [COMMAND_SELECT_PAGE],
+    undoAfter: [COMMAND_SELECT_SIBLING_PAGE],
   },
   [DELETE_PAGE]: {
     handler: commitHandler,
