@@ -5,3 +5,4 @@ import "./textTab";
 import "./eventTab";
 import "./animateTab";
 import "./chartTab";
+import "./documentTab";

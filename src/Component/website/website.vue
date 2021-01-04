@@ -31,7 +31,9 @@ export default {
     }
   },
   computed: {},
-  mounted() {},
+  mounted() {
+    this.url = this.cmpConfig.props.text;
+  },
 };
 </script>
 

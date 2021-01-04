@@ -12,7 +12,7 @@
     "change": {
         "type": 3,
         "loop": true,
-        "singlePagePlayTime": 2000
+        "singlePagePlayTime": 200000
     },
     "pages": [
         {
@@ -172,6 +172,7 @@
             "container": {
                 "backGround": {}
             },
+            "components":[],
             "name": "页面1",
             "id": "d912d040-4657-11eb-a3ca-bb193d389b3f"
         }
