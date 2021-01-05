@@ -153,14 +153,14 @@ export default {
       this.cancelOpen();
       this.start(config);
     });
-    this.start({
-      onSelect: (a) => {
-        console.log(a);
-      },
-      aSelectType: ["image", "audio", "video"],
-      multi: false,
-      title: "背景图片",
-    });
+    // this.start({
+    //   onSelect: (a) => {
+    //     console.log(a);
+    //   },
+    //   aSelectType: ["image", "audio", "video"],
+    //   multi: false,
+    //   title: "背景图片",
+    // });
     // this.loadResource();
   },
   created() {

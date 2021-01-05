@@ -6,3 +6,4 @@ import "./eventTab";
 import "./animateTab";
 import "./chartTab";
 import "./documentTab";
+import "./mixPlayTab";
