@@ -2,7 +2,7 @@
   <el-dialog
     :title="title"
     :visible.sync="dialogVisible"
-    width="70%"
+    width="75%"
     custom-class="resourceDialog"
     :before-close="handleClose"
   >
@@ -25,7 +25,7 @@
         ></el-input
         ><span class="el-icon-search search_icon" @click="onSearch"></span
       ></el-header>
-      <el-main class="dialogMiddle" style="height: 83%">
+      <el-main class="dialogMiddle" style="height: 70%">
         <el-container>
           <el-aside width="150px">
             <el-tabs
@@ -46,10 +46,11 @@
             </el-tabs></el-aside
           ><el-main>
             <vue-select-image
-              ref="aaa"
+              ref="selectCmp"
               :dataImages="aResource"
               @onselectimage="onSelectImage"
               @onselectmultipleimage="onSelectImage"
+              @onselectmultipleimagedelete="deleteSelect"
               :is-multiple="multi"
               :h="'120px'"
               :w="'140px'"
@@ -58,11 +59,28 @@
               :isLoading="isLoading"
               :noMore="noMore"
               :isDisabled="cannotLoad"
+              :selectedImages="selectImages"
             >
             </vue-select-image></el-main
         ></el-container>
       </el-main>
-      <el-footer style="height: 10%; margin-top: 10px"
+      <el-footer style="height: 110px;width:100%;display:block;overflow:auto" v-if="multi"
+        ><div
+          v-for="(item, index) in selectImages"
+          :key="item.id"
+          style="
+          display:inline-block;
+            width: 100px;
+            height: 100px;
+            position: relative;
+            margin: 5px 5px;
+          "
+        >
+          <img :src="item.src" style="width: 100%; height: 70%" />
+          <label style="width: 100%; height: 30%">{{ item.alt }}</label>
+          <i class="el-icon-delete deleteIcon" @click="onClickDeleteSelect(index)"></i></div
+      ></el-footer>
+      <el-footer style="height: 10%; margin-top: 10px; bottom: 0"
         ><el-button @click="handleClose">取消</el-button
         ><el-button style="height: 100%" @click="commit"
           >确定</el-button
@@ -97,6 +115,7 @@ export default {
       searchText: "",
       acceptFile: "*",
       isStarting: true,
+      selectImages: [],
     };
   },
   watch: {
@@ -134,15 +153,24 @@ export default {
       this.cancelOpen();
       this.start(config);
     });
+    this.start({
+      onSelect: (a) => {
+        console.log(a);
+      },
+      aSelectType: ["image", "audio", "video"],
+      multi: false,
+      title: "背景图片",
+    });
     // this.loadResource();
   },
   created() {
     this.url = "/res/get";
+    window.abc = this;
     // this.loadResource();
   },
   methods: {
     commit() {
-      this.onSelect && this.onSelect(this.aResult);
+      this.onSelect && this.onSelect(this.muilti?this.selectImages:this.aResult);
       this.closeOpen();
     },
     resetType() {
@@ -179,14 +207,30 @@ export default {
       if (!(a instanceof Array)) {
         a = [a];
       }
+      a.forEach((ele) => {
+        let dataImage = this.selectImages.find((data) => {
+          return data.id === ele.id;
+        });
+        if (!dataImage) {
+          this.selectImages.push(ele);
+        }
+      });
+      // this.selectImages.push.apply();
       var arr = [];
-      a.forEach(ele=>{
+      a.forEach((ele) => {
         arr.push(JSON.parse(JSON.stringify(ele.payload)));
       });
       this.aResult = arr;
     },
+    deleteSelect(ele) {
+      let dataImage = this.selectImages.find((data) => {
+        return data.id === ele.id;
+      });
+      this.selectImages.splice(this.selectImages.indexOf(dataImage), 1);
+    },
     fmtRes(res) {
       const { resName, resType, resUrl, resId } = res;
+      console.log(resId);
       return {
         id: resId,
         src: resType === 1 ? resUrl : fileIcon,
@@ -197,8 +241,11 @@ export default {
     //开始选择，配置参数
     start({ onSelect, aSelectType, multi, title }) {
       this.dialogVisible = true;
+      while (this.selectImages.length) {
+        this.selectImages.pop();
+      }
       this.$nextTick(() => {
-        this.$refs["aaa"].reset();
+        this.$refs["selectCmp"].reset();
         this.aResult = [];
         this.isStarting = true;
         this.searchText = "";
@@ -234,6 +281,10 @@ export default {
       this.cancelOpen();
       this.closeOpen();
     },
+    onClickDeleteSelect(idx){
+      let item = this.selectImages.splice(idx,1);
+      this.$refs["selectCmp"].removeSelect(item[0].id);
+    }
     //数据加载
   },
 };
@@ -241,7 +292,16 @@ export default {
 
 <style lang="less" scope>
 @deep: ~">>>";
-
+.deleteIcon {
+  cursor:pointer;
+  background: white;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+}
+.deleteIcon:hover{
+  background:#CCCCCC;
+}
 .el-tabs--left .el-tabs__item.is-left {
   text-align: left !important;
 }
@@ -300,7 +360,7 @@ export default {
   }
 }
 .resourceDialog {
-  height: 70%;
+  height: 80%;
   padding-top: 0;
 }
 .el-header {

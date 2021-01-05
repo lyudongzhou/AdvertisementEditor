@@ -67,7 +67,7 @@
 </template>
 
 <script>
-var console = {log:()=>{}};
+var console = { log: () => {} };
 export default {
   name: "vue-select-image",
   props: {
@@ -156,6 +156,17 @@ export default {
       this.singleSelected.id = "";
       this.multipleSelected.splice(0, this.multipleSelected.length);
     },
+    removeSelect(id){
+      let arrSelect = [];
+      this.multipleSelected.forEach(ele=>{
+        if(ele.id === id){
+          arrSelect.push(ele);
+        }
+      });
+      arrSelect.forEach(ele=>{
+        this.multipleSelected.splice(this.multipleSelected.indexOf(ele),1);
+      });
+    },
     classThumbnail(selectedId, imageId, isDisabled) {
       const baseClass = `${this.rootClass}__thumbnail`;
       if (isDisabled) {
@@ -222,6 +233,7 @@ export default {
             this.$emit("onselectmultipleimage", this.multipleSelected);
           }
         } else {
+          this.$emit("onselectmultipleimagedelete", objectImage);
           this.removeFromMultipleSelected(objectImage.id, true);
           this.$emit("onselectmultipleimage", this.multipleSelected);
         }

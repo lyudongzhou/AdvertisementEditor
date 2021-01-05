@@ -81,10 +81,11 @@ function generateFakeResourcesData() {
     {resName:"document",resType:4,resUrl:"http://localhost:8080/document/document.pdf"}
   ];
   var aResults = [];
-  for (var i = 0; i < 100; i++) {
+  for (let i = 0; i < 100; i++) {
     var res = getRandomResource();
-    res.resId = i;
-    aResults.push(res);
+    let o = JSON.parse(JSON.stringify(res));
+    o.resId = i;
+    aResults.push(o);
   }
   return aResults;
 }
@@ -224,7 +225,7 @@ function getProgramResources() {
     }
   ];
   var aResults = [];
-  for (var i = 0; i < 100; i++) {
+  for (let i = 0; i < 100; i++) {
     var res = getRandomResource();
     res.resId = i;
     aResults.push(res);
