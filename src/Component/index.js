@@ -5,3 +5,4 @@ import "./chart";
 import "./website";
 import "./document";
 import "./mixplay";
+import "./video";

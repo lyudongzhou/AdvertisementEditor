@@ -5,8 +5,8 @@
       style="margin: 0"
       v-infinite-scroll="loadResource"
       infinite-scroll-disabled="cannotLoad"
-      infinite-scroll-immediate=false
-      infinite-scroll-distance=150
+      infinite-scroll-immediate="false"
+      infinite-scroll-distance="150"
     >
       <el-col
         v-for="(o, index) in aResource"
@@ -22,11 +22,19 @@
               class="image"
               @click="handleClick(o)"
             />
-            <img
-               v-if="o.bodyJson"
-               :src="o.thumbnail"
-               class="image"
-               @click="handleClick(o)" />
+            <video
+              v-if="o.resType === 2"
+              :src="o.resUrl"
+              class="image"
+              @click="handleClick(o)"
+            ></video>
+            <iframe
+              v-if="o.resType === 4"
+              :src="o.resUrl"
+              class="image"
+              @click="handleClick(o)"
+            ></iframe>
+            <img v-if="o.bodyJson" :src="o.thumbnail" class="image" />
           </el-container>
         </el-card>
       </el-col>
@@ -45,18 +53,18 @@ import { REG_TITLECONFIG } from "@/const";
 const config = get(REG_TITLECONFIG);
 export default {
   props: ["sortConfig", "typeSwitch"],
-  mixins: [schemaMixin,dataMixin],
+  mixins: [schemaMixin, dataMixin],
   watch: {
     sortConfig() {
       console.log(111);
       this.reset();
       this.loadResource();
     },
-    typeSwitch (type) {
+    typeSwitch(type) {
       console.log(type);
-      if(type===1){
+      if (type === 1) {
         this.url = "/res/get";
-      }else{
+      } else {
         this.url = "program/list";
       }
       this.reset();
@@ -77,13 +85,24 @@ export default {
       };
     },
     handleClick(o) {
+      console.log("oooo", o);
       if (this.typeSwitch === 1) {
-        let defaultSchema = config["ImageCmp"][0].defaultSchema;
-        console.log(o);
-        defaultSchema.props.bgUrl = o.resUrl;
-        this.$$addNewComponent(defaultSchema);
+        if (o.resType === 1) {
+          let defaultSchema = config["ImageCmp"][0].defaultSchema;
+          console.log(o);
+          defaultSchema.props.bgUrl = o.resUrl;
+          this.$$addNewComponent(defaultSchema);
+        } else if (o.resType === 2) {
+          let defaultSchema = config["VideoCmp"][0].defaultSchema;
+          defaultSchema.props.bgUrl = o.resUrl;
+          this.$$addNewComponent(defaultSchema);
+          // TODO: simulate bodyJson
+        } else if (o.resType === 4) {
+          let defaultSchema = config["documentCmp"][0].defaultSchema;
+          defaultSchema.props.url = o.resUrl;
+          this.$$addNewComponent(defaultSchema);
+        }
       } else {
-        // TODO: simulate bodyJson
         this.resetSchema(o.bodyJson);
       }
     },
