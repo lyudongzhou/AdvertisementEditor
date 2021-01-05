@@ -6,6 +6,26 @@
 import designer from './Designer.vue';
 import {SUBMIT_PROJECT} from './constant/event';
 import {mapMutations} from './store/index';
+import {clone} from '@/utils';
+
+/*eslint no-unused-vars: ["error", { "args": "none" }]*/
+const resourceVisitor = {
+  component: (schema, context) => {
+    if (schema.type === 'ImageCmp') {
+      context.resource.add(schema.props.bgUrl);
+    }
+    // todo 其他组件
+  },
+  container(schema, context) {
+    // todo 处理对应资源
+  },
+  page(schema, context) {
+    // todo 处理对应资源
+  },
+  dialog(schema, context) {
+    // todo 处理对应资源
+  },
+};
 
 export default {
   components: {
@@ -27,7 +47,9 @@ export default {
     handleSubmit(payload) {
       const isCreate = !payload.id;
       const url = `/program/${isCreate ? 'add' : 'update'}`;
-      this.$axios.post(url, {id: payload.id, programData: payload.schema}).then(({data}) => {
+      const resource = this.getResource(payload.schema);
+      const programData = {...clone(payload.schema), resource};
+      this.$axios.post(url, {id: payload.id, programData}).then(({data}) => {
         if (isCreate) {
           const urlSearchParams = new URLSearchParams(location.hash);
           urlSearchParams.append('id', data.id);
@@ -61,6 +83,33 @@ export default {
           this.$refs.designer.openProject(data.programData);
         });
       }
+    },
+    getResource(schema) {
+      const resource = new Set();
+      this.traversalSchema(schema, resourceVisitor, {resource});
+      return [...resource];
+    },
+    traversalSchema(schema, visitor, context) {
+      if (!schema) {
+        return;
+      }
+      if (visitor.container) {
+        visitor.container(schema.container, context);
+      }
+      const traversalPageLike = (key, visitorKey) => {
+        if (schema[key] && (visitor[visitorKey] || visitor.component)) {
+          schema[key].forEach(page => {
+            visitor[visitorKey] && visitor[visitorKey](page, context);
+            if (visitor.component && page.components) {
+              page.components.forEach(component => {
+                visitor.component(component, context);
+              });
+            }
+          });
+        }
+      };
+      traversalPageLike('pages', 'page');
+      traversalPageLike('dialogs', 'dialog');
     }
   }
 };
