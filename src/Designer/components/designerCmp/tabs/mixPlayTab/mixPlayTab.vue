@@ -11,7 +11,7 @@ import "../../editors";
 import { get } from "@/register";
 import { REG_EDITORS } from "@/const";
 import { mapMutations } from "../../../../store";
-// import { UPDATE_COMPONENT_PROPS } from "../../../../constant/schema";
+import { UPDATE_COMPONENT_PROPS } from "../../../../constant/schema";
 // import { mapState } from '../../../../store'
 export default {
   name: "mixPlayTab",
@@ -31,17 +31,16 @@ export default {
         title: "混播",
       });
     },
-    onSelect() {
-      return;
-      // if (!a || a.length === 0) {
-      //   return;
-      // }
-      // this.updateSchema({
-      //   type: UPDATE_COMPONENT_PROPS,
-      //   value: {
-      //     "props.bgUrl": a[0].resUrl,
-      //   },
-      // });
+    onSelect(a) {
+      if (!a || a.length === 0) {
+        return;
+      }
+      this.updateSchema({
+        type: UPDATE_COMPONENT_PROPS,
+        value: {
+          "props.components": a,
+        },
+      });
     },
   },
 };

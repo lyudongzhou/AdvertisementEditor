@@ -8,10 +8,10 @@
 const state = {
   schema: null,
   pageCount: 0,
-  currentPage: "1",//当前页面ID
-  targetPage: "1",//目标页面ID
+  currentPage: "1", //当前页面ID
+  targetPage: "1", //目标页面ID
   designMode: false,
-  baseUrl: '',
+  baseUrl: "",
   windowStorage: [], // 页面路径存储，弹窗返回使用
   singlePagePreview: false,
 };
@@ -19,7 +19,7 @@ const mutations = {
   setSchema(store, schema) {
     store.schema = schema;
   },
-  setCurrentPage(store,pageId){
+  setCurrentPage(store, pageId) {
     store.currentPage = pageId;
   },
   setSinglePagePreview(store, prop) {
@@ -74,8 +74,8 @@ const mutations = {
   },
 
   addWindowData(state, { toId, backTime, type }) {
-    if (type === 'pages') {
-      console.log('clear windowStorage');
+    if (type === "pages") {
+      console.log("clear windowStorage");
       state.windowStorage.length = 0;
     }
     state.windowStorage.push({
@@ -86,15 +86,16 @@ const mutations = {
   },
   backPrevDialog(state) {
     state.windowStorage.pop();
-  }
-
-
+  },
 };
 const getters = {
-  currentPage: state => state.currentPage,
-  handleUrl: state => url => `${state.baseUrl}${url}`,
-  targetPage: state => state.targetPage,
-  designMode: state => state.designMode,
+  currentPage: (state) => state.currentPage,
+  handleUrl: (state) => (url) => {
+    console.log(state.baseUrl);
+    return `${state.baseUrl}${url}`;
+  },
+  targetPage: (state) => state.targetPage,
+  designMode: (state) => state.designMode,
   nextID(state) {
     let findIndex = -1;
     state.schema.pages.some((ele, index) => {
@@ -103,11 +104,11 @@ const getters = {
         return true;
       }
     });
-    if(findIndex!==-1){
-      if(findIndex===state.schema.pages.length-1){
-        return {type:"null",id:null};
+    if (findIndex !== -1) {
+      if (findIndex === state.schema.pages.length - 1) {
+        return { type: "null", id: null };
       }
-      return {type:"page",id:state.schema.pages[findIndex+1].id};
+      return { type: "page", id: state.schema.pages[findIndex + 1].id };
     }
     state.schema.dialogs.some((ele, index) => {
       if (ele.id === state.currentPage) {
@@ -115,13 +116,13 @@ const getters = {
         return true;
       }
     });
-    if(findIndex!==-1){
-      if(findIndex===state.schema.dialogs.length-1){
-        return {type:"null",id:null};
+    if (findIndex !== -1) {
+      if (findIndex === state.schema.dialogs.length - 1) {
+        return { type: "null", id: null };
       }
-      return {type:"dialog",id:state.schema.dialogs[findIndex+1].id};
+      return { type: "dialog", id: state.schema.dialogs[findIndex + 1].id };
     }
-    return {type:"null",id:null};
+    return { type: "null", id: null };
   },
   preID(state) {
     let findIndex = -1;
@@ -131,11 +132,11 @@ const getters = {
         return true;
       }
     });
-    if(findIndex!==-1){
-      if(findIndex===0){
-        return {type:"null",id:null};
+    if (findIndex !== -1) {
+      if (findIndex === 0) {
+        return { type: "null", id: null };
       }
-      return {type:"page",id:state.schema.pages[findIndex-1].id};
+      return { type: "page", id: state.schema.pages[findIndex - 1].id };
     }
     state.schema.dialogs.some((ele, index) => {
       if (ele.id === state.currentPage) {
@@ -143,14 +144,14 @@ const getters = {
         return true;
       }
     });
-    if(findIndex!==-1){
-      if(findIndex===0){
-        return {type:"null",id:null};
+    if (findIndex !== -1) {
+      if (findIndex === 0) {
+        return { type: "null", id: null };
       }
-      return {type:"dialog",id:state.schema.dialogs[findIndex-1].id};
+      return { type: "dialog", id: state.schema.dialogs[findIndex - 1].id };
     }
-    return {type:"null",id:null};
-  }
+    return { type: "null", id: null };
+  },
 };
 
 export default {
@@ -158,4 +159,4 @@ export default {
   state,
   mutations,
   getters,
-}
+};
