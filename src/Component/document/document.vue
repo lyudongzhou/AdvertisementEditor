@@ -1,12 +1,12 @@
 <template lang="html">
   <baseCmp :cmpConfig="cmpConfig">
-  <iframe :src="url" style="width:100%;height:100%"></iframe>
+  <iframe :src="handleUrl(url)" style="width:100%;height:100%"></iframe>
   </baseCmp>
 </template>
 
 <script>
 import baseCmp from "../Base.vue";
-
+import { mapGetters } from "../../Render/store/";
 export default {
   name: "documentCmp",
   props: ["cmpConfig"],
@@ -33,7 +33,9 @@ export default {
     //   return /^(https?:\/\/(([a-zA-Z0-9]+-?)+[a-zA-Z0-9]+\.)+[a-zA-Z]+)(:\d+)?(\/.*)?(\?.*)?(#.*)?$/.test(value);
     // }
   },
-  computed: {},
+  computed: {
+    ...mapGetters(['handleUrl']),
+  },
   mounted() {
     this.url = this.cmpConfig.props.url;
   },

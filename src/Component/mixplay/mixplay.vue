@@ -41,6 +41,9 @@ export default {
       this.current++;
     },3000);
   },
+  destroyed(){
+    clearInterval(this.interval);
+  },
   computed: {
     ...mapGetters(["handleUrl"]),
   },
