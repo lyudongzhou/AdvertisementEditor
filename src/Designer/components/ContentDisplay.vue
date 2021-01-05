@@ -7,7 +7,7 @@
   import editorWin from './EditorWindow';
   import RotateOperate from './RotateOperate';
   import Vue from 'vue';
-  import {CHANGE_SCALE, UPDATE_SELECT_INFO} from '../constant/event';
+  import {CHANGE_SCALE, UPDATE_CANVAS_SIZE, UPDATE_SELECT_INFO} from '../constant/event';
   import {CONTENT_OFFSET, GRID_ADSORBENT_VALUE} from '../constant/base';
   import {
     BEFORE_UPDATE_COMPONENT_SIZE,
@@ -56,6 +56,9 @@
       this.$event.on(UPDATE_SELECT_INFO, () => {
         this.updateSelectItemInfo();
       });
+      this.$event.on(UPDATE_CANVAS_SIZE, () => {
+        this.scaleState = null;
+      });
     },
     mixins: [schemaMixin],
     mounted() {
@@ -66,6 +69,8 @@
         // console.log(fn,this.$refs.render.getCmp(this.currentComponentId));
       });
       document.addEventListener('mousemove', this.mousemove, true);
+      const {height, width} = this.$refs.workspace.getBoundingClientRect();
+      this.containerInfo = {height, width};
     },
     beforeDestroy() {
       document.removeEventListener('mousemove', this.mousemove, true);
@@ -85,6 +90,7 @@
           ver: {},
           hoz: {},
         },
+        containerInfo: {},
 //        selectItemContainerStyle: {},
       };
     },
@@ -156,7 +162,7 @@
         const {
           width,
           height,
-        } = this.$refs.workspace.getBoundingClientRect();
+        } = this.containerInfo;
         const originWidth = this.schema.container.width;
         const originHeight = this.schema.container.height;
         const maxWidth = width - CONTENT_OFFSET * 2;

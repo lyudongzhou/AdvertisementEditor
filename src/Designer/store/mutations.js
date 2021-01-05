@@ -1,7 +1,7 @@
 import {clone, getPropByPath} from '../../Utils/utils';
 import { getSchemaManager } from '../manager/schemaManager';
 import { eventBus } from '../plugin/event';
-import { UPDATE_SELECT_INFO } from '../constant/event';
+import {UPDATE_CANVAS_SIZE, UPDATE_SELECT_INFO} from '../constant/event';
 import operatorMap from '../manager/operators';
 import {
   COMMAND_UPDATE_SELECT_ITEM,
@@ -9,7 +9,7 @@ import {
   COMMAND_SELECT_CONTAINER,
   COMMAND_SELECT_PAGE,
   COMMAND_SELECT_SIBLING_PAGE,
-  COMMAND_CLEAR_CURRENT_TARGET,
+  COMMAND_CLEAR_CURRENT_TARGET, COMMAND_UPDATE_CANVAS_SIZE,
 } from '../constant/base';
 
 const afterCommandMap = {
@@ -61,6 +61,12 @@ const afterCommandMap = {
     state.currentType = currentPageType;
     state.currentPageId = getPropByPath(state.schema, `${currentPageType === 'page' ? 'pages' : 'dialogs'}[0].id`, null);
   },
+  /**
+   * 修改画布大小
+   */
+  [COMMAND_UPDATE_CANVAS_SIZE]() {
+    eventBus.emit(UPDATE_CANVAS_SIZE);
+  }
 };
 
 export default {
