@@ -62,6 +62,7 @@ export default {
   },
   created() {},
   mounted() {
+    window.edit = this; 
     this.onChangeType(this.currentComponent);
   },
   methods: {

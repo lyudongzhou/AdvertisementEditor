@@ -8,3 +8,4 @@ import "./chartTab";
 import "./documentTab";
 import "./mixPlayTab";
 import "./videoTab";
+import "./svgTab";

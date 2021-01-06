@@ -221,7 +221,7 @@ export const mask = [
     name: "3",
     position: "5.3.1",
     defaultSchema: {
-      "type": "svgCmp",
+      "type": "svgMaskCmp",
       "layoutConfig": {
         "width": 200,
         "height": 200
