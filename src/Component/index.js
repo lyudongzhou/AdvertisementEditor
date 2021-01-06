@@ -6,3 +6,4 @@ import "./website";
 import "./document";
 import "./mixplay";
 import "./video";
+import "./button";

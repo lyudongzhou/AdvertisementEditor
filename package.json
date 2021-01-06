@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/lyudongzhou/AdvertisementEditor#readme",
   "dependencies": {
+    "@svgdotjs/svg.js": "^3.0.16",
     "EventEmitter": "^1.0.0",
     "axios": "^0.21.0",
     "core-js": "^3.6.5",
