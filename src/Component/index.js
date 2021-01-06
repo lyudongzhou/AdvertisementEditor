@@ -7,3 +7,4 @@ import "./document";
 import "./mixplay";
 import "./video";
 import "./button";
+import "./svgs";
