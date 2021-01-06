@@ -26,7 +26,7 @@ import {
   AUTO_UPDATING_PROP,
   AUTO_AFTER_PROP,
 
-  UPDATE_SCHEMA,
+  UPDATE_SCHEMA, UPDATE_RESOLUTION,
 } from '../constant/schema';
 import {setPropByPath, switchArrayIndex} from '../../Utils/utils';
 import {
@@ -34,7 +34,7 @@ import {
   COMMAND_SELECT_COMPONENT,
   COMMAND_SELECT_CONTAINER,
   COMMAND_SELECT_PAGE,
-  COMMAND_SELECT_SIBLING_PAGE,
+  COMMAND_SELECT_SIBLING_PAGE, COMMAND_UPDATE_CANVAS_SIZE,
   COMMAND_UPDATE_SELECT_ITEM,
 } from '../constant/base';
 import {getSchemaManager} from './schemaManager';
@@ -257,6 +257,16 @@ export default {
   [UPDATE_INDEX_TO_BOTTOM]: {
     handler: commitHandler,
     updater: generateSwitchIndexUpdater('bottom'),
+  },
+  [UPDATE_RESOLUTION]: {
+    handler: commitHandler,
+    updater:  (schema, config) => {
+      const {width, height} = config.value;
+      schema.container.width = width;
+      schema.container.height = height;
+    },
+    after: [COMMAND_UPDATE_CANVAS_SIZE, COMMAND_UPDATE_SELECT_ITEM],
+    undoAfter: [COMMAND_UPDATE_CANVAS_SIZE, COMMAND_UPDATE_SELECT_ITEM],
   },
   [UPDATE_SCHEMA]: {
     handler: commitHandler,
