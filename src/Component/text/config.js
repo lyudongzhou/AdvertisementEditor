@@ -7,6 +7,7 @@ export default {
     {
       type: "textTab",
       name: "文本配置",
+      notSupport: "",
       children: [
 
       ]
