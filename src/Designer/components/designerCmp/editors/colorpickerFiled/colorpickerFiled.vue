@@ -86,8 +86,6 @@ export default {
         });
       },
       up: (hex) => {
-        console.log(this.config);
-        console.log(this.config.target);
         this.updateSchema({
           type: this.config.props.type.after || null,
           value: this.config.props.changeType === 'page'?

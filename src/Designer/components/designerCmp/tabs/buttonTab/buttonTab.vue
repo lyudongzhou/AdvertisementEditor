@@ -42,6 +42,7 @@
           { className: 'btn5', target: 'btnProps.background'},
           { className: 'btn6', target: ''},
         ],
+        test: false,
         path: 'btnProps.background',
         activeBtn: 'btn1',
         hueConfig: {
@@ -68,6 +69,7 @@
           'color': '#fff',
           'border-radius': '4px',
           'box-shadow': `#43a1ff 0px ${height*0.8} 0px 0px`,
+          'border-color': 'transparent',
         }
       },
       btn2 () {
@@ -80,6 +82,7 @@
           'color': '#fff',
           'border-radius': `${height*0.8}px`,
           'box-shadow': 'none',
+          'border-color': 'transparent',
         }
       },
       btn3 () {
@@ -104,6 +107,7 @@
           'border': 'none',
           'border-radius': '4px',
           'box-shadow': 'none',
+          'border-color': 'transparent',
         }
       },
       btn5 () {
@@ -116,6 +120,7 @@
           'color': '#fff',
           'border-radius': `${height*0.5}px 0px`,
           'box-shadow': 'none',
+          'border-color': 'transparent',
         }
       },
       btn6 () {
@@ -127,7 +132,8 @@
         }
       }
     },
-    mounted() {},
+    mounted() {
+    },
     methods: {
       ...mapMutations(["updateSchema"]),
       changeStyle (type) {
