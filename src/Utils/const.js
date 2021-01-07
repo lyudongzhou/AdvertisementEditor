@@ -6,6 +6,7 @@ export const REG_COMPONENTSSCHEMA = "RegComponentsSchema";
 export const REG_EDITORS = "RegistorEditors";
 export const REG_TITLECONFIG = "REG_TITLECONFIG";
 export const SVGS = "SVGS";
+export const REG_GETRES = "REG_GETRES";
 export const DEFAULTTABS = [
   {
     type: "layoutTab",

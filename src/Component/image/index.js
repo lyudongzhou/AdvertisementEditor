@@ -7,8 +7,9 @@
 import image from "./image";
 import schema from "./config";
 import editorConfig from "./editorConfig";
+import fun from "./filterResource";
 import {register} from "@/register";
-import {REG_COMPONENTS,REG_COMPONENTSSCHEMA,REG_TITLECONFIG} from "@/const";
+import {REG_COMPONENTS,REG_COMPONENTSSCHEMA,REG_TITLECONFIG,REG_GETRES} from "@/const";
 register(REG_TITLECONFIG,{
     type:image.name,
     payload:editorConfig
@@ -20,4 +21,8 @@ register(REG_COMPONENTS,{
 register(REG_COMPONENTSSCHEMA,{
     type:image.name,
     payload:schema
+});
+register(REG_GETRES,{
+    type:image.name,
+    payload:fun
 });
