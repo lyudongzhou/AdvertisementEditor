@@ -7,8 +7,8 @@ export default {
     {
       type: "buttonTab",
       name: "按钮配置",
-      children: [
-      ]
+      notSupport: "倾斜",
+      children: []
     }
   ]
 };

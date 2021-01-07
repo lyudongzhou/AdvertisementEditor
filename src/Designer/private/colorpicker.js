@@ -39,6 +39,8 @@
         allMode,
         color
       }
+      console.log(bodyDom);
+      console.log(bodyDom.offsetWidth, 111);
       this.bindElem = elem;
       this.elem_wrap = null;
       this.fixedBg = null;

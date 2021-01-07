@@ -1,6 +1,6 @@
 <template>
     <div class="basic_tab">
-        <textStyle :configData="configData"></textStyle>
+        <textStyle :configData="configData" :config="config"></textStyle>
     </div>
 </template>
 

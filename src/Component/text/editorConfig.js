@@ -1,9 +1,3 @@
-/*
- * @Author: LyuDongzhou
- * @Date: 2020-12-02 22:54:00
- * @LastEditTime: 2020-12-02 23:34:18
- * @Description: file content
- */
 export default [
     {
     position: "0",
@@ -21,10 +15,7 @@ export default [
             "fontWeight": 10,
             "fontStyle": "normal",
             "fontSize": 30,
-            "color": {
-              "type": "color",
-              "value": "#000000"
-            }
+            "color": "#000000"
         },
         "animation": [],
         "events": [],

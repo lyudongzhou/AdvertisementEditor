@@ -1,6 +1,6 @@
 <template lang="html">
-  <div class="colorPicker" style="height:350px;">
-    <div class="color_warp" ref="color_warp">
+  <div class="colorPicker" style="width: 199px;height:350px;">
+    <div class="color_warp" ref="color_warp" style="width: 199px;">
       <div class="color_palette" ref="color_palette">
         <p v-for="(item, index) in palette" :item="item" :key="index" v-bind:style="{background: item}"></p>
       </div>
@@ -72,7 +72,7 @@ export default {
       bodyDom: this.$refs['color_warp'],
       palette: this.$refs['color_palette'],
       color: this.configData && this.configData[this.config.target]?
-             this.configData[this.config.target].value:
+             this.configData[this.config.target].value||this.configData[this.config.target]:
              "rgb(0, 0, 0)",
       down: () => {
         this.updateSchema({
@@ -86,6 +86,8 @@ export default {
         });
       },
       up: (hex) => {
+        console.log(this.config);
+        console.log(this.config.target);
         this.updateSchema({
           type: this.config.props.type.after || null,
           value: this.config.props.changeType === 'page'?

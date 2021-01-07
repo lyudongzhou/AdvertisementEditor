@@ -69,7 +69,7 @@ let Constructor ={children:[
           {
             "id": 3,
             "label": "按钮",
-            "type": "BtnCmp",
+            "type": "buttonCmp",
             "icon": mix
           },
           {

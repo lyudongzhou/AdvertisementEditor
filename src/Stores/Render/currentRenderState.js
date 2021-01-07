@@ -75,7 +75,7 @@ const mutations = {
 
   addWindowData(state, { toId, backTime, type }) {
     if (type === "pages") {
-      console.log("clear windowStorage");
+      // console.log("clear windowStorage");
       state.windowStorage.length = 0;
     }
     state.windowStorage.push({
@@ -91,7 +91,7 @@ const mutations = {
 const getters = {
   currentPage: (state) => state.currentPage,
   handleUrl: (state) => (url) => {
-    console.log(state.baseUrl);
+    // console.log(state.baseUrl);
     return `${state.baseUrl}${url}`;
   },
   targetPage: (state) => state.targetPage,
