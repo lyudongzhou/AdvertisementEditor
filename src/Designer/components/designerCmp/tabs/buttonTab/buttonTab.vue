@@ -46,7 +46,7 @@
         path: 'btnProps.background',
         activeBtn: 'btn1',
         hueConfig: {
-          "target": this.path?this.path:'btnProps.background',
+          "target": 'btnProps.background',
           "props": {
             "changeType": "cmp",
             "type": {
@@ -146,6 +146,7 @@
       },
       choiceBtn (style) {
         this.path = style.target;
+        this.$set(this.hueConfig, 'target', this.path);
         this.activeBtn = style.className;
         this.changeStyle(BEFORE_UPDATE_COMPONENT_PROPS);
         Object.assign(this.configData.btnProps, this[style.className]);
