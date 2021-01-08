@@ -30,9 +30,9 @@ export default {
       console.log("preview",data);
       this.isShow = data;
       // if (this.isShow) {
-        this.$nextTick(() => {
+        // this.$nextTick(() => {
           this.renderPreview();
-        });
+        // });
       // }
     },
     isShow(value) {
@@ -51,14 +51,12 @@ export default {
     ...mapMutations(["setPreviewState"]),
     renderPreview() {
       this.previewInstance && this.previewInstance.$destroy();
-      console.log(this.currentPageId);
-      let me = this;
       this.$nextTick(() => {
         this.previewInstance = new Vue({
           el: this.$refs["preview"],
           render: (h) => {
             let currentPage = this.currentPageId;
-            console.log(me.previewTotal);
+            this.$emit("afterRender");
             return h(render, {
               props: {
                 renderData: this.schema,
