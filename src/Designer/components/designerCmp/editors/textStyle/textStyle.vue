@@ -6,49 +6,49 @@
               :config="{ props: {}, target: 'props.text' }"
           ></textField>
       </el-form-item>
-        <el-form-item label="字体">
-            <el-select
-                v-model="fontFamily"
-                placeholder="请选择"
-                @change="onChange('props.fontFamily', fontFamily)"
-                style="width:100%"
-            >
-                <el-option
-                    v-for="item in fontFamilies"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                >
-                </el-option>
-            </el-select>
-        </el-form-item>
-        <el-form-item label="倾斜">
-            <el-radio
-                v-model="fontStyle"
-                label="normal"
-                @change="onChange('props.fontStyle', fontStyle)"
-                >正常</el-radio
-            >
-            <el-radio
-                v-model="fontStyle"
-                label="italic"
-                @change="onChange('props.fontStyle', fontStyle)"
-                >倾斜</el-radio
-            >
-        </el-form-item>
-        <el-form-item label="字号">
-            <numberField
-            style="width:100%"
-                :configData="configData"
-                :config="{ props: {}, target: 'props.fontSize' }"
-            ></numberField>
-        </el-form-item>
-        <el-form-item label="颜色">
-            <colorPicker
-                :configData="configData"
-                :config="colorpickerConfig"
-            ></colorPicker>
-        </el-form-item>
+      <el-form-item label="字体">
+          <el-select
+              v-model="fontFamily"
+              placeholder="请选择"
+              @change="onChange('props.fontFamily', fontFamily)"
+              style="width:100%"
+          >
+              <el-option
+                  v-for="item in fontFamilies"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+              >
+              </el-option>
+          </el-select>
+      </el-form-item>
+      <el-form-item v-if="config&&!config.notSupport||config.notSupport!=='倾斜'" label="倾斜">
+          <el-radio
+              v-model="fontStyle"
+              label="normal"
+              @change="onChange('props.fontStyle', fontStyle)"
+              >正常</el-radio
+          >
+          <el-radio
+              v-model="fontStyle"
+              label="italic"
+              @change="onChange('props.fontStyle', fontStyle)"
+              >倾斜</el-radio
+          >
+      </el-form-item>
+      <el-form-item label="大小">
+          <numberField
+          style="width:100%"
+              :configData="configData"
+              :config="{ props: {}, target: 'props.fontSize' }"
+          ></numberField>
+      </el-form-item>
+      <el-form-item label="文字颜色">
+        <colorpickerFiled
+            :configData="configData"
+            :config="colorpickerConfig"
+        ></colorpickerFiled>
+      </el-form-item>
     </el-form>
 </template>
 
@@ -57,17 +57,17 @@ import { getPropByPath } from "@/utils";
 // import Throttle from "../../../../manager/updateThrottle";
 import numberField from "../numberField/numberField";
 import textField from "../textField/textField";
-import colorPicker from "../colorpickerFiled/colorpickerFiled";
+import colorpickerFiled from "../colorpickerFiled/colorpickerFiled";
 import {UPDATE_COMPONENT_PROPS} from "../../../../constant/schema";
 import {mapMutations} from "../../../../store";
 export default {
     name: "textStyle",
-    props: ["configData"],
+    props: ["configData", "config"],
     created() {},
     components: {
       numberField,
       textField,
-      colorPicker,
+      colorpickerFiled,
     },
     data() {
       return {
@@ -122,7 +122,7 @@ export default {
     },
     watch: {
         text() {
-            console.log("textChange");
+            // console.log("textChange");
         },
         dataFontStyle(text) {
             this.fontStyle = text;
@@ -135,7 +135,7 @@ export default {
         this.isMounted = true;
         this.fontFamily = this.dataFontFamily;
         this.fontStyle = this.dataFontStyle;
-        console.log("init", this.text);
+        // console.log("init", this.text);
     },
 };
 </script>

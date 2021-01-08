@@ -1,4 +1,5 @@
 import "./basicTab";
+import "./buttonTab";
 import "./layoutTab";
 import "./imageTab";
 import "./textTab";
