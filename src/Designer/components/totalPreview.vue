@@ -5,310 +5,343 @@
  * @Description: file content
 -->
 <template>
-  <div v-if="isShow" class="totalPreviewContainer">
-    <div class="leftContainer">
-      <div class="leftContainer_inner" ref="container">
-        <singlePagePreview
-          ref="render"
-          :style="caculateRenderScale"
-          class="previewPage"
-          @afterRender="onRender"
-        ></singlePagePreview>
+  <div v-if="isShow">
+    <div v-if="previewTotal" class="totalPreviewContainer">
+      <div class="leftContainer">
+        <div class="leftContainer_inner" ref="container">
+          <singlePagePreview
+            ref="render"
+            :style="caculateRenderScale"
+            class="previewPage"
+            @afterRender="onRender"
+          ></singlePagePreview>
+        </div>
+      </div>
+      <div class="rightContainer">
+        <el-container>
+          <el-main class="main">
+            <el-tabs type="border-card" class="card">
+              <el-tab-pane label="常用设置" style="display: flex">
+                <div class="leftImg">
+                  <img style="width: 100%; height: 100%" />
+                </div>
+                <div class="leftImg noborder">
+                  <el-form class="nameConfig">
+                    <el-form-item label="节目名称">
+                      <el-input></el-input>
+                    </el-form-item>
+                    <el-form-item label="描述">
+                      <el-input type="textarea"></el-input>
+                    </el-form-item>
+                  </el-form>
+                </div>
+                <div class="bgmConfigContainer">
+                  <div style="padding: 10px 0 10px 0">背景音乐</div>
+                  <el-row :gutter="24" style="width: 100%; margin: 0">
+                    <el-col :span="12"
+                      ><div
+                        class="selectBgm blackFont"
+                        @click="handleBGMConfig"
+                      >
+                        背景音乐<i class="el-icon-headset icon"></i></div
+                    ></el-col>
+                    <el-col :span="12"
+                      ><div class="grid-content bg-purple">
+                        <div
+                          class="selectBgm blackFont"
+                          @click="handleAutoPlay"
+                        >
+                          音乐自动播放
+                          <div class="autoPlaySwitch">
+                            {{ bgmConfig.autoPlay ? "ON" : "OFF" }}
+                          </div>
+                        </div>
+                      </div></el-col
+                    >
+                  </el-row>
+                  <div style="width: 100%; padding: 10px 12px 0 12px">
+                    <el-row
+                      style="
+                        width: 100%;
+                        border: 1px solid black;
+                        border-radius: 4px;
+                      "
+                    >
+                      <el-col :span="6"
+                        ><div class="volumeConfig">背景音量</div></el-col
+                      >
+                      <el-col :span="13"
+                        ><div class="grid-content bg-purple">
+                          <div class="volumeConfig">
+                            <el-slider v-model="bgmConfig.volume"></el-slider>
+                          </div></div
+                      ></el-col>
+                      <el-col :span="5"
+                        ><div class="volumeConfig">
+                          <el-input
+                            class="volumeInput"
+                            v-model="volumeTemp"
+                            @change="onVolumeChange"
+                          >
+                            <template slot="append">%</template></el-input
+                          >
+                        </div></el-col
+                      >
+                    </el-row>
+                  </div>
+                </div>
+                <div class="pageContainer">
+                  <div style="padding: 10px 0 10px 0">页码</div>
+                  <el-row :gutter="24" style="width: 100%; margin: 10px 0 0 0">
+                    <el-col :span="12">
+                      <div style="selectBgm">
+                        <span style="margin: 10px 0 10px 0; display: block"
+                          >页码位置</span
+                        >
+                        <el-select
+                          v-model="pagingObj.position"
+                          placeholder="请选择"
+                        >
+                          <el-option
+                            v-for="item in pagingPositions"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value"
+                          >
+                          </el-option>
+                        </el-select>
+                      </div>
+                    </el-col>
+                    <el-col :span="12">
+                      <div style="selectBgm">
+                        <span style="margin: 10px 0 10px 0; display: block"
+                          >页码样式</span
+                        >
+                        <el-select v-model="pagingObj.fmt" placeholder="请选择">
+                          <el-option
+                            v-for="item in pagingStyle"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value"
+                          >
+                          </el-option>
+                        </el-select>
+                      </div>
+                    </el-col>
+                  </el-row>
+                  <el-row :gutter="24" style="width: 100%; margin: 10px 0 0 0">
+                    <el-col :span="12">
+                      <div style="selectBgm">
+                        <span style="margin: 10px 0 10px 0; display: block"
+                          >页码颜色</span
+                        >
+                        <el-color-picker
+                          v-model="pagingObj.color"
+                        ></el-color-picker>
+                      </div>
+                    </el-col>
+                    <el-col :span="12">
+                      <div style="selectBgm">
+                        <span style="margin: 10px 0 10px 0; display: block"
+                          >背景颜色</span
+                        >
+                        <el-color-picker
+                          v-model="pagingObj.bgColor"
+                        ></el-color-picker>
+                      </div>
+                    </el-col>
+                  </el-row>
+                  <el-row :gutter="24" style="width: 100%; margin: 10px 0 0 0">
+                    <el-col :span="12">
+                      <div style="selectBgm">
+                        <span style="margin: 10px 0 10px 0; display: block"
+                          >页码字体</span
+                        >
+                        <el-select
+                          v-model="pagingObj.family"
+                          placeholder="请选择"
+                        >
+                          <el-option
+                            v-for="item in fontFamilies"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value"
+                          >
+                          </el-option>
+                        </el-select>
+                      </div>
+                    </el-col>
+                    <el-col :span="12">
+                      <div style="selectBgm">
+                        <span style="margin: 10px 0 10px 0; display: block"
+                          >字体大小</span
+                        >
+                        <el-input
+                          v-model="sizeTemp"
+                          @change="handleSizeChange"
+                        ></el-input>
+                      </div>
+                    </el-col>
+                  </el-row>
+                </div>
+              </el-tab-pane>
+              <el-tab-pane label="翻页效果">
+                <div
+                  v-for="(item, index) in aAniType"
+                  :key="index"
+                  style="display: flex; padding: 10px"
+                  class="changeType"
+                  @click="handleType(index)"
+                >
+                  <div class="changeIconContainer">
+                    <div
+                      :class="fmtClass(item.icon, index)"
+                      :style="fmtUrl()"
+                    ></div>
+                    <div>{{ item.text }}</div>
+                  </div>
+                </div>
+                <div class="playContainer">
+                  <div style="padding: 10px 0 10px 0">翻页设置</div>
+                  <el-row
+                    :gutter="24"
+                    class="playSet"
+                    style="width: 100%; margin: 10px 0 0 0; padding: 0 12px"
+                  >
+                    <el-col :span="8">
+                      <el-select
+                        v-model="changeTypeIndex2"
+                        placeholder="请选择"
+                      >
+                        <el-option
+                          v-for="item in changeTypes"
+                          :key="item.value"
+                          :label="item.label"
+                          :value="item.value"
+                        >
+                        </el-option>
+                      </el-select>
+                    </el-col>
+                    <el-col :span="8">
+                      <div
+                        class="grid-content bg-purple"
+                        @click="handleLoopTemp"
+                      >
+                        <div class="selectBgm blackFont">
+                          循环播放
+                          <div class="autoPlaySwitch">
+                            {{ playConfig.loop ? "ON" : "OFF" }}
+                          </div>
+                        </div>
+                      </div>
+                    </el-col>
+                    <el-col :span="8">
+                      <div class="grid-content bg-purple">
+                        <div
+                          class="selectBgm blackFont"
+                          @click="handleChangeHint"
+                        >
+                          翻页提示
+                          <div class="autoPlaySwitch">
+                            {{ playConfig.changeHint ? "ON" : "OFF" }}
+                          </div>
+                        </div>
+                      </div>
+                    </el-col>
+                  </el-row>
+                  <div style="width: 100%; padding: 10px 12px 0 12px">
+                    <el-row
+                      style="
+                        width: 100%;
+                        border: 1px solid black;
+                        border-radius: 4px;
+                      "
+                    >
+                      <el-col :span="9"
+                        ><div class="volumeConfig">默认页播放时长</div></el-col
+                      >
+                      <el-col :span="8"
+                        ><div class="grid-content bg-purple">
+                          <div class="volumeConfig">
+                            <el-slider
+                              v-model="playConfig.singlePagePlayTime"
+                              :min="20"
+                              :max="1800"
+                            ></el-slider>
+                          </div></div
+                      ></el-col>
+                      <el-col :span="7"
+                        ><div class="volumeConfig">
+                          <el-input
+                            class="volumeInput"
+                            v-model="singlePagePlayTimeTemp"
+                            @change="handleSinglePlayTimeChange"
+                          >
+                            <template slot="append">秒</template></el-input
+                          >
+                        </div></el-col
+                      >
+                    </el-row>
+                  </div>
+                  <div style="width: 100%; padding: 10px 12px 0 12px">
+                    <el-row
+                      style="
+                        width: 100%;
+                        border: 1px solid black;
+                        border-radius: 4px;
+                      "
+                    >
+                      <el-col :span="9"
+                        ><div class="volumeConfig">无触摸返回时长</div></el-col
+                      >
+                      <el-col :span="8"
+                        ><div class="grid-content bg-purple">
+                          <div class="volumeConfig">
+                            <el-slider
+                              v-model="playConfig.backTime"
+                              :min="1"
+                              :max="99999"
+                            ></el-slider>
+                          </div></div
+                      ></el-col>
+                      <el-col :span="7"
+                        ><div class="volumeConfig">
+                          <el-input
+                            class="volumeInput"
+                            v-model="backTimeTemp"
+                            @change="handleBackTimeChange"
+                          >
+                            <template slot="append">秒</template></el-input
+                          >
+                        </div></el-col
+                      >
+                    </el-row>
+                  </div>
+                </div>
+              </el-tab-pane>
+            </el-tabs>
+          </el-main>
+          <el-footer class="buttonContainer">
+            <el-button @click="cancelChange">关闭</el-button>
+          </el-footer>
+        </el-container>
       </div>
     </div>
-    <div class="rightContainer">
-      <el-container>
-        <el-main class="main">
-          <el-tabs type="border-card" class="card">
-            <el-tab-pane label="常用设置" style="display: flex">
-              <div class="leftImg">
-                <img style="width: 100%; height: 100%" />
-              </div>
-              <div class="leftImg noborder">
-                <el-form class="nameConfig">
-                  <el-form-item label="节目名称">
-                    <el-input></el-input>
-                  </el-form-item>
-                  <el-form-item label="描述">
-                    <el-input type="textarea"></el-input>
-                  </el-form-item>
-                </el-form>
-              </div>
-              <div class="bgmConfigContainer">
-                <div style="padding: 10px 0 10px 0">背景音乐</div>
-                <el-row :gutter="24" style="width: 100%; margin: 0">
-                  <el-col :span="12"
-                    ><div class="selectBgm blackFont" @click="handleBGMConfig">
-                      背景音乐<i class="el-icon-headset icon"></i></div
-                  ></el-col>
-                  <el-col :span="12"
-                    ><div class="grid-content bg-purple">
-                      <div class="selectBgm blackFont" @click="handleAutoPlay">
-                        音乐自动播放
-                        <div class="autoPlaySwitch">
-                          {{ bgmConfig.autoPlay ? "ON" : "OFF" }}
-                        </div>
-                      </div>
-                    </div></el-col
-                  >
-                </el-row>
-                <div style="width: 100%; padding: 10px 12px 0 12px">
-                  <el-row
-                    style="
-                      width: 100%;
-                      border: 1px solid black;
-                      border-radius: 4px;
-                    "
-                  >
-                    <el-col :span="6"
-                      ><div class="volumeConfig">背景音量</div></el-col
-                    >
-                    <el-col :span="13"
-                      ><div class="grid-content bg-purple">
-                        <div class="volumeConfig">
-                          <el-slider v-model="bgmConfig.volume"></el-slider>
-                        </div></div
-                    ></el-col>
-                    <el-col :span="5"
-                      ><div class="volumeConfig">
-                        <el-input
-                          class="volumeInput"
-                          v-model="volumeTemp"
-                          @change="onVolumeChange"
-                        >
-                          <template slot="append">%</template></el-input
-                        >
-                      </div></el-col
-                    >
-                  </el-row>
-                </div>
-              </div>
-              <div class="pageContainer">
-                <div style="padding: 10px 0 10px 0">页码</div>
-                <el-row :gutter="24" style="width: 100%; margin: 10px 0 0 0">
-                  <el-col :span="12">
-                    <div style="selectBgm">
-                      <span style="margin: 10px 0 10px 0; display: block"
-                        >页码位置</span
-                      >
-                      <el-select
-                        v-model="pagingObj.position"
-                        placeholder="请选择"
-                      >
-                        <el-option
-                          v-for="item in pagingPositions"
-                          :key="item.value"
-                          :label="item.label"
-                          :value="item.value"
-                        >
-                        </el-option>
-                      </el-select>
-                    </div>
-                  </el-col>
-                  <el-col :span="12">
-                    <div style="selectBgm">
-                      <span style="margin: 10px 0 10px 0; display: block"
-                        >页码样式</span
-                      >
-                      <el-select v-model="pagingObj.fmt" placeholder="请选择">
-                        <el-option
-                          v-for="item in pagingStyle"
-                          :key="item.value"
-                          :label="item.label"
-                          :value="item.value"
-                        >
-                        </el-option>
-                      </el-select>
-                    </div>
-                  </el-col>
-                </el-row>
-                <el-row :gutter="24" style="width: 100%; margin: 10px 0 0 0">
-                  <el-col :span="12">
-                    <div style="selectBgm">
-                      <span style="margin: 10px 0 10px 0; display: block"
-                        >页码颜色</span
-                      >
-                      <el-color-picker
-                        v-model="pagingObj.color"
-                      ></el-color-picker>
-                    </div>
-                  </el-col>
-                  <el-col :span="12">
-                    <div style="selectBgm">
-                      <span style="margin: 10px 0 10px 0; display: block"
-                        >背景颜色</span
-                      >
-                      <el-color-picker
-                        v-model="pagingObj.bgColor"
-                      ></el-color-picker>
-                    </div>
-                  </el-col>
-                </el-row>
-                <el-row :gutter="24" style="width: 100%; margin: 10px 0 0 0">
-                  <el-col :span="12">
-                    <div style="selectBgm">
-                      <span style="margin: 10px 0 10px 0; display: block"
-                        >页码字体</span
-                      >
-                      <el-select
-                        v-model="pagingObj.family"
-                        placeholder="请选择"
-                      >
-                        <el-option
-                          v-for="item in fontFamilies"
-                          :key="item.value"
-                          :label="item.label"
-                          :value="item.value"
-                        >
-                        </el-option>
-                      </el-select>
-                    </div>
-                  </el-col>
-                  <el-col :span="12">
-                    <div style="selectBgm">
-                      <span style="margin: 10px 0 10px 0; display: block"
-                        >字体大小</span
-                      >
-                      <el-input
-                        v-model="sizeTemp"
-                        @change="handleSizeChange"
-                      ></el-input>
-                    </div>
-                  </el-col>
-                </el-row>
-              </div>
-            </el-tab-pane>
-            <el-tab-pane label="翻页效果">
-              <div
-                v-for="(item, index) in aAniType"
-                :key="index"
-                style="display: flex; padding: 10px"
-                class="changeType"
-                @click="handleType(index)"
-              >
-                <div class="changeIconContainer">
-                  <div
-                    :class="fmtClass(item.icon, index)"
-                    :style="fmtUrl()"
-                  ></div>
-                  <div>{{ item.text }}</div>
-                </div>
-              </div>
-              <div class="playContainer">
-                <div style="padding: 10px 0 10px 0">翻页设置</div>
-                <el-row
-                  :gutter="24"
-                  class="playSet"
-                  style="width: 100%; margin: 10px 0 0 0; padding: 0 12px"
-                >
-                  <el-col :span="8">
-                    <el-select v-model="changeTypeIndex2" placeholder="请选择">
-                      <el-option
-                        v-for="item in changeTypes"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value"
-                      >
-                      </el-option>
-                    </el-select>
-                  </el-col>
-                  <el-col :span="8">
-                    <div class="grid-content bg-purple" @click="handleLoopTemp">
-                      <div class="selectBgm blackFont">
-                        循环播放
-                        <div class="autoPlaySwitch">
-                          {{ playConfig.loop ? "ON" : "OFF" }}
-                        </div>
-                      </div>
-                    </div>
-                  </el-col>
-                  <el-col :span="8">
-                    <div class="grid-content bg-purple">
-                      <div
-                        class="selectBgm blackFont"
-                        @click="handleChangeHint"
-                      >
-                        翻页提示
-                        <div class="autoPlaySwitch">
-                          {{ playConfig.changeHint ? "ON" : "OFF" }}
-                        </div>
-                      </div>
-                    </div>
-                  </el-col>
-                </el-row>
-                <div style="width: 100%; padding: 10px 12px 0 12px">
-                  <el-row
-                    style="
-                      width: 100%;
-                      border: 1px solid black;
-                      border-radius: 4px;
-                    "
-                  >
-                    <el-col :span="9"
-                      ><div class="volumeConfig">默认页播放时长</div></el-col
-                    >
-                    <el-col :span="8"
-                      ><div class="grid-content bg-purple">
-                        <div class="volumeConfig">
-                          <el-slider
-                            v-model="playConfig.singlePagePlayTime"
-                            :min="20"
-                            :max="1800"
-                          ></el-slider>
-                        </div></div
-                    ></el-col>
-                    <el-col :span="7"
-                      ><div class="volumeConfig">
-                        <el-input
-                          class="volumeInput"
-                          v-model="singlePagePlayTimeTemp"
-                          @change="handleSinglePlayTimeChange"
-                        >
-                          <template slot="append">秒</template></el-input
-                        >
-                      </div></el-col
-                    >
-                  </el-row>
-                </div>
-                <div style="width: 100%; padding: 10px 12px 0 12px">
-                  <el-row
-                    style="
-                      width: 100%;
-                      border: 1px solid black;
-                      border-radius: 4px;
-                    "
-                  >
-                    <el-col :span="9"
-                      ><div class="volumeConfig">无触摸返回时长</div></el-col
-                    >
-                    <el-col :span="8"
-                      ><div class="grid-content bg-purple">
-                        <div class="volumeConfig">
-                          <el-slider v-model="playConfig.backTime" :min="1"
-                            :max="99999"></el-slider>
-                        </div></div
-                    ></el-col>
-                    <el-col :span="7"
-                      ><div class="volumeConfig">
-                        <el-input
-                          class="volumeInput"
-                          v-model="backTimeTemp"
-                          @change="handleBackTimeChange"
-                        >
-                          <template slot="append">秒</template></el-input
-                        >
-                      </div></el-col
-                    >
-                  </el-row>
-                </div>
-              </div>
-            </el-tab-pane>
-          </el-tabs>
-        </el-main>
-        <el-footer class="buttonContainer">
-          <el-button @click="cancelChange">关闭</el-button>
-        </el-footer>
-      </el-container>
+    <div v-if="!previewTotal" class="singlePreviewContainer">
+      <div ref="container1" style="width: 100%; height: 100%">
+        <singlePagePreview
+          ref="render1"
+          :style="caculateRenderScale1"
+          class="previewPage"
+          @afterRender="onRender1"
+        ></singlePagePreview>
+        <el-button
+          v-if="!previewTotal"
+          class="singleCloseBtn"
+          @click="cancelChange"
+          >关闭</el-button
+        >
+      </div>
     </div>
   </div>
 </template>
@@ -386,6 +419,18 @@ export default {
     },
     cancelChange() {
       this.setPreviewState({ previewing: false });
+    },
+    onRender1() {
+      this.$nextTick(() => {
+        let pageBound = this.$refs.render1.$el.getBoundingClientRect();
+        let containerBound = this.$refs.container1.getBoundingClientRect();
+        this.pageInfo1.previewWidth = pageBound.width;
+        this.pageInfo1.previewHeight = pageBound.height;
+        this.pageInfo1.containerWidth = containerBound.width;
+        this.pageInfo1.containerHeight = containerBound.height;
+        console.log(this.pageInfo1);
+        // console.log(this.$refs.render);
+      });
     },
     onRender() {
       this.$nextTick(() => {
@@ -578,6 +623,33 @@ export default {
     changeTypeSchema() {
       return map[`${this.changeTypeIndex}:${this.changeTypeIndex2}`];
     },
+    caculateRenderScale1() {
+      let {
+        previewWidth,
+        previewHeight,
+        containerWidth,
+        containerHeight,
+      } = this.pageInfo1;
+      let scaleX = containerWidth / previewWidth;
+      let scaleY = containerHeight / previewHeight;
+      let scale = Math.min(scaleX, scaleY);
+      let c = scaleX > scaleY;
+      if (c) {
+        return {
+          "transform-origin": "0 0",
+          transform: `scale(${scale}) translate(${
+            (0.5 * containerWidth) / scale - 0.5 * previewWidth
+          }}px,0px)`,
+        };
+      } else {
+        return {
+          "transform-origin": "0 0",
+          transform: `scale(${scale}) translate(0px,${
+            (0.5 * containerHeight) / scale - 0.5 * previewHeight
+          }px)`,
+        };
+      }
+    },
     caculateRenderScale() {
       let {
         previewWidth,
@@ -613,9 +685,9 @@ export default {
       singlePagePlayTime: "",
       isShow: false,
       select: 1,
-      volumeTemp:"",
-      singlePagePlayTimeTemp:"",
-      backTimeTemp:"",
+      volumeTemp: "",
+      singlePagePlayTimeTemp: "",
+      backTimeTemp: "",
       bgmConfig: {
         autoPlay: false,
         volume: 0,
@@ -692,6 +764,12 @@ export default {
         containerWidth: 0,
         containerHeight: 0,
       },
+      pageInfo1: {
+        previewWidth: 0,
+        previewHeight: 0,
+        containerWidth: 0,
+        containerHeight: 0,
+      },
       changeTypeIndex: 0,
       changeTypeIndex2: "horizontal",
     };
@@ -713,6 +791,15 @@ export default {
   position: absolute;
   right: 10px;
   top: 10px;
+}
+.singlePreviewContainer {
+  color: white;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 10;
+  left: 0;
+  top: 0;
 }
 .totalPreviewContainer {
   color: white;
