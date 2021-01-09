@@ -5,21 +5,15 @@
  * @Description: A template for render single page or single dialog
 -->
 <template>
-<<<<<<< HEAD
-    <ul :style="fmtStyle()" ref="page" :key="pageData.id">
-=======
-<div>
-    <ul :style="fmtStyle(this.pageData)" ref="page" :key="pageData.id">
->>>>>>> 863ab627950a57d58da4dd6fc5919ddb2570ef00
-        <component
-            v-for="(cmp) in pageData.components"
-            v-bind:key="cmp.id"
-            :is="cmp.type"
-            :cmpConfig="cmp"
-            :ref="cmp.id"
-        />
-    </ul>
-</div>
+  <ul :style="fmtStyle()" ref="page" :key="pageData.id">
+      <component
+          v-for="(cmp) in pageData.components"
+          v-bind:key="cmp.id"
+          :is="cmp.type"
+          :cmpConfig="cmp"
+          :ref="cmp.id"
+      />
+  </ul>
 </template>
 <script>
 import html2canvas from "html2canvas";
