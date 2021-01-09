@@ -1,5 +1,5 @@
 export default {
-  name: '通知',
+  name: '字幕',
   notSupport: [
 
   ],
