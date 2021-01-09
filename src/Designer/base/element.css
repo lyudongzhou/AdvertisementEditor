@@ -33,6 +33,11 @@
     color: white;
     border: 0;
 }
+.el-textarea__inner{
+    background-color: #9B9B9B;
+    color: white;
+    border: 0;
+}
 .el-input-number .el-input__inner{
     text-align: left;
     background-color: #9B9B9B;

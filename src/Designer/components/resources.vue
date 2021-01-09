@@ -26,17 +26,17 @@
               v-if="o.resType === 2"
               :src="o.resUrl"
               class="image"
-              @click="handleClick(o)"
+              @click.capture="handleClick(o)"
+              @click="handleClick1()"
             ></video>
-            <div @click="handleClick(o)">
-              <iframe
-                v-if="o.resType === 4"
-                :src="o.resUrl"
-                class="image"
-                
-              ></iframe>
+            <div @click="handleClick(o,arguments[0])" style="position:relative">
+              <div style="position:absolute;width:100%;height:100%;left:0;top:0;"></div>
+                <iframe
+                  v-if="o.resType === 4"
+                  :src="o.resUrl"
+                  class="image"
+                ></iframe>
             </div>
-
             <img v-if="o.bodyJson" :src="o.thumbnail" class="image" />
           </el-container>
         </el-card>
@@ -88,8 +88,8 @@ export default {
         "padding-bottom": count - index < 2 ? 0 : "10px",
       };
     },
-    handleClick(o) {
-      console.log("oooo", o);
+    handleClick(o,e) {
+      console.log("capture");
       if (this.typeSwitch === 1) {
         console.log(o.resType);
         if (o.resType === 1) {
@@ -110,7 +110,13 @@ export default {
       } else {
         this.resetSchema(o.bodyJson);
       }
+      if(e){
+        e.preventDefault();
+      }
     },
+    handleClick1(){
+      console.log("bubble");
+    }
   },
 };
 </script>

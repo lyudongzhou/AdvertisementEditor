@@ -45,3 +45,13 @@ export const DEFAULTTABS = [
     ],
   },
 ];
+export const FONTDEFINE = [
+  {
+    value: "微软雅黑",
+    label: "微软雅黑",
+  },
+  {
+    value: "黑体",
+    label: "黑体",
+  },
+];
