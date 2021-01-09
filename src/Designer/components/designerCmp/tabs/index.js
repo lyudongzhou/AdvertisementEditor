@@ -10,3 +10,4 @@ import "./documentTab";
 import "./mixPlayTab";
 import "./videoTab";
 import "./svgTab";
+import "./timeTab";

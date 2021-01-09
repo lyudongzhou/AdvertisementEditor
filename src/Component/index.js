@@ -8,3 +8,4 @@ import "./mixplay";
 import "./video";
 import "./button";
 import "./svgs";
+import "./time";

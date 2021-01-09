@@ -99,7 +99,7 @@ let Constructor ={children:[
           {
             "id": 2,
             "label": "日期",
-            "type": "document",
+            "type": "date",
             "icon": date
           },
           {

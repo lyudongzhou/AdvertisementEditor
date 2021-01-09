@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="colorpickerFiled" style="width: 199px;height:350px;">
+  <div class="colorpickerFiled" style="width: 199px;height:340px;">
     <div class="color_warp" ref="color_warp" style="width: 199px;">
       <div class="color_palette" ref="color_palette">
         <p v-for="(item, index) in palette" :item="item" :key="index" v-bind:style="{background: item}"></p>
