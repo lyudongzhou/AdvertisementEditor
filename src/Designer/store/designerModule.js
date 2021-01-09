@@ -12,6 +12,11 @@ export default {
   namespaced: true,
   state() {
     return {
+      programInfo:{
+        programName:"",
+        coverUrl:"",
+        description:""
+      },
       currentComponentOperator:null,
       schema: {},
       currentComponentId: null,

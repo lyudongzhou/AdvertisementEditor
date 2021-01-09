@@ -12,16 +12,21 @@
       height: renderData.container.height + 'px',
     }"
   >
-    <audio ref="bgm" :src="handleUrl(getPropByPath(renderData, 'container.bgm.src'))"></audio>
+    <audio
+      ref="bgm"
+      :src="handleUrl(getPropByPath(renderData, 'container.bgm.src'))"
+    ></audio>
     <!-- <singlePage
             :pageData="renderData.pages[currentIndex]"
             :pageIndex="currentIndex"
         ></singlePage> -->
     <preview
+      style="z-index: 1"
       ref="preview"
       :renderData="renderData"
       :currentIndex="currentIndex"
     ></preview>
+    <span class="paging" :style="fmtPagingStyle()">{{ paging }}</span>
   </div>
 </template>
 <script>
@@ -41,7 +46,9 @@ export default {
     "singlePagePreview",
   ],
   data() {
-    return {};
+    return {
+      paging: "",
+    };
   },
   computed: {
     currentIndex() {
@@ -50,7 +57,10 @@ export default {
     pageCount() {
       return this.renderData.pages.length;
     },
-    ...mapGetters(["handleUrl"]),
+    ...mapGetters(["handleUrl", "currentPageStore"]),
+    pageFmt() {
+      return this.renderData.container.paging.fmt;
+    },
   },
   watch: {
     renderData(data) {
@@ -61,6 +71,13 @@ export default {
     },
     currentPage(data) {
       this.jumpPageImmediately(data);
+      this.setPaging();
+    },
+    currentPageStore() {
+      this.setPaging();
+    },
+    pageFmt() {
+      this.setPaging();
     },
     designMode(data) {
       this.setDesignMode(data);
@@ -80,6 +97,7 @@ export default {
     pipe.on("rightClick", (dom, componentId, event) => {
       this.$emit("rightClick", dom, componentId, event);
     });
+    console.log(this.currentPage);
   },
   components: {
     // singlePage,
@@ -93,7 +111,11 @@ export default {
       !this.designMode
     ) {
       this.$refs.bgm.play();
+      this.$refs.bgm.volume = parseInt(
+        this.renderData.container.bgm.volume / 100
+      );
     }
+    this.setPaging();
   },
   methods: {
     ...mapMutations([
@@ -111,8 +133,81 @@ export default {
     getCmp(id) {
       return this.$refs["preview"].getCmp(id);
     },
+    findCurrentIndex(chooice, useId) {
+      let getIndex;
+      this.renderData[chooice].some((child, index) => {
+        if (child.id === useId) {
+          getIndex = index;
+          return true;
+        }
+      });
+      return getIndex;
+    },
+    setPaging() {
+      let data = this.currentPageStore;
+      let index = this.findCurrentIndex("pages", data);
+      let total;
+      if (data !== -1) {
+        total = this.renderData.pages.length;
+      } else {
+        index = this.findCurrentIndex("dialogs", data);
+        total = this.renderData.dialogs.length;
+      }
+      let fmt = new String(this.renderData.container.paging.fmt);
+      this.paging = fmt
+        .replace("${CURRENT}", index + 1)
+        .replace("${TOTAL}", total);
+    },
+    setPagingPosition() {},
+    fmtPagingStyle() {
+      let o = {};
+      // this.renderData.container.paging.fmt;
+      switch (this.renderData.container.paging.position) {
+        case "hide":
+          o.left = "9999px";
+          break;
+        case "center&bottom":
+          o.left = "50%";
+          o.bottom = "0";
+          o.transform = "translate(-50%,0)";
+          break;
+        case "center&top":
+          o.left = "50%";
+          o.top = 0;
+          o.transform = "translate(-50%,0)";
+          break;
+        case "left&top":
+          o.left = "0";
+          o.top = "0";
+          break;
+        case "left&bottom":
+          o.left = "0";
+          o.bottom = "0";
+          break;
+        case "right&top":
+          o.right = "0";
+          o.top = "0";
+          break;
+        case "right&bottom":
+          o.right = "0";
+          o.bottom = "0";
+          break;
+      }
+      o.color = this.renderData.container.paging.color;
+      o["font-size"] = this.renderData.container.paging.size+"px";
+      o["font-family"] = this.renderData.container.paging.family;
+      o["background"] = this.renderData.container.paging.bgColor;
+      return o;
+    },
   },
 };
 </script>
 
-<style></style>
+<style scoped>
+.paging {
+  z-index: 2;
+  color: white;
+  font-size: 40px;
+  position: absolute;
+}
+</style>

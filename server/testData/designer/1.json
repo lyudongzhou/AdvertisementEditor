@@ -6,13 +6,24 @@
         "height": 700,
         "bgm": {
             "autoPlay": true,
-            "src": "audios/audio.mp3"
+            "src": "audios/audio.mp3",
+            "volume": 50
+        },
+        "paging": {
+            "position": "center&bottom",
+            "fmt": "${CURRENT}/${TOTAL}",
+            "color": "#E41C1C",
+            "size": 20,
+            "family": "",
+            "bgColor":"#000000"
         }
     },
     "change": {
-        "type": 3,
+        "type": 70,
         "loop": true,
-        "singlePagePlayTime": 200000
+        "singlePagePlayTime": 1800,
+        "changeHint":true,
+        "backTime":6000
     },
     "pages": [
         {
@@ -201,12 +212,16 @@
             ]
         },
         {
+            "name": "页面3",
+            "id": "3111",
             "container": {
-                "backGround": {}
+                "backGround": {
+                    "type": "image",
+                    "value": "http://localhost:8080/images/Jellyfish.jpg"
+                }
             },
-            "components": [],
-            "name": "页面1",
-            "id": "d912d040-4657-11eb-a3ca-bb193d389b3f"
+            "components": [
+            ]
         }
     ],
     "dialogs": [],

@@ -88,6 +88,7 @@ const mutations = {
 };
 const getters = {
   currentPage: (state) => state.currentPage,
+  currentPageStore: (state) => state.currentPage,
   handleUrl: (state) => (url) => {
     // console.log(state.baseUrl);
     return `${state.baseUrl}${url}`;

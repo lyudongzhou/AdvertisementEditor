@@ -70,6 +70,13 @@ const afterCommandMap = {
 };
 
 export default {
+  setProgramInfo(){
+    
+    // let arr = ["coverUrl",];
+    // Object.keys(data).forEach(ele=>{
+    //   state.setProgramInfo[ele] = data[ele];
+    // });
+  },
   resetSchema (state, schema) {
     state.schema = clone(schema);
     state.currentPageId = getPropByPath(schema, 'pages[0].id', null);
