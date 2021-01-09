@@ -49,7 +49,7 @@ export default {
   props: ["parentWidth"],
   data() {
     return {
-      activeNames: [0],
+      activeNames: 0,
       isClose: true,
       tabs: [],
     };
@@ -62,7 +62,7 @@ export default {
   },
   created() {},
   mounted() {
-    window.edit = this; 
+    window.edit = this;
     this.onChangeType(this.currentComponent);
   },
   methods: {
@@ -98,9 +98,15 @@ export default {
   },
   watch: {
     currentComponent(data) {
+      this.activeNames = 0;
       this.isClose = data ? false : true;
       this.onChangeType(data);
     },
+    activeNames (n) {
+      if (n === 4) { // 4:私有配置的name
+        this.$event.emit('SHOWCOLORPICKER')
+      }
+    }
   },
 };
 </script>

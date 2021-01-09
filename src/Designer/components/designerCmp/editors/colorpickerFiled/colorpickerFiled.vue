@@ -60,55 +60,69 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'currentPage'
+      'currentPage',
+      'currentComponent',
     ]),
     changeSchema () {
       return getPropByPath(this.configData, this.config.target);
     }
   },
   mounted () {
-    this._colorPicker = Colorpicker.create({
-      el: this.$refs['color_picker'],
-      bodyDom: this.$refs['color_warp'],
-      palette: this.$refs['color_palette'],
-      color: this.configData && this.configData[this.config.target]?
-             this.configData[this.config.target].value||this.configData[this.config.target]:
-             "rgb(0, 0, 0)",
-      down: () => {
-        this.updateSchema({
-          type: this.config.props.type.before || null
-        });
-      },
-      move: (hex) => {
-        this.updateSchema({
-          type: this.config.props.type.update || null,
-          value: {["value"]:hex},
-        });
-      },
-      up: (hex) => {
-        this.updateSchema({
-          type: this.config.props.type.after || null,
-          value: this.config.props.changeType === 'page'?
-                  {
-                    ["type"]: "color",
-                    ["value"]:hex,
-                  }:{[this.config.target]:hex},
-        });
-      },
-      change: () => {},
-    })
+    if (this.config.props.changeType === 'page') {
+      if (this._colorPicker) return;
+      this.createColorPicker();
+    } else { // cmp
+      this.$event.on('SHOWCOLORPICKER', () => {
+        this.$nextTick(() => {
+          if (this._colorPicker) return;
+          this.createColorPicker();
+        })
+      });
+    }
   },
   methods: {
     ...mapMutations([
       'updateSchema',
-    ])
+    ]),
+    createColorPicker () {
+      this._colorPicker = Colorpicker.create({
+        el: this.$refs['color_picker'],
+        bodyDom: this.$refs['color_warp'],
+        palette: this.$refs['color_palette'],
+        color: this.configData && this.configData[this.config.target]?
+               this.configData[this.config.target].value||this.configData[this.config.target]:
+               "rgb(0, 0, 0)",
+        down: () => {
+          this.updateSchema({
+            type: this.config.props.type.before || null
+          });
+        },
+        move: (hex) => {
+          this.updateSchema({
+            type: this.config.props.type.update || null,
+            value: {["value"]:hex},
+          });
+        },
+        up: (hex) => {
+          this.updateSchema({
+            type: this.config.props.type.after || null,
+            value: this.config.props.changeType === 'page'?
+                    {
+                      ["type"]: "color",
+                      ["value"]:hex,
+                    }:{[this.config.target]:hex},
+          });
+        },
+        change: () => {},
+      })
+    },
   },
   watch: {
     changeSchema (n) {
       if (n.type === 'color') {
         this._colorPicker.setColorByInput(n.value);
       }
-    }
+    },
   }
 }
 </script>
