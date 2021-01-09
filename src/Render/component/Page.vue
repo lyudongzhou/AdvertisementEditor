@@ -5,7 +5,7 @@
  * @Description: A template for render single page or single dialog
 -->
 <template>
-    <ul :style="fmtStyle(this.pageData)" ref="page" :key="pageData.id">
+    <ul :style="fmtStyle()" ref="page" :key="pageData.id">
         <component
             v-for="(cmp) in pageData.components"
             v-bind:key="cmp.id"

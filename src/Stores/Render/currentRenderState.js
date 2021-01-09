@@ -27,9 +27,7 @@ const mutations = {
   },
   pageCountChange(store, count) {
     store.pageCount = count;
-    if (store.targetPage >= count) {
-      store.targetPage = count - 1;
-    }
+    return;
   },
   /**
    * @description Jump to specific page. It is not a sync function
