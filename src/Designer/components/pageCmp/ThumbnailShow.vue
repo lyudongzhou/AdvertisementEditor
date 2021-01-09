@@ -12,6 +12,7 @@
                     <snapShotDisplay :id="page.id"></snapShotDisplay>
                 </p>
                 <span class="add_page el-icon-plus" @click="addPage"></span>
+                <span class="del_page el-icon-minus" @click.stop="deletePage(page.id)"></span>
             </li>
         </ul>
     </div>
@@ -51,7 +52,10 @@ export default {
         },
         addPage () {
           this.$$addPage('page');
-        }
+        },
+        deletePage (id) {
+          this.$$deletePage('page',{id: id});
+        },
     },
     watch: {
         // pages(newValue) {
@@ -99,7 +103,7 @@ export default {
               width: 30px;
               height: 30px;
               border-radius: 50%;
-              left: 146px;
+              left: 170px;
               top: 163px;
               font-size: 20px;
               background: #ffffff;
@@ -110,13 +114,16 @@ export default {
               font-weight: bold;
             }
             .add_page {
+              left: 120px;
+            }
+            .add_page,.del_page {
               display: none;
             }
         }
         li:hover {
             cursor: pointer;
             background: #727272;
-            .add_page {
+            .add_page,.del_page {
               display: flex;
             }
         }
