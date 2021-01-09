@@ -356,7 +356,7 @@ import {
   UPDATE_BGM_AFTER,
 } from "../constant/schema";
 import icon from "../public/icon.png";
-console = {log(){}};
+window.console = {log(){}};
 const map = {
   "0:vertical": 68,
   "0:horizontal": 70,
