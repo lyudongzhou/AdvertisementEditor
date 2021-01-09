@@ -3,38 +3,18 @@ export default [
     name: "日期",
     position: "3.1.1",
     defaultSchema: {
-      "type": "lineChartCmp",
+      "type": "dateCmp",
       "layoutConfig": {
-        "width": 500,
-        "height": 500
+        "width": 100,
+        "height": 50
       },
       "props": {
-        "grid": {
-          "width": 'auto',
-          "height": 'auto'
-        },
-        "legend": {
-          "show": true
-        },
-        "xAxis": {
-          "type": 'category',
-          "data": ['Mon', 'Tue']
-        },
-        "yAxis": {
-          "type": 'value'
-        },
-        "series": [
-          {
-            "name": "A",
-            "data": [1200, 200],
-            "type": 'line'
-          },
-          {
-            "name": "B",
-            "data": [1000, 400],
-            "type": 'line'
-          }
-        ]
+        "width": 100,
+        "height": 50,
+        "background": "#abcdef",
+        "color": "#0f0",
+        "font-size": 20,
+        "text": ""
       },
       "animation": [],
       "events": [],

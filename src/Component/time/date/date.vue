@@ -1,13 +1,13 @@
 <template lang="html">
   <baseCmp :cmpConfig="cmpConfig">
-    <div id="main" ref="chart" :style="getSize"></div>
+    <div class="warp" :style="getStyle">
+      <span>{{cmpConfig.props.text}}</span>
+    </div>
   </baseCmp>
 </template>
 
 <script>
-import {getPropByPath} from '@/utils';
 import baseCmp from '../../Base.vue';
-let echarts = require('echarts');
 
 export default {
   name: 'dateCmp',
@@ -15,46 +15,48 @@ export default {
   components: {
     baseCmp,
   },
+  data () {
+    return {
+      nowTime: '',
+    }
+  },
   computed: {
-    getSize () {
-      return `width:${this.cmpConfig.layoutConfig.width}px;
-              height:${this.cmpConfig.layoutConfig.height}px`;
-    },
-    switchShow () {
-      return getPropByPath(this.cmpConfig, 'props.legend.show');
-    },
-    chartTHData () {
-      return getPropByPath(this.cmpConfig, 'props.series');
-    },
-    chartTDData () {
-      return getPropByPath(this.cmpConfig, 'props.xAxis.data');
-    },
-    option: {
-      get () {
-        let option = this.cmpConfig.props;
-        return option;
-      },
-      set () {
-        this.myChart.setOption(this.option);
-      }
-    },
+    getStyle () {
+      let style = {};
+      Object.keys(this.cmpConfig.props).forEach(key => {
+        switch (key) {
+          case 'font-size':
+            style[key] = this.cmpConfig.props[key]+'px'
+            break;
+          case 'width':
+            style[key] = this.cmpConfig.layoutConfig[key]+'px'
+            break;
+          case 'height':
+            style[key] = this.cmpConfig.layoutConfig[key]+'px'
+            break;
+          default:
+            style[key] = this.cmpConfig.props[key]
+        }
+      })
+
+      return style;
+    }
   },
   mounted() {
-    this.myChart = echarts.init(this.$refs.chart);
-    this.myChart.setOption(this.option);
+    this.dealWithTime(new Date());
   },
-  watch: {
-    // 图例
-    switchShow () {
-      this.myChart.setOption(this.option);
+  methods: {
+    dealWithTime (data) {
+      let Y = data.getFullYear();
+      let M = data.getMonth()+1;
+      let D = data.getDate();
+      M = M<10?`0${M}`:M;
+      D = D<10?`0${D}`:D;
+      this.cmpConfig.props.text = `${Y}-${M}-${D}`;
     },
-    chartTHData () {
-      this.myChart.setOption(this.option);
-    },
-    chartTDData () {
-      this.myChart.setOption(this.option);
-    }
-  }
+  },
+  destroyed () {},
+  watch: {},
 }
 </script>
 

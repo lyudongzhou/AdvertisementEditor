@@ -5,9 +5,9 @@ export default {
   ],
   extraTabs: [
     {
-      type: "chartTab",
+      type: "timeTab",
       name: "日期配置",
-      target: {},
+      target: "props.text",
       children: []
     }
   ]
