@@ -2,44 +2,43 @@ import {
   BEFORE_UPDATE_COMPONENT_SIZE,
   UPDATING_COMPONENT_SIZE,
   AFTER_UPDATE_COMPONENT_SIZE,
-
   BEFORE_UPDATE_COMPONENT_POSITION,
   UPDATING_COMPONENT_POSITION,
   AFTER_UPDATE_COMPONENT_POSITION,
-
   ADD_COMPONENT,
   DELETE_COMPONENT,
   UPDATE_COMPONENT_PROPS,
-
   ADD_PAGE,
   DELETE_PAGE,
-
   SWITCH_INDEX,
   UPDATE_INDEX_TO_TOP,
   UPDATE_INDEX_TO_BOTTOM,
-
   BEFORE_UPDATE_COMPONENT_PROPS,
   UPDATING_COMPONENT_PROPS,
   AFTER_UPDATE_COMPONENT_PROPS,
-
   AUTO_BEFORE_PROP,
   AUTO_UPDATING_PROP,
   AUTO_AFTER_PROP,
-
-  UPDATE_SCHEMA, UPDATE_RESOLUTION,
-} from '../constant/schema';
-import {setPropByPath, switchArrayIndex} from '../../Utils/utils';
+  UPDATE_SCHEMA,
+  UPDATE_RESOLUTION,
+  UPDATE_BGM_BEFORE,
+  UPDATE_BGM,
+  UPDATE_BGM_AFTER
+} from "../constant/schema";
+import { setPropByPath, switchArrayIndex } from "../../Utils/utils";
 import {
   COMMAND_CLEAR_CURRENT_TARGET,
   COMMAND_SELECT_COMPONENT,
   COMMAND_SELECT_CONTAINER,
   COMMAND_SELECT_PAGE,
-  COMMAND_SELECT_SIBLING_PAGE, COMMAND_UPDATE_CANVAS_SIZE,
+  COMMAND_SELECT_SIBLING_PAGE,
+  COMMAND_UPDATE_CANVAS_SIZE,
   COMMAND_UPDATE_SELECT_ITEM,
-} from '../constant/base';
-import {getSchemaManager} from './schemaManager';
+} from "../constant/base";
+import { getSchemaManager } from "./schemaManager";
 
-const getPageKey = currentPageType => currentPageType === 'page' ? 'pages' : 'dialogs';
+const getPageKey = (currentPageType) =>
+  currentPageType === "page" ? "pages" : "dialogs";
 
 const getComponent = (schema, config) => {
   const page = getPage(schema, config);
@@ -51,39 +50,43 @@ const getComponent = (schema, config) => {
 };
 
 const getPage = (schema, config) => {
-  const {currentPageId, currentPageType} = config;
-  return (schema[getPageKey(currentPageType)] || []).find(({id}) => id === currentPageId) || null;
+  const { currentPageId, currentPageType } = config;
+  return (
+    (schema[getPageKey(currentPageType)] || []).find(
+      ({ id }) => id === currentPageId
+    ) || null
+  );
 };
 
 // updater
-const generateComponentUpdater = targetPath => (schema, config) => {
+const generateComponentUpdater = (targetPath) => (schema, config) => {
   const component = getComponent(schema, config);
   Object.entries(config.value).forEach(([path, value]) => {
-    path = `${targetPath ? targetPath + '.' : ''}${path}`;
+    path = `${targetPath ? targetPath + "." : ""}${path}`;
     setPropByPath(component, path, value);
   });
 };
 
 // update page
-const generatePageUpdater = targetPath => (schema, config) => {
+const generatePageUpdater = (targetPath) => (schema, config) => {
   const page = getPage(schema, config);
   Object.entries(config.value).forEach(([path, value]) => {
-    path = `${targetPath ? targetPath + '.' : ''}${path}`;
+    path = `${targetPath ? targetPath + "." : ""}${path}`;
     setPropByPath(page, path, value);
   });
 };
-const generateSwitchIndexUpdater = (type = 'switch') => (schema, config) => {
+const generateSwitchIndexUpdater = (type = "switch") => (schema, config) => {
   const currentPage = getPage(schema, config);
-  const components = currentPage ? (currentPage.components || []) : [];
+  const components = currentPage ? currentPage.components || [] : [];
   let newIndex;
   let oldIndex;
-  if (type === 'switch') {
+  if (type === "switch") {
     newIndex = config.newIndex;
     oldIndex = config.oldIndex;
   } else {
     const { targetId } = config;
     oldIndex = components.findIndex(({ id }) => id === targetId);
-    if (type === 'top') {
+    if (type === "top") {
       let maxZIndex = -1;
       newIndex = -1;
       components.forEach((component, index) => {
@@ -92,8 +95,8 @@ const generateSwitchIndexUpdater = (type = 'switch') => (schema, config) => {
           maxZIndex = zIndex;
           newIndex = index;
         }
-      })
-    } else if (type === 'bottom') {
+      });
+    } else if (type === "bottom") {
       let minIndex = Infinity;
       newIndex = -1;
       components.forEach((component, index) => {
@@ -102,7 +105,7 @@ const generateSwitchIndexUpdater = (type = 'switch') => (schema, config) => {
           minIndex = zIndex;
           newIndex = index;
         }
-      })
+      });
     }
   }
   doSwitchIndex(components, newIndex, oldIndex);
@@ -111,38 +114,51 @@ const generateSwitchIndexUpdater = (type = 'switch') => (schema, config) => {
 const doSwitchIndex = (components, newIndex, oldIndex) => {
   const targetLayoutConfig = components[newIndex].layoutConfig;
   const changeLayoutConfig = components[oldIndex].layoutConfig;
-  const {zIndex: fromIndex} = targetLayoutConfig;
-  const {zIndex: toIndex} = changeLayoutConfig;
+  const { zIndex: fromIndex } = targetLayoutConfig;
+  const { zIndex: toIndex } = changeLayoutConfig;
   switchArrayIndex(components, oldIndex, newIndex);
   targetLayoutConfig.zIndex = toIndex;
   changeLayoutConfig.zIndex = fromIndex;
 };
 //更新背景色
 const updatePageColor = generatePageUpdater("container.backGround");
+//更新背景音频
+const updateBgm = (schema, config) => {
+  Object.entries(config.value).forEach(([path, value]) => {
+    setPropByPath(schema, path, value);
+  });
+};
+
 // 更新组件
-const updateComponent = generateComponentUpdater('');
+const updateComponent = generateComponentUpdater("");
 
 // 更新组件的layoutConfig
-const updateComponentLayout = generateComponentUpdater('layoutConfig');
+const updateComponentLayout = generateComponentUpdater("layoutConfig");
 
 // handler
 const generateHandler = (fn) => (state, operateConfig) => {
   const manager = getSchemaManager(state);
-  fn({manager, state, operateConfig});
+  fn({ manager, state, operateConfig });
 };
 
 // 快照
-const snapshotHandler = generateHandler(({manager, operateConfig}) => manager.snapshot(operateConfig));
+const snapshotHandler = generateHandler(({ manager, operateConfig }) =>
+  manager.snapshot(operateConfig)
+);
 
 // 提交操作（生成redo undo）
-const commitHandler = generateHandler(({manager, operateConfig}) => manager.commit(operateConfig));
+const commitHandler = generateHandler(({ manager, operateConfig }) =>
+  manager.commit(operateConfig)
+);
 
 // 更新视图
-const updateHandler = generateHandler(({manager, operateConfig}) => manager.update(operateConfig));
+const updateHandler = generateHandler(({ manager, operateConfig }) =>
+  manager.update(operateConfig)
+);
 
 export default {
   beforeupdatePage: {
-    handler: snapshotHandler
+    handler: snapshotHandler,
   },
   updatingPage: {
     handler: updateHandler,
@@ -152,15 +168,26 @@ export default {
     handler: commitHandler,
     updater: updatePageColor,
   },
-  [AUTO_BEFORE_PROP]:{
+  [UPDATE_BGM_BEFORE]: {
     handler: snapshotHandler
   },
-  [AUTO_UPDATING_PROP]:{
+  [UPDATE_BGM]: {
+    handler: updateHandler,
+    updater: updateBgm,
+  },
+  [UPDATE_BGM_AFTER]: {
+    handler: commitHandler,
+    updater: updateBgm,
+  },
+  [AUTO_BEFORE_PROP]: {
+    handler: snapshotHandler,
+  },
+  [AUTO_UPDATING_PROP]: {
     handler: updateHandler,
     updater: updateComponent,
     after: [COMMAND_UPDATE_SELECT_ITEM],
   },
-  [AUTO_AFTER_PROP]:{
+  [AUTO_AFTER_PROP]: {
     handler: commitHandler,
     updater: updateComponent,
     after: [COMMAND_UPDATE_SELECT_ITEM],
@@ -252,16 +279,16 @@ export default {
   },
   [UPDATE_INDEX_TO_TOP]: {
     handler: commitHandler,
-    updater: generateSwitchIndexUpdater('top'),
+    updater: generateSwitchIndexUpdater("top"),
   },
   [UPDATE_INDEX_TO_BOTTOM]: {
     handler: commitHandler,
-    updater: generateSwitchIndexUpdater('bottom'),
+    updater: generateSwitchIndexUpdater("bottom"),
   },
   [UPDATE_RESOLUTION]: {
     handler: commitHandler,
-    updater:  (schema, config) => {
-      const {width, height} = config.value;
+    updater: (schema, config) => {
+      const { width, height } = config.value;
       schema.container.width = width;
       schema.container.height = height;
     },
@@ -270,7 +297,8 @@ export default {
   },
   [UPDATE_SCHEMA]: {
     handler: commitHandler,
-    updater: (schema, operateConfig, setSchema) => setSchema(operateConfig.value),
+    updater: (schema, operateConfig, setSchema) =>
+      setSchema(operateConfig.value),
     after: [COMMAND_CLEAR_CURRENT_TARGET],
   },
 };

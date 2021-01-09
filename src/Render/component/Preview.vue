@@ -61,7 +61,12 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(["jumpPage", "jumpPageReal", "backPrevDialog"]),
+    ...mapMutations([
+      "jumpPage",
+      "jumpPageReal",
+      "backPrevDialog",
+      "setCurrentPage",
+    ]),
     /**
      * @description Change page action
      * @author lyuDongzhou
@@ -81,6 +86,7 @@ export default {
               resolve();
             },
           });
+          console.log();
           this.translate.nextPage(
             !isPrev
               ? this.renderData.change.type
@@ -99,7 +105,7 @@ export default {
     automaticCycle() {
       if (this.renderData.change.loop) {
         let singlePagePlayTime = this.renderData.change.singlePagePlayTime;
-        console.log(singlePagePlayTime,"qqqqqq");
+        console.log(singlePagePlayTime, "qqqqqq");
         this._timer = setInterval(() => {
           if (this.beginTime) {
             let dt = new Date().getTime() - this.beginTime;
@@ -108,7 +114,7 @@ export default {
               this.beginTime = null;
             }
           }
-        }, singlePagePlayTime);
+        }, singlePagePlayTime*1000);
       }
     },
     handleNextPage() {

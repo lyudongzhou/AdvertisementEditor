@@ -5,6 +5,7 @@
  * @Description: A template for render single page or single dialog
 -->
 <template>
+<div>
     <ul :style="fmtStyle(this.pageData)" ref="page" :key="pageData.id">
         <component
             v-for="(cmp) in pageData.components"
@@ -14,6 +15,7 @@
             :ref="cmp.id"
         />
     </ul>
+</div>
 </template>
 <script>
 import html2canvas from "html2canvas";

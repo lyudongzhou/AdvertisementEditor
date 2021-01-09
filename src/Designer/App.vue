@@ -65,7 +65,7 @@ export default {
     });
   },
   methods: {
-    ...mapMutations(["setProjectId"]),
+    ...mapMutations(["setProjectId","setProgramInfo"]),
     handleSubmit(payload) {
       const isCreate = !payload.id;
       const url = `/program/${isCreate ? "add" : "update"}`;
@@ -102,6 +102,8 @@ export default {
         this.$axios
           .get("/template/get/id", { templateId: id })
           .then(({ data }) => {
+            console.log(data);
+            this.setProgramInfo(data.programData);
             this.$refs.designer.openProject(data.bodyJson);
           });
       } else if (id) {
@@ -109,6 +111,7 @@ export default {
         this.$axios
           .get("/program/get/id", { programId: id })
           .then(({ data }) => {
+            this.setProgramInfo(data.programData);
             this.$refs.designer.openProject(data.programData);
           });
       }
