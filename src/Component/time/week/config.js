@@ -5,8 +5,9 @@ export default {
   ],
   extraTabs: [
     {
-      type: "chartTab",
-      name: "周配置",
+      type: "timeTab",
+      name: "时间配置",
+      notSupport: "显示格式",
       target: {},
       children: []
     }

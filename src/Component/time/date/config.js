@@ -6,7 +6,7 @@ export default {
   extraTabs: [
     {
       type: "timeTab",
-      name: "日期配置",
+      name: "时间配置",
       target: "props.text",
       children: []
     }

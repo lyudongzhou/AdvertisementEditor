@@ -13,7 +13,7 @@
             :config="{props:colorpickerConfig,target: 'props.background'}"
         ></colorpickerFiled>
       </el-form-item>
-      <el-form-item label="显示格式" style="margin-bottom:50px;">
+      <el-form-item v-if="config.notSupport!=='显示格式'" label="显示格式">
         <el-select v-model="defaultFormat" placeholder="请选择" @change="selectFormat">
           <el-option
             v-for="item in formatter"

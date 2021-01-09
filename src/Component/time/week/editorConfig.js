@@ -1,40 +1,19 @@
 export default [
   {
-    name: "柱状图",
-    position: "3.5.3",
+    name: "周",
+    position: "3.1.2",
     defaultSchema: {
-      "type": "linecodeChartCmp",
+      "type": "weekCmp",
       "layoutConfig": {
-        "width": 400,
-        "height": 400
+        "width": 100,
+        "height": 50
       },
       "props": {
-        "grid": {
-          "width": 'auto',
-          "height": 'auto'
-        },
-        "legend": {
-          "show": true
-        },
-        "xAxis": {
-          "type": 'value'
-        },
-        "yAxis": {
-          "type": 'category',
-          "data": ['Mon', 'Tue', 'Wed']
-        },
-        "series": [
-          {
-            "name": "A",
-            "data": [120, 200, 150],
-            "type": 'bar'
-          },
-          {
-            "name": "B",
-            "data": [70, 110, 130],
-            "type": 'bar'
-          }
-        ]
+        "width": 100,
+        "height": 50,
+        "background": "#abcdef",
+        "color": "#0f0",
+        "font-size": 20
       },
       "animation": [],
       "events": [],

@@ -98,7 +98,7 @@ export default {
   },
   watch: {
     currentComponent(data) {
-      this.activeNames = 0;
+      this.activeNames = '';
       this.isClose = data ? false : true;
       this.onChangeType(data);
     },

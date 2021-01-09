@@ -6,11 +6,10 @@ export default {
   extraTabs: [
     {
       type: "timeTab",
-      name: "星期配置",
+      name: "时间配置",
+      notSupport: "显示格式",
       target: {},
-      children: [
-
-      ]
+      children: []
     }
   ]
 };

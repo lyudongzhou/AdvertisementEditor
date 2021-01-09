@@ -5,31 +5,15 @@ export default [
     defaultSchema: {
       "type": "weekdayCmp",
       "layoutConfig": {
-        "width": 300,
-        "height": 300
+        "width": 100,
+        "height": 50
       },
       "props": {
-        "legend": {
-          "show": true,
-        },
-        "grid": {
-          "width": 'auto',
-          "height": 'auto'
-        },
-        "series": [
-          {
-            "name": "访问来源",
-            "type": "pie",
-            "radius": "55%",
-            "data": [
-              {"value": "40", "name": "直接访问"},
-              {"value": "60", "name": "搜索引擎"}
-            ],
-            "label": {
-              "formatter": "{c}"
-            }
-          }
-        ]
+        "width": 100,
+        "height": 50,
+        "background": "#abcdef",
+        "color": "#0f0",
+        "font-size": 20
       },
       "animation": [],
       "events": [],
