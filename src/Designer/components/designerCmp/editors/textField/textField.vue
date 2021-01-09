@@ -18,7 +18,7 @@ import {
 } from "../../../../constant/schema";
 
 export default {
-    name: "numberField",
+    name: "textField",
     props: ["configData", "config"],
     data() {
       return {

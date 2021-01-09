@@ -1,16 +1,18 @@
 export default {
-  name: '星期',
+  name: '公告',
   notSupport: [
 
   ],
   extraTabs: [
     {
       type: "timeTab",
-      name: "时间配置",
+      name: "通知配置",
       notSupport: "显示格式",
-      support: "",
-      target: {},
-      children: []
+      support: "文本",
+      target: "props.text",
+      children: [
+
+      ]
     }
   ]
 };

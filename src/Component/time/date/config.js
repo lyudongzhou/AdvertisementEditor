@@ -8,6 +8,8 @@ export default {
       type: "timeTab",
       name: "时间配置",
       target: "props.text",
+      notSupport: "",
+      support: "",
       children: []
     }
   ]

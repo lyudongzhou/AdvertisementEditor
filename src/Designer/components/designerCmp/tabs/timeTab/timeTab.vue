@@ -1,6 +1,12 @@
 <template>
   <div class="basic_tab">
     <el-form ref="form" style="width:100%" size="mini" label-position="left">
+      <el-form-item v-if="config.support==='文本'" label="文本">
+          <textField
+              :configData="configData"
+              :config="{ props: {}, target: 'props.text' }"
+          ></textField>
+      </el-form-item>
       <el-form-item label="文字颜色">
         <colorpickerFiled
             :configData="configData"
