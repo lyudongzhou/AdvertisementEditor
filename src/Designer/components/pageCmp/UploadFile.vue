@@ -3,6 +3,8 @@
     :title="title"
     :visible.sync="dialogVisible"
     width="75%"
+    :modal-append-to-body="false"
+    :center="true"
     custom-class="resourceDialog"
     :before-close="handleClose"
   >
@@ -42,6 +44,7 @@
                 <span slot="label"
                   ><i class="el-icon-date"></i>{{ tab.text }}</span
                 >
+                1121212
               </el-tab-pane>
             </el-tabs></el-aside
           ><el-main>
@@ -165,7 +168,6 @@ export default {
   },
   created() {
     this.url = "/res/get";
-    window.abc = this;
     // this.loadResource();
   },
   methods: {

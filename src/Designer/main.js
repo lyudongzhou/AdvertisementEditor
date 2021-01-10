@@ -12,7 +12,11 @@ import handleRenderDep from './renderDep';
 import Event from './plugin/event';
 import http from './plugin/http';
 import ContextMenu from "vue-contextmenujs"
+import 'vue-beauty/package/style/vue-beauty.min.css'
 
+//import components
+import vueBeauty from 'vue-beauty'
+Vue.use(vueBeauty)
 Vue.config.productionTip = false;
 
 Vue.use(ElementUI);

@@ -173,5 +173,12 @@ export default {
   },
   setProjectId(state, id) {
     state.projectId = id;
+  },
+  showProgramConfig(state){
+    state.isShowProgram = true;
+  },
+  hideProgramConfig(state){
+    state.isShowProgram = false;
+
   }
 };

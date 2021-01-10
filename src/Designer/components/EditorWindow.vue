@@ -12,7 +12,7 @@
   >
     <el-container style="height:100%;border:1px solid black;padding:10px">
       <el-header class="editor_header">
-        <span>Editor</span>
+        <span>编辑面板</span>
         <i class="el-icon-close" @click="closeSetDialog"></i>
       </el-header>
       <el-main class="noPadding">
@@ -127,6 +127,7 @@ export default {
     text-align: center;
     height: 30px;
     line-height: 30px;
+    font-size: 16px;
     i {
       position: absolute;
       right: 0;
@@ -144,6 +145,7 @@ export default {
       border: 1px 1px 0 0 solid #373737;
 
       .tabInner {
+        width:100%;
         background: #4d4d4d;
       }
     }

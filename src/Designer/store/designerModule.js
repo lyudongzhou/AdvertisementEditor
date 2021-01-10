@@ -36,6 +36,7 @@ export default {
       previewing: false,
       lockState: {},
       projectId: '',
+      isShowProgram:false,
     };
   },
   getters: {

@@ -22,11 +22,13 @@
           <PageFrame></PageFrame>
         </el-aside>
         <edit-chart-window></edit-chart-window>
+        <resourceDialg></resourceDialg>
+        <programDialog></programDialog>
       </el-container>
     </el-container>
     <!-- <singlePagePreview></singlePagePreview> -->
     <pageSnapshot></pageSnapshot>
-    <resourceDialg></resourceDialg>
+    
     <totalPreview></totalPreview>
     <key-map></key-map>
   </div>
@@ -40,6 +42,7 @@ import DesignerOperator from "./components/DesignerOperator.vue";
 import Editor from "./components/Editor.vue";
 import pageSnapshot from "./components/pageSnapshot.vue";
 import resourceDialg from "./components/pageCmp/UploadFile";
+import programDialog from "./components/ProgramConfig";
 import { mapMutations } from "./store";
 import totalPreview from "./components/totalPreview";
 import EditChartWindow from "./components/EditChartWindow.vue";
@@ -60,6 +63,7 @@ export default {
     totalPreview,
     resourceDialg,
     KeyMap,
+    programDialog
   },
   computed: {
     ...mapState(["previewing"]),
@@ -80,6 +84,7 @@ export default {
 
 <style lang="less">
 .main-container {
+  overflow: hidden;
   height: calc(100vh - 55px);
   .no-padding {
     position: relative;

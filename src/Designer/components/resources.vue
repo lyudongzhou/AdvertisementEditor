@@ -54,7 +54,6 @@ import { mapMutations } from "../store";
 import { get } from "@/register";
 import { REG_TITLECONFIG } from "@/const";
 const config = get(REG_TITLECONFIG);
-console.log(1111);
 export default {
   props: ["sortConfig", "typeSwitch"],
   mixins: [schemaMixin, dataMixin],
@@ -91,7 +90,6 @@ export default {
     handleClick(o,e) {
       console.log("capture");
       if (this.typeSwitch === 1) {
-        console.log(o.resType);
         if (o.resType === 1) {
           let defaultSchema = config["ImageCmp"][0].defaultSchema;
           console.log(o);
