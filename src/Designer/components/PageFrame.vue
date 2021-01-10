@@ -13,13 +13,13 @@
 <script>
   import { mapState } from '../store';
   import PageList from './pageCmp/PageList.vue';
-  import PopupList from './popupCmp/PopupList.vue';
+  import DialogList from './popupCmp/DialogList.vue';
 
   export default {
     name: "pageFrame",
     components: {
       PageList,
-      PopupList
+      DialogList
     },
     created() {
     },
@@ -33,11 +33,11 @@
           },
           {
             id: 2,
-            type: 'PopupList',
+            type: 'DialogList',
             name: '弹窗'
           }
         ],
-        listActive: 'PageList'
+        listActive: 'DialogList'
       };
     },
     computed: {

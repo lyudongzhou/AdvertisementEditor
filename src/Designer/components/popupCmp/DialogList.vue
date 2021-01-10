@@ -12,19 +12,19 @@
 </template>
 
 <script>
-import PageSetup from './PageSetup.vue';
+import DialogSetup from './DialogSetup.vue';
 import LayerManager from './LayerManager.vue';
-import PageManager from './PageManager.vue';
+import DialogManager from './DialogManager.vue';
 
 export default {
-  name: "PageList",
+  name: "DialogList",
   data () {
     return {
       listName: [
         {
           id: 1,
-          type: 'PageSetup',
-          name: '页面设置'
+          type: 'DialogSetup',
+          name: '弹窗设置'
         },
         {
           id: 2,
@@ -33,17 +33,17 @@ export default {
         },
         {
           id: 3,
-          type: 'PageManager',
-          name: '页面管理'
+          type: 'DialogManager',
+          name: '弹窗管理'
         }
       ],
-      listActive: 'PageManager'
+      listActive: 'DialogManager'
     }
   },
   components: {
-    PageSetup,
+    DialogSetup,
     LayerManager,
-    PageManager
+    DialogManager
   },
 }
 </script>

@@ -2,17 +2,16 @@
     <div class="thumbnailShow">
         <ul>
             <li
-                v-for="(page, index) in pages"
-                :class="page.id === currentPageId ? 'list_active' : ''"
-                :key="page.id"
-                @click="switchCurrentPage(page)"
+                v-for="(dialog, index) in dialogs"
+                :class="dialog.id === currentPageId ? 'list_active' : ''"
+                :key="dialog.id"
+                @click="switchCurrentPage(dialog)"
             >
                 <p class="list_index">{{ index + 1 }}</p>
                 <p class="list_thumbnail">
-                    <snapShotDisplay :id="page.id"></snapShotDisplay>
+                    <snapShotDisplay :id="dialog.id"></snapShotDisplay>
                 </p>
-                <!-- <span class="add_page el-icon-plus" @click="addPage"></span> -->
-                <span class="del_page el-icon-minus" @click.stop="deletePage(page.id)"></span>
+                <span class="del_page el-icon-minus" @click.stop="deletePage(dialog.id)"></span>
             </li>
         </ul>
     </div>
@@ -34,7 +33,7 @@ export default {
         return {}
     },
     computed: {
-        ...mapGetters(['pages']),
+        ...mapGetters(['dialogs']),
         ...mapState(['currentPageId']),
     },
     created() {},
@@ -44,24 +43,20 @@ export default {
         ...mapMutations(['selectPage']),
         /**
          * 点击缩略图切换页面
-         * @param {Object} page
+         * @param {Object} dialog
          */
-        switchCurrentPage(page) {
-            manager.addTask(this.currentPageId,false,true)
-            this.selectPage({ id: page.id, currentPageType: 'page' })
-        },
-        addPage () {
-          this.$$addPage('page');
+        switchCurrentPage(dialog) {
+          manager.addTask(this.currentPageId, false, true)
+          this.selectPage({
+            id: dialog.id,
+            currentPageType: 'dialog'
+          })
         },
         deletePage (id) {
-          this.$$deletePage('page',{id: id});
+          this.$$deletePage('dialog',{id: id});
         },
     },
     watch: {
-        // pages(newValue) {
-        //   newValue.forEach((ele) => {
-        //   });
-        // },
     },
 }
 </script>

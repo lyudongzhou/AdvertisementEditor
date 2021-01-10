@@ -66,6 +66,7 @@ export default {
   methods: {
     ...mapMutations([
       "jumpPage",
+      "jumpPageImmediately",
       "jumpPageReal",
       "backPrevDialog",
       "setCurrentPage",
@@ -89,7 +90,6 @@ export default {
               resolve();
             },
           });
-          console.log();
           this.translate.nextPage(
             !isPrev
               ? this.renderData.change.type
@@ -108,7 +108,7 @@ export default {
     automaticCycle() {
       if (this.renderData.change.loop) {
         let singlePagePlayTime = this.renderData.change.singlePagePlayTime;
-        console.log(singlePagePlayTime, "qqqqqq");
+        // console.log(singlePagePlayTime, "qqqqqq");
         this._timer = setInterval(() => {
           if (this.beginTime) {
             let dt = new Date().getTime() - this.beginTime;
@@ -125,6 +125,7 @@ export default {
         pages = this.renderData.pages;
       if (getIndex + 1 < pages.length) {
         this.jumpPage(pages[getIndex + 1].id);
+        this.clickSwitchPage = "next";
       } else if (this.renderData.change.loop) {
         // loop
         this.jumpPage(pages[0].id);
@@ -136,6 +137,7 @@ export default {
         pages = this.renderData.pages;
       if (getIndex - 1 >= 0) {
         this.jumpPage(pages[getIndex - 1].id);
+        this.clickSwitchPage = "prev";
       } else if (this.renderData.change.loop) {
         // loop
         this.jumpPage(pages[pages.length - 1].id);
@@ -207,6 +209,7 @@ export default {
      * page->page || page->dialog || dialog->dialog || dialog->page
      */
     judgeDirection(next, old) {
+      // console.log('old:', old, 'next: ', next);
       let oldType = this.findCurrentMessage(old).type,
         nextType = this.findCurrentMessage(next).type,
         isPrev = false;
@@ -249,7 +252,9 @@ export default {
      * @description Watch the varible targetPage for change current page.
      */
     targetPage(next, old) {
-      console.log("targetChange");
+      if (old === null) {
+        old = this.renderData.pages[0].id;
+      }
       clearInterval(this._timer);
       if (next === this.currentPage) {
         this.currentState = 2;

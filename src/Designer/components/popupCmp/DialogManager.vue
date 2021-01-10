@@ -3,7 +3,7 @@
     <div class="thumbnail_warp">
       <ThumbnailShow></ThumbnailShow>
     </div>
-    <p class="add_page el-icon-plus" @click="addPage"></p>
+    <p class="add_page el-icon-plus" @click="addDialog"></p>
   </div>
 </template>
 
@@ -12,7 +12,7 @@ import ThumbnailShow from './ThumbnailShow.vue';
 import schemaMixin from '../../mixin/schemaMixin';
 
 export default {
-  name: 'PageManager',
+  name: 'DialogManager',
   mixins: [schemaMixin],
   components: {
     ThumbnailShow,
@@ -21,8 +21,8 @@ export default {
     return {}
   },
   methods: {
-    addPage () {
-      this.$$addPage('page');
+    addDialog () {
+      this.$$addPage('dialog');
     },
   },
 }
