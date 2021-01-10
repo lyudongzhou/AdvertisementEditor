@@ -1,20 +1,30 @@
 <template lang="html">
   <div class="pageManager">
-    <ThumbnailShow></ThumbnailShow>
+    <div class="thumbnail_warp">
+      <ThumbnailShow></ThumbnailShow>
+    </div>
+    <p class="add_page el-icon-plus" @click="addPage"></p>
   </div>
 </template>
 
 <script>
 import ThumbnailShow from './ThumbnailShow.vue';
+import schemaMixin from '../../mixin/schemaMixin';
 
 export default {
   name: 'PageManager',
+  mixins: [schemaMixin],
   components: {
     ThumbnailShow,
   },
   data () {
     return {}
-  }
+  },
+  methods: {
+    addPage () {
+      this.$$addPage('page');
+    },
+  },
 }
 </script>
 
@@ -22,30 +32,29 @@ export default {
   .pageManager {
     width: 100%;
     height: 100%;
-    overflow: scroll;
     flex: 1;
-    ::-webkit-scrollbar {
-      display: none; /* Chrome Safari */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    .thumbnail_warp {
+      overflow: scroll;
+      flex: 1;
+      ::-webkit-scrollbar {
+        display: none; /* Chrome Safari */
+      }
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* IE 10+ */
     }
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE 10+ */
-    ul {
+    p {
       width: 100%;
-      display: flex;
-      li {
-        flex: 1;
-        text-align: center;
-        font-size: 16px;
-        font-family: PingFangSC-Regular, PingFang SC;
-        font-weight: 400;
-        color: #B9B9B9;
-        padding: 19px 0 14px 0;
-      }:hover {
-        cursor: pointer;
-      }
-      .activeShow {
-        color: #FFFFFF;
-      }
+      height: 50px;
+      background: #9a9898;
+      font-size: 20px;
+      text-align: center;
+      line-height: 50px;
+      color: #ffffff;
+      font-weight: bold;
+      cursor: pointer;
     }
   }
 </style>

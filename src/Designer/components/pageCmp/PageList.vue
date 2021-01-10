@@ -37,7 +37,7 @@ export default {
           name: '页面管理'
         }
       ],
-      listActive: 'PageSetup'
+      listActive: 'PageManager'
     }
   },
   components: {

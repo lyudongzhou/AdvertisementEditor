@@ -11,7 +11,7 @@
                 <p class="list_thumbnail">
                     <snapShotDisplay :id="page.id"></snapShotDisplay>
                 </p>
-                <span class="add_page el-icon-plus" @click="addPage"></span>
+                <!-- <span class="add_page el-icon-plus" @click="addPage"></span> -->
                 <span class="del_page el-icon-minus" @click.stop="deletePage(page.id)"></span>
             </li>
         </ul>
@@ -103,7 +103,7 @@ export default {
               width: 30px;
               height: 30px;
               border-radius: 50%;
-              left: 170px;
+              left: 148px;
               top: 163px;
               font-size: 20px;
               background: #ffffff;
@@ -112,12 +112,9 @@ export default {
               align-items: center;
               color: #000000;
               font-weight: bold;
-            }
-            .add_page {
-              left: 120px;
-            }
-            .add_page,.del_page {
               display: none;
+              border: 1px solid #d8c8c8;
+              box-sizing: border-box;
             }
         }
         li:hover {
