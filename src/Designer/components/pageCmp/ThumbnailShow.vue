@@ -47,7 +47,7 @@ export default {
          * @param {Object} page
          */
         switchCurrentPage(page) {
-            manager.addTask(this.currentPageId)
+            manager.addTask(this.currentPageId,false,true)
             this.selectPage({ id: page.id, currentPageType: 'page' })
         },
         addPage () {

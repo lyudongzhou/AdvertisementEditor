@@ -356,7 +356,6 @@ import {
   UPDATE_BGM_AFTER,
 } from "../constant/schema";
 import icon from "../public/icon.png";
-window.console = {log(){}};
 const map = {
   "0:vertical": 68,
   "0:horizontal": 70,
@@ -429,8 +428,6 @@ export default {
         this.pageInfo1.previewHeight = pageBound.height;
         this.pageInfo1.containerWidth = containerBound.width;
         this.pageInfo1.containerHeight = containerBound.height;
-        console.log(this.pageInfo1);
-        // console.log(this.$refs.render);
       });
     },
     onRender() {
@@ -441,8 +438,6 @@ export default {
         this.pageInfo.previewHeight = pageBound.height;
         this.pageInfo.containerWidth = containerBound.width;
         this.pageInfo.containerHeight = containerBound.height;
-        console.log(this.pageInfo);
-        // console.log(this.$refs.render);
       });
     },
     fmtUrl() {
@@ -514,13 +509,11 @@ export default {
     },
     handleType(index) {
       this.changeTypeIndex = index;
-      console.log("changeType", index);
     },
   },
   watch: {
     changeTypeIndex() {
       if (this.isMounted) {
-        console.log("changeTo", this.changeTypeSchema);
         this.updateSchema({
           type: UPDATE_BGM,
           value: {
@@ -592,7 +585,6 @@ export default {
           type: UPDATE_BGM_BEFORE,
           value: {},
         });
-        // console.log(this.schema);
         this.bgmConfig.autoPlay = this.schema.container.bgm.autoPlay;
         this.bgmConfig.volume = this.schema.container.bgm.volume;
         // this.volumeTemp = this.bgmConfig.volume;
@@ -631,25 +623,32 @@ export default {
         containerWidth,
         containerHeight,
       } = this.pageInfo1;
+      if (this.pageInfo1.style) {
+        return this.pageInfo1.style;
+      }
       let scaleX = containerWidth / previewWidth;
       let scaleY = containerHeight / previewHeight;
       let scale = Math.min(scaleX, scaleY);
+      if (!scale) {
+        return;
+      }
       let c = scaleX > scaleY;
       if (c) {
-        return {
+        this.pageInfo1.style = {
           "transform-origin": "0 0",
           transform: `scale(${scale}) translate(${
             (0.5 * containerWidth) / scale - 0.5 * previewWidth
           }}px,0px)`,
         };
       } else {
-        return {
+        this.pageInfo1.style = {
           "transform-origin": "0 0",
           transform: `scale(${scale}) translate(0px,${
             (0.5 * containerHeight) / scale - 0.5 * previewHeight
           }px)`,
         };
       }
+      return this.pageInfo1.style;
     },
     caculateRenderScale() {
       let {
@@ -658,25 +657,32 @@ export default {
         containerWidth,
         containerHeight,
       } = this.pageInfo;
+      if (this.pageInfo.style) {
+        return this.pageInfo.style;
+      }
       let scaleX = containerWidth / previewWidth;
       let scaleY = containerHeight / previewHeight;
       let scale = Math.min(scaleX, scaleY);
+      if (!scale) {
+        return;
+      }
       let c = scaleX > scaleY;
       if (c) {
-        return {
+        this.pageInfo.style = {
           "transform-origin": "0 0",
           transform: `scale(${scale}) translate(${
             (0.5 * containerWidth) / scale - 0.5 * previewWidth
           }}px,0px)`,
         };
       } else {
-        return {
+        this.pageInfo.style = {
           "transform-origin": "0 0",
           transform: `scale(${scale}) translate(0px,${
             (0.5 * containerHeight) / scale - 0.5 * previewHeight
           }px)`,
         };
       }
+      return this.pageInfo.style;
     },
   },
   components: { singlePagePreview },

@@ -47,10 +47,14 @@ class ScreenSnapshotManager extends EventEmitter {
       this.oResult[id] = "";
     }
   }
-  addTask(id, useCache) {
+  addTask(id, useCache = true,isOrder = true) {
     if (!useCache) {
       if (this.aTask.indexOf(id) === -1) {
-        this.aTask.push(id);
+        if(isOrder){
+          this.aTask.push(id);
+        }else{
+          this.addImmediately(id);
+        }
       }
       this.addEmptyResult(id);
       this.emit("change", {
@@ -60,7 +64,11 @@ class ScreenSnapshotManager extends EventEmitter {
     } else {
       let cache = this.getResult(id);
       if (cache === "") {
-        this.addImmediately(id);
+        if(isOrder){
+          this.addImmediately(id);
+        }else{
+          this.addTask(id,false,true);
+        }
       }
     }
   }

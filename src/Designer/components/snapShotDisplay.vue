@@ -22,7 +22,7 @@ export default {
       }
   },
   mounted() {
-    manager.addTask(this.id);
+    manager.addTask(this.id,true,false);
     this.data = manager.getResult(this.id);
     manager.on("change", ({ id, data }) => {
       if (id === this.id) {

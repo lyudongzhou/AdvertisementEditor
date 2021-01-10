@@ -39,7 +39,7 @@ export default {
          * @param {Object} page
          */
         switchCurrentPage(dialog) {
-            manager.addTask(this.currentPageId)
+            manager.addTask(this.currentPageId,false,true)
             this.selectPage({ id: dialog.id, currentPageType: 'dialog' })
         },
         addDialog () {

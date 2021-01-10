@@ -3,14 +3,14 @@
     class="editWin fly"
     :resizable="false"
     :parent="true"
-    :y="50"
+    :y="0"
     :x="initialPosition.x"
-    :h="805"
-    :w="305"
+    :h="'auto'"
+    :w="327"
     v-if="!isClose"
     dragHandle=".editor_header"
   >
-    <el-container>
+    <el-container style="height:100%;border:1px solid black;padding:10px">
       <el-header class="editor_header">
         <span>Editor</span>
         <i class="el-icon-close" @click="closeSetDialog"></i>
@@ -33,6 +33,7 @@
           </el-collapse-item>
         </el-collapse>
       </el-main>
+      <el-footer></el-footer>
     </el-container>
   </vue-draggable-resizable>
 </template>
@@ -57,7 +58,7 @@ export default {
   computed: {
     ...mapGetters(["currentComponent"]),
     initialPosition() {
-      return { x: this.parentWidth - 315 };
+      return { x: this.parentWidth - 327 };
     },
   },
   created() {},
@@ -119,7 +120,7 @@ export default {
   /*transition: transform 0.3s ease-out;*/
   color: snow;
   width: 300px;
-  height: 800px;
+  height: 70%;
   overflow: hidden;
   .editor_header {
     position: relative;
@@ -136,7 +137,7 @@ export default {
   .noPadding {
     overflow: hidden;
     padding: 0;
-    height: 760px;
+    height: cals(100%);
     overflow-y: auto;
     .collapse-item {
       background: #535353;

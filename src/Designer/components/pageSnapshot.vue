@@ -39,6 +39,9 @@ export default {
   mounted() {
     setSnapShotInstance(this);
   },
+  created(){
+    console.log("create");
+  },
   methods: {
     /**
      * @description: get page schema by id

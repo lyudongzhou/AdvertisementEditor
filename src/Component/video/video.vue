@@ -2,7 +2,6 @@
     <baseCmp ref="parent" :cmpConfig="cmpConfig">
         <video
             autoplay
-             controls="controls"
             :src="handleUrl(cmpConfig.props.bgUrl)"
             style="width:100%;height:100%"
         />
