@@ -224,7 +224,64 @@
             ]
         }
     ],
-    "dialogs": [],
+    "dialogs": [
+      {
+          "name": "弹窗1",
+          "id": "弹窗1",
+          "container": {
+              "backGround": {
+                  "type": "image",
+                  "value": "http://localhost:8080/images/Jellyfish.jpg"
+              }
+          },
+          "components": [
+              {
+                  "props": {
+                      "videoSrc": "",
+                      "bgUrl": "http://localhost:8080/video/test.mp4"
+                  },
+                  "animation": [],
+                  "events": [],
+                  "type": "VideoCmp",
+                  "layoutConfig": {
+                      "width": 300,
+                      "height": 300,
+                      "hidden": false,
+                      "rotation": 0,
+                      "top": 0,
+                      "left": 0,
+                      "opacity": 1,
+                      "pivotX": 0,
+                      "pivotY": 0,
+                      "scaleX": 1,
+                      "scaleY": 1,
+                      "aniRotation": 0,
+                      "skewX": 0,
+                      "skewY": 0,
+                      "positionX": 0,
+                      "positionY": 0,
+                      "alpha": 1,
+                      "zIndex": 6
+                  },
+                  "children": [],
+                  "name": "视频1",
+                  "id": "popup1"
+              }
+          ]
+      },
+      {
+          "name": "弹窗2",
+          "id": "弹窗2",
+          "container": {
+              "backGround": {
+                  "type": "image",
+                  "value": "http://localhost:8080/images/Koala.jpg"
+              }
+          },
+          "components": [
+          ]
+      }
+    ],
     "resource": [
         "http://localhost:8080/video/test.mp4",
         "images/Koala.jpg"

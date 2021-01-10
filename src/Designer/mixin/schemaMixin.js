@@ -116,7 +116,7 @@ export default {
     },
     $$deletePage(pageType, base = {}) {
       executeMutations.call(this, 'updateSchema', {type: DELETE_PAGE,  targetId: base.id});
-      let ids = executeGetter.call(this, 'pages')[0].id;
+      let ids = executeGetter.call(this, pageType==='page'?'pages':'dialogs')[0].id;
       executeMutations.call(this, 'selectPage', {id: ids,  currentPageType: pageType});
     },
   },
