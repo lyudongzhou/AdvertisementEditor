@@ -10,17 +10,16 @@ export default [
         name: "图片",
         "position": "1",
         defaultSchema: {
-            "type": "ImageCmp",
-            "layoutConfig":{
-                "width":300,
-                "height":300
+            props: {
+              bgUrl: [],
+              changeType: "",
+              autoChange: false,
+              changeTime: 5,
             },
-            "props": {
-                "bgUrl": "images/Koala.jpg"
-            },
-            "animation": [],
-            "events": [],
-            "children": []
-        }
+            animation: [],
+            events: [],
+            type: "ImageCmp",
+            children: []
+          }
     }
 ]

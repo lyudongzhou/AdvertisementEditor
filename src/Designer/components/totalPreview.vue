@@ -869,8 +869,8 @@ export default {
       }
       .leftImg {
         display: flex;
-        width: 179px;
-        height: 179px;
+        width: 175px;
+        height: 175;
         border: 1px solid white;
       }
       .leftImg.noborder {
