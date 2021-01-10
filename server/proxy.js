@@ -8,6 +8,6 @@ const filter = function (pathname, req) {
   return proxyPaths.some(x => pathname === x);
 };
 module.exports = createProxyMiddleware(filter, {
-  target: 'https://saberxf.rz-edu.cn/api/xf-open',
+  target: 'https://saberxf.rz-edu.cn/api/xf-open/openapi',
   changeOrigin: true,
 });
