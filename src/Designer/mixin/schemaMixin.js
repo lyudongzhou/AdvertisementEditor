@@ -1,6 +1,6 @@
 import {clone, getPropByPath, getUuid} from '../../Utils/utils';
 import {mapGetters, mapState, mapMutations} from '../store/index';
-import {ADD_COMPONENT, ADD_PAGE, DELETE_PAGE} from '../constant/schema';
+import {ADD_COMPONENT, ADD_PAGE} from '../constant/schema';
 import {get} from '@/register';
 import {REG_COMPONENTSSCHEMA} from '@/const';
 
