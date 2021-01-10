@@ -15,29 +15,93 @@
         :style="caculatePadding(index, loadResource.length)"
       >
         <el-card :body-style="{ padding: '0px' }" shadow="hover">
-          <el-container style="height: 100px">
-            <img
-              v-if="o.resType === 1"
-              :src="o.resUrl"
-              class="image"
-              @click="handleClick(o)"
-            />
-            <video
-              v-if="o.resType === 2"
-              :src="o.resUrl"
-              class="image"
-              @click.capture="handleClick(o)"
-              @click="handleClick1()"
-            ></video>
-            <div @click="handleClick(o,arguments[0])" style="position:relative">
-              <div style="position:absolute;width:100%;height:100%;left:0;top:0;"></div>
-                <iframe
-                  v-if="o.resType === 4"
+          <el-container style="height: 100px;position:relative;">
+            <el-tooltip placement="right" style="width: 100%; height: 100%">
+              <div slot="content">
+                <div style="width: 250px; height: 250px">
+                  <img
+                    v-if="o.resType === 1"
+                    :src="o.resUrl"
+                    class="image"
+                    @click="handleClick(o)"
+                  />
+                  <video
+                    v-if="o.resType === 2"
+                    :src="o.resUrl"
+                    class="image"
+                    @click.capture="handleClick(o)"
+                    @click="handleClick1()"
+                  ></video>
+                  <div
+                    @click="handleClick(o, arguments[0])"
+                    style="position: relative"
+                  >
+                    <div
+                      style="
+                        position: absolute;
+                        width: 100%;
+                        height: 100%;
+                        left: 0;
+                        top: 0;
+                      "
+                    ></div>
+                    <iframe
+                      v-if="o.resType === 4"
+                      :src="o.resUrl"
+                      class="image"
+                    ></iframe>
+                  </div>
+                  <img v-if="o.bodyJson" :src="o.thumbnail" class="image" />
+                </div>
+              </div>
+              <div>
+                <img
+                  v-if="o.resType === 1"
                   :src="o.resUrl"
                   class="image"
-                ></iframe>
-            </div>
-            <img v-if="o.bodyJson" :src="o.thumbnail" class="image" />
+                  @click="handleClick(o)"
+                />
+                <video
+                  v-if="o.resType === 2"
+                  :src="o.resUrl"
+                  class="image"
+                  @click.capture="handleClick(o)"
+                  @click="handleClick1()"
+                ></video>
+
+                <div
+                  @click="handleClick(o, arguments[0])"
+                  style="position: relative"
+                >
+                  <div
+                    style="
+                      position: absolute;
+                      width: 100%;
+                      height: 100%;
+                      left: 0;
+                      top: 0;
+                    "
+                  ></div>
+                  <iframe
+                    v-if="o.resType === 4"
+                    :src="o.resUrl"
+                    class="image"
+                  ></iframe>
+                </div>
+                <img v-if="o.bodyJson" :src="o.thumbnail" class="image" />
+              </div>
+            </el-tooltip>
+            <img
+            v-if="o.priceType!==0"
+              :src="clownImage"
+              style="
+                position: absolute;
+                width: 30px;
+                height: 30px;
+                top: 0;
+                left: 0;
+              "
+            />
           </el-container>
         </el-card>
       </el-col>
@@ -53,6 +117,7 @@ import dataMixin from "../mixin/pagingResourceMixin";
 import { mapMutations } from "../store";
 import { get } from "@/register";
 import { REG_TITLECONFIG } from "@/const";
+import image from "../public/58.png";
 const config = get(REG_TITLECONFIG);
 export default {
   props: ["sortConfig", "typeSwitch"],
@@ -76,6 +141,7 @@ export default {
   },
   created() {
     this.loadResource();
+    this.clownImage = image;
   },
   methods: {
     ...mapMutations(["resetSchema"]),
@@ -87,7 +153,7 @@ export default {
         "padding-bottom": count - index < 2 ? 0 : "10px",
       };
     },
-    handleClick(o,e) {
+    handleClick(o, e) {
       console.log("capture");
       if (this.typeSwitch === 1) {
         if (o.resType === 1) {
@@ -108,13 +174,13 @@ export default {
       } else {
         this.resetSchema(o.bodyJson);
       }
-      if(e){
+      if (e) {
         e.preventDefault();
       }
     },
-    handleClick1(){
+    handleClick1() {
       console.log("bubble");
-    }
+    },
   },
 };
 </script>
