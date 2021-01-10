@@ -43,8 +43,9 @@ const afterCommandMap = {
    */
   [COMMAND_SELECT_PAGE](state, operateConfig) {
     state.currentPageId = operateConfig.targetId;
-    state.currentType = operateConfig.currentType;
-    state.currentPageType = state.currentType;
+    state.currentType = operateConfig.currentPageType;
+    state.currentPageType = operateConfig.currentPageType;
+    state.currentComponentId = null;
   },
   [COMMAND_CLEAR_CURRENT_TARGET](state) {
     state.currentComponentId = null;

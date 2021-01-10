@@ -1,11 +1,12 @@
 import axios from "axios";
 
-const getUserId = () => 1;
+const getUserId = () => '111';
 
 const createInstance = ({$message}) => {
   const instance = axios.create({
     baseURL: '/api',
     headers: {'Content-Type': 'application/json;charset=UTF-8'},
+    // headers: {'Content-Type': 'application/x-www-form-urlencoded'},
     transformRequest: [
       function handleUserId(data) {
         data = data || {};
