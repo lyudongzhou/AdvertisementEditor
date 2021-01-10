@@ -112,12 +112,7 @@ export default {
       base.name = getNextName(container, prefix);
       const page = createPage(pageType, base);
 
-      executeMutations.call(this, 'updateSchema', {type: ADD_PAGE, value: page, targetId: page.id});
-    },
-    $$deletePage(pageType, base = {}) {
-      executeMutations.call(this, 'updateSchema', {type: DELETE_PAGE,  targetId: base.id});
-      let ids = executeGetter.call(this, pageType==='page'?'pages':'dialogs')[0].id;
-      executeMutations.call(this, 'selectPage', {id: ids,  currentPageType: pageType});
+      executeMutations.call(this, 'updateSchema', {type: ADD_PAGE, value: page, targetId: page.id, currentPageType: pageType});
     },
   },
 };

@@ -10,7 +10,12 @@ export function getPropByPath(obj = {}, path = '', defaultValue) {
     .replace(/\[([^\]]+)\]/g, (match, p1, offset) => offset ? `.${p1}` : p1)
     // path 数组
     .split('.')
-    .reduce((p, c) => p ? p[c] : defaultValue, obj);
+    .reduce((p, c, i, {length}) => {
+      if (length === i + 1 && (!p || !p[c])) {
+        return defaultValue;
+      }
+      return p ? p[c] : undefined;
+    }, obj);
 }
 
 export function setPropByPath(obj = {}, path = '', value) {

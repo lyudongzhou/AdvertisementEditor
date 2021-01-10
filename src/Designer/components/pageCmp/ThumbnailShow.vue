@@ -23,6 +23,7 @@ import { mapMutations, mapGetters, mapState } from '../../store';
 import snapShotDisplay from '../snapShotDisplay';
 import manager from '../../manager/snapShot';
 import schemaMixin from '../../mixin/schemaMixin';
+import {DELETE_PAGE} from '../../constant/schema';
 
 export default {
     name: 'ThumbnailShow',
@@ -41,7 +42,7 @@ export default {
     mounted() {},
     updated() {},
     methods: {
-        ...mapMutations(['selectPage']),
+        ...mapMutations(['selectPage', 'updateSchema']),
         /**
          * 点击缩略图切换页面
          * @param {Object} page
@@ -54,7 +55,7 @@ export default {
           this.$$addPage('page');
         },
         deletePage (id) {
-          this.$$deletePage('page',{id: id});
+          this.updateSchema({type: DELETE_PAGE, targetId: id, currentPageType: 'page'});
         },
     },
     watch: {
