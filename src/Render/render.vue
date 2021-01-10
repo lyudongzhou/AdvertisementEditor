@@ -148,7 +148,7 @@ export default {
       let data = this.currentPageStore;
       let index = this.findCurrentIndex("pages", data);
       let total;
-      if (data !== -1) {
+      if (index!==undefined) {
         total = this.renderData.pages.length;
       } else {
         index = this.findCurrentIndex("dialogs", data);
