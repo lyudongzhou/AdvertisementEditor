@@ -1,13 +1,13 @@
 <template>
   <div class="flex-container content-center">
     <ul>
-      <li v-for="config in headConfig" :key="config.label">
+      <li v-for="(config,index) in headConfig" :key="config.label">
         <div v-if="config.children.length>0" ref="moreCmp">
           <i><img :src="config.icon" alt="" /></i>
           <span>{{config.label}}</span>
           <div class="frame" ref="frame">
             <!-- <div class="arrow"></div> -->
-            <div class="frame_content">
+            <div :class="index<headConfig.length-2?'frame_content_h':'frame_content_l'">
               <div class="list" v-for="msg in config.children" :key="msg.id">
                 <p class="frame_title">{{msg.label}}</p>
                 <ol class="frame_list">
@@ -92,7 +92,7 @@
               left: 50%;
               z-index: 1;
             }
-            .frame_content {
+            .frame_content_h {
               z-index: 0;
               width: auto;
               height: auto;
@@ -140,6 +140,61 @@
                     background: #ccc;
                   }
                 }
+              }
+            }
+            .frame_content_l {
+              z-index: 0;
+              width: auto;
+              height: auto;
+              position: absolute;
+              transform: translateX(-50%);
+              left: 50%;
+              text-align: center;
+              // display: flex;
+              font-size: 16px;
+              font-family: PingFangSC-Medium, PingFang SC;
+              font-weight: 500;
+              color: #000000;
+              background: #FFFFFF;
+              box-shadow: 0px 5px 10px 0px rgba(178, 178, 178, 0.5);
+              .list {
+                display: flex;
+                height: 55px;
+                line-height: 55px;
+                width: auto;
+                .frame_title {
+                  width: 85px;
+                  text-align: center;
+                  font-size: 16px;
+                  font-family: PingFangSC-Medium, PingFang SC;
+                  font-weight: 500;
+                  color: #666666;
+                  background: #F1F1F1;
+                  border-bottom: 1px solid #fff;
+                }
+                .frame_list {
+                  color: #666;
+                  display: flex;
+                  >li {
+                    padding: 0 10px 0 5px;
+                    white-space: nowrap;
+                    >i {
+                      display: inline-block;
+                      width: 30px;
+                      vertical-align: middle;
+                      text-align: center;
+                    }
+                    >span {
+                      font-weight: bold;
+                    }
+                  }
+                  >li:hover {
+                    background: #ccc;
+                  }
+                }
+              }
+              .list:last-child .frame_title {
+                border: none;
               }
             }
           }
