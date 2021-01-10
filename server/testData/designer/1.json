@@ -31,11 +31,42 @@
             "id": "3",
             "container": {
                 "backGround": {
-                    "type": "image",
-                    "value": "http://localhost:8080/images/Jellyfish.jpg"
+                    "type": "color",
+                    "value": "#FFFFFF"
                 }
             },
             "components": [
+                {
+                    "props": {
+                        
+                    },
+                    "animation": [],
+                    "events": [],
+                    "type": "VideoCmp",
+                    "layoutConfig": {
+                        "width": 300,
+                        "height": 300,
+                        "hidden": false,
+                        "rotation": 0,
+                        "top": 0,
+                        "left": 0,
+                        "opacity": 1,
+                        "pivotX": 0,
+                        "pivotY": 0,
+                        "scaleX": 1,
+                        "scaleY": 1,
+                        "aniRotation": 0,
+                        "skewX": 0,
+                        "skewY": 0,
+                        "positionX": 0,
+                        "positionY": 0,
+                        "alpha": 1,
+                        "zIndex": 6
+                    },
+                    "children": [],
+                    "name": "视频1",
+                    "id": "a34e67a0-5037-11eb-91a5-17124fe8a128fa"
+                },
                 {
                     "props": {
                         "videoSrc": "",

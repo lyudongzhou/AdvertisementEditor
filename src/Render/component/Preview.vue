@@ -1,10 +1,10 @@
 <template lang="html">
   <div class="preview" :style="!designMode ? { overflow: 'hidden' } : {}">
     <div class="mask"></div>
-    <button id="prevBtn" v-if="!designMode" @click="handlePrevPage">
+    <button id="prevBtn" v-if="!designMode&&!isProduction" @click="handlePrevPage">
       上一页
     </button>
-    <button id="nextBtn" v-if="!designMode" @click="handleNextPage">
+    <button id="nextBtn" v-if="!designMode&&!isProduction" @click="handleNextPage">
       下一页
     </button>
     <div id="pt-main" class="pt-perspective" ref="main">
@@ -47,6 +47,9 @@ export default {
     currentLayout() {
       return this.findCurrentMessage(this.currentPage).layout;
     },
+    isProduction(){
+      return !!window.renderData;
+    }
   },
   components: {
     singlePage,
@@ -114,7 +117,7 @@ export default {
               this.beginTime = null;
             }
           }
-        }, singlePagePlayTime*1000);
+        }, singlePagePlayTime * 1000);
       }
     },
     handleNextPage() {

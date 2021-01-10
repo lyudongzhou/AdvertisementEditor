@@ -330,7 +330,7 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  height:350px;
+  // height:350px;
   align-content: flex-start;
 }
 .animateIcon {

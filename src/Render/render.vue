@@ -44,6 +44,7 @@ export default {
     "designMode",
     "baseUrl",
     "singlePagePreview",
+    "Production"
   ],
   data() {
     return {

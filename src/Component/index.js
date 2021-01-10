@@ -10,3 +10,4 @@ import "./button";
 import "./svgs";
 import "./time";
 import "./notice";
+import "./weather";

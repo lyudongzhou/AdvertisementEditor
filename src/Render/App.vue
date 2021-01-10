@@ -41,7 +41,7 @@ export default {
             deviceWidth: document.body.clientWidth,
             deviceHeight: document.body.clientHeight,
             renderData: window.renderData,
-            currentPage: "1",
+            currentPage: window.renderData.pages[0].id,
             baseUrl: '',
         };
     },

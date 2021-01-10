@@ -510,6 +510,12 @@ export default {
     handleType(index) {
       this.changeTypeIndex = index;
     },
+    storeStyle(style) {
+      this.pageInfo.style = style;
+    },
+    storeStyle1(style) {
+      this.pageInfo1.style = style;
+    },
   },
   watch: {
     changeTypeIndex() {
@@ -634,19 +640,19 @@ export default {
       }
       let c = scaleX > scaleY;
       if (c) {
-        this.pageInfo1.style = {
+        this.storeStyle1({
           "transform-origin": "0 0",
           transform: `scale(${scale}) translate(${
             (0.5 * containerWidth) / scale - 0.5 * previewWidth
           }px,0px)`,
-        };
+        });
       } else {
-        this.pageInfo1.style = {
+        this.storeStyle1({
           "transform-origin": "0 0",
           transform: `scale(${scale}) translate(0px,${
             (0.5 * containerHeight) / scale - 0.5 * previewHeight
           }px)`,
-        };
+        });
       }
       return this.pageInfo1.style;
     },
@@ -668,19 +674,19 @@ export default {
       }
       let c = scaleX > scaleY;
       if (c) {
-        this.pageInfo.style = {
+        this.storeStyle({
           "transform-origin": "0 0",
           transform: `scale(${scale}) translate(${
             (0.5 * containerWidth) / scale - 0.5 * previewWidth
           }px,0px)`,
-        };
+        });
       } else {
-        this.pageInfo.style = {
+        this.storeStyle({
           "transform-origin": "0 0",
           transform: `scale(${scale}) translate(0px,${
             (0.5 * containerHeight) / scale - 0.5 * previewHeight
           }px)`,
-        };
+        });
       }
       return this.pageInfo.style;
     },
