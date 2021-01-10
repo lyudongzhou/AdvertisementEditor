@@ -34,11 +34,11 @@
       >
         <v-form direction="inline">
           <v-form-item>
-            <v-input-number :value="width"></v-input-number>
+            <v-input-number @change="width = arguments[0]" :value="width"></v-input-number>
           </v-form-item>
           <v-form-item> x </v-form-item>
           <v-form-item>
-            <v-input-number :value="height"></v-input-number>
+            <v-input-number @change="height = arguments[0]" :value="height"></v-input-number>
           </v-form-item>
         </v-form>
       </v-form-item>
@@ -95,11 +95,12 @@ export default {
     realHeight(value) {
       this.height = value;
     },
+    width(w){
+    }
   },
   computed: {
     ...mapState(["schema","isShowProgram"]),
     isShowConfig() {
-      console.log("isShow", this.ratio);
       return this.ratio === "userConfig";
     },
     ratio() {

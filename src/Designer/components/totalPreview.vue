@@ -638,7 +638,7 @@ export default {
           "transform-origin": "0 0",
           transform: `scale(${scale}) translate(${
             (0.5 * containerWidth) / scale - 0.5 * previewWidth
-          }}px,0px)`,
+          }px,0px)`,
         };
       } else {
         this.pageInfo1.style = {
@@ -672,7 +672,7 @@ export default {
           "transform-origin": "0 0",
           transform: `scale(${scale}) translate(${
             (0.5 * containerWidth) / scale - 0.5 * previewWidth
-          }}px,0px)`,
+          }px,0px)`,
         };
       } else {
         this.pageInfo.style = {
