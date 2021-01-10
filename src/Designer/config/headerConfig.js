@@ -266,26 +266,32 @@ let Constructor ={children:[
           {
             "id": 1,
             "label": "",
-            "type": "circle",
-            "icon": "/icon_circle.png"
+            "type": "0.0",
+            "color": '#666'
           },
           {
             "id": 2,
             "label": "",
-            "type": "heart",
-            "icon": "/icon_heart.png"
+            "type": "0.1",
+            "color": '#ff71a1'
           },
           {
             "id": 3,
             "label": "",
-            "type": "snow",
-            "icon": "/icon_snow.png"
+            "type": "0.2",
+            "color": '#666'
           },
           {
             "id": 4,
             "label": "",
-            "type": "blood",
-            "icon": "/icon_blood.png"
+            "type": "0.3",
+            "color": '#ffac13'
+          },
+          {
+            "id": 5,
+            "label": "",
+            "type": "0.4",
+            "color": '#666'
           }
         ]
       },
@@ -296,26 +302,32 @@ let Constructor ={children:[
           {
             "id": 1,
             "label": "",
-            "type": "circle",
-            "icon": "/icon_circle.png"
+            "type": "1.0",
+            "color": "#ffd15c"
           },
           {
             "id": 2,
             "label": "",
-            "type": "heart",
-            "icon": "/icon_heart.png"
+            "type": "1.1",
+            "color": "#666"
           },
           {
             "id": 3,
             "label": "",
-            "type": "snow",
-            "icon": "/icon_snow.png"
+            "type": "1.2",
+            "color": "#666"
           },
           {
             "id": 4,
             "label": "",
-            "type": "blood",
-            "icon": "/icon_blood.png"
+            "type": "1.3",
+            "color": "#666"
+          },
+          {
+            "id": 5,
+            "label": "",
+            "type": "1.4",
+            "color": "#666"
           }
         ]
       },
@@ -326,59 +338,71 @@ let Constructor ={children:[
           {
             "id": 1,
             "label": "",
-            "type": "circle",
-            "icon": "/icon_circle.png"
+            "type": "2.0",
+            "color": "#595757"
           },
           {
             "id": 2,
             "label": "",
-            "type": "heart",
-            "icon": "/icon_heart.png"
+            "type": "2.1",
+            "color": "#ddaf59"
           },
           {
             "id": 3,
             "label": "",
-            "type": "snow",
-            "icon": "/icon_snow.png"
+            "type": "2.2",
+            "color": "#666"
           },
           {
             "id": 4,
             "label": "",
-            "type": "blood",
-            "icon": "/icon_blood.png"
-          }
-        ]
-      },
-      {
-        "id": 4,
-        "label": "图片容器",
-        "children": [
-          {
-            "id": 1,
-            "label": "",
-            "type": "circle",
-            "icon": "/icon_circle.png"
+            "type": "2.3",
+            "color": "#ffca46"
           },
           {
-            "id": 2,
+            "id": 5,
             "label": "",
-            "type": "heart",
-            "icon": "/icon_heart.png"
-          },
-          {
-            "id": 3,
-            "label": "",
-            "type": "snow",
-            "icon": "/icon_snow.png"
-          },
-          {
-            "id": 4,
-            "label": "",
-            "type": "blood",
-            "icon": "/icon_blood.png"
+            "type": "2.4",
+            "color": "#666"
           }
         ]
       }
+      // {
+      //   "id": 4,
+      //   "label": "图片容器",
+      //   "children": [
+      //     {
+      //       "id": 1,
+      //       "label": "",
+      //       "type": "3.0",
+      //       "colo": "#dd684f"
+      //     },
+      //     {
+      //       "id": 2,
+      //       "label": "",
+      //       "type": "3.1",
+      //       "colo": "#5855c8"
+      //     },
+      //     {
+      //       "id": 3,
+      //       "label": "",
+      //       "type": "3.2",
+      //       "colo": "#b12621"
+      //     },
+      //     {
+      //       "id": 4,
+      //       "label": "",
+      //       "type": "3.3",
+      //       "colo": "#f9a326"
+      //     },
+      //     {
+      //       "id": 5,
+      //       "label": "",
+      //       "type": "3.4",
+      //       "colo": "#f9a326"
+      //     }
+      //   ]
+      // }
     ]
   }
 ]};

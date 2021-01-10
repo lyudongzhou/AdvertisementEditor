@@ -72,6 +72,24 @@ export const normal = [
     }
   },
   {
+    name: "4",
+    position: "5.0.4",
+    defaultSchema: {
+      "type": "svgCmp",
+      "layoutConfig": {
+        "width": 200,
+        "height": 200
+      },
+      "props": {
+        type:"0.4",
+        color:"#F00"
+      },
+      "animation": [],
+      "events": [],
+      "children": []
+    }
+  },
+  {
     name: "0",
     position: "5.1.0",
     defaultSchema: {
@@ -136,6 +154,24 @@ export const normal = [
       },
       "props": {
         type:"1.3",
+        color:"#F00"
+      },
+      "animation": [],
+      "events": [],
+      "children": []
+    }
+  },
+  {
+    name: "4",
+    position: "5.1.4",
+    defaultSchema: {
+      "type": "svgCmp",
+      "layoutConfig": {
+        "width": 200,
+        "height": 200
+      },
+      "props": {
+        type:"1.4",
         color:"#F00"
       },
       "animation": [],
@@ -214,25 +250,43 @@ export const normal = [
       "events": [],
       "children": []
     }
-  }
-]
-export const mask = [
+  },
   {
-    name: "3",
-    position: "5.3.1",
+    name: "4",
+    position: "5.2.4",
     defaultSchema: {
-      "type": "svgMaskCmp",
+      "type": "svgCmp",
       "layoutConfig": {
         "width": 200,
         "height": 200
       },
       "props": {
-        type:"3.1",
-        url:"images/Koala.jpg"
+        type:"2.4",
+        color:"#F00"
       },
       "animation": [],
       "events": [],
       "children": []
     }
   }
+]
+export const mask = [
+  // {
+  //   name: "3",
+  //   position: "5.3.1",
+  //   defaultSchema: {
+  //     "type": "svgMaskCmp",
+  //     "layoutConfig": {
+  //       "width": 200,
+  //       "height": 200
+  //     },
+  //     "props": {
+  //       type:"3.1",
+  //       url:"images/Koala.jpg"
+  //     },
+  //     "animation": [],
+  //     "events": [],
+  //     "children": []
+  //   }
+  // }
 ]

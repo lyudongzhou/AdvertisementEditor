@@ -2,7 +2,7 @@
   <div class="flex-container content-center">
     <ul>
       <li v-for="(config,index) in headConfig" :key="config.label">
-        <div v-if="config.children.length>0" ref="moreCmp">
+        <div v-if="config.children.length>0">
           <i><img :src="config.icon" alt="" /></i>
           <span>{{config.label}}</span>
           <div class="frame" ref="frame">
@@ -10,10 +10,15 @@
             <div :class="index<headConfig.length-2?'frame_content_h':'frame_content_l'">
               <div class="list" v-for="msg in config.children" :key="msg.id">
                 <p class="frame_title">{{msg.label}}</p>
-                <ol class="frame_list">
+                <ol class="frame_list" v-if="index<headConfig.length-1">
                   <li v-for="child in msg.children" :key="child.id" @click="addCmp(child)">
                     <i><img :src="child.icon" /></i>
                     <span>{{child.label}}</span>
+                  </li>
+                </ol>
+                <ol class="frame_list" v-else>
+                  <li v-for="child in msg.children" :key="child.id" @click="addCmp(child)">
+                    <div class="svgContainer" v-html="tmpSvg(child)"></div>
                   </li>
                 </ol>
               </div>
@@ -32,7 +37,9 @@
 <script>
   import headConfig from '../config/headerConfig';
   import schemaMixin from '../mixin/schemaMixin';
-// console.log(headConfig);
+  import {get} from "@/register";
+  import {SVGS} from "@/const";
+
   export default {
     name: 'components',
     mixins: [schemaMixin],
@@ -48,9 +55,20 @@
     },
     methods: {
       addCmp (config) {
-        // console.log(config);
         this.$$addNewComponent(config.editConfig.defaultSchema);
-      }
+      },
+      tmpSvg (msg) {
+        return get(SVGS)[msg.type]({
+          "layoutConfig": {
+            "width": 50,
+            "height": 50
+          },
+          "props": {
+            "color": msg.color,
+            "type": msg.type
+          }
+        });
+      },
     }
   }
 </script>
@@ -178,6 +196,8 @@
                   >li {
                     padding: 0 10px 0 5px;
                     white-space: nowrap;
+                    width: auto;
+                    height: auto;
                     >i {
                       display: inline-block;
                       width: 30px;
@@ -186,6 +206,10 @@
                     }
                     >span {
                       font-weight: bold;
+                    }
+                    >div {
+                      width: auto;
+                      height: auto;
                     }
                   }
                   >li:hover {
