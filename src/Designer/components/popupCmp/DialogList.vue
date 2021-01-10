@@ -15,6 +15,7 @@
 import DialogSetup from './DialogSetup.vue';
 import LayerManager from './LayerManager.vue';
 import DialogManager from './DialogManager.vue';
+import { mapGetters } from "../../store";
 
 export default {
   name: "DialogList",
@@ -23,16 +24,6 @@ export default {
       listName: [
         {
           id: 1,
-          type: 'DialogSetup',
-          name: '弹窗设置'
-        },
-        {
-          id: 2,
-          type: 'LayerManager',
-          name: '图层管理'
-        },
-        {
-          id: 3,
           type: 'DialogManager',
           name: '弹窗管理'
         }
@@ -44,6 +35,32 @@ export default {
     DialogSetup,
     LayerManager,
     DialogManager
+  },
+  computed: {
+    ...mapGetters(["currentDialog"]),
+  },
+  watch: {
+    currentDialog(n) {
+      if (n && this.listName.length<3) {
+        this.listName = [
+          {
+            id: 1,
+            type: 'DialogSetup',
+            name: '弹窗设置'
+          },
+          {
+            id: 2,
+            type: 'LayerManager',
+            name: '图层管理'
+          },
+          {
+            id: 3,
+            type: 'DialogManager',
+            name: '弹窗管理'
+          }
+        ];
+      }
+    }
   },
 }
 </script>
@@ -61,7 +78,7 @@ export default {
       height: 76px;
       line-height: 76px;
       li {
-        width: 90px;
+        flex: 1;
         height: 40px;
         line-height: 40px;
         text-align: center;
@@ -71,7 +88,7 @@ export default {
         color: #B5B5B5;
         background: #424242;
         border-radius: 6px;
-        margin: 16px 4px 0 10px;
+        margin: 16px 10px 0 10px;
       }:hover {
         cursor: pointer;
       }

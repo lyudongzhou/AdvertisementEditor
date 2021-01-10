@@ -15,6 +15,7 @@
 import PageSetup from './PageSetup.vue';
 import LayerManager from './LayerManager.vue';
 import PageManager from './PageManager.vue';
+import { mapGetters } from "../../store";
 
 export default {
   name: "PageList",
@@ -23,16 +24,6 @@ export default {
       listName: [
         {
           id: 1,
-          type: 'PageSetup',
-          name: '页面设置'
-        },
-        {
-          id: 2,
-          type: 'LayerManager',
-          name: '图层管理'
-        },
-        {
-          id: 3,
           type: 'PageManager',
           name: '页面管理'
         }
@@ -40,10 +31,36 @@ export default {
       listActive: 'PageManager'
     }
   },
+  computed: {
+    ...mapGetters(["currentPage"]),
+  },
   components: {
     PageSetup,
     LayerManager,
     PageManager
+  },
+  watch: {
+    currentPage(n) {
+      if (n && this.listName.length<3) {
+        this.listName = [
+          {
+            id: 1,
+            type: 'PageSetup',
+            name: '页面设置'
+          },
+          {
+            id: 2,
+            type: 'LayerManager',
+            name: '图层管理'
+          },
+          {
+            id: 3,
+            type: 'PageManager',
+            name: '页面管理'
+          }
+        ];
+      }
+    }
   },
 }
 </script>
@@ -61,7 +78,7 @@ export default {
       height: 76px;
       line-height: 76px;
       li {
-        width: 90px;
+        flex: 1;
         height: 40px;
         line-height: 40px;
         text-align: center;
@@ -71,7 +88,7 @@ export default {
         color: #B5B5B5;
         background: #424242;
         border-radius: 6px;
-        margin: 16px 4px 0 10px;
+        margin: 16px 10px 0 10px;
       }:hover {
         cursor: pointer;
       }
