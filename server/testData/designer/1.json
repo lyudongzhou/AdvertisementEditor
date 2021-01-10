@@ -27,8 +27,8 @@
     },
     "pages": [
         {
-            "name": "页面3",
-            "id": "3",
+            "name": "页面1",
+            "id": "111111",
             "container": {
                 "backGround": {
                     "type": "image",
@@ -212,12 +212,12 @@
             ]
         },
         {
-            "name": "页面3",
-            "id": "3111",
+            "name": "页面2",
+            "id": "22222",
             "container": {
                 "backGround": {
                     "type": "image",
-                    "value": "http://localhost:8080/images/Jellyfish.jpg"
+                    "value": "http://localhost:8080/images/Koala.jpg"
                 }
             },
             "components": [

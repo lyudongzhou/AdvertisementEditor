@@ -8,8 +8,8 @@
 const state = {
   schema: null,
   pageCount: 0,
-  currentPage: "1", //当前页面ID
-  targetPage: "1", //目标页面ID
+  currentPage: null, //当前页面ID
+  targetPage: null, //目标页面ID
   designMode: false,
   baseUrl: "",
   windowStorage: [], // 页面路径存储，弹窗返回使用
