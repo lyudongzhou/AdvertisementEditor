@@ -129,7 +129,7 @@
           w: width,
           h: height,
 
-          rotation: this.currentComponent.layoutConfig.rotation,
+          rotation: this.currentComponent&&this.currentComponent.layoutConfig.rotation,
         };
       },
       scaleValue() {

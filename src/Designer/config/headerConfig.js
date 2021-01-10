@@ -18,6 +18,7 @@ import qrcode from '../public/qrcode.png';
 import subTitle from '../public/sub_title.png';
 import weather from '../public/weather.png';
 import week from '../public/week.png';
+import plugin from '../public/plugin.png';
 // import iconImg from '../public/icon_img.png'
 import { get } from "@/register";
 import { REG_TITLECONFIG } from "@/const";
@@ -240,13 +241,13 @@ let Constructor ={children:[
             "id": 1,
             "label": "投票",
             "type": "vote",
-            "icon": "/icon_vote.png"
+            "icon": plugin
           },
           {
             "id": 2,
             "label": "表单",
             "type": "form",
-            "icon": "/icon_form.png"
+            "icon": plugin
           }
         ]
       }
