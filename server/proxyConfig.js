@@ -1,5 +1,5 @@
 module.exports = [
-  '/template/get',
+  // '/program/get',
   // '/program/list',
 ].map(x => `/api${x}`);
 

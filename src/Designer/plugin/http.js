@@ -5,13 +5,20 @@ const getUserId = () => '111';
 const createInstance = ({$message}) => {
   const instance = axios.create({
     baseURL: '/api',
-    headers: {'Content-Type': 'application/json;charset=UTF-8'},
-    // headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    // headers: {'Content-Type': 'application/json;charset=UTF-8'},
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
     transformRequest: [
       function handleUserId(data) {
         data = data || {};
         data.userId = getUserId();
         return data;
+      },
+      function (data) {
+        let ret = '';
+        for (let it in data) {
+          ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+        }
+        return ret
       },
       ...axios.defaults.transformRequest,
     ]

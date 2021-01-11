@@ -71,7 +71,7 @@ export default {
       const url = `/program/${isCreate ? "add" : "update"}`;
       const resource = this.getResource(payload.schema);
       console.log(resource);
-      const programData = { ...clone(payload.schema), resource };
+      const programData = JSON.stringify({ ...clone(payload.schema), resource }, null, 4);
       this.$axios
         .post(url, { id: payload.id, programData })
         .then(({ data }) => {
@@ -109,7 +109,7 @@ export default {
       } else if (id) {
         this.setProjectId(id);
         this.$axios
-          .get("/program/get/id", { programId: id })
+          .post("/program/get", { programId: id })
           .then(({ data }) => {
             this.setProgramInfo(data.programData);
             this.$refs.designer.openProject(data.programData);
