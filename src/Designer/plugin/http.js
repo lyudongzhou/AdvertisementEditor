@@ -4,7 +4,7 @@ const getUserId = () => '111';
 
 const createInstance = ({$message}) => {
   const instance = axios.create({
-    baseURL: '/api',
+    baseURL: '/openapi',
     // headers: {'Content-Type': 'application/json;charset=UTF-8'},
     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
     transformRequest: [

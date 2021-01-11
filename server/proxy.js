@@ -8,7 +8,4 @@ const filter = function (pathname, req) {
 module.exports = createProxyMiddleware(filter, {
   target: 'http://saberxf.rz-edu.cn/api/xf-open',
   changeOrigin: true,
-  pathRewrite: {
-    '^/api': '/openapi',
-  }
 });
