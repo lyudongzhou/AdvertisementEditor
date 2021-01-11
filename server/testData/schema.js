@@ -12,7 +12,7 @@ window.renderData = {
   "change": {
     "type": 3,
     "loop": true,
-    "singlePagePlayTime": 2000
+    "singlePagePlayTime": 2000000
   },
   "pages": [
     {
