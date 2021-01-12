@@ -4,7 +4,7 @@ register(SVGS,{
   type: "3.1",
   payload: function(cmpConfig) {
     return `<svg xmlns="http://www.w3.org/2000/svg"
-    xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 311 280" xml:space="preserve" preserveAspectRatio="none" style="overflow: visible; width: ${cmpConfig.layoutConfig.width}; height: ${cmpConfig.layoutConfig.width}">
+    xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 311 280" xml:space="preserve" preserveAspectRatio="none" style="overflow: visible; width: ${cmpConfig.layoutConfig.width}; height: ${cmpConfig.layoutConfig.height}">
     <g style="stroke: none;  stroke-width: 0;stroke-dasharray: 0,0;stroke-linecap: butt;stroke-linejoin: miter;stroke-miterlimit: 10;" transform="translate(0 0) ">
         <g style=" isolation:isolate">
             <rect xmlns="http://www.w3.org/2000/svg" fill="#2e2c2d" height="311.11" transform="translate(263.41 -47.7) rotate(90)" width="184.42" x="63.35" y="-47.7" style="fill: rgb(46, 44, 45); isolation: isolate; fill-opacity: 1;"></rect>

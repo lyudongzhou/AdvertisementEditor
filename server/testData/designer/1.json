@@ -75,7 +75,8 @@
                         "fontWeight": 10,
                         "fontStyle": "normal",
                         "fontSize": 30,
-                        "color": "#000000"
+                        "color": "#000000",
+                        "background": "#00FF00"
                     },
                     "animation": [],
                     "events": [],
@@ -236,7 +237,8 @@
     ],
     "dialogs": [],
     "resource": [
-        "video/test.mp4",
-        "images/Koala.jpg"
+        "http://localhost:8080/video/test.mp4",
+        "http://localhost:8080/images/Koala.jpg",
+        "http://localhost:8080/images/Jellyfish.jpg"
     ]
 }

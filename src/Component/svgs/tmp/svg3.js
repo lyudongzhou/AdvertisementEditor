@@ -1,9 +1,16 @@
-import {register} from "@/register";
-import {SVGS} from "@/const";
-register(SVGS,{
+import { register } from "@/register";
+import { SVGS } from "@/const";
+register(SVGS, {
   type: "0.2",
   payload: function(cmpConfig) {
-    let props = cmpConfig.props;
-    return `<svg viewBox="0 0 60 67" xmlns="http://www.w3.org/2000/svg" style="width: ${cmpConfig.layoutConfig.width}; height: ${cmpConfig.layoutConfig.width}; fill: ${props.color};"><g transform="translate(0 0) scale(1 1)">' + '<path xmlns="http://www.w3.org/2000/svg" d="M35.83,11.86a7.42,7.42,0,1,0-11.84,0h0s5.94,6.43,5.94,21.51c0-15.09,5.94-21.51,5.94-21.51Z" style="fill: ${props.color};"></path><path xmlns="http://www.w3.org/2000/svg" d="M14.24,17.48h0A7.42,7.42,0,1,0,8.31,27.75v0s8.54-1.93,21.6,5.61C16.84,25.84,14.24,17.48,14.24,17.48Z" style="fill: ${props.color};"></path><path xmlns="http://www.w3.org/2000/svg" d="M8.3,39v0a7.34,7.34,0,0,0-4.59.92,7.42,7.42,0,1,0,10.51,9.34v0s2.6-8.36,15.66-15.9C16.84,40.92,8.3,39,8.3,39Z" style="fill: ${props.color};"></path><path xmlns="http://www.w3.org/2000/svg" d="M24,54.9a7.42,7.42,0,1,0,11.84,0h0S29.9,48.47,29.9,33.38C29.9,48.47,24,54.89,24,54.89Z" style="fill: ${props.color};"></path><path xmlns="http://www.w3.org/2000/svg" d="M56.1,39.93A7.36,7.36,0,0,0,51.5,39v0S43,40.92,29.9,33.38C43,40.92,45.56,49.28,45.56,49.28h0a7.35,7.35,0,0,0,3.09,3.52A7.42,7.42,0,1,0,56.1,39.93Z" style="fill: ${props.color};"></path><path xmlns="http://www.w3.org/2000/svg" d="M51.51,27.77v0A7.42,7.42,0,1,0,45.58,17.5v0S43,25.84,29.9,33.38C43,25.84,51.51,27.77,51.51,27.77Z" style="fill: ${props.color};"></path>' + '</g></svg>`;
-  }
+    // let props = cmpConfig.props;
+    return `<svg id="图层_1" data-name="图层 1"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 41.28" style="width: ${cmpConfig.layoutConfig.width}; height: ${cmpConfig.layoutConfig.height}">
+    <defs>
+        <style>.cls-0-2{fill:${cmpConfig.props.color};}</style>
+    </defs>
+    <title>未标题-2</title>
+    <path style="fill:${cmpConfig.props.color};" d="M17.83,46A23.92,23.92,0,0,1,30,39.65,32.2,32.2,0,0,1,50,19V46ZM37.69,20.91a14,14,0,0,0-27.22,4.34,14.38,14.38,0,0,0,.44,3.52,26.82,26.82,0,0,0-3.23-.22,25,25,0,0,0-2.87.2l-.69-.57L7.7,22.84,5.76,16.72l5.9-2.54L13.33,8l6.33,1,4.77-4.3L29.18,9l6.33-1,1.68,6.2,5.75,2.47A40.55,40.55,0,0,0,37.69,20.91ZM13.84,25.25a10.58,10.58,0,0,1,21.07-1.32A38.41,38.41,0,0,0,28.46,35a11.44,11.44,0,0,1-2.87.74,25.82,25.82,0,0,0-10.81-6.19A10.82,10.82,0,0,1,13.84,25.25Zm9.35,13.87A28.74,28.74,0,0,0,13.9,46H0V32.85A21.41,21.41,0,0,1,23.19,39.12Z" transform="translate(0 -4.72)"/>
+</svg>`;
+  },
 });

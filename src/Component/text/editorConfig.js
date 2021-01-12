@@ -12,10 +12,11 @@ export default [
         "props": {
             "text": "文本",
             "fontFamily": "微软雅黑",
-            "fontWeight": 10,
             "fontStyle": "normal",
             "fontSize": 30,
-            "color": "#000000"
+            "color": "#000000",
+            "fontAlign":"left",
+            "fontWeight":"normal"
         },
         "animation": [],
         "events": [],
