@@ -1,18 +1,18 @@
-import weather from "./weather";
-import schema from "./config";
-import editorConfig from "./editorConfig";
+import realTimeWeather from "./realTime/weather";
+import realTimeSchema from "./realTime/config";
+import realTimeEditorConfig from "./realTime/editorConfig";
 import {register} from "@/register";
 import {REG_TITLECONFIG, REG_COMPONENTS, REG_COMPONENTSSCHEMA} from "@/const";
 
 register(REG_TITLECONFIG,{
-  type: weather.name,
-  payload: editorConfig
+  type: realTimeWeather.name,
+  payload: realTimeEditorConfig
 });
 register(REG_COMPONENTS,{
-  type: weather.name,
-  payload: weather
+  type: realTimeWeather.name,
+  payload: realTimeWeather
 });
 register(REG_COMPONENTSSCHEMA,{
-  type: weather.name,
-  payload: schema
+  type: realTimeWeather.name,
+  payload: realTimeSchema
 });
