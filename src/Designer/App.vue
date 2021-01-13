@@ -10,6 +10,7 @@ import { clone } from "@/utils";
 /*eslint no-unused-vars: ["error", { "args": "none" }]*/
 import { get } from "@/register";
 import { REG_GETRES } from "@/const";
+import defaultJson from "../../testData/defaultJson.json"
 const resourceVisitor = {
   component: (schema, context) => {
     let fun = get(REG_GETRES)[schema.type];
@@ -57,7 +58,7 @@ export default {
   data() {
     return {};
   },
-  created() {
+  mounted() {
     this.initProject();
     this.init();
     this.$event.on(SUBMIT_PROJECT, (payload) => {
@@ -65,13 +66,17 @@ export default {
     });
   },
   methods: {
-    ...mapMutations(["setProjectId","setProgramInfo"]),
+    ...mapMutations(["setProjectId", "setProgramInfo"]),
     handleSubmit(payload) {
       const isCreate = !payload.id;
       const url = `/program/${isCreate ? "add" : "update"}`;
       const resource = this.getResource(payload.schema);
       console.log(resource);
-      const programData = JSON.stringify({ ...clone(payload.schema), resource }, null, 4);
+      const programData = JSON.stringify(
+        { ...clone(payload.schema), resource },
+        null,
+        4
+      );
       this.$axios
         .post(url, { id: payload.id, programData })
         .then(({ data }) => {
@@ -108,12 +113,13 @@ export default {
           });
       } else if (id) {
         this.setProjectId(id);
-        this.$axios
-          .post("/program/get", { programId: id })
-          .then(({ data }) => {
-            this.setProgramInfo(data.programData);
-            this.$refs.designer.openProject(data.programData);
-          });
+        this.$axios.post("/program/get", { programId: id }).then(({ data }) => {
+          this.setProgramInfo(data.programData);
+          this.$refs.designer.openProject(data.programData);
+        });
+      } else {
+        // this.setProgramInfo(data.programData);
+        this.$refs.designer.openProject(defaultJson);
       }
     },
     getResource(schema) {

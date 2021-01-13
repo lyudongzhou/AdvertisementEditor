@@ -1,0 +1,39 @@
+{
+    "version": "1.0",
+    "description": "",
+    "container": {
+        "width": 1920,
+        "height": 1080,
+        "bgm": {
+        },
+        "paging": {
+            "position": "center&bottom",
+            "fmt": "${CURRENT}/${TOTAL}",
+            "color": "#E41C1C",
+            "size": 20,
+            "family": "",
+            "bgColor": "#000000"
+        }
+    },
+    "change": {
+        
+    },
+    "pages": [
+        {
+            "name": "页面3",
+            "id": "3",
+            "container": {
+                "backGround": {
+                    "type": "",
+                    "value": ""
+                }
+            },
+            "components": [
+                
+            ]
+        }
+    ],
+    "dialogs": [],
+    "resource": [
+    ]
+}
