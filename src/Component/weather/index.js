@@ -4,6 +4,9 @@ import realTimeEditorConfig from "./realTime/editorConfig";
 import oneDayWeather from "./oneDay/weather";
 import oneDaySchema from "./oneDay/config";
 import oneDayEditorConfig from "./oneDay/editorConfig";
+import weekdayWeather from "./weekday/weather";
+import weekdaySchema from "./weekday/config";
+import weekdayEditorConfig from "./weekday/editorConfig";
 import {register} from "@/register";
 import {REG_TITLECONFIG, REG_COMPONENTS, REG_COMPONENTSSCHEMA} from "@/const";
 
@@ -30,4 +33,16 @@ register(REG_COMPONENTS,{
 register(REG_COMPONENTSSCHEMA,{
   type: oneDayWeather.name,
   payload: oneDaySchema
+});
+register(REG_TITLECONFIG,{
+  type: weekdayWeather.name,
+  payload: weekdayEditorConfig
+});
+register(REG_COMPONENTS,{
+  type: weekdayWeather.name,
+  payload: weekdayWeather
+});
+register(REG_COMPONENTSSCHEMA,{
+  type: weekdayWeather.name,
+  payload: weekdaySchema
 });
