@@ -155,11 +155,19 @@ export default {
     },
     handleClick(o, e) {
       console.log("capture");
+      var isVip= window.sessionStorage.getItem("isVIP");
+      if(!isVip&&o.priceType!==0){
+        this.$alert('成为会员即可免费哦。', {
+          confirmButtonText: '确定'
+        });
+        return;
+      }
+      console.log(o);
       if (this.typeSwitch === 1) {
         if (o.resType === 1) {
           let defaultSchema = config["ImageCmp"][0].defaultSchema;
           console.log(o);
-          defaultSchema.props.bgUrl = o.resUrl;
+          defaultSchema.props.bgUrl = [o.resUrl];
           this.$$addNewComponent(defaultSchema);
         } else if (o.resType === 2) {
           let defaultSchema = config["VideoCmp"][0].defaultSchema;

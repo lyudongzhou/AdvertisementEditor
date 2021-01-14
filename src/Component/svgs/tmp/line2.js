@@ -3,7 +3,10 @@ import { SVGS } from "@/const";
 register(SVGS, {
   type: "1.1",
   payload: function(cmpConfig) {
-    let props = cmpConfig.props;
-    return `<svg viewBox="0 0 1000 100" xmlns="http://www.w3.org/2000/svg" style="width: ${cmpConfig.layoutConfig.width}px; height: ${cmpConfig.layoutConfig.height}px; stroke: ${props.color});"><g transform="translate(0 0) scale(1 1)">' + '<line xmlns="http://www.w3.org/2000/svg" y1="3" x2="9.5" y2="3" fill="none" stroke-miterlimit="10" stroke-width="6"></line><line xmlns="http://www.w3.org/2000/svg" x1="15.49" y1="3" x2="15.5" y2="3" fill="none" stroke-miterlimit="10" stroke-width="6" stroke-dasharray="0.01 0 0 0"></line><line xmlns="http://www.w3.org/2000/svg" x1="15.5" y1="3" x2="990.5" y2="3" fill="none" stroke-miterlimit="10" stroke-width="6" stroke-dasharray="19 5.99 0.01 0 0 0"></line><line xmlns="http://www.w3.org/2000/svg" x1="990.5" y1="3" x2="1000" y2="3" fill="none" stroke-miterlimit="10" stroke-width="6"></line>' + '</g></svg>`;
+    return `<svg id="图层_1" data-name="图层 1"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 1.61" style="width: ${cmpConfig.layoutConfig.width}; height: ${cmpConfig.layoutConfig.height};color:${cmpConfig.props.color}">
+    <title>未标题-2</title>
+    <path style="fill:${cmpConfig.props.color}" d="M50,25H48.39V23.37H50Zm-4.84,0H43.55V23.37h1.61Zm-4.84,0H38.71V23.37h1.61Zm-4.84,0H33.87V23.37h1.61Zm-4.83,0H29V23.37h1.62Zm-4.84,0H24.19V23.37h1.62ZM21,25H19.35V23.37H21Zm-4.84,0H14.52V23.37h1.61Zm-4.84,0H9.68V23.37h1.61ZM6.45,25H4.84V23.37H6.45ZM1.61,25H0V23.37H1.61Z" transform="translate(0 -23.37)"/>
+</svg>`;
   },
 });

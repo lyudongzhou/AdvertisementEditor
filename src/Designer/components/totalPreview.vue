@@ -870,7 +870,7 @@ export default {
       .leftImg {
         display: flex;
         width: 175px;
-        height: 175;
+        height: 175px;
         border: 1px solid white;
       }
       .leftImg.noborder {

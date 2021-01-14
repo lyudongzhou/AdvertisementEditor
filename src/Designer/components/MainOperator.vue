@@ -10,7 +10,7 @@ import {SUBMIT_PROJECT} from '../constant/event';
 export default {
   components: {},
   computed:{
-    ...mapState(['schema', 'projectId']),
+    ...mapState(['schema', 'projectInfo']),
   },
   created() {
     
@@ -24,7 +24,7 @@ export default {
       this.setPreviewState({previewTotal:true,previewing:true});
     },
     submitProject() {
-      this.$event.emit(SUBMIT_PROJECT, {id: this.projectId, schema: this.schema});
+      this.$event.emit(SUBMIT_PROJECT, {id: this.projectInfo.id, schema: this.schema});
     }
   },
 };

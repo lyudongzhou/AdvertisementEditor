@@ -10,6 +10,7 @@ import { clone } from "@/utils";
 /*eslint no-unused-vars: ["error", { "args": "none" }]*/
 import { get } from "@/register";
 import { REG_GETRES } from "@/const";
+import defaultJson from "../../testData/defaultJson.json"
 const resourceVisitor = {
   component: (schema, context) => {
     let fun = get(REG_GETRES)[schema.type];
@@ -57,7 +58,7 @@ export default {
   data() {
     return {};
   },
-  created() {
+  mounted() {
     this.initProject();
     this.init();
     this.$event.on(SUBMIT_PROJECT, (payload) => {
@@ -65,13 +66,17 @@ export default {
     });
   },
   methods: {
-    ...mapMutations(["setProjectId","setProgramInfo"]),
+    ...mapMutations(["setProgramInfo"]),
     handleSubmit(payload) {
       const isCreate = !payload.id;
       const url = `/program/${isCreate ? "add" : "update"}`;
       const resource = this.getResource(payload.schema);
       console.log(resource);
-      const programData = JSON.stringify({ ...clone(payload.schema), resource }, null, 4);
+      const programData = JSON.stringify(
+        { ...clone(payload.schema), resource },
+        null,
+        4
+      );
       this.$axios
         .post(url, { id: payload.id, programData })
         .then(({ data }) => {
@@ -96,24 +101,21 @@ export default {
       const urlSearchParams = new URLSearchParams(location.search);
       const urlHashParams = new URLSearchParams(location.hash);
       let id = urlSearchParams.get("id") || urlHashParams.get("id");
-      id = !PRODUCTION ? id || 1 : id;
-      const templateId = urlSearchParams.get("templateId");
-      if (!id && templateId) {
-        this.$axios
-          .get("/template/get/id", { templateId: id })
-          .then(({ data }) => {
-            console.log(data);
-            this.setProgramInfo(data.programData);
-            this.$refs.designer.openProject(data.bodyJson);
-          });
-      } else if (id) {
-        this.setProjectId(id);
-        this.$axios
-          .post("/program/get", { programId: id })
-          .then(({ data }) => {
-            this.setProgramInfo(data.programData);
-            this.$refs.designer.openProject(data.programData);
-          });
+      if (!PRODUCTION) {
+        id = id || 1
+      }
+      if (id) {
+        this.$axios.post("/program/get", { programId: id }).then(({ data }) => {
+          let {id, name, description, programData} = data;
+          // 引用情况&&不是新增后刷新的
+          if (urlSearchParams.get('action') === 'quote' && !urlHashParams.get("id")) {
+            id = null;
+          }
+          this.setProgramInfo({id, name, description});
+          this.$refs.designer.openProject(programData);
+        });
+      } else {
+        this.$refs.designer.openProject(defaultJson);
       }
     },
     getResource(schema) {
