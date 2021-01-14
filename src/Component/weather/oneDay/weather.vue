@@ -1,9 +1,9 @@
 <template lang="html">
   <baseCmp :cmpConfig="cmpConfig">
-    <div class="oneDayForecastContainer">
+    <div class="oneDayForecastContainer" v-if="weather">
       <h2>24小时预报（北京）</h2>
       <ul>
-        <li v-for="(child,index) in hour" :key="index">
+        <li v-for="(child,index) in weather" :key="index">
           <p>{{child.time}}</p>
           <p>{{child.temperature}}℃</p>
           <p>{{child.weather}}</p>
@@ -26,215 +26,22 @@
     },
     data() {
       return {
-        hour: [
-        {
-            "wind_direction": "东风",
-            "wind_power": "<3级",
-            "temperature": "1",
-            "weather": "晴",
-            "time": "18:00",
-            "weather_code": "00"
-        },
-        {
-            "wind_direction": "东风",
-            "wind_power": "<3级",
-            "temperature": "0",
-            "weather": "晴",
-            "time": "19:00",
-            "weather_code": "00"
-        },
-        {
-            "wind_direction": "东南风",
-            "wind_power": "<3级",
-            "temperature": "-2",
-            "weather": "晴",
-            "time": "20:00",
-            "weather_code": "00"
-        },
-        {
-            "wind_direction": "东风",
-            "wind_power": "<3级",
-            "temperature": "-2",
-            "weather": "晴",
-            "time": "21:00",
-            "weather_code": "00"
-        },
-        {
-            "wind_direction": "东风",
-            "wind_power": "<3级",
-            "temperature": "-2",
-            "weather": "晴",
-            "time": "22:00",
-            "weather_code": "00"
-        },
-        {
-            "wind_direction": "南风",
-            "wind_power": "<3级",
-            "temperature": "-2",
-            "weather": "晴",
-            "time": "23:00",
-            "weather_code": "00"
-        },
-        {
-            "wind_direction": "东风",
-            "wind_power": "<3级",
-            "temperature": "-3",
-            "weather": "晴",
-            "time": "00:00",
-            "weather_code": "00"
-        },
-        {
-            "wind_direction": "东风",
-            "wind_power": "<3级",
-            "temperature": "-3",
-            "weather": "晴",
-            "time": "01:00",
-            "weather_code": "00"
-        },
-        {
-            "wind_direction": "南风",
-            "wind_power": "<3级",
-            "temperature": "-3",
-            "weather": "晴",
-            "time": "02:00",
-            "weather_code": "00"
-        },
-        {
-            "wind_direction": "东风",
-            "wind_power": "<3级",
-            "temperature": "-5",
-            "weather": "晴",
-            "time": "03:00",
-            "weather_code": "00"
-        },
-        {
-            "wind_direction": "东风",
-            "wind_power": "<3级",
-            "temperature": "-5",
-            "weather": "晴",
-            "time": "04:00",
-            "weather_code": "00"
-        },
-        {
-            "wind_direction": "南风",
-            "wind_power": "<3级",
-            "temperature": "-5",
-            "weather": "晴",
-            "time": "05:00",
-            "weather_code": "00"
-        },
-        {
-            "wind_direction": "东南风",
-            "wind_power": "<3级",
-            "temperature": "-7",
-            "weather": "晴",
-            "time": "06:00",
-            "weather_code": "00"
-        },
-        {
-            "wind_direction": "东风",
-            "wind_power": "<3级",
-            "temperature": "-7",
-            "weather": "晴",
-            "time": "07:00",
-            "weather_code": "00"
-        },
-        {
-            "wind_direction": "南风",
-            "wind_power": "<3级",
-            "temperature": "-6",
-            "weather": "晴",
-            "time": "08:00",
-            "weather_code": "00"
-        },
-        {
-            "wind_direction": "东南风",
-            "wind_power": "<3级",
-            "temperature": "-5",
-            "weather": "多云",
-            "time": "09:00",
-            "weather_code": "01"
-        },
-        {
-            "wind_direction": "东南风",
-            "wind_power": "<3级",
-            "temperature": "-3",
-            "weather": "多云",
-            "time": "10:00",
-            "weather_code": "01"
-        },
-        {
-            "wind_direction": "西北风",
-            "wind_power": "<3级",
-            "temperature": "-2",
-            "weather": "多云",
-            "time": "11:00",
-            "weather_code": "01"
-        },
-        {
-            "wind_direction": "南风",
-            "wind_power": "<3级",
-            "temperature": "0",
-            "weather": "多云",
-            "time": "12:00",
-            "weather_code": "01"
-        },
-        {
-            "wind_direction": "南风",
-            "wind_power": "<3级",
-            "temperature": "1",
-            "weather": "多云",
-            "time": "13:00",
-            "weather_code": "01"
-        },
-        {
-            "wind_direction": "西北风",
-            "wind_power": "<3级",
-            "temperature": "2",
-            "weather": "多云",
-            "time": "14:00",
-            "weather_code": "01"
-        },
-        {
-            "wind_direction": "西北风",
-            "wind_power": "<3级",
-            "temperature": "2",
-            "weather": "多云",
-            "time": "15:00",
-            "weather_code": "01"
-        },
-        {
-            "wind_direction": "西北风",
-            "wind_power": "<3级",
-            "temperature": "1",
-            "weather": "多云",
-            "time": "16:00",
-            "weather_code": "01"
-        },
-        {
-            "wind_direction": "西北风",
-            "wind_power": "<3级",
-            "temperature": "0",
-            "weather": "多云",
-            "time": "17:00",
-            "weather_code": "01"
-        },
-        {
-            "wind_direction": "西北风",
-            "wind_power": "<3级",
-            "temperature": "-1",
-            "weather": "多云",
-            "time": "18:00",
-            "weather_code": "01"
-        }],
+        weather: null,
       };
     },
-    watch: {},
-    methods: {},
     computed: {},
     mounted() {
-      this.url = this.cmpConfig.props.url;
+      this.$axios.get('/weather/get', {
+        needday: 24,
+        prev: "北京省",
+        city: "北京市",
+        area: "海淀区"
+      }).then((res) => {
+        this.weather = res.data.hour;
+      })
     },
+    methods: {},
+    watch: {},
   };
 </script>
 
@@ -255,6 +62,19 @@
           margin-top: 5px;
         }
       }
+    }
+    @bgs: 00,01,02,04,07,10,33;
+    each(@bgs, {
+      .bg-@{value} {
+        background: url("../../../Designer/public/weather/@{value}.png");
+      }
+    });
+    .weather_icon {
+      display: inline-block;
+      width: 45px;
+      height: 45px;
+      background-repeat: no-repeat;
+      background-size: 45px auto;
     }
   }
 </style>

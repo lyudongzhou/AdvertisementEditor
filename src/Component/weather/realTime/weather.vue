@@ -1,6 +1,6 @@
 <template lang="html">
   <baseCmp :cmpConfig="cmpConfig">
-    <div class="realTimeForecastContainer">
+    <div class="realTimeForecastContainer" v-if="weather">
       <div class="location">
         <i class="el-icon-location"></i>
         <span>{{weather.prev}} </span>
@@ -42,25 +42,22 @@
     },
     data() {
       return {
-        weather: {
-          "prev": "北京省",
-          "city": "北京市",
-          "wind_direction": "东北风",
-          "wind_power": "1级",
-          "quality": "轻度污染",
-          "temperature": "0",
-          "weather": "晴",
-          "humidity": "32%",
-          "time": "20:30",
-          "weather_code": "00",
-        },
+        weather: null,
       };
     },
-    watch: {},
-    methods: {},
     computed: {},
     mounted() {
+      this.$axios.get('/weather/get', {
+        needday: 1,
+        prev: "北京省",
+        city: "北京市",
+        area: "海淀区"
+      }).then((res) => {
+        this.weather = res.data.now;
+      })
     },
+    methods: {},
+    watch: {},
   };
 </script>
 
@@ -91,6 +88,7 @@
         margin-right: 10px;
       }
       span:nth-child(2) {
+        margin-left: 10px;
         font-size: 30px;
       }
     }

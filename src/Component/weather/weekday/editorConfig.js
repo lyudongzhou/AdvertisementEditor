@@ -5,8 +5,8 @@ export default [
     defaultSchema: {
       "type": "weekdayForecastCmp",
       "layoutConfig": {
-        "width": 700,
-        "height": 300
+        "width": 900,
+        "height": 400
       },
       "props": {
 
