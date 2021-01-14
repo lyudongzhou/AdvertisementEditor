@@ -15,7 +15,7 @@
         :style="caculatePadding(index, loadResource.length)"
       >
         <el-card :body-style="{ padding: '0px' }" shadow="hover">
-          <el-container style="height: 100px;position:relative;">
+          <el-container style="height: 100px; position: relative">
             <el-tooltip placement="right" style="width: 100%; height: 100%">
               <div slot="content">
                 <div style="width: 250px; height: 250px">
@@ -35,6 +35,7 @@
                   <div
                     @click="handleClick(o, arguments[0])"
                     style="position: relative"
+                    v-if="o.resType === 4"
                   >
                     <div
                       style="
@@ -45,11 +46,7 @@
                         top: 0;
                       "
                     ></div>
-                    <iframe
-                      v-if="o.resType === 4"
-                      :src="o.resUrl"
-                      class="image"
-                    ></iframe>
+                    <img :src="o.imgList[0]" class="image" />
                   </div>
                   <img v-if="o.bodyJson" :src="o.thumbnail" class="image" />
                 </div>
@@ -61,17 +58,18 @@
                   class="image"
                   @click="handleClick(o)"
                 />
-                <video
+                <img
                   v-if="o.resType === 2"
-                  :src="o.resUrl"
+                  :src="o.thumbnail"
                   class="image"
                   @click.capture="handleClick(o)"
                   @click="handleClick1()"
-                ></video>
+                />
 
                 <div
+                  v-if="o.resType === 4"
                   @click="handleClick(o, arguments[0])"
-                  style="position: relative"
+                  style="position: relative; width: 100%; height: 100%"
                 >
                   <div
                     style="
@@ -82,17 +80,13 @@
                       top: 0;
                     "
                   ></div>
-                  <iframe
-                    v-if="o.resType === 4"
-                    :src="o.resUrl"
-                    class="image"
-                  ></iframe>
+                  <img :src="fireImage" class="image" />
                 </div>
                 <img v-if="o.bodyJson" :src="o.thumbnail" class="image" />
               </div>
             </el-tooltip>
             <img
-            v-if="o.priceType!==0"
+              v-if="o.isVip !== 0"
               :src="clownImage"
               style="
                 position: absolute;
@@ -118,6 +112,8 @@ import { mapMutations } from "../store";
 import { get } from "@/register";
 import { REG_TITLECONFIG } from "@/const";
 import image from "../public/58.png";
+import fileIcon from "../public/file.jpg";
+
 const config = get(REG_TITLECONFIG);
 export default {
   props: ["sortConfig", "typeSwitch"],
@@ -142,6 +138,7 @@ export default {
   created() {
     this.loadResource();
     this.clownImage = image;
+    this.fireImage = fileIcon;
   },
   methods: {
     ...mapMutations(["resetSchema"]),
@@ -155,10 +152,11 @@ export default {
     },
     handleClick(o, e) {
       console.log("capture");
-      var isVip= window.sessionStorage.getItem("isVIP");
-      if(!isVip&&o.priceType!==0){
-        this.$alert('成为会员即可免费哦。', {
-          confirmButtonText: '确定'
+      var isVip = window.sessionStorage.getItem("isVIP");
+      isVip = true;
+      if (!isVip && o.isVip !== 0) {
+        this.$alert("成为会员即可免费哦。", {
+          confirmButtonText: "确定",
         });
         return;
       }
@@ -176,7 +174,7 @@ export default {
           // TODO: simulate bodyJson
         } else if (o.resType === 4) {
           let defaultSchema = config["documentCmp"][0].defaultSchema;
-          defaultSchema.props.url = o.resUrl;
+          defaultSchema.props.bgUrl = o.imgList;
           this.$$addNewComponent(defaultSchema);
         }
       } else {

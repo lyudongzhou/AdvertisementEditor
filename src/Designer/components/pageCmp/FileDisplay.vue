@@ -21,6 +21,11 @@
           v-if="!isMultiple"
         >
           <img
+            v-if="dataImage.payload.isVip"
+            :src="imageIcon"
+            style="position: absolute; width: 70px; height: 30px"
+          />
+          <img
             :src="dataImage.src"
             :alt="dataImage.alt"
             :id="dataImage.id"
@@ -43,6 +48,12 @@
           :style="`width:${w}`"
           v-if="isMultiple"
         >
+          <img
+            v-if="dataImage.payload.isVip"
+            :src="imageIcon"
+            style="position: absolute; width: 70px; height: 30px"
+          />
+
           <img
             :src="dataImage.src"
             :alt="dataImage.alt"
@@ -68,6 +79,7 @@
 
 <script>
 var console = { log: () => {} };
+import imageIcon from "../../public/58.png";
 export default {
   name: "vue-select-image",
   props: {
@@ -147,6 +159,9 @@ export default {
       return this.dataImages || [];
     },
   },
+  created() {
+    this.imageIcon = imageIcon;
+  },
   mounted() {
     // set initial selectedImage
     this.setInitialSelection();
@@ -156,15 +171,15 @@ export default {
       this.singleSelected.id = "";
       this.multipleSelected.splice(0, this.multipleSelected.length);
     },
-    removeSelect(id){
+    removeSelect(id) {
       let arrSelect = [];
-      this.multipleSelected.forEach(ele=>{
-        if(ele.id === id){
+      this.multipleSelected.forEach((ele) => {
+        if (ele.id === id) {
           arrSelect.push(ele);
         }
       });
-      arrSelect.forEach(ele=>{
-        this.multipleSelected.splice(this.multipleSelected.indexOf(ele),1);
+      arrSelect.forEach((ele) => {
+        this.multipleSelected.splice(this.multipleSelected.indexOf(ele), 1);
       });
     },
     classThumbnail(selectedId, imageId, isDisabled) {
@@ -189,6 +204,10 @@ export default {
       return `${baseMultipleClass}`;
     },
     onSelectImage(objectImage) {
+      let isVip = window.sessionStorage.getItem("isVip");
+      if(!isVip&&objectImage.payload.isVip){
+        return;
+      }
       if (!objectImage.disabled) {
         this.singleSelected = Object.assign(
           {},
@@ -219,6 +238,10 @@ export default {
       this.multipleSelected = [];
     },
     onSelectMultipleImage(objectImage) {
+      let isVip = window.sessionStorage.getItem("isVip");
+      if(!isVip&&objectImage.payload.isVip){
+        return;
+      }
       if (!objectImage.disabled) {
         if (!this.isExistInArray(objectImage.id)) {
           if (this.limit > 0) {

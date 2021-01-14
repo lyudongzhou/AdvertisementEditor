@@ -6,7 +6,6 @@
         autoPlay: false,
         delay: 0,
         allowFullscreen: false,
-        aspectRatio: aspectRatio,
       }"
       :images="cmpConfig.props.bgUrl"
       :transitions="[cmpConfig.props.changeType]"
@@ -16,6 +15,7 @@
   </baseCmp>
 </template>
 <script>
+//与document一致
 import baseCmp from "../Base.vue";
 import { mapGetters } from "../../Render/store/";
 import { VueFlux } from "vue-flux";
@@ -45,7 +45,6 @@ export default {
   },
   mounted() {
     this.parent = this.$refs["parent"];
-    window.abcccs = this;
     if (this.cmpConfig.props.autoChange && !this.designMode) {
       this.interval = setInterval(() => {
         this.next();
@@ -62,12 +61,11 @@ export default {
       });
       return arr;
     },
-    aspectRatio() {
-      console.log(231);
-      return (
-        this.cmpConfig.layoutConfig.width / this.cmpConfig.layoutConfig.height
-      );
-    },
+    // aspectRatio() {
+    //   return (
+    //     this.cmpConfig.layoutConfig.width / this.cmpConfig.layoutConfig.height
+    //   );
+    // },
   },
   beforeDestroy() {},
   props: ["cmpConfig"],

@@ -3,7 +3,9 @@ import maskCmp from "./svg2";
 import {normal,mask} from "./config";
 import {normal as normalEditor,mask as maskEditor} from "./editorConfig";
 import {register} from "@/register";
-import {REG_TITLECONFIG, REG_COMPONENTS, REG_COMPONENTSSCHEMA} from "@/const";
+import {REG_TITLECONFIG, REG_COMPONENTS, REG_COMPONENTSSCHEMA,REG_GETRES} from "@/const";
+import fun from "./filterResource";
+
 
 register(REG_TITLECONFIG,{
   type: qrcode.name,
@@ -29,4 +31,8 @@ register(REG_COMPONENTS,{
 register(REG_COMPONENTSSCHEMA,{
   type: maskCmp.name,
   payload: mask
+});
+register(REG_GETRES,{
+  type:maskCmp.name,
+  payload:fun
 });

@@ -12,7 +12,7 @@
         :label-col="labelCol"
         :wrapper-col="wrapperCol"
       >
-        <v-input placeholder="请输入" size="large"></v-input>
+        <v-input placeholder="请输入" size="large" v-model="projectInfo.name"></v-input>
       </v-form-item>
       <v-form-item
         label="分辨率"
@@ -97,7 +97,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(["schema","isShowProgram"]),
+    ...mapState(["schema","isShowProgram","projectInfo"]),
     isShowConfig() {
       return this.ratio === "userConfig";
     },

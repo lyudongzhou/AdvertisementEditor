@@ -31,7 +31,7 @@ export default {
         0: [
           {
             label: "全部",
-            value: 0,
+            value: 5,
           },
           {
             label: "图片",
@@ -40,10 +40,6 @@ export default {
           {
             label: "视频",
             value: 2,
-          },
-          {
-            label: "音频",
-            value: 3,
           },
           {
             label: "文档",

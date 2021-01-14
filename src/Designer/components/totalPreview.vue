@@ -28,10 +28,10 @@
                 <div class="leftImg noborder">
                   <el-form class="nameConfig">
                     <el-form-item label="节目名称">
-                      <el-input></el-input>
+                      <el-input v-model="projectInfo.name"></el-input>
                     </el-form-item>
                     <el-form-item label="描述">
-                      <el-input type="textarea"></el-input>
+                      <el-input type="textarea" v-model="projectInfo.description"></el-input>
                     </el-form-item>
                   </el-form>
                 </div>
@@ -618,7 +618,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(["previewing", "previewTotal", "schema"]),
+    ...mapState(["previewing", "previewTotal", "schema","projectInfo"]),
     changeTypeSchema() {
       return map[`${this.changeTypeIndex}:${this.changeTypeIndex2}`];
     },

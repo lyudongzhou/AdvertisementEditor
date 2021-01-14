@@ -1,46 +1,74 @@
-<template lang="html">
-  <baseCmp :cmpConfig="cmpConfig">
-  <iframe :src="handleUrl(url)" style="width:100%;height:100%"></iframe>
+<template>
+  <baseCmp ref="parent" :cmpConfig="cmpConfig">
+    <vue-flux
+      style="width: 100%; height: 100%"
+      :options="{
+        autoPlay: false,
+        delay: 0,
+        allowFullscreen: false,
+      }"
+      :images="cmpConfig.props.bgUrl"
+      :transitions="[cmpConfig.props.changeType]"
+      ref="slider"
+    >
+    </vue-flux>
   </baseCmp>
 </template>
-
 <script>
+//与document一致
 import baseCmp from "../Base.vue";
 import { mapGetters } from "../../Render/store/";
+import { VueFlux } from "vue-flux";
 export default {
   name: "documentCmp",
-  props: ["cmpConfig"],
   components: {
+    VueFlux,
     baseCmp,
   },
-  data(){
-    return {
-      url:""
-    }
+  methods: {
+    next() {
+      this.$refs.slider.show();
+    },
   },
-  watch:{
-    "cmpConfig.props.url"(value){
-      console.log(value);
-      this.url = value;
-      // if(this.checkUrl(value)){
-      //   console.log("checked");
-        
-      // }
-    }
+  data: () => {
+    return {};
   },
-  methods:{
-    // checkUrl(value){
-    //   return /^(https?:\/\/(([a-zA-Z0-9]+-?)+[a-zA-Z0-9]+\.)+[a-zA-Z]+)(:\d+)?(\/.*)?(\?.*)?(#.*)?$/.test(value);
-    // }
+  watch: {
+    "cmpConfig.layoutConfig.width"() {
+      this.$refs.slider && this.$refs.slider.resize();
+    },
+    "cmpConfig.layoutConfig.height"() {
+      this.$refs.slider && this.$refs.slider.resize();
+    },
   },
-  computed: {
-    ...mapGetters(['handleUrl']),
+  created() {
   },
   mounted() {
-    this.url = this.cmpConfig.props.url;
+    this.parent = this.$refs["parent"];
+    if (this.cmpConfig.props.autoChange && !this.designMode) {
+      this.interval = setInterval(() => {
+        this.next();
+      }, this.cmpConfig.props.changeTime * 1000);
+    }
+    this.$el.addEventLis;
   },
+  computed: {
+    ...mapGetters(["handleUrl", "designMode"]),
+    computedUrl() {
+      let arr = [];
+      this.cmpConfig.props.bgUrl.forEach((ele) => {
+        arr.push(this.handleUrl(ele));
+      });
+      return arr;
+    },
+    // aspectRatio() {
+    //   console.log(231);
+    //   return (
+    //     this.cmpConfig.layoutConfig.width / this.cmpConfig.layoutConfig.height
+    //   );
+    // },
+  },
+  beforeDestroy() {},
+  props: ["cmpConfig"],
 };
 </script>
-
-<style lang="less" scoped>
-</style>

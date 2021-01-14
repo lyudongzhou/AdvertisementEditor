@@ -91,7 +91,7 @@ export default {
       sortConfig: {
         searchText: "",
         type: 1, // 机构1商城2
-        resType: 0,
+        resType: 5,
         orderType: 0,
         priceType: 1,
       },

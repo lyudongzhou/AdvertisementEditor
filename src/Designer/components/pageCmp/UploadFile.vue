@@ -67,12 +67,14 @@
             </vue-select-image></el-main
         ></el-container>
       </el-main>
-      <el-footer style="height: 110px;width:100%;display:block;overflow:auto" v-if="multi"
+      <el-footer
+        style="height: 110px; width: 100%; display: block; overflow: auto"
+        v-if="multi"
         ><div
           v-for="(item, index) in selectImages"
           :key="item.id"
           style="
-          display:inline-block;
+            display: inline-block;
             width: 100px;
             height: 100px;
             position: relative;
@@ -81,7 +83,10 @@
         >
           <img :src="item.src" style="width: 100%; height: 70%" />
           <label style="width: 100%; height: 30%">{{ item.alt }}</label>
-          <i class="el-icon-delete deleteIcon" @click="onClickDeleteSelect(index)"></i></div
+          <i
+            class="el-icon-delete deleteIcon"
+            @click="onClickDeleteSelect(index)"
+          ></i></div
       ></el-footer>
       <el-footer style="height: 10%; margin-top: 10px; bottom: 0"
         ><el-button @click="handleClose">取消</el-button
@@ -99,6 +104,8 @@ import VueSelectImage from "./FileDisplay";
 // require("vue-select-image/dist/vue-select-image.css");
 import dataMixin from "../../mixin/pagingResourceMixin";
 import fileIcon from "../../public/file.jpg";
+import image from "../../public/58.png";
+
 export default {
   components: { VueSelectImage },
   mixins: [dataMixin],
@@ -168,11 +175,13 @@ export default {
   },
   created() {
     this.url = "/res/get";
+    this.imageIcon = image;
     // this.loadResource();
   },
   methods: {
     commit() {
-      this.onSelect && this.onSelect(this.muilti?this.selectImages:this.aResult);
+      this.onSelect &&
+        this.onSelect(this.muilti ? this.selectImages : this.aResult);
       this.closeOpen();
     },
     resetType() {
@@ -235,7 +244,7 @@ export default {
       console.log(resId);
       return {
         id: resId,
-        src: resType === 1 ? resUrl : fileIcon,
+        src: resType === 1 ? resUrl : resType === 2 ? res.thumbnail : fileIcon ,
         alt: resName,
         payload: res,
       };
@@ -283,10 +292,10 @@ export default {
       this.cancelOpen();
       this.closeOpen();
     },
-    onClickDeleteSelect(idx){
-      let item = this.selectImages.splice(idx,1);
+    onClickDeleteSelect(idx) {
+      let item = this.selectImages.splice(idx, 1);
       this.$refs["selectCmp"].removeSelect(item[0].id);
-    }
+    },
     //数据加载
   },
 };
@@ -295,14 +304,14 @@ export default {
 <style lang="less" scope>
 @deep: ~">>>";
 .deleteIcon {
-  cursor:pointer;
+  cursor: pointer;
   background: white;
   position: absolute;
   right: 0px;
   top: 0px;
 }
-.deleteIcon:hover{
-  background:#CCCCCC;
+.deleteIcon:hover {
+  background: #cccccc;
 }
 .el-tabs--left .el-tabs__item.is-left {
   text-align: left !important;
