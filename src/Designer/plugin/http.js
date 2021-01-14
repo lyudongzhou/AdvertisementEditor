@@ -1,6 +1,11 @@
 import axios from "axios";
 
-const getUserId = () => '111';
+const getUserId = () => {
+  if (PRODUCTION) {
+    return sessionStorage.getItem('userId');
+  }
+  return '111';
+};
 
 const createInstance = ({$message}) => {
   const instance = axios.create({
