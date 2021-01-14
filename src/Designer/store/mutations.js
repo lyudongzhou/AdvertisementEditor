@@ -71,13 +71,6 @@ const afterCommandMap = {
 };
 
 export default {
-  setProgramInfo(){
-    
-    // let arr = ["coverUrl",];
-    // Object.keys(data).forEach(ele=>{
-    //   state.setProgramInfo[ele] = data[ele];
-    // });
-  },
   resetSchema (state, schema) {
     state.schema = clone(schema);
     state.currentPageId = getPropByPath(schema, 'pages[0].id', null);
@@ -172,8 +165,8 @@ export default {
     state.lockState[state.currentPageId][componentId] = !locked;
     state.lockState = {...state.lockState};
   },
-  setProjectId(state, id) {
-    state.projectId = id;
+  setProgramInfo(state, projectInfo) {
+    state.projectInfo = projectInfo;
   },
   showProgramConfig(state){
     state.isShowProgram = true;

@@ -302,4 +302,349 @@ router.get('/program/list', (req, res) => {
   res.send({ resources: aResponse, size, total: total });
 })
 
+router.get('/program/list', (req, res) => {
+  let size = parseInt(req.query.size);
+  let start = (parseInt(req.query.current) - 1) * size;
+  let aResponse;
+  let total;
+  aResponse = realProgramResource.slice(start, start + size);
+  total = realProgramResource.length;
+  res.send({ resources: aResponse, size, total: total });
+})
+
+router.get('/weather/get', (req, res) => {
+  let realtime = {
+        now: {
+          "prev": "北京省",
+          "city": "北京市",
+          "wind_direction": "东北风",
+          "wind_power": "1级",
+          "quality": "轻度污染",
+          "temperature": "0",
+          "weather": "晴",
+          "humidity": "32%",
+          "time": "20:30",
+          "weather_code": "00"
+        }
+      },
+      oneday = {
+        hour: [
+        {
+            "wind_direction": "东风",
+            "wind_power": "<3级",
+            "temperature": "1",
+            "weather": "晴",
+            "time": "18:00",
+            "weather_code": "00"
+        },
+        {
+            "wind_direction": "东风",
+            "wind_power": "<3级",
+            "temperature": "0",
+            "weather": "晴",
+            "time": "19:00",
+            "weather_code": "00"
+        },
+        {
+            "wind_direction": "东南风",
+            "wind_power": "<3级",
+            "temperature": "-2",
+            "weather": "晴",
+            "time": "20:00",
+            "weather_code": "00"
+        },
+        {
+            "wind_direction": "东风",
+            "wind_power": "<3级",
+            "temperature": "-2",
+            "weather": "晴",
+            "time": "21:00",
+            "weather_code": "00"
+        },
+        {
+            "wind_direction": "东风",
+            "wind_power": "<3级",
+            "temperature": "-2",
+            "weather": "晴",
+            "time": "22:00",
+            "weather_code": "00"
+        },
+        {
+            "wind_direction": "南风",
+            "wind_power": "<3级",
+            "temperature": "-2",
+            "weather": "晴",
+            "time": "23:00",
+            "weather_code": "00"
+        },
+        {
+            "wind_direction": "东风",
+            "wind_power": "<3级",
+            "temperature": "-3",
+            "weather": "晴",
+            "time": "00:00",
+            "weather_code": "00"
+        },
+        {
+            "wind_direction": "东风",
+            "wind_power": "<3级",
+            "temperature": "-3",
+            "weather": "晴",
+            "time": "01:00",
+            "weather_code": "00"
+        },
+        {
+            "wind_direction": "南风",
+            "wind_power": "<3级",
+            "temperature": "-3",
+            "weather": "晴",
+            "time": "02:00",
+            "weather_code": "00"
+        },
+        {
+            "wind_direction": "东风",
+            "wind_power": "<3级",
+            "temperature": "-5",
+            "weather": "晴",
+            "time": "03:00",
+            "weather_code": "00"
+        },
+        {
+            "wind_direction": "东风",
+            "wind_power": "<3级",
+            "temperature": "-5",
+            "weather": "晴",
+            "time": "04:00",
+            "weather_code": "00"
+        },
+        {
+            "wind_direction": "南风",
+            "wind_power": "<3级",
+            "temperature": "-5",
+            "weather": "晴",
+            "time": "05:00",
+            "weather_code": "00"
+        },
+        {
+            "wind_direction": "东南风",
+            "wind_power": "<3级",
+            "temperature": "-7",
+            "weather": "晴",
+            "time": "06:00",
+            "weather_code": "00"
+        },
+        {
+            "wind_direction": "东风",
+            "wind_power": "<3级",
+            "temperature": "-7",
+            "weather": "晴",
+            "time": "07:00",
+            "weather_code": "00"
+        },
+        {
+            "wind_direction": "南风",
+            "wind_power": "<3级",
+            "temperature": "-6",
+            "weather": "晴",
+            "time": "08:00",
+            "weather_code": "00"
+        },
+        {
+            "wind_direction": "东南风",
+            "wind_power": "<3级",
+            "temperature": "-5",
+            "weather": "多云",
+            "time": "09:00",
+            "weather_code": "01"
+        },
+        {
+            "wind_direction": "东南风",
+            "wind_power": "<3级",
+            "temperature": "-3",
+            "weather": "多云",
+            "time": "10:00",
+            "weather_code": "01"
+        },
+        {
+            "wind_direction": "西北风",
+            "wind_power": "<3级",
+            "temperature": "-2",
+            "weather": "多云",
+            "time": "11:00",
+            "weather_code": "01"
+        },
+        {
+            "wind_direction": "南风",
+            "wind_power": "<3级",
+            "temperature": "0",
+            "weather": "多云",
+            "time": "12:00",
+            "weather_code": "01"
+        },
+        {
+            "wind_direction": "南风",
+            "wind_power": "<3级",
+            "temperature": "1",
+            "weather": "多云",
+            "time": "13:00",
+            "weather_code": "01"
+        },
+        {
+            "wind_direction": "西北风",
+            "wind_power": "<3级",
+            "temperature": "2",
+            "weather": "多云",
+            "time": "14:00",
+            "weather_code": "01"
+        },
+        {
+            "wind_direction": "西北风",
+            "wind_power": "<3级",
+            "temperature": "2",
+            "weather": "多云",
+            "time": "15:00",
+            "weather_code": "01"
+        },
+        {
+            "wind_direction": "西北风",
+            "wind_power": "<3级",
+            "temperature": "1",
+            "weather": "多云",
+            "time": "16:00",
+            "weather_code": "01"
+        },
+        {
+            "wind_direction": "西北风",
+            "wind_power": "<3级",
+            "temperature": "0",
+            "weather": "多云",
+            "time": "17:00",
+            "weather_code": "01"
+        },
+        {
+            "wind_direction": "西北风",
+            "wind_power": "<3级",
+            "temperature": "-1",
+            "weather": "多云",
+            "time": "18:00",
+            "weather_code": "01"
+        }]
+      },
+      weekday = {
+        day: [
+          {
+              "date": "01-13",
+              "night_air_weather": "晴",
+              "week": "三",
+              "night_wind_direction": "南风",
+              "day_air_weather": "晴",
+              "night_air_temperature": "-7",
+              "day_weather_code": "00",
+              "night_weather_code": "00",
+              "day_wind_power": "<3级",
+              "day_air_temperature": "8",
+              "day_wind_direction": "东南风",
+              "night_wind_power": "<3级"
+          },
+          {
+              "date": "01-14",
+              "night_air_weather": "多云",
+              "week": "四",
+              "night_wind_direction": "北风",
+              "day_air_weather": "多云",
+              "night_air_temperature": "-7",
+              "day_weather_code": "01",
+              "night_weather_code": "01",
+              "day_wind_power": "<3级",
+              "day_air_temperature": "3",
+              "day_wind_direction": "西北风",
+              "night_wind_power": "<3级"
+          },
+          {
+              "date": "01-15",
+              "night_air_weather": "晴",
+              "week": "五",
+              "night_wind_direction": "北风",
+              "day_air_weather": "晴",
+              "night_air_temperature": "-8",
+              "day_weather_code": "00",
+              "night_weather_code": "00",
+              "day_wind_power": "3-4级",
+              "day_air_temperature": "4",
+              "day_wind_direction": "北风",
+              "night_wind_power": "<3级"
+          },
+          {
+              "date": "01-16",
+              "night_air_weather": "晴",
+              "week": "六",
+              "night_wind_direction": "西北风",
+              "day_air_weather": "晴",
+              "night_air_temperature": "-10",
+              "day_weather_code": "00",
+              "night_weather_code": "00",
+              "day_wind_power": "3-4级",
+              "day_air_temperature": "1",
+              "day_wind_direction": "西北风",
+              "night_wind_power": "<3级"
+          },
+          {
+              "date": "01-17",
+              "night_air_weather": "晴",
+              "week": "日",
+              "night_wind_direction": "西南风",
+              "day_air_weather": "晴",
+              "night_air_temperature": "-10",
+              "day_weather_code": "00",
+              "night_weather_code": "00",
+              "day_wind_power": "<3级",
+              "day_air_temperature": "4",
+              "day_wind_direction": "南风",
+              "night_wind_power": "<3级"
+          },
+          {
+              "date": "01-18",
+              "night_air_weather": "晴",
+              "week": "一",
+              "night_wind_direction": "北风",
+              "day_air_weather": "晴",
+              "night_air_temperature": "-8",
+              "day_weather_code": "00",
+              "night_weather_code": "00",
+              "day_wind_power": "<3级",
+              "day_air_temperature": "6",
+              "day_wind_direction": "东南风",
+              "night_wind_power": "<3级"
+          },
+          {
+              "date": "01-19",
+              "night_air_weather": "晴",
+              "week": "二",
+              "night_wind_direction": "西北风",
+              "day_air_weather": "晴",
+              "night_air_temperature": "-7",
+              "day_weather_code": "04",
+              "night_weather_code": "033",
+              "day_wind_power": "<3级",
+              "day_air_temperature": "5",
+              "day_wind_direction": "东风",
+              "night_wind_power": "<3级"
+          }
+        ]
+      };
+  switch (req.query.needday) {
+    case '1':
+      res.send(realtime);
+      break;
+    case '24':
+      res.send(oneday);
+      break;
+    case '7':
+      res.send(weekday);
+      break;
+    default:
+      res.send(null);
+  }
+})
+
 module.exports = router;
