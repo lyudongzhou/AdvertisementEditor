@@ -37,6 +37,11 @@ export default {
       lockState: {},
       projectId: '',
       isShowProgram:false,
+      projectInfo: {
+        id: null,
+        name: '节目',
+        description: '',
+      },
     };
   },
   getters: {
