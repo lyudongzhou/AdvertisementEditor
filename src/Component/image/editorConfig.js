@@ -10,6 +10,10 @@ export default [
         name: "图片",
         "position": "1",
         defaultSchema: {
+          layoutConfig:{
+            width:200,
+            height:200
+          },
             props: {
               bgUrl: [],
               changeType: "",

@@ -271,22 +271,94 @@ export const normal = [
   }
 ]
 export const mask = [
-  // {
-  //   name: "3",
-  //   position: "5.3.1",
-  //   defaultSchema: {
-  //     "type": "svgMaskCmp",
-  //     "layoutConfig": {
-  //       "width": 200,
-  //       "height": 200
-  //     },
-  //     "props": {
-  //       type:"3.1",
-  //       url:"images/Koala.jpg"
-  //     },
-  //     "animation": [],
-  //     "events": [],
-  //     "children": []
-  //   }
-  // }
+  {
+    name: "1",
+    position: "5.3.0",
+    defaultSchema: {
+      "type": "svgMaskCmp",
+      "layoutConfig": {
+        "width": 200,
+        "height": 200
+      },
+      "props": {
+        type:"3.0",
+        url:""
+      },
+      "animation": [],
+      "events": [],
+      "children": []
+    }
+  },
+  {
+    name: "2",
+    position: "5.3.1",
+    defaultSchema: {
+      "type": "svgMaskCmp",
+      "layoutConfig": {
+        "width": 200,
+        "height": 200
+      },
+      "props": {
+        type:"3.1",
+        url:""
+      },
+      "animation": [],
+      "events": [],
+      "children": []
+    }
+  },
+  {
+    name: "3",
+    position: "5.3.2",
+    defaultSchema: {
+      "type": "svgMaskCmp",
+      "layoutConfig": {
+        "width": 200,
+        "height": 200
+      },
+      "props": {
+        type:"3.2",
+        url:""
+      },
+      "animation": [],
+      "events": [],
+      "children": []
+    }
+  },
+  {
+    name: "4",
+    position: "5.3.3",
+    defaultSchema: {
+      "type": "svgMaskCmp",
+      "layoutConfig": {
+        "width": 200,
+        "height": 200
+      },
+      "props": {
+        type:"3.3",
+        url:""
+      },
+      "animation": [],
+      "events": [],
+      "children": []
+    }
+  },
+  {
+    name: "5",
+    position: "5.3.4",
+    defaultSchema: {
+      "type": "svgMaskCmp",
+      "layoutConfig": {
+        "width": 200,
+        "height": 200
+      },
+      "props": {
+        type:"3.4",
+        url:""
+      },
+      "animation": [],
+      "events": [],
+      "children": []
+    }
+  }
 ]
