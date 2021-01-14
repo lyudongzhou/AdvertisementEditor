@@ -7,15 +7,12 @@
         <span>{{weather.city}}</span>
       </div>
       <div class="real">
-        <p>
-          <span>空气 {{weather.quality}}</span>
-          <span> {{weather.weather_code}}</span>
-        </p>
+        <p>空气 {{weather.quality}}</p>
         <p>{{weather.time}} 更新</p>
       </div>
       <div class="temperature">
         <span>{{weather.temperature}}℃</span>
-        <i><img :url="zfine" /></i>
+        <i :class="`weather_icon bg-${Number(weather.weather_code)}`"></i>
         <span>{{weather.weather}}</span>
       </div>
       <div class="remind">
@@ -36,7 +33,6 @@
 
 <script>
   import baseCmp from "../../Base.vue";
-  import fine from "../../../Designer/public/fine.png";
 
   export default {
     name: "realTimeForecastCmp",
@@ -58,14 +54,12 @@
           "time": "20:30",
           "weather_code": "00",
         },
-        zfine: fine,
       };
     },
     watch: {},
     methods: {},
     computed: {},
     mounted() {
-      this.url = this.cmpConfig.props.url;
     },
   };
 </script>
@@ -107,4 +101,27 @@
       }
     }
   }
+  // @bgs: 00,01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,53,99,301,302;
+  @bgs: 00,01,02,04,07,10,33;
+  each(@bgs, {
+    .bg-@{value} {
+      background: url("../../../Designer/public/weather/@{value}.png");
+    }
+  });
+  .weather_icon {
+    display: inline-block;
+    width: 45px;
+    height: 45px;
+    background-repeat: no-repeat;
+    background-size: 45px auto;
+  }
+  // each(@bgs, {
+  //   .sel-0@{value} when (@{value}<10) {
+  //     background: url("../../../Designer/public/weather/0@{value}.png");
+  //   }
+  //   .sel-@{value} when (@{value}>=10) {
+  //     background: url("../../../Designer/public/weather/@{value}.png");
+  //   }
+  // });
+
 </style>
