@@ -11,3 +11,4 @@ import "./mixPlayTab";
 import "./videoTab";
 import "./svgTab";
 import "./timeTab";
+import "./timerTab";

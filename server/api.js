@@ -243,7 +243,7 @@ router.get('/testSchema', (req, res) => {
 });
 router.post('/program/get', (req, res) => {
   let result = fs.readFileSync(path.resolve(__dirname, `./testData/designer/${req.body.programId}.json`), 'utf8');
-  res.send(createSuccessResult({ programData: JSON.parse(result) }))
+  res.send(createSuccessResult({ programData: JSON.parse(result), id: req.body.programId }))
 });
 
 router.post('/program/update', (req, res) => {

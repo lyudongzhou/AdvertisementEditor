@@ -1,6 +1,10 @@
 import { v1 as uuidv1 } from 'uuid';
 import Vue from 'vue';
 
+const ONE_SEC_TIMESTAMP = 1000;
+const ONE_MIN_TIMESTAMP = ONE_SEC_TIMESTAMP * 60;
+const ONE_HOUR_TIMESTAMP = ONE_MIN_TIMESTAMP * 60;
+export const ONE_DAY_TIMESTAMP = ONE_HOUR_TIMESTAMP * 24;
 
 export const clone = obj => JSON.parse(JSON.stringify(obj));
 
@@ -43,4 +47,35 @@ export function switchArrayIndex(array, from, to) {
   Vue.set(array, from, toItem);
   Vue.set(array, to, fromItem);
   return array;
+}
+
+
+function fixWithZero(value, max = 2) {
+  value = value + '';
+  const {length} = value;
+  if (length < max) {
+    let needFixCount = max - length;
+    while (needFixCount > 0) {
+      value = '0' + value;
+      needFixCount--;
+    }
+  }
+  return value;
+}
+
+export function getTimeRemainStr(timestamp, format) {
+  if (format === 'dd') {
+    return `${fixWithZero(Math.ceil(timestamp / ONE_DAY_TIMESTAMP))}天`;
+  }
+  if (format === 'ddHHmmss') {
+    let timeRemain = timestamp;
+    const day = Math.floor(timestamp / ONE_DAY_TIMESTAMP);
+    timeRemain -= day * ONE_DAY_TIMESTAMP;
+    const hour = Math.floor(timeRemain / ONE_HOUR_TIMESTAMP);
+    timeRemain -= hour * ONE_HOUR_TIMESTAMP;
+    const min = Math.floor(timeRemain / ONE_MIN_TIMESTAMP);
+    timeRemain -= min * ONE_MIN_TIMESTAMP;
+    const sec = Math.floor(timeRemain / ONE_SEC_TIMESTAMP);
+    return `${fixWithZero(day)}天${fixWithZero(hour)}时${fixWithZero(min)}分${fixWithZero(sec)}秒`;
+  }
 }

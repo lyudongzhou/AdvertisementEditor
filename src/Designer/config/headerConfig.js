@@ -130,7 +130,7 @@ let Constructor ={children:[
           {
             "id": 2,
             "label": "正计时",
-            "type": "timing",
+            "type": "count",
             "icon": isTiming
           },
           {

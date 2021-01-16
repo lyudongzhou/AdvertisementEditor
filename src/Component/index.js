@@ -11,3 +11,4 @@ import "./svgs";
 import "./time";
 import "./notice";
 import "./weather";
+import "./timer";

@@ -132,7 +132,6 @@ export default {
     const lastOperate = manager.undo();
     if (lastOperate) {
       const type = lastOperate.type;
-      console.info(type);
       if (operatorMap[type] && operatorMap[type].undoAfter) {
         operatorMap[type].undoAfter.forEach(command => {
           afterCommandMap[command](state, lastOperate);
