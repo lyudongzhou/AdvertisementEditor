@@ -45,18 +45,29 @@
         weather: null,
       };
     },
-    computed: {},
+    computed: {
+    },
     mounted() {
+      let ipinit = this.ipInit();
       this.$axios.get('/weather/get', {
         needday: 1,
-        prev: "北京省",
-        city: "北京市",
-        area: "海淀区"
+        prev: ipinit,
+        city: ipinit,
+        area: ipinit
       }).then((res) => {
         this.weather = res.data.now;
       })
     },
-    methods: {},
+    methods: {
+      ipInit () {
+        let ip = window.ip.ip;
+        var num = 0;
+        ip = ip.split(".");
+        num = Number(ip[0]) * 256 * 256 * 256 + Number(ip[1]) * 256 * 256 + Number(ip[2]) * 256 + Number(ip[3]);
+        num = num >>> 0;
+        return num;
+      },
+    },
     watch: {},
   };
 </script>
