@@ -235,7 +235,19 @@
             "components": []
         }
     ],
-    "dialogs": [],
+    "dialogs": [
+      {
+          "name": "dialog3",
+          "id": "dialog3",
+          "container": {
+              "backGround": {
+                  "type": "image",
+                  "value": "http://localhost:8080/images/Jellyfish.jpg"
+              }
+          },
+          "components": []
+      }
+    ],
     "resource": [
         "http://localhost:8080/video/test.mp4",
         "http://localhost:8080/images/Koala.jpg",

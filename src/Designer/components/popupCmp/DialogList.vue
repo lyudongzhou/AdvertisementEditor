@@ -28,6 +28,23 @@ export default {
           name: '弹窗管理'
         }
       ],
+      listNames: [
+        {
+          id: 1,
+          type: 'DialogSetup',
+          name: '弹窗设置'
+        },
+        {
+          id: 2,
+          type: 'LayerManager',
+          name: '图层管理'
+        },
+        {
+          id: 3,
+          type: 'DialogManager',
+          name: '弹窗管理'
+        }
+      ],
       listActive: 'DialogManager'
     }
   },
@@ -39,26 +56,15 @@ export default {
   computed: {
     ...mapGetters(["currentDialog"]),
   },
+  mounted () {
+    if (this.currentDialog) {
+      this.listName = this.listNames;
+    }
+  },
   watch: {
     currentDialog(n) {
       if (n && this.listName.length<3) {
-        this.listName = [
-          {
-            id: 1,
-            type: 'DialogSetup',
-            name: '弹窗设置'
-          },
-          {
-            id: 2,
-            type: 'LayerManager',
-            name: '图层管理'
-          },
-          {
-            id: 3,
-            type: 'DialogManager',
-            name: '弹窗管理'
-          }
-        ];
+        this.listName = this.listNames;
       }
     }
   },

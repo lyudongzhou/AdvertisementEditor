@@ -28,11 +28,33 @@ export default {
           name: '页面管理'
         }
       ],
+      listNames: [
+        {
+          id: 1,
+          type: 'PageSetup',
+          name: '页面设置'
+        },
+        {
+          id: 2,
+          type: 'LayerManager',
+          name: '图层管理'
+        },
+        {
+          id: 3,
+          type: 'PageManager',
+          name: '页面管理'
+        }
+      ],
       listActive: 'PageManager'
     }
   },
   computed: {
     ...mapGetters(["currentPage"]),
+  },
+  mounted () {
+    if (this.currentPage) {
+      this.listName = this.listNames;
+    }
   },
   components: {
     PageSetup,
@@ -42,23 +64,7 @@ export default {
   watch: {
     currentPage(n) {
       if (n && this.listName.length<3) {
-        this.listName = [
-          {
-            id: 1,
-            type: 'PageSetup',
-            name: '页面设置'
-          },
-          {
-            id: 2,
-            type: 'LayerManager',
-            name: '图层管理'
-          },
-          {
-            id: 3,
-            type: 'PageManager',
-            name: '页面管理'
-          }
-        ];
+        this.listName = this.listNames;
       }
     }
   },
