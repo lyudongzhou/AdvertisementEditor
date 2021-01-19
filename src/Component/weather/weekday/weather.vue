@@ -42,16 +42,20 @@
       let ipinit = this.ipInit();
       this.$axios.get('/weather/get', {
         needday: 7,
-        prev: ipinit,
-        city: ipinit,
-        area: ipinit
+        ip: ipinit
       }).then((res) => {
         this.weather = res.data.day;
       })
     },
     methods: {
       ipInit () {
-        let ip = window.ip.ip;
+        let ip;
+        if (window.ip) {
+          ip = window.ip&&window.ip.ip;
+        } else {
+          console.error('ip获取失败');
+          return '';
+        }
         var num = 0;
         ip = ip.split(".");
         num = Number(ip[0]) * 256 * 256 * 256 + Number(ip[1]) * 256 * 256 + Number(ip[2]) * 256 + Number(ip[3]);
