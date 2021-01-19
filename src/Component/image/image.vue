@@ -45,7 +45,10 @@ export default {
   },
   mounted() {
     this.parent = this.$refs["parent"];
+      console.log(1111111111,this.designMode);
+
     if (this.cmpConfig.props.autoChange && !this.designMode) {
+      console.log(1111111111);
       this.interval = setInterval(() => {
         this.next();
       }, this.cmpConfig.props.changeTime * 1000);

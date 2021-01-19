@@ -134,7 +134,7 @@ export default {
       }
       let arr = [];
       a.forEach((ele) => {
-        arr.push(ele.resUrl);
+        arr.push(ele.sourcePaht);
       });
       this.updateSchema({
         type: UPDATE_COMPONENT_PROPS,

@@ -1,10 +1,11 @@
 <template>
   <baseCmp ref="parent" :cmpConfig="cmpConfig">
-    <div :style="publicList">{{ cmpConfig.props.text }}</div>
+    <div :style="publicList"  ref="text" @click="openEdit" >{{ cmpConfig.props.text }}</div>
   </baseCmp>
 </template>
 <script>
 import baseCmp from "../Base.vue";
+import {mapGetters} from "../../Render/store/index"
 export default {
   name: "textCmp",
   components: {
@@ -15,6 +16,7 @@ export default {
     this.parent = this.$refs["parent"];
   },
   computed: {
+    ...mapGetters(["designMode"]),
     textStyle() {
       return this.cmpConfig.props;
     },
@@ -52,5 +54,10 @@ export default {
       return style;
     },
   },
+  methods:{
+    openEdit(){
+      console.log(this.designMode);
+    }
+  }
 };
 </script>

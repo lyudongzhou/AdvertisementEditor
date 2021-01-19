@@ -465,7 +465,7 @@ export default {
       this.updateSchema({
         type: UPDATE_BGM,
         value: {
-          "container.bgm.src": a[0].resUrl,
+          "container.bgm.src": a[0].sourcePaht,
         },
       });
     },
