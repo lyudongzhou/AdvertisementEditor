@@ -152,7 +152,7 @@ export default {
     },
     handleClick(o, e) {
       console.log("capture");
-      var isVip = window.sessionStorage.getItem("isVIP");
+      var isVip = JSON.parse(window.localStorage.getItem("saber-userInfo")).content.memberType===1;
       isVip = true;
       if (!isVip && o.isVip !== 0) {
         this.$alert("成为会员即可免费哦。", {

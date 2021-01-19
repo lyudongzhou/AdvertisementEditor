@@ -204,7 +204,7 @@ export default {
       return `${baseMultipleClass}`;
     },
     onSelectImage(objectImage) {
-      let isVip = window.sessionStorage.getItem("isVip");
+      let isVip = JSON.parse(window.localStorage.getItem("saber-userInfo")).content.memberType===1;
       if(!isVip&&objectImage.payload.isVip){
         return;
       }
@@ -238,7 +238,7 @@ export default {
       this.multipleSelected = [];
     },
     onSelectMultipleImage(objectImage) {
-      let isVip = window.sessionStorage.getItem("isVip");
+      let isVip = JSON.parse(window.localStorage.getItem("saber-userInfo")).content.memberType===1;
       if(!isVip&&objectImage.payload.isVip){
         return;
       }

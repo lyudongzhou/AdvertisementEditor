@@ -2,7 +2,7 @@ import axios from "axios";
 
 const getUserId = () => {
   if (PRODUCTION) {
-    return sessionStorage.getItem('userId');
+    return JSON.parse(window.localStorage.getItem("saber-userInfo")).content.id;
   }
   return '111';
 };
