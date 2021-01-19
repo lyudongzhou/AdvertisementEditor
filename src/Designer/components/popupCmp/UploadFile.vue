@@ -231,11 +231,11 @@ export default {
       this.selectImages.splice(this.selectImages.indexOf(dataImage), 1);
     },
     fmtRes(res) {
-      const { resName, resType, resUrl, resId } = res;
+      const { resName, resType, sourcePaht, resId } = res;
       console.log(resId);
       return {
         id: resId,
-        src: resType === 1 ? resUrl : fileIcon,
+        src: resType === 1 ? sourcePaht : fileIcon,
         alt: resName,
         payload: res,
       };

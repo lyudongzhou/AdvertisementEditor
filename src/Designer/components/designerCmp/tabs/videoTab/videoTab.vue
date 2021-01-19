@@ -38,7 +38,7 @@ export default {
       this.updateSchema({
         type: UPDATE_COMPONENT_PROPS,
         value: {
-          "props.bgUrl": a[0].resUrl,
+          "props.bgUrl": a[0].sourcePaht,
         },
       });
     },

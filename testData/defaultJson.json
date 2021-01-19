@@ -16,7 +16,11 @@
         }
     },
     "change": {
-        
+        "type": 70,
+        "loop": true,
+        "singlePagePlayTime": 20000,
+        "changeHint": true,
+        "backTime": 6000
     },
     "pages": [
         {

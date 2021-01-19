@@ -21,13 +21,13 @@
                 <div style="width: 250px; height: 250px">
                   <img
                     v-if="o.resType === 1"
-                    :src="o.resUrl"
+                    :src="o.sourcePaht"
                     class="image"
                     @click="handleClick(o)"
                   />
                   <video
                     v-if="o.resType === 2"
-                    :src="o.resUrl"
+                    :src="o.sourcePaht"
                     class="image"
                     @click.capture="handleClick(o)"
                     @click="handleClick1()"
@@ -54,7 +54,7 @@
               <div>
                 <img
                   v-if="o.resType === 1"
-                  :src="o.resUrl"
+                  :src="o.sourcePaht"
                   class="image"
                   @click="handleClick(o)"
                 />
@@ -165,11 +165,11 @@ export default {
         if (o.resType === 1) {
           let defaultSchema = config["ImageCmp"][0].defaultSchema;
           console.log(o);
-          defaultSchema.props.bgUrl = [o.resUrl];
+          defaultSchema.props.bgUrl = [o.sourcePaht];
           this.$$addNewComponent(defaultSchema);
         } else if (o.resType === 2) {
           let defaultSchema = config["VideoCmp"][0].defaultSchema;
-          defaultSchema.props.bgUrl = o.resUrl;
+          defaultSchema.props.bgUrl = o.sourcePaht;
           this.$$addNewComponent(defaultSchema);
           // TODO: simulate bodyJson
         } else if (o.resType === 4) {

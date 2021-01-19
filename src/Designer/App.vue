@@ -101,9 +101,9 @@ export default {
       const urlSearchParams = new URLSearchParams(location.search);
       const urlHashParams = new URLSearchParams(location.hash);
       let id = urlSearchParams.get("id") || urlHashParams.get("id");
-      if (!PRODUCTION) {
-        id = id || 1
-      }
+      // if (!PRODUCTION) {
+      //   id = id || 1
+      // }
       if (id) {
         this.$axios.post("/program/get", { programId: id }).then(({ data }) => {
           let {id, name, description, programData} = data;

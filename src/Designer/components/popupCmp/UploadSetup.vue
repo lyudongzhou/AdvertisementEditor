@@ -60,7 +60,7 @@ export default {
       this.updateSchema({
         type: "beforeupdatePage",
       });
-      var newValue = a.length ? a[0].resUrl : "";
+      var newValue = a.length ? a[0].sourcePaht : "";
       this.updateSchema({
         type: "afterPage",
         value: {
