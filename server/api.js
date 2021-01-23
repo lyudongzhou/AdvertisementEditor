@@ -90,12 +90,12 @@ function generateFakeResourcesData() {
     {
       resName: "file",
       resType: 1,
-      resUrl: "http://localhost:8080/images/Koala.jpg",
+      sourcePaht: "http://localhost:8080/images/Koala.jpg",
     },
     {
       resName: "image",
       resType: 1,
-      resUrl: "http://localhost:8080/images/Jellyfish.jpg",
+      sourcePaht: "http://localhost:8080/images/Jellyfish.jpg",
     },
     {
       resName: "document",
@@ -109,7 +109,7 @@ function generateFakeResourcesData() {
     {
       resName: "video",
       resType: 2,
-      resUrl: "http://localhost:8080/video/test.mp4",
+      sourcePaht: "http://localhost:8080/video/test.mp4",
       thumbnail: "http://localhost:8080/video/test.jpeg",
     },
   ];

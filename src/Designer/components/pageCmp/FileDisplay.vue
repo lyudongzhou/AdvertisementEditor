@@ -204,8 +204,16 @@ export default {
       return `${baseMultipleClass}`;
     },
     onSelectImage(objectImage) {
-      let isVip = JSON.parse(window.localStorage.getItem("saber-userInfo")).content.memberType===1;
-      if(!isVip&&objectImage.payload.isVip){
+      var isVip;
+      try {
+        isVip =
+          JSON.parse(window.localStorage.getItem("saber-userInfo")).content
+            .memberType === 1;
+      } catch (e) {
+        console.log("vipCatchErr");
+        isVip = true;
+      }
+      if (!isVip && objectImage.payload.isVip) {
         return;
       }
       if (!objectImage.disabled) {
@@ -238,8 +246,16 @@ export default {
       this.multipleSelected = [];
     },
     onSelectMultipleImage(objectImage) {
-      let isVip = JSON.parse(window.localStorage.getItem("saber-userInfo")).content.memberType===1;
-      if(!isVip&&objectImage.payload.isVip){
+      var isVip;
+      try {
+        isVip =
+          JSON.parse(window.localStorage.getItem("saber-userInfo")).content
+            .memberType === 1;
+      } catch (e) {
+        console.log("vipCatchErr");
+        isVip = true;
+      }
+      if (!isVip && objectImage.payload.isVip) {
         return;
       }
       if (!objectImage.disabled) {

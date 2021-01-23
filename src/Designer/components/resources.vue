@@ -152,8 +152,15 @@ export default {
     },
     handleClick(o, e) {
       console.log("capture");
-      var isVip = JSON.parse(window.localStorage.getItem("saber-userInfo")).content.memberType===1;
-      isVip = true;
+      var isVip;
+      try {
+        isVip =
+          JSON.parse(window.localStorage.getItem("saber-userInfo")).content
+            .memberType === 1;
+      } catch (e) {
+        console.log("vipCatchErr");
+        isVip = true;
+      }
       if (!isVip && o.isVip !== 0) {
         this.$alert("成为会员即可免费哦。", {
           confirmButtonText: "确定",

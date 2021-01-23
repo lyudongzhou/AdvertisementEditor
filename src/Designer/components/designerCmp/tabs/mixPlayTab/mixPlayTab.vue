@@ -3,6 +3,17 @@
     <el-button type="primary" @click="choice"
       >选择<i class="el-icon-upload el-icon--right"></i
     ></el-button>
+    <v-form direction="vertical" style="width: 100%; margin-top: 10px">
+      <v-form-item label="切换时间" class="whiteClass">
+        <v-input-number
+          :min="1"
+          :max="1000"
+          v-model="value"
+          @change="_handleChange"
+          style="width: 100%"
+        ></v-input-number>
+      </v-form-item>
+    </v-form>
   </div>
 </template>
 
@@ -17,16 +28,31 @@ export default {
   name: "mixPlayTab",
   components: get(REG_EDITORS),
   props: ["configData", "config"],
-  mounted() {},
+  mounted() {
+    this.value = this.configData.props.changeTime;
+  },
+  data() {
+    return {
+      value: "",
+    };
+  },
   computed: {
     // ...mapState(['schema']),
   },
   methods: {
     ...mapMutations(["updateSchema"]),
+    _handleChange(value) {
+      this.updateSchema({
+        type: UPDATE_COMPONENT_PROPS,
+        value: {
+          "props.changeTime": value,
+        },
+      });
+    },
     choice() {
       this.$event.emit("openUploadWin", {
         onSelect: this.onSelect.bind(this),
-        aSelectType: ["image","video","document"],
+        aSelectType: ["image", "video", "document"],
         multi: true,
         title: "混播",
       });

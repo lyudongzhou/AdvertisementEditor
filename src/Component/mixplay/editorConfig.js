@@ -2,6 +2,18 @@ export default [
   {
     name: "混播",
     position: "3.0.0",
+    before: {
+      types: ["image","video","document"],
+      multi: true,
+      title: "混播",
+      fmtRes(a, schema) {
+        if (!a || a.length === 0) {
+          return schema;
+        }
+        schema.props.components = a;
+        return schema;
+      },
+    },
     defaultSchema: {
       "type": "mixplayCmp",
       "layoutConfig": {
@@ -9,7 +21,8 @@ export default [
         "height": 200
       },
       "props": {
-        "components":[]
+        "components":[],
+        "changeTime":3
       },
       "animation": [],
       "events": [],
