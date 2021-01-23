@@ -98,8 +98,10 @@ export default {
       orderType = 0,
       priceType = 1,
       type = 1,
+      // labelIds = [],
     }) {
-      return { resType, userId, current, size, orderType, priceType, type };
+      return { resType, userId, current, size, orderType, priceType, type};
+      // return { resType, userId, current, size, orderType, priceType, type,labelIds:JSON.stringify(labelIds) };
     },
     calculatePara() {
       let para = {};

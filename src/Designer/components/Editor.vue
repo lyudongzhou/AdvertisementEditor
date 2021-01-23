@@ -2,11 +2,14 @@
   <el-container style="height: 100%; background-color: #4d4d4d">
     <el-aside width="70px">
       <!-- 素材、节目 -->
-      <div v-for="list in typeList" :key="list.id"
-           :class="{typeSwitch: true, active: typeSwitch === list.id }"
-           @click="typeSwitch=list.id">
-          <img :src="list.icon" class="typeSwitchIcon">
-          <div>{{list.name}}</div>
+      <div
+        v-for="list in typeList"
+        :key="list.id"
+        :class="{ typeSwitch: true, active: typeSwitch === list.id }"
+        @click="typeSwitch = list.id"
+      >
+        <img :src="list.icon" class="typeSwitchIcon" />
+        <div>{{ list.name }}</div>
       </div>
     </el-aside>
     <!-- <el-container style="width: 200px" v-if="typeSwitch === 1"> -->
@@ -15,39 +18,50 @@
         <el-container>
           <!-- 机构、商城 -->
           <el-header style="height: 40px; padding: 0px; display: flex">
-            <div v-for="list in switchList" :key="list.id"
-                 :class="{ switch_list: true, active: sortConfig.type === list.id }"
-                 @click="onSortConfigChange(3, list.id)">
-              {{list.name}}
+            <div
+              v-for="list in switchList"
+              :key="list.id"
+              :class="{
+                switch_list: true,
+                active: sortConfig.type === list.id,
+              }"
+              @click="onSortConfigChange(3, list.id)"
+            >
+              {{ list.name }}
             </div>
           </el-header>
           <el-main style="padding: 0">
             <!-- search input -->
             <el-input
-              placeholder="搜索素材"
+              :placeholder="typeSwitch === 1 ? '搜索素材' : '搜索节目'"
               v-model="searchText"
               @blur="onSortConfigChange(4, searchText)"
-              style="margin: 24px 16px 24px 10px; width: 174px;color:white"
+              style="margin: 24px 16px 24px 10px; width: 174px; color: white"
             >
               <i slot="suffix" class="el-input__icon el-icon-search"></i>
             </el-input>
             <!-- 类型、排序、价格 -->
-            <sortItem :typeSwitch="typeSwitch" @sort-click="onSortClick"></sortItem>
+            <sortItem
+              :sortTabConfig="sortTabConfig[typeSwitch][sortConfig.type]"
+              @sort-click="onSortClick"
+            ></sortItem>
           </el-main>
         </el-container>
       </el-header>
       <el-main style="padding: 0">
         <!-- resource content -->
         <resources
-         :sortConfig="sortConfig"
-         :typeSwitch="typeSwitch"></resources>
+          :sortConfig="sortConfig"
+          :typeSwitch="typeSwitch"
+        ></resources>
       </el-main>
     </el-container>
     <sortPanel
       v-if="sortPanelShow"
       :select="fmtSelect()"
       :style="sortPosition"
-      :sortType="sortType"
+      :sortType="sortPanelConfig"
+      :property="panelProperty"
       @sort-config-change="onSortConfigChange"
       @mouse-leave="closeSortPanel"
     ></sortPanel>
@@ -58,21 +72,185 @@ import resources from "./resources";
 import sortItem from "./sortItem";
 import sortPanel from "./sortPanel";
 import resourceIcon from "../public/resource.png";
-import programIcon from "../public/program.png"
+import programIcon from "../public/program.png";
 export default {
   data() {
     return {
+      sortPanelConfig: [],
+      panelProperty: "",
+      sortTabConfig: {
+        1: {
+          1: [
+            {
+              text: "类型",
+              type: 0,
+              aSort: [
+                {
+                  label: "全部",
+                  value: 5,
+                },
+                {
+                  label: "图片",
+                  value: 1,
+                },
+                {
+                  label: "视频",
+                  value: 2,
+                },
+                {
+                  label: "文档",
+                  value: 4,
+                },
+              ],
+            },
+            {
+              text: "排序",
+              type: 1,
+              aSort: [
+                {
+                  label: "默认",
+                  value: 0,
+                },
+                {
+                  label: "最新",
+                  value: 1,
+                },
+                {
+                  label: "精选",
+                  value: 2,
+                },
+              ],
+            },
+            { text: "全部", type: 5, isLabel: true },
+          ],
+          2: [
+            {
+              text: "类型",
+              type: 0,
+              aSort: [
+                {
+                  label: "全部",
+                  value: 5,
+                },
+                {
+                  label: "图片",
+                  value: 1,
+                },
+                {
+                  label: "视频",
+                  value: 2,
+                },
+                {
+                  label: "文档",
+                  value: 4,
+                },
+              ],
+            },
+            {
+              text: "排序",
+              type: 1,
+              aSort: [
+                {
+                  label: "默认",
+                  value: 0,
+                },
+                {
+                  label: "最新",
+                  value: 1,
+                },
+                {
+                  label: "精选",
+                  value: 2,
+                },
+              ],
+            },
+            {
+              text: "价格",
+              type: 2,
+              aSort: [
+                {
+                  label: "免费",
+                  value: 1,
+                },
+                {
+                  label: "会员免费",
+                  value: 2,
+                },
+              ],
+            },
+            { text: "全部", type: 5, isLabel: true },
+          ],
+        },
+        2: {
+          1: [
+            {
+              text: "排序",
+              type: 1,
+              aSort: [
+                {
+                  label: "默认",
+                  value: 0,
+                },
+                {
+                  label: "最新",
+                  value: 1,
+                },
+                {
+                  label: "精选",
+                  value: 2,
+                },
+              ],
+            },
+            { text: "全部", type: 5, isLabel: true },
+          ],
+          2: [
+            {
+              text: "排序",
+              type: 1,
+              aSort: [
+                {
+                  label: "默认",
+                  value: 0,
+                },
+                {
+                  label: "最新",
+                  value: 1,
+                },
+                {
+                  label: "精选",
+                  value: 2,
+                },
+              ],
+            },
+            {
+              text: "价格",
+              type: 2,
+              aSort: [
+                {
+                  label: "免费",
+                  value: 1,
+                },
+                {
+                  label: "会员免费",
+                  value: 2,
+                },
+              ],
+            },
+            { text: "全部", type: 5, isLabel: true },
+          ],
+        },
+      },
       typeList: [
         {
           id: 1,
           name: "素材",
-          icon:resourceIcon
+          icon: resourceIcon,
         },
         {
           id: 2,
           name: "节目",
-          icon:programIcon
-        }
+          icon: programIcon,
+        },
       ],
       typeSwitch: 1,
       switchList: [
@@ -83,7 +261,7 @@ export default {
         {
           id: 2,
           name: "商城",
-        }
+        },
       ],
       isCollapse: true,
       sortType: null,
@@ -94,6 +272,7 @@ export default {
         resType: 5,
         orderType: 0,
         priceType: 1,
+        labelIds: [],
       },
       sortPosition: {
         top: "208px",
@@ -126,6 +305,9 @@ export default {
           break;
         case 4:
           type = "searchText";
+          break;
+        case 5:
+          type = "labelIds";
       }
       return type;
     },
@@ -140,19 +322,41 @@ export default {
       console.log(key, keyPath);
     },
     // 类型排序价格菜单栏是否需要折叠起来
-    onSortClick(type) {
-      if (type !== this.sortType) {
+    onSortClick(item, index, total) {
+      if (item.type !== this.sortType) {
         this.sortPanelShow = true;
       } else {
         this.closeSortPanel();
         return;
       }
-      this.sortType = type;
-      this.$set(
-        this.sortPosition,
-        "left",
-        type === 0 ? "55px" : type === 1 ? "117px" : "186px"
-      );
+      this.sortType = item.type;
+      this.panelProperty = this.caculateSortType(item.type);
+      if (total === 4) {
+        this.$set(
+          this.sortPosition,
+          "left",
+          index === 0
+            ? "40px"
+            : index === 1
+            ? "90px"
+            : index === 2
+            ? "140px"
+            : "180px"
+        );
+      } else {
+        this.$set(
+          this.sortPosition,
+          "left",
+          index === 0 ? "55px" : index === 1 ? "117px" : "186px"
+        );
+      }
+      while (this.sortPanelConfig.length) {
+        this.sortPanelConfig.pop();
+      }
+      item.aSort &&
+        item.aSort.forEach((ele) => {
+          this.sortPanelConfig.push(ele);
+        });
       // this.sortPosition = this.fmtSortStyle(type);
     },
     fmtSortStyle(type) {
@@ -170,7 +374,11 @@ export default {
       };
     },
     onSortConfigChange(type, config) {
-      this.sortConfig[this.caculateSortType(type)] = config;
+      if (type === "labelIds") {
+        this.sortConfig[type] = [config];
+      } else {
+        this.sortConfig[type] = config;
+      }
       this.sortConfig = Object.assign({}, this.sortConfig);
       this.closeSortPanel();
     },
@@ -183,14 +391,14 @@ export default {
 </script>
 
 <style scoped>
-.typeSwitchIcon{
-  width:40px;
-  height:40px;
+.typeSwitchIcon {
+  width: 30px;
+  height: 30px;
   margin-bottom: 5px;
 }
 .typeSwitch {
   width: 70px;
-  height:70px;
+  height: 70px;
   background-color: #424242;
   text-align: center;
   /* line-height: 70px; */
@@ -217,6 +425,7 @@ export default {
 
 } */
 .switch_list {
+  font-size: 16px;
   width: 100px;
   background-color: #424242;
   text-align: center;

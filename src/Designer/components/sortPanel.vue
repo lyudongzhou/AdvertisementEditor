@@ -1,10 +1,42 @@
 <template>
   <div class="sortContainer" @mouseleave="$emit('mouse-leave')">
     <div
-      v-for="(cmp, index) in sortTypeMap[sortType]"
+      v-if="sortType.length === 0"
+      style="width: 100%; height: 100%; position: relative"
+    >
+      <div class="sortItem" @mouseover="handleOver('industryList')">
+        行业<i class="el-icon-caret-right"></i>
+      </div>
+      <div class="sortItem" @mouseover="handleOver('purposeList')">
+        用途<i class="el-icon-caret-right"></i>
+      </div>
+      <div class="subSortPanel" v-if="currentSelect === 'industryList'">
+        <div
+          v-for="(cmp, index) in industryList"
+          :key="index"
+          :class="fmtClass(cmp.value)"
+          @click="onClick(cmp.id)"
+        >
+          {{ cmp.name }}
+        </div>
+      </div>
+      <div class="subSortPanel" v-if="currentSelect === 'purposeList'">
+        <div
+          v-for="(cmp, index) in purposeList"
+          :key="index"
+          :class="fmtClass(cmp.value)"
+          @click="onClick(cmp.id)"
+        >
+          {{ cmp.name }}
+        </div>
+      </div>
+    </div>
+
+    <div
+      v-for="(cmp, index) in sortType"
       :key="index"
       :class="fmtClass(cmp.value)"
-      @click="onClick(sortType, cmp.value)"
+      @click="onClick(cmp.value)"
     >
       {{ cmp.label }}
     </div>
@@ -13,70 +45,60 @@
 
 <script>
 export default {
-  props: ["sortType","select"],
+  props: ["property", "sortType", "select"],
   methods: {
-    onClick(type, value) {
-      this.$emit("sort-config-change", type, value);
+    onClick(value) {
+      console.log(this.property,value);
+      this.$emit("sort-config-change", this.property, value);
     },
-    fmtClass(index){
-        return {
-            sortItem:true,
-            active:this.select===index
-        }
+    fmtClass(index) {
+      return {
+        sortItem: true,
+        active: this.select === index,
+      };
+    },
+    getResources() {
+      return new Promise((resolve) => {
+        this.$axios.get("/label/get").then(resolve);
+      });
+    },
+    handleOver(name){
+      console.log("over");
+      this.currentSelect = name;
     }
+  },
+  created() {
+    this.getResources().then((res) => {
+      res.data[0].forEach((ele) => {
+        this.industryList.push(ele);
+      });
+      res.data[1].forEach((ele) => {
+        this.purposeList.push(ele);
+      });
+    });
   },
   data() {
     return {
-      sortTypeMap: {
-        0: [
-          {
-            label: "全部",
-            value: 5,
-          },
-          {
-            label: "图片",
-            value: 1,
-          },
-          {
-            label: "视频",
-            value: 2,
-          },
-          {
-            label: "文档",
-            value: 4,
-          },
-        ],
-        1: [
-          {
-            label: "默认",
-            value: 0,
-          },
-          {
-            label: "最新",
-            value: 1,
-          },
-          {
-            label: "精选",
-            value: 2,
-          },
-        ],
-        2: [
-          {
-            label: "免费",
-            value: 1,
-          },
-          {
-            label: "会员免费",
-            value: 2,
-          },
-        ],
-      },
+      currentSelect: "industryList",
+      industryList: [],
+      purposeList: [],
     };
   },
 };
 </script>
 
 <style scoped>
+.subSortPanel {
+  position: absolute;
+  width: 100px;
+  display: flex;
+  flex-wrap: wrap;
+  max-height: 200px;
+  left: 100px;
+  background: white;
+  top: 0px;
+  overflow-y: auto;
+}
 .sortContainer {
   display: flex;
   position: absolute;
