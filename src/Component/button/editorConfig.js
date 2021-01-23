@@ -5,12 +5,12 @@ export default [
     defaultSchema: {
       "type": "buttonCmp",
       "layoutConfig": {
-        "width": 200,
-        "height": 200
+        "width": 300,
+        "height": 150
       },
       "btnProps": {
-        "width": 200,
-        "height": 200,
+        "width": 300,
+        "height": 150,
         "opacity": 1,
         "background": "#abcdef",
         "text-align": "center",
