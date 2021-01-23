@@ -11,7 +11,8 @@ export default [
       "props": {
         "width": 100,
         "height": 50,
-        "background": "#abcdef",
+        "background": "transparent",
+        "font-family": "黑体",
         "color": "#0f0",
         "font-size": 20,
         "text": ""
