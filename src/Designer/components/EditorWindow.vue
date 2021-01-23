@@ -95,6 +95,7 @@ export default {
         schema.extraTabs.forEach((ele) => {
           this.tabs.push(ele);
         });
+        schema.extraTabs && (this.activeNames = DEFAULTTABS.length);
     },
   },
   watch: {
