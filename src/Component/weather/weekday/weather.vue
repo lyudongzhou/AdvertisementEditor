@@ -39,29 +39,20 @@
     computed: {
     },
     mounted() {
-      let ipinit = this.ipInit();
+      let ip;
+      if (window.ip) {
+        ip = window.ip&&window.ip.ip;
+      } else {
+        console.error('ip获取失败');
+      }
       this.$axios.get('/weather/get', {
         needday: 7,
-        ip: ipinit
+        ip: ip
       }).then((res) => {
         this.weather = res.data.day;
       })
     },
     methods: {
-      ipInit () {
-        let ip;
-        if (window.ip) {
-          ip = window.ip&&window.ip.ip;
-        } else {
-          console.error('ip获取失败');
-          return '';
-        }
-        var num = 0;
-        ip = ip.split(".");
-        num = Number(ip[0]) * 256 * 256 * 256 + Number(ip[1]) * 256 * 256 + Number(ip[2]) * 256 + Number(ip[3]);
-        num = num >>> 0;
-        return num;
-      },
     },
     watch: {},
   };

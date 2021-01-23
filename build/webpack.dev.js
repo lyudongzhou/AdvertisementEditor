@@ -7,15 +7,15 @@ module.exports = merge(commonConfig, {
     contentBase: path.join(__dirname, "../testData/"),
     open: true,
     before(app) {
-      // enhanceApp(app);
+      enhanceApp(app);
     },
-    proxy:{
-      "/openapi":{
-        target:"http://saberxf.rz-edu.cn/api/xf-open/",
-        pathRewrite:{
-          // "^/openapi":"/"
-        }
-      }
-    }
+    // proxy:{
+    //   "/openapi":{
+    //     target:"http://saberxf.rz-edu.cn/api/xf-open/",
+    //     pathRewrite:{
+    //       // "^/openapi":"/"
+    //     }
+    //   }
+    // }
   }
 });
