@@ -1,7 +1,7 @@
 <template>
   <div class="chart_tab">
     <div>
-      <div :class="configData.props.legend.show?'show':'hide'" class="show_legend">
+      <div :class="{'hide_legend':!configData.props.legend.show}" class="show_legend">
         <span>提示图例</span>
         <button @click="switchLegend">{{configData.props.legend.show?'ON':'OFF'}}</button>
       </div>
@@ -123,7 +123,7 @@
           outline: none;
         }
       }
-      .hide {
+      .hide_legend {
         span {
           color: #ab9898;
         }
