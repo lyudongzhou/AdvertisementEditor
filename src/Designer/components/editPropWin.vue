@@ -2,19 +2,41 @@
   <el-dialog
     :title="title"
     :visible.sync="showEditWin"
-    width="75%"
+    width="50%"
     :modal-append-to-body="false"
     :center="true"
     :before-close="handleClose"
+    class="propWin"
   >
-    <div style="height: 200px">
-      <component
-        :is="tab.type"
-        :configData="defaultSchema"
-        :config="tab"
-        class="tabInner"
-      ></component>
-    </div>
+    <el-container class="dialogContainer">
+      <el-main
+        class="dialogMiddle"
+        style="max-height: 300px; overflow-x: hidden; overflow-y: scroll"
+      >
+        <component
+          v-if="tab"
+          :configData="currentComponent"
+          :is="tab.type"
+          :config="tab"
+          class="tabInner"
+        ></component>
+      </el-main>
+      <el-footer
+        style="height: 10%; margin-top: 10px; bottom: 0; text-align: center"
+        ><el-button style="width: 130px; height: 45px" @click="handleClose"
+          >取消</el-button
+        ><el-button
+          style="
+            width: 130px;
+            height: 45px;
+            background: #1391ff;
+            color: #ffffff;
+          "
+          @click="commit"
+          >确定</el-button
+        ></el-footer
+      >
+    </el-container>
   </el-dialog>
 </template>
 
@@ -22,43 +44,43 @@
 import "./designerCmp";
 import { REG_TABS } from "@/const";
 import { get } from "@/register";
+import { mapGetters } from "../store";
 export default {
   components: { ...get(REG_TABS) },
-  computed: {},
+  // computed: {},
+  mounted() {
+    this.$event.on("openEditWin", (config) => {
+      this.start(config);
+    });
+  },
   data() {
     return {
       showEditWin: false,
       title: "编辑",
-      tab: {
-        type: "textTab",
-        name: "文本配置",
-        notSupport: "",
-        children: [],
-      },
-      defaultSchema: {
-        name: "按钮1",
-        type: "textCmp",
-        layoutConfig: {
-          width: 100,
-          height: 30,
-        },
-        props: {
-          text: "文本",
-          fontFamily: "微软雅黑",
-          fontStyle: "normal",
-          fontSize: 30,
-          color: "#000000",
-          fontAlign: "left",
-          fontWeight: "normal",
-        },
-        animation: [],
-        events: [],
-        children: [],
-      },
+      tab: null,
+      // currentComponent:null,
     };
   },
+  computed:{
+    ...mapGetters(["currentComponent"]),
+  },
   methods: {
-    handleClose() {},
+    start({ title, tab, cb }) {
+      this.cb = cb;
+      this.title = title;
+      this.tab = tab;
+      this.showEditWin = true;
+    },
+    handleClose() {
+      this.showEditWin = false;
+      this.tab = null;
+      this.cb && this.cb(false);
+    },
+    commit() {
+      this.showEditWin = false;
+      this.tab = null;
+      this.cb && this.cb(true);
+    },
   },
 };
 </script>

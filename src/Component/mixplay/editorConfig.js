@@ -10,7 +10,19 @@ export default [
         if (!a || a.length === 0) {
           return schema;
         }
-        schema.props.components = a;
+        let arr = [];
+        a.forEach((ele) => {
+          let t = [];
+          if (ele.resType === 4) {
+            ele.imgList.forEach((ele) => {
+              t.push({ sourcePaht: ele, resType: 1 });
+            });
+            arr.push.apply(arr, t);
+          }else{
+            arr.push(ele);
+          }
+        });
+        schema.props.components = arr;
         return schema;
       },
     },

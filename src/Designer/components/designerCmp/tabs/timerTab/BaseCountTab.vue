@@ -64,6 +64,9 @@
         return this.isCountdown ? '截止时间' : ' 开始时间';
       }
     },
+    created(){
+      console.log("create");
+    },
     methods: {
       ...mapMutations(["updateSchema"]),
       handleInput(value) {

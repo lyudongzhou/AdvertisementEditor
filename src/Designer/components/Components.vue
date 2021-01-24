@@ -53,7 +53,8 @@ import headConfig from "../config/headerConfig";
 import schemaMixin from "../mixin/schemaMixin";
 import { get } from "@/register";
 import { SVGS } from "@/const";
-
+import { DELETE_COMPONENT } from "../constant/schema";
+import { mapMutations } from "../store/index";
 export default {
   name: "components",
   mixins: [schemaMixin],
@@ -67,11 +68,34 @@ export default {
     };
   },
   methods: {
+    ...mapMutations(["updateSchema"]),
     addCmp(config) {
-      if (config.editConfig.before) {
+      if (config.editConfig.after) {
+        // console.log(DELETE_COMPONENT);
+        // this.$$addNewComponent(config.editConfig.defaultSchema);
+        // return;
+        let me = this;
+        me.$$addNewComponent(config.editConfig.defaultSchema);
+        this.$event.emit("openEditWin", {
+          title: config.editConfig.after.title,
+          tab: config.editConfig.after.tab,
+          cb(isSuccess) {
+            if (!isSuccess) {
+              me.updateSchema({
+                type: DELETE_COMPONENT,
+              });
+            }
+          },
+        });
+      } else if (config.editConfig.before) {
         this.$event.emit("openUploadWin", {
-          onSelect: (a)=>{
-            this.$$addNewComponent(config.editConfig.before.fmtRes(a,config.editConfig.defaultSchema));
+          onSelect: (a) => {
+            this.$$addNewComponent(
+              config.editConfig.before.fmtRes(
+                a,
+                config.editConfig.defaultSchema
+              )
+            );
           },
           aSelectType: config.editConfig.before.types,
           multi: config.editConfig.before.multi,

@@ -61,10 +61,22 @@ export default {
       if (!a || a.length === 0) {
         return;
       }
+      let arr = [];
+      a.forEach((ele) => {
+        let t = [];
+        if (ele.resType === 4) {
+          ele.imgList.forEach((ele) => {
+            t.push({ sourcePaht: ele, resType: 1 });
+          });
+          arr.push.apply(arr, t);
+        }else{
+          arr.push(ele);
+        }
+      });
       this.updateSchema({
         type: UPDATE_COMPONENT_PROPS,
         value: {
-          "props.components": a,
+          "props.components": arr,
         },
       });
     },
