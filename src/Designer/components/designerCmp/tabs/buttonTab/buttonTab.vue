@@ -150,6 +150,7 @@
         this.activeBtn = style.className;
         this.changeStyle(BEFORE_UPDATE_COMPONENT_PROPS);
         Object.assign(this.configData.btnProps, this[style.className]);
+        console.log(this.configData.btnProps, 111111);
         this.changeStyle(AFTER_UPDATE_COMPONENT_PROPS);
       }
     },

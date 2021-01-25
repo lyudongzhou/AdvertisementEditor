@@ -104,11 +104,11 @@ export default {
       this.isClose = data ? false : true;
       this.onChangeType(data);
     },
-    activeNames (n) {
-      if (n === 4) { // 4:私有配置的name
-        this.$event.emit('SHOWCOLORPICKER')
-      }
-    }
+    // activeNames (n) {
+    //   if (n === 4) { // 4:私有配置的name
+    //     this.$event.emit('SHOWCOLORPICKER')
+    //   }
+    // }
   },
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
     <div class="basic_tab">
-        <textStyle :configData="configData" :config="config"></textStyle>
+        <textStyle :configData="configData" :config="config" :isHasBg="true"></textStyle>
     </div>
 </template>
 

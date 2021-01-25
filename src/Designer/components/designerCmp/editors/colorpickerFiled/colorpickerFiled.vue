@@ -72,12 +72,12 @@ export default {
       if (this._colorPicker) return;
       this.createColorPicker();
     } else { // cmp
-      this.$event.on('SHOWCOLORPICKER', () => {
-        this.$nextTick(() => {
+      // this.$event.on('SHOWCOLORPICKER', () => {
+      //   this.$nextTick(() => {
           if (this._colorPicker) return;
           this.createColorPicker();
-        })
-      });
+      //   })
+      // });
     }
   },
   methods: {

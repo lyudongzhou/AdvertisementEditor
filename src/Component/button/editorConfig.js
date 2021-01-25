@@ -12,7 +12,6 @@ export default [
         "width": 300,
         "height": 150,
         "opacity": 1,
-        "background": "#abcdef",
         "text-align": "center",
         'border-width': 10,
         'border-style': 'solid',

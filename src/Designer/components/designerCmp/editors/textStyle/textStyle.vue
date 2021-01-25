@@ -115,7 +115,7 @@
         :config="colorpickerConfig"
       ></colorpickerFiled>
     </el-form-item>
-    <el-form-item label="背景颜色">
+    <el-form-item v-if="isHasBg" label="背景颜色">
       <colorpickerFiled
         :configData="configData"
         :config="colorpickerBGConfig"
@@ -137,7 +137,7 @@ import { UPDATE_COMPONENT_PROPS } from "../../../../constant/schema";
 import { mapMutations } from "../../../../store";
 export default {
   name: "textStyle",
-  props: ["configData", "config"],
+  props: ["configData", "config", 'isHasBg'],
   created() {},
   components: {
     numberField,
