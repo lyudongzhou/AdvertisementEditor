@@ -624,7 +624,7 @@ export default {
         class="ae-select-item"
         :draggable="!isCurrentComponentLocked"
         :active="true"
-        :preventDeactivation="false"
+        :preventDeactivation="true"
         :parent="true"
         :min-width="null"
         :min-height="null"

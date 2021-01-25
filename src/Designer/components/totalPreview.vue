@@ -520,6 +520,7 @@ export default {
   watch: {
     changeTypeIndex() {
       if (this.isMounted) {
+        console.log(this.changeTypeSchema);
         this.updateSchema({
           type: UPDATE_BGM,
           value: {

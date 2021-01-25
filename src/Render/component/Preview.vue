@@ -47,9 +47,9 @@ export default {
     currentLayout() {
       return this.findCurrentMessage(this.currentPage).layout;
     },
-    isProduction(){
+    isProduction() {
       return !!window.renderData;
-    }
+    },
   },
   components: {
     singlePage,
@@ -82,6 +82,7 @@ export default {
         if (this.nextData !== null) {
           let $main = $(this.$refs["main"]);
           let $pages = $($main).children("ul.pt-page");
+          console.log("display", this.renderData.change.type);
           this.translate = new transition({
             $main,
             $pages,
