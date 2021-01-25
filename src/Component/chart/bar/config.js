@@ -1,12 +1,12 @@
 export default {
-  name: '折线图',
+  name: '柱状图',
   notSupport: [
 
   ],
   extraTabs: [
     {
       type: "chartTab",
-      name: "折线图配置",
+      name: "柱状图配置",
       target: {
         "switch": "props.legend.show",
         "data": {

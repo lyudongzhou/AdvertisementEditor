@@ -6,7 +6,7 @@ export default {
   extraTabs: [
     {
       type: "chartTab",
-      name: "折线图配置",
+      name: "条形图配置",
       target: {
         "switch": "props.legend.show",
         "data": {

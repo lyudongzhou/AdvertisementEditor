@@ -1,6 +1,6 @@
 export default [
   {
-    name: "柱状图",
+    name: "条形图",
     position: "3.5.3",
     defaultSchema: {
       "type": "linecodeChartCmp",
