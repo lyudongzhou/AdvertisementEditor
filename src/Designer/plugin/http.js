@@ -14,11 +14,20 @@ const createInstance = ({$message}) => {
     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
     transformRequest: [
       function handleUserId(data) {
+        if(data instanceof FormData){
+          data.append("userId",getUserId());
+          return data;
+        }
+        console.log("fmt");
         data = data || {};
         data.userId = getUserId();
         return data;
       },
       function (data) {
+        if(data instanceof FormData){
+          return data;
+        }
+        console.log("fmt");
         let ret = '';
         for (let it in data) {
           ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
