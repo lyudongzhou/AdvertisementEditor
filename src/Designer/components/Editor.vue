@@ -25,7 +25,7 @@
                 switch_list: true,
                 active: sortConfig.type === list.id,
               }"
-              @click="onSortConfigChange(3, list.id)"
+              @click="onSortConfigChange('type', list.id)"
             >
               {{ list.name }}
             </div>
@@ -379,6 +379,7 @@ export default {
       } else {
         this.sortConfig[type] = config;
       }
+      console.log(this.sortConfig);
       this.sortConfig = Object.assign({}, this.sortConfig);
       this.closeSortPanel();
     },

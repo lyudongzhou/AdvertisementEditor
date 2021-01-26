@@ -55,7 +55,7 @@ export default {
       Object.assign(this, o);
     },
     loadResource() {
-      console.log("loadRes");
+      // console.log("loadRes");
       if (this.isLoading) {
         return false;
       }
@@ -69,14 +69,23 @@ export default {
     fmtRes(res) {
       return res;
     },
+    fmtProgram(res){
+      return res;
+    },
     onLoad(res) {
       console.log(res);
-      res.data.resources.forEach((ele) => {
-        this.aResource.push(this.fmtRes(ele));
-      });
+      if (this.url === "/res/get") {
+        res.data.resources.forEach((ele) => {
+          this.aResource.push(this.fmtRes(ele));
+        });
+      } else {
+        res.data.records.forEach((ele) => {
+          this.aResource.push(this.fmtProgram(ele));
+        });
+      }
+
       this.isLoading = false;
       this.total = res.data.total;
-      console.log(this.aResource);
     },
     getResources() {
       return new Promise((resolve) => {
@@ -100,7 +109,11 @@ export default {
       type = 1,
       // labelIds = [],
     }) {
-      return { resType, userId, current, size, orderType, priceType, type};
+      let o = { resType, userId, current, size, orderType, priceType, type };
+      if(this.url !== "/res/get"){
+        delete o.resType
+      }
+      return o;
       // return { resType, userId, current, size, orderType, priceType, type,labelIds:JSON.stringify(labelIds) };
     },
     calculatePara() {

@@ -48,7 +48,7 @@
                     ></div>
                     <img :src="o.imgList[0]" class="image" />
                   </div>
-                  <img v-if="o.bodyJson" :src="o.thumbnail" class="image" />
+                  <img v-if="o.body" :src="o.thumbnail" class="image" />
                 </div>
               </div>
               <div>
@@ -82,7 +82,7 @@
                   ></div>
                   <img :src="fireImage" class="image" />
                 </div>
-                <img v-if="o.bodyJson" :src="o.thumbnail" class="image" />
+                <img v-if="o.body" :src="o.thumbnail" class="image" />
               </div>
             </el-tooltip>
             <img
@@ -178,14 +178,14 @@ export default {
           let defaultSchema = config["VideoCmp"][0].defaultSchema;
           defaultSchema.props.bgUrl = o.sourcePaht;
           this.$$addNewComponent(defaultSchema);
-          // TODO: simulate bodyJson
+          // TODO: simulate body
         } else if (o.resType === 4) {
           let defaultSchema = config["documentCmp"][0].defaultSchema;
           defaultSchema.props.bgUrl = o.imgList;
           this.$$addNewComponent(defaultSchema);
         }
       } else {
-        this.resetSchema(o.bodyJson);
+        this.resetSchema(o.body);
       }
       if (e) {
         e.preventDefault();
