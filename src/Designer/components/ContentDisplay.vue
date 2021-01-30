@@ -96,6 +96,7 @@ export default {
       },
       containerInfo: {},
       //        selectItemContainerStyle: {},
+      activeSelectItem: true,
     };
   },
   computed: {
@@ -248,6 +249,15 @@ export default {
     },
   },
   methods: {
+    toggleActivate(activeSelectItem) {
+      this.activeSelectItem = activeSelectItem;
+      if (!this.activeSelectItem) {
+        this.selectCurrentPage();
+      }
+    },
+    handleCtrlClick(componentInstance, componentId) {
+      console.info(componentInstance, componentId)
+    },
     onDblClick() {
       let type = this.currentComponent.type;
       console.log(111);
@@ -311,6 +321,7 @@ export default {
               left: dom.offsetLeft * this.scaleValue + container.offsetLeft,
             },
           };
+          this.toggleActivate(true);
         });
       }
     },
@@ -544,7 +555,7 @@ export default {
       });
       return false;
     },
-    ...mapMutations(["selectComponent", "updateSchema"]),
+    ...mapMutations(["selectComponent", "updateSchema", 'selectCurrentPage']),
   },
 };
 </script>
@@ -561,6 +572,7 @@ export default {
       @contextmenu="onContextmenu(false, $event)"
     >
       <render
+        @ctrlClick="handleCtrlClick"
         v-if="opened"
         ref="render"
         :renderData="schema"
@@ -621,10 +633,10 @@ export default {
           transform: `translate(${selectItemLayoutInfo.x}px, ${selectItemLayoutInfo.y}px) rotate(${selectItemLayoutInfo.rotation}deg)`,
         }"
         ref="selectItem"
-        class="ae-select-item"
+        :class="['ae-select-item', {'hidden-vdr': !activeSelectItem}]"
         :draggable="!isCurrentComponentLocked"
-        :active="true"
-        :preventDeactivation="true"
+        :active="activeSelectItem"
+        :preventDeactivation="false"
         :parent="true"
         :min-width="null"
         :min-height="null"
@@ -640,12 +652,15 @@ export default {
         @dragstop="dragStop"
         @resizestop="resizeStop"
         @dblclick.native="onDblClick"
+        @activated="toggleActivate(true)"
+        @deactivated="toggleActivate(false)"
       >
         <div
           :style="{ width: '100%', height: '100%' }"
           @contextmenu="onContextmenu(true, $event)"
         ></div>
         <rotate-operate
+          v-if="activeSelectItem"
           :active="rotateActive"
           @activeChange="rotateActiveChange"
         ></rotate-operate>
@@ -722,6 +737,9 @@ export default {
 
     .ae-select-item {
       pointer-events: auto;
+      &.hidden-vdr {
+        border: none;
+      }
     }
   }
 
