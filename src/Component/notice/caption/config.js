@@ -5,7 +5,7 @@ export default {
   ],
   extraTabs: [
     {
-      type: "timeTab",
+      type: "captionTab",
       name: "通知配置",
       notSupport: "显示格式",
       support: "文本",

@@ -16,15 +16,15 @@ export default [
     defaultSchema: {
       type: "informCmp",
       layoutConfig: {
-        width: 100,
-        height: 50,
+        width: 200,
+        height: 100,
       },
       props: {
-        width: 100,
-        height: 50,
+        width: 200,
+        height: 100,
         text: "通知",
-        color: "#0f0",
-        background: "#abcdef",
+        color: "#000",
+        background: "transparent",
         "font-size": 30,
       },
       animation: [],
