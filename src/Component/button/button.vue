@@ -39,7 +39,7 @@
             case 'height':
                 style[key] = this.cmpConfig.layoutConfig[key]+'px'
                 break
-            case 'background-color':
+            case 'background':
                 style[key] = this.cmpConfig.btnProps[key]
                 break
             case 'box-shadow':
