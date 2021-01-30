@@ -39,7 +39,7 @@
             case 'height':
                 style[key] = this.cmpConfig.layoutConfig[key]+'px'
                 break
-            case 'background':
+            case 'background-color':
                 style[key] = this.cmpConfig.btnProps[key]
                 break
             case 'box-shadow':
@@ -47,7 +47,7 @@
                 break
             case 'border-radius':
                 style[key] = this.cmpConfig.btnProps['border-radius'].split('px').length>2?
-                                         `${this.cmpConfig.layoutConfig.height*0.6}px 0px`:
+                                         `${this.cmpConfig.layoutConfig.height}px 0px`:
                                          (this.cmpConfig.btnProps['border-radius']!=='4px'?
                                             `${this.cmpConfig.layoutConfig.height*0.8}px`:
                                             this.cmpConfig.btnProps[key])

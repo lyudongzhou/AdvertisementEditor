@@ -13,6 +13,7 @@ export default [
         "height": 150,
         "opacity": 1,
         "text-align": "center",
+        "background-color": '#abcdef',
         'border-width': 10,
         'border-style': 'solid',
         'border-color': '#abcdef',

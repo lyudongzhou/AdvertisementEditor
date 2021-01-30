@@ -65,7 +65,7 @@
           height = this.configData.btnProps.height.split('px')[0];
         }
         return {
-          'background': '#abcdef',
+          'background-color': '#abcdef',
           'color': '#fff',
           'border-radius': '4px',
           'box-shadow': `#43a1ff 0px ${height*0.8} 0px 0px`,
@@ -78,7 +78,7 @@
           height = this.configData.btnProps.height.split('px')[0];
         }
         return {
-          'background': '#abcdef',
+          'background-color': '#abcdef',
           'color': '#fff',
           'border-radius': `${height*0.8}px`,
           'box-shadow': 'none',
@@ -92,7 +92,7 @@
         }
         return {
           'color': '#abcdef',
-          'background': 'none',
+          'background-color': 'transparent',
           'border-width': height*0.1+'px',
           'border-style': 'solid',
           'border-color': '#abcdef',
@@ -102,7 +102,7 @@
       },
       btn4 () {
         return {
-          'background': '#abcdef',
+          'background-color': '#abcdef',
           'color': '#fff',
           'border': 'none',
           'border-radius': '4px',
@@ -116,7 +116,7 @@
           height = this.configData.btnProps.height.split('px')[0];
         }
         return {
-          'background': '#abcdef',
+          'background-color': '#abcdef',
           'color': '#fff',
           'border-radius': `${height*0.5}px 0px`,
           'box-shadow': 'none',
@@ -125,7 +125,7 @@
       },
       btn6 () {
         return {
-          'background': 'transparent',
+          'background-color': 'transparent',
           'color': 'transparent',
           'box-shadow': 'none',
           'border-color': 'transparent',
