@@ -92,7 +92,7 @@
         }
         return {
           'color': '#abcdef',
-          'background': 'none',
+          'background': 'transparent',
           'border-width': height*0.1+'px',
           'border-style': 'solid',
           'border-color': '#abcdef',

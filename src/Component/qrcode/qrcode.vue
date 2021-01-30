@@ -1,6 +1,7 @@
 <template lang="html">
   <baseCmp :cmpConfig="cmpConfig">
     <vue-qr :text="cmpConfig.props.text"
+            :margin="0"
             :size="cmpConfig.layoutConfig.width"></vue-qr>
   </baseCmp>
 </template>
