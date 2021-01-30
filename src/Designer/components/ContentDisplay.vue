@@ -96,7 +96,6 @@ export default {
       },
       containerInfo: {},
       //        selectItemContainerStyle: {},
-      activeSelectItem: true,
     };
   },
   computed: {
@@ -250,8 +249,7 @@ export default {
   },
   methods: {
     toggleActivate(activeSelectItem) {
-      this.activeSelectItem = activeSelectItem;
-      if (!this.activeSelectItem) {
+      if (!activeSelectItem) {
         this.selectCurrentPage();
       }
     },
@@ -633,9 +631,9 @@ export default {
           transform: `translate(${selectItemLayoutInfo.x}px, ${selectItemLayoutInfo.y}px) rotate(${selectItemLayoutInfo.rotation}deg)`,
         }"
         ref="selectItem"
-        :class="['ae-select-item', {'hidden-vdr': !activeSelectItem}]"
+        :class="['ae-select-item']"
         :draggable="!isCurrentComponentLocked"
-        :active="activeSelectItem"
+        :active="true"
         :preventDeactivation="false"
         :parent="true"
         :min-width="null"
@@ -652,7 +650,6 @@ export default {
         @dragstop="dragStop"
         @resizestop="resizeStop"
         @dblclick.native="onDblClick"
-        @activated="toggleActivate(true)"
         @deactivated="toggleActivate(false)"
       >
         <div
@@ -660,7 +657,6 @@ export default {
           @contextmenu="onContextmenu(true, $event)"
         ></div>
         <rotate-operate
-          v-if="activeSelectItem"
           :active="rotateActive"
           @activeChange="rotateActiveChange"
         ></rotate-operate>
