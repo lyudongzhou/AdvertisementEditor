@@ -20,10 +20,10 @@
         this.redo();
       });
       Mousetrap.bind(KEY_MAP_PASTE, () => {
-        this.$$pasteComponent();
+        this.$$pasteComponents();
       });
       Mousetrap.bind(KEY_MAP_COPY, () => {
-        this.$$copyComponent();
+        this.$$copyComponents();
       });
     },
     render() {

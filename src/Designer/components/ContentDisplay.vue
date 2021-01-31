@@ -9,10 +9,10 @@ import RotateOperate from "./RotateOperate";
 import Vue from "vue";
 import {
   CHANGE_SCALE,
-  UPDATE_CANVAS_SIZE,
+  UPDATE_CANVAS_SIZE, UPDATE_MULTIPLE_SELECT_INFO,
   UPDATE_SELECT_INFO,
-} from "../constant/event";
-import { CONTENT_OFFSET, GRID_ADSORBENT_VALUE } from "../constant/base";
+} from '../constant/event';
+import {CONTENT_OFFSET, GRID_ADSORBENT_VALUE} from '../constant/base';
 import {
   BEFORE_UPDATE_COMPONENT_SIZE,
   UPDATING_COMPONENT_SIZE,
@@ -23,8 +23,8 @@ import {
   DELETE_COMPONENT,
   UPDATE_INDEX_TO_BOTTOM,
   UPDATE_INDEX_TO_TOP,
-  UPDATE_COMPONENT_PROPS
-} from "../constant/schema";
+  UPDATE_COMPONENT_PROPS, BATCH_UPDATING_COMPONENT_POSITION, BATCH_AFTER_UPDATE_COMPONENT_POSITION
+} from '../constant/schema';
 import schemaMixin from "../mixin/schemaMixin";
 
 const getScaleValue = (originValue, maxValue) => {
@@ -59,6 +59,11 @@ export default {
     });
     this.$event.on(UPDATE_SELECT_INFO, () => {
       this.updateSelectItemInfo();
+    });
+    this.$event.on(UPDATE_MULTIPLE_SELECT_INFO, () => {
+      const selectedComponents = this.selectedComponents.filter(componentId => this.components.some(({id}) => componentId === id));
+      this.updateSelectedComponents(selectedComponents);
+      Vue.nextTick(() => this.updateSelectedComponentInfos());
     });
     this.$event.on(UPDATE_CANVAS_SIZE, () => {
       this.scaleState = null;
@@ -97,6 +102,7 @@ export default {
       containerInfo: {},
       selectItemLayoutInfo: {},
       selectedComponentInfos: [],
+      componentInfoOfMutiComponent: null,
     };
   },
   computed: {
@@ -105,10 +111,11 @@ export default {
       "currentComponentId",
       "opened",
       "currentPageId",
-      "copyComponent",
+      "copyComponents",
       "selectedComponents",
     ]),
     ...mapGetters([
+      "components",
       "getComponentSchema",
       "currentComponent",
       "isComponentLocked",
@@ -305,40 +312,77 @@ export default {
       if (this.currentComponentId) {
         Vue.nextTick(() => {
           this.selectItemLayoutInfo = this.getComponentSelectionLayoutInfo(this.currentComponentId);
-          console.info(this.selectItemLayoutInfo);
         });
       }
     },
-    commitDragMutation(left, top, type) {
-      left = this.positionHandler(left, "hoz");
-      top = this.positionHandler(top, "ver");
-      this.updateSchema({
-        type,
-        value: {
-          left,
-          top,
-        },
-      });
+    commitDragMutation(left, top, type, componentId) {
+      left = this.positionHandler(left, "hoz", componentId);
+      top = this.positionHandler(top, "ver", componentId);
+      if (componentId) {
+        const {top: originTop, left: originLeft} = this.componentInfoOfMutiComponent;
+        const topOffset = originTop - top;
+        const leftOffset = originLeft - left;
+        this.updateSchema({
+          type,
+          value: [
+            {targetId: componentId, top, left},
+            ...this.selectedComponentInfos
+              .filter(({componentId: id}) => id !== componentId && !this.isComponentLocked(id))
+              .map(({componentId: id}) => {
+                const {top, left} = getPropByPath(this.getComponentSchema(id) || {}, 'layoutConfig');
+                return {
+                  targetId: id,
+                  top: top - topOffset,
+                  left: left - leftOffset,
+                };
+              }),
+          ]
+        });
+      } else {
+        this.updateSchema({
+          type,
+          value: {
+            left,
+            top,
+          },
+        });
+      }
+      // 多组件的情况下
+      if (componentId) {
+        this.updateComponentInfoOfMutiComponent(componentId);
+      }
     },
-    onDragStart() {
+    updateComponentInfoOfMutiComponent(componentId) {
+      const {top, left} = getPropByPath(this.getComponentSchema(componentId) || {}, 'layoutConfig', {});
+      this.componentInfoOfMutiComponent = {componentId, top, left};
+    },
+    onDragStart(event, componentId) {
       this.updateSchema({
         type: BEFORE_UPDATE_COMPONENT_POSITION,
       });
       this.highlightState = true;
+      // 多组件选择的情况下，记录当前组件的left， top值
+      if (componentId) {
+        this.updateComponentInfoOfMutiComponent(componentId);
+      }
     },
-    onDrag(left, top) {
+    onDrag(left, top, componentId) {
       this.dragging = true;
       this.highlightState = true;
-      this.commitDragMutation(left, top, UPDATING_COMPONENT_POSITION);
+      this.commitDragMutation(left, top, componentId ? BATCH_UPDATING_COMPONENT_POSITION : UPDATING_COMPONENT_POSITION, componentId);
     },
-    dragStop(left, top) {
+    dragStop(left, top, componentId) {
       if (this.dragging) {
         this.dragging = false;
-        this.commitDragMutation(left, top, AFTER_UPDATE_COMPONENT_POSITION);
+        this.commitDragMutation(left, top, componentId ? BATCH_AFTER_UPDATE_COMPONENT_POSITION : AFTER_UPDATE_COMPONENT_POSITION, componentId);
       }
       this.highlightState = false;
+      if (componentId) {
+        this.componentInfoOfMutiComponent = null;
+      }
     },
-    positionHandler(value, direction = "ver") {
+    positionHandler(value, direction = "ver", componentId) {
+      const component = this.getComponentSchema(componentId || this.currentComponentId);
       const container = this.$refs.renderContainer;
       // 与container的某个方向（水平/垂直）的距离
       let offsetValue;
@@ -346,10 +390,10 @@ export default {
       let directionOffset;
       if (direction === "hoz") {
         offsetValue = container.offsetLeft;
-        directionOffset = this.currentComponent.layoutConfig.width;
+        directionOffset = component.layoutConfig.width;
       } else {
         offsetValue = container.offsetTop;
-        directionOffset = this.currentComponent.layoutConfig.height;
+        directionOffset = component.layoutConfig.height;
       }
       value = Math.round((value - offsetValue) / this.scaleValue);
       // 检测辅助线
@@ -488,15 +532,15 @@ export default {
             disabled: !isComponent,
             icon: "el-icon-copy-document",
             onClick: () => {
-              this.$$copyComponent();
+              this.$$copyComponents();
             },
           },
           {
             label: "粘贴",
-            disabled: !this.copyComponent,
+            disabled: !this.copyComponents,
             icon: "el-icon-document-copy",
             onClick: () => {
-              this.$$pasteComponent();
+              this.$$pasteComponents();
             },
           },
           {
@@ -511,7 +555,7 @@ export default {
           },
           {
             label: "置顶",
-            disabled: !isComponent,
+            disabled: !isComponent || this.isSelectMultipleComponent,
             icon: "el-icon-top",
             onClick: () => {
               this.updateSchema({
@@ -521,7 +565,7 @@ export default {
           },
           {
             label: "置底",
-            disabled: !isComponent,
+            disabled: !isComponent || this.isSelectMultipleComponent,
             icon: "el-icon-bottom",
             onClick: () => {
               this.updateSchema({
@@ -555,19 +599,22 @@ export default {
         return {
           componentId,
           ...this.getComponentSelectionLayoutInfo(componentId),
+          onDragStart: (...arg) => this.onDragStart(...arg, componentId),
+          onDrag: (...arg) => this.onDrag(...arg, componentId),
+          dragStop: (...arg) => this.dragStop(...arg, componentId),
         };
       })
     },
-    ...mapMutations(["selectComponent", "updateSchema", 'selectCurrentPage', 'selectMultipleComponent']),
+    ...mapMutations(["selectComponent", "updateSchema", 'selectCurrentPage', 'selectMultipleComponent', 'updateSelectedComponents']),
   },
-  watch: {
-    selectedComponents(newValue, oldValue) {
-      console.info(newValue, oldValue);
-      if (newValue.length !== oldValue.length) {
-        this.updateSelectedComponentInfos();
-      }
-    }
-  },
+//  watch: {
+//    selectedComponents(newValue, oldValue) {
+//      console.info(newValue, oldValue);
+//      if (newValue.length !== oldValue.length) {
+//        this.updateSelectedComponentInfos();
+//      }
+//    }
+//  },
 };
 </script>
 
@@ -710,9 +757,9 @@ export default {
             :y="componentInfo.y"
             :h="componentInfo.h"
             :w="componentInfo.w"
-            @dragging="onDrag"
-            :onDragStart="onDragStart"
-            @dragstop="dragStop"
+            @dragging="componentInfo.onDrag"
+            :onDragStart="componentInfo.onDragStart"
+            @dragstop="componentInfo.dragStop"
             @dblclick.native="onDblClick"
         >
           <div

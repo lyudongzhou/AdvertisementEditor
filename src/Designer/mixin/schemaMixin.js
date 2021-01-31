@@ -1,6 +1,6 @@
 import { clone, getPropByPath, getUuid } from "../../Utils/utils";
 import { mapGetters, mapState, mapMutations } from "../store/index";
-import { ADD_COMPONENT, ADD_PAGE } from "../constant/schema";
+import {ADD_COMPONENT, ADD_PAGE, BATCH_ADD_COMPONENT} from '../constant/schema';
 import { get } from "@/register";
 import { REG_COMPONENTSSCHEMA } from "@/const";
 
@@ -44,7 +44,7 @@ const getNextName = (array, prefix = "组件") => {
  */
 export default {
   methods: {
-    $$addNewComponent(base) {
+    convertBaseToNewComponent(base) {
       base = clone(base);
       if (!base.layoutConfig) {
         base.layoutConfig = {};
@@ -81,31 +81,56 @@ export default {
       );
       const components = executeGetter.call(this, "components");
       base.name = getNextName(components, prefix);
-      const component = createComponent(base);
-      console.log(component);
+      return createComponent(base);
+    },
+    $$addNewComponents(components) {
+      components = components.map(component => this.convertBaseToNewComponent(component));
+      executeMutations.call(this, "updateSchema", {
+        type: BATCH_ADD_COMPONENT,
+        value: components,
+        targetIds: components.map(component => component.id),
+      });
+    },
+    $$addNewComponent(base) {
+      const component = this.convertBaseToNewComponent(base);
       executeMutations.call(this, "updateSchema", {
         type: ADD_COMPONENT,
         value: component,
         targetId: component.id,
       });
     },
-    $$pasteComponent(baseLayout) {
-      let base = clone(getFromState.call(this, "copyComponent"));
-      if (!base) {
+    $$pasteComponents() {
+      let components = clone(getFromState.call(this, "copyComponents"));
+      if (!components || !components.length) {
         return;
       }
-      if (baseLayout) {
-        base.layoutConfig = { ...base.layoutConfig, ...baseLayout };
+      components.forEach(component => {
+        // 默认错开一些
+        component.layoutConfig.top = component.layoutConfig.top - 30;
+        component.layoutConfig.left = component.layoutConfig.left - 30;
+      });
+      if (components.length === 1) {
+        this.$$addNewComponent(components[0]);
+      } else {
+        this.$$addNewComponents(components);
       }
-      this.$$addNewComponent(base);
     },
-    $$copyComponent() {
-      const component = executeGetter.call(this, "currentComponent");
-      if (!component) {
-        // todo error
-        return;
+    $$copyComponents() {
+      const isSelectMultipleComponent = executeGetter.call(this, "isSelectMultipleComponent");
+      let components;
+      if (isSelectMultipleComponent) {
+        const getComponentSchema = executeGetter.call(this, 'getComponentSchema');
+        const selectedComponents = getFromState.call(this, 'selectedComponents');
+        components = selectedComponents.map(id => clone(getComponentSchema(id)));
+      } else {
+        const component = executeGetter.call(this, "currentComponent");
+        if (!component) {
+          // todo error
+          return;
+        }
+        components = [clone(component)];
       }
-      executeMutations.call(this, "copyComponent", clone(component));
+      executeMutations.call(this, "copyComponents", components);
     },
     $$copyPage() {
       const base = executeGetter.call(this, 'currentContainer');
@@ -147,8 +172,8 @@ const createComponent = (base) => {
       ...base.layoutConfig,
       hidden: false,
       rotation: 0,
-      top: 0,
-      left: 0,
+      // top: 0,
+      // left: 0,
     },
   };
 };
