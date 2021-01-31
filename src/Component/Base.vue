@@ -2,8 +2,9 @@
   <li
     class="moveItem"
     :style="publicList"
-    @click="dispatchEvent('click', arguments[0])"
-    @click.right="dispatchEvent('rightClick', $event)"
+    @click.exact="dispatchEvent('click', arguments[0])"
+    @click.right.exact="dispatchEvent('rightClick', $event)"
+    @click.ctrl.exact="dispatchEvent('ctrlClick', $event)"
   >
     <slot></slot>
   </li>
@@ -102,6 +103,8 @@ export default {
         pipe.emit("click", this, this.cmpConfig.id);
       } else if (type === 'rightClick') {
         pipe.emit("rightClick", this, this.cmpConfig.id, e);
+      } else if (type === 'ctrlClick') {
+        pipe.emit("ctrlClick", this, this.cmpConfig.id, e);
       }
     },
     idleAction(isForce) {

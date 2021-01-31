@@ -107,6 +107,11 @@ export default {
       }
       executeMutations.call(this, "copyComponent", clone(component));
     },
+    $$copyPage() {
+      const base = executeGetter.call(this, 'currentContainer');
+      const pageType = getFromState.call(this, 'currentPageType');
+      this.$$addPage(pageType, base);
+    },
     $$addPage(pageType, base = {}) {
       let container;
       let prefix;

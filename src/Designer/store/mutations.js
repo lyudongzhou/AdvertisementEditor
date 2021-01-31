@@ -88,6 +88,10 @@ export default {
     state.currentType = 'component';
     eventBus.emit(UPDATE_SELECT_INFO);
   },
+  selectCurrentPage(state) {
+    state.currentType = state.currentPageType;
+    state.currentComponentId = null;
+  },
   selectPage (state, {id, currentPageType}) {
     if (id !== state.currentPageId) {
       // 切换页面重置redo undo
