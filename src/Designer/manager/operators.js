@@ -23,18 +23,18 @@ import {
   UPDATE_RESOLUTION,
   UPDATE_BGM_BEFORE,
   UPDATE_BGM,
-  UPDATE_BGM_AFTER
-} from "../constant/schema";
+  UPDATE_BGM_AFTER, BATCH_UPDATING_COMPONENT_POSITION, BATCH_AFTER_UPDATE_COMPONENT_POSITION, BATCH_ADD_COMPONENT
+} from '../constant/schema';
 import { setPropByPath, switchArrayIndex } from "../../Utils/utils";
 import {
   COMMAND_CLEAR_CURRENT_TARGET,
   COMMAND_SELECT_COMPONENT,
-  COMMAND_SELECT_CONTAINER,
+  COMMAND_SELECT_CONTAINER, COMMAND_SELECT_MULTIPLE_COMPONENT,
   COMMAND_SELECT_PAGE,
   COMMAND_SELECT_SIBLING_PAGE,
-  COMMAND_UPDATE_CANVAS_SIZE,
+  COMMAND_UPDATE_CANVAS_SIZE, COMMAND_UPDATE_MULTIPLE_SELECT_ITEM,
   COMMAND_UPDATE_SELECT_ITEM,
-} from "../constant/base";
+} from '../constant/base';
 import { getSchemaManager } from "./schemaManager";
 
 const getPageKey = (currentPageType) =>
@@ -64,6 +64,22 @@ const generateComponentUpdater = (targetPath) => (schema, config) => {
   Object.entries(config.value).forEach(([path, value]) => {
     path = `${targetPath ? targetPath + "." : ""}${path}`;
     setPropByPath(component, path, value);
+  });
+};
+
+// batch updater
+const generateBatchComponentUpdater = targetPath => (schema, config) => {
+  const page = getPage(schema, config);
+  if (!page) {
+    return;
+  }
+  const components = page.components || [];
+  config.value.forEach(({targetId, ...rest}) => {
+    const component = components.find(({id}) => id === targetId);
+    Object.entries(rest).forEach(([path, value]) => {
+      path = `${targetPath ? targetPath + '.' : ''}${path}`;
+      setPropByPath(component, path, value);
+    });
   });
 };
 
@@ -134,6 +150,9 @@ const updateComponent = generateComponentUpdater("");
 
 // 更新组件的layoutConfig
 const updateComponentLayout = generateComponentUpdater("layoutConfig");
+
+// 批量更新组件的layoutConfig
+const batchUpdateComponentLayout = generateBatchComponentUpdater('layoutConfig');
 
 // handler
 const generateHandler = (fn) => (state, operateConfig) => {
@@ -231,6 +250,16 @@ export default {
     updater: updateComponentLayout,
     after: [COMMAND_UPDATE_SELECT_ITEM],
   },
+  [BATCH_UPDATING_COMPONENT_POSITION]: {
+    handler: updateHandler,
+    updater: batchUpdateComponentLayout,
+    after: [COMMAND_UPDATE_MULTIPLE_SELECT_ITEM],
+  },
+  [BATCH_AFTER_UPDATE_COMPONENT_POSITION]: {
+    handler: commitHandler,
+    updater: batchUpdateComponentLayout,
+    after: [COMMAND_UPDATE_MULTIPLE_SELECT_ITEM],
+  },
   [ADD_COMPONENT]: {
     handler: commitHandler,
     updater: (schema, config) => {
@@ -238,16 +267,29 @@ export default {
       page.components.unshift(config.value);
     },
     after: [COMMAND_SELECT_COMPONENT, COMMAND_UPDATE_SELECT_ITEM],
-    undoAfter: [COMMAND_SELECT_CONTAINER, COMMAND_UPDATE_SELECT_ITEM],
+    undoAfter: [COMMAND_SELECT_CONTAINER, COMMAND_UPDATE_SELECT_ITEM, COMMAND_UPDATE_MULTIPLE_SELECT_ITEM],
+  },
+  [BATCH_ADD_COMPONENT]: {
+    handler: commitHandler,
+    updater: (schema, config) => {
+      const page = getPage(schema, config);
+      page.components.unshift(...config.value);
+    },
+    after: [COMMAND_SELECT_MULTIPLE_COMPONENT, COMMAND_UPDATE_MULTIPLE_SELECT_ITEM],
+    undoAfter: [COMMAND_SELECT_CONTAINER, COMMAND_UPDATE_SELECT_ITEM, COMMAND_UPDATE_MULTIPLE_SELECT_ITEM],
   },
   [DELETE_COMPONENT]: {
     handler: commitHandler,
     updater: (schema, config) => {
       const page = getPage(schema, config);
-      const { targetId } = config;
-      page.components = page.components.filter(({ id }) => id !== targetId);
+      const { targetId, targetIds } = config;
+      if (targetId) {
+        page.components = page.components.filter(({ id }) => id !== targetId);
+      } else if (targetIds) {
+        page.components = page.components.filter(({ id }) => !targetIds.includes(id));
+      }
     },
-    after: [COMMAND_SELECT_CONTAINER, COMMAND_UPDATE_SELECT_ITEM],
+    after: [COMMAND_SELECT_CONTAINER, COMMAND_UPDATE_SELECT_ITEM, COMMAND_UPDATE_MULTIPLE_SELECT_ITEM],
   },
   [UPDATE_COMPONENT_PROPS]: {
     handler: commitHandler,
@@ -292,8 +334,8 @@ export default {
       schema.container.width = width;
       schema.container.height = height;
     },
-    after: [COMMAND_UPDATE_CANVAS_SIZE, COMMAND_UPDATE_SELECT_ITEM],
-    undoAfter: [COMMAND_UPDATE_CANVAS_SIZE, COMMAND_UPDATE_SELECT_ITEM],
+    after: [COMMAND_UPDATE_CANVAS_SIZE, COMMAND_UPDATE_SELECT_ITEM, COMMAND_UPDATE_MULTIPLE_SELECT_ITEM],
+    undoAfter: [COMMAND_UPDATE_CANVAS_SIZE, COMMAND_UPDATE_SELECT_ITEM, COMMAND_UPDATE_MULTIPLE_SELECT_ITEM],
   },
   [UPDATE_SCHEMA]: {
     handler: commitHandler,
