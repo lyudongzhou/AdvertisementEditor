@@ -34,6 +34,16 @@
           style="width: 100%"
         ></v-input-number>
       </v-form-item>
+      <v-form-item class="whiteClass">
+        <div class="imageTab" style="width: 100%">
+          <div class="selectAutoPlay blackFont" @click="handleShowName">
+            是否显示图片名称
+            <div class="autoPlaySwitch">
+              {{ configData.props.showName ? "显示" : "隐藏" }}
+            </div>
+          </div>
+        </div>
+      </v-form-item>
     </v-form>
     <el-image
       style="width: 100%; height: 100px; margin: 10px"
@@ -67,7 +77,7 @@ export default {
   data() {
     return {
       value: 1,
-      valueType:"",
+      valueType: "",
       options: [
         { label: "淡入", value: "fade" },
         { label: "淡入淡出", value: "kenburn" },
@@ -91,9 +101,7 @@ export default {
       ],
     };
   },
-  watch: {
-    
-  },
+  watch: {},
   methods: {
     ...mapMutations(["updateSchema"]),
     change(value) {
@@ -128,18 +136,29 @@ export default {
         },
       });
     },
+    handleShowName(){
+      this.updateSchema({
+        type: UPDATE_COMPONENT_PROPS,
+        value: {
+          "props.showName": !this.configData.props.showName,
+        },
+      });
+    },
     onSelect(a) {
       if (!a || a.length === 0) {
         return;
       }
       let arr = [];
+      let arr1 = [];
       a.forEach((ele) => {
         arr.push(ele.sourcePaht);
+        arr1.push(ele.resName);
       });
       this.updateSchema({
         type: UPDATE_COMPONENT_PROPS,
         value: {
           "props.bgUrl": arr,
+          "props.introduce":arr1,
         },
       });
     },

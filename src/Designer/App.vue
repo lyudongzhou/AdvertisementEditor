@@ -4,7 +4,7 @@
 <script>
 import designer from "./Designer.vue";
 import { SUBMIT_PROJECT } from "./constant/event";
-import { mapMutations } from "./store/index";
+import { mapMutations,mapState } from "./store/index";
 import { clone } from "@/utils";
 
 /*eslint no-unused-vars: ["error", { "args": "none" }]*/
@@ -65,6 +65,9 @@ export default {
       this.handleSubmit(payload);
     });
   },
+  computed:{
+    ...mapState(["projectInfo"]),
+  },
   methods: {
     ...mapMutations(["setProgramInfo"]),
     handleSubmit(payload) {
@@ -72,13 +75,13 @@ export default {
       const url = `/program/${isCreate ? "add" : "update"}`;
       const resource = this.getResource(payload.schema);
       console.log(resource);
-      const programData = JSON.stringify(
+      const bodyJson = JSON.stringify(
         { ...clone(payload.schema), resource },
         null,
         4
       );
       this.$axios
-        .post(url, { id: payload.id, programData })
+        .post(url, { userId: payload.id, bodyJson ,name:this.projectInfo.name,resolutionWidth:payload.schema.container.width,resolutionHeight:payload.schema.container.height})
         .then(({ data }) => {
           if (isCreate) {
             const urlSearchParams = new URLSearchParams(location.hash);

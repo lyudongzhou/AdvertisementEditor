@@ -171,8 +171,9 @@ export default {
       if (this.typeSwitch === 1) {
         if (o.resType === 1) {
           let defaultSchema = config["ImageCmp"][0].defaultSchema;
-          console.log(o);
+          // console.log(o);
           defaultSchema.props.bgUrl = [o.sourcePaht];
+          defaultSchema.props.introduce = [o.resName];
           this.$$addNewComponent(defaultSchema);
         } else if (o.resType === 2) {
           let defaultSchema = config["VideoCmp"][0].defaultSchema;

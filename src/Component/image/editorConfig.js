@@ -18,10 +18,13 @@ export default [
           return schema;
         }
         let arr = [];
+        let arr1 = [];
         a.forEach((ele) => {
           arr.push(ele.sourcePaht);
+          arr1.push(ele.resName);
         });
         schema.props.bgUrl = arr;
+        schema.props.introduce = arr1;
         return schema;
       },
     },
