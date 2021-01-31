@@ -5,7 +5,7 @@ export default [
     defaultSchema: {
       "type": "realTimeForecastCmp",
       "layoutConfig": {
-        "width": 300,
+        "width": 400,
         "height": 300
       },
       "props": {

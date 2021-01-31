@@ -1,12 +1,12 @@
 export default [
   {
-    name: "七天预报",
-    position: "3.4.2",
+    name: "空气质量指数",
+    position: "3.4.4",
     defaultSchema: {
-      "type": "weekdayForecastCmp",
+      "type": "airIndexCmp",
       "layoutConfig": {
-        "width": 580,
-        "height": 360
+        "width": 800,
+        "height": 200
       },
       "props": {
 
