@@ -82,20 +82,65 @@ export default {
     // 清空之前的记录
     getSchemaManager(state).clear();
     state.lockState = {};
+    state.selectedComponents = [];
   },
   selectComponent (state, componentId) {
     state.currentComponentId = componentId;
     state.currentType = 'component';
+    state.selectedComponents = [];
     eventBus.emit(UPDATE_SELECT_INFO);
+  },
+  selectMultipleComponent(state, componentId) {
+    const originSelectedComponents = state.selectedComponents;
+    if (originSelectedComponents.length === 0) {
+      if (state.currentComponentId) {
+        if (state.currentComponentId !== componentId) {
+          // 已有选中，加入多选中
+          state.selectedComponents = [state.currentComponentId, componentId];
+          state.currentComponentId = null;
+        } else {
+          // 取消选择
+          state.currentComponentId = null;
+          state.currentType = state.currentPageType;
+        }
+      } else {
+        // 没有选中，选中一个
+        state.currentComponentId = componentId;
+        state.currentType = 'component';
+        eventBus.emit(UPDATE_SELECT_INFO);
+      }
+    } else if (originSelectedComponents.length > 0) {
+      let selectedComponents;
+      if (originSelectedComponents.includes(componentId)) {
+        // remove
+        selectedComponents = originSelectedComponents.filter(id => id !== componentId);
+        // 只剩一个的情况，切换为currentComponentId
+        if (selectedComponents.length === 1) {
+          state.currentComponentId = selectedComponents[0];
+          state.currentType = 'component';
+          selectedComponents = [];
+          state.selectedComponents = selectedComponents;
+          eventBus.emit(UPDATE_SELECT_INFO);
+        } else {
+          state.selectedComponents = selectedComponents;
+        }
+      } else {
+        // add
+        selectedComponents = [...originSelectedComponents, componentId];
+        state.selectedComponents = selectedComponents;
+      }
+    }
   },
   selectCurrentPage(state) {
     state.currentType = state.currentPageType;
     state.currentComponentId = null;
+    state.selectedComponents = [];
   },
   selectPage (state, {id, currentPageType}) {
     if (id !== state.currentPageId) {
       // 切换页面重置redo undo
       getSchemaManager(state).clear();
+      state.selectedComponents = [];
     }
     state.currentPageId = id;
     state.currentPageType = currentPageType;

@@ -95,6 +95,9 @@ export default {
     pipe.on("click", (dom, componentId) => {
       this.$emit("click", dom, componentId);
     });
+    pipe.on("ctrlClick", (dom, componentId) => {
+      this.$emit("ctrlClick", dom, componentId);
+    });
     pipe.on("rightClick", (dom, componentId, event) => {
       this.$emit("rightClick", dom, componentId, event);
     });

@@ -15,14 +15,14 @@
     name: 'LayerManager',
     mixins: [schemaMixin],
     computed: {
-      ...mapGetters(['components', 'currentComponent', 'isComponentLocked', 'components']),
-      ...mapState(['currentComponentId']),
+      ...mapGetters(['components', 'currentComponent', 'isComponentLocked', 'components', 'isSelectMultipleComponent']),
+      ...mapState(['currentComponentId', 'selectedComponents']),
     },
     components: {
       draggable,
     },
     methods: {
-      ...mapMutations(['selectComponent', 'updateSchema', 'toggleComponentLockState']),
+      ...mapMutations(['selectComponent', 'updateSchema', 'toggleComponentLockState', 'selectMultipleComponent']),
       handleComponentClick(componentId) {
         this.selectComponent(componentId);
       },
@@ -75,6 +75,13 @@
           type: UPDATE_INDEX_TO_BOTTOM,
         });
       },
+      isActivate(componentId) {
+        if (this.isSelectMultipleComponent) {
+          return this.selectedComponents.includes(componentId);
+        } else {
+          return componentId === this.currentComponentId;
+        }
+      },
     },
   };
 </script>
@@ -101,9 +108,10 @@
     <draggable :value="components" @change="handleOrderChange" class="components-container">
       <div
         v-for="component in components"
-        :class="['component-item', {activate: component.id === currentComponentId}]"
+        :class="['component-item', {activate: isActivate(component.id) }]"
         :key="component.id"
-        @click="handleComponentClick(component.id)"
+        @click.exact="handleComponentClick(component.id)"
+        @click.ctrl.exact="selectMultipleComponent(component.id)"
       >
         <i :class="getLockIconClass(component.id)" @click.stop="toggleComponentLockState({componentId: component.id})"></i>
         <i :class="getVisibleIconClass(component.id)" @click.stop="toggleComponentVisibleState(component.id)"></i>

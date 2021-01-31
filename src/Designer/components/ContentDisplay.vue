@@ -95,7 +95,8 @@ export default {
         hoz: {},
       },
       containerInfo: {},
-      //        selectItemContainerStyle: {},
+      selectItemLayoutInfo: {},
+      selectedComponentInfos: [],
     };
   },
   computed: {
@@ -105,12 +106,15 @@ export default {
       "opened",
       "currentPageId",
       "copyComponent",
+      "selectedComponents",
     ]),
     ...mapGetters([
+      "getComponentSchema",
       "currentComponent",
       "isComponentLocked",
       "gridGuideHozSet",
       "gridGuideVerSet",
+      "isSelectMultipleComponent",
     ]),
     selectItemContainerStyle() {
       const workspaceDom = this.$refs.workspace;
@@ -121,26 +125,6 @@ export default {
     },
     isCurrentComponentLocked() {
       return this.isComponentLocked(this.currentComponentId);
-    },
-    selectItemLayoutInfo() {
-      const { top, left, width, height } = getPropByPath(
-        this.selectItemInfo,
-        "position",
-        {}
-      );
-      return {
-        //          y: Math.ceil(top),
-        //          x: Math.ceil(left),
-        //          w: Math.ceil(width),
-        //          h: Math.ceil(height),
-        y: top,
-        x: left,
-        w: width,
-        h: height,
-
-        rotation:
-          this.currentComponent && this.currentComponent.layoutConfig.rotation,
-      };
     },
     scaleValue() {
       if (this.scaleState) {
@@ -248,13 +232,24 @@ export default {
     },
   },
   methods: {
-    toggleActivate(activeSelectItem) {
-      if (!activeSelectItem) {
-        this.selectCurrentPage();
+    handleWorkspaceClick(event) {
+      if (!this.currentComponent && !this.isSelectMultipleComponent) {
+        return;
       }
+      // 点击除了selectItemContainer和编辑框外的内容，取消选中
+      const editorWinDom = this.$refs.editorWin && this.$refs.editorWin.$el;
+      const selectItemContainer = this.$refs.selectItemContainer;
+      const {target} = event;
+      if (editorWinDom && editorWinDom.contains(target)) {
+        return;
+      }
+      if (selectItemContainer && selectItemContainer.contains(target)) {
+        return;
+      }
+      this.selectCurrentPage();
     },
     handleCtrlClick(componentInstance, componentId) {
-      console.info(componentInstance, componentId)
+      this.selectMultipleComponent(componentId);
     },
     onDblClick() {
       let type = this.currentComponent.type;
@@ -309,17 +304,8 @@ export default {
     updateSelectItemInfo() {
       if (this.currentComponentId) {
         Vue.nextTick(() => {
-          const dom = this.$refs.render.getCmp(this.currentComponentId).$el;
-          const container = this.$refs.renderContainer;
-          this.selectItemInfo = {
-            position: {
-              height: dom.offsetHeight * this.scaleValue,
-              width: dom.offsetWidth * this.scaleValue,
-              top: dom.offsetTop * this.scaleValue + container.offsetTop,
-              left: dom.offsetLeft * this.scaleValue + container.offsetLeft,
-            },
-          };
-          this.toggleActivate(true);
+          this.selectItemLayoutInfo = this.getComponentSelectionLayoutInfo(this.currentComponentId);
+          console.info(this.selectItemLayoutInfo);
         });
       }
     },
@@ -553,13 +539,40 @@ export default {
       });
       return false;
     },
-    ...mapMutations(["selectComponent", "updateSchema", 'selectCurrentPage']),
+    getComponentSelectionLayoutInfo(componentId) {
+      const dom = this.$refs.render.getCmp(componentId).$el;
+      const container = this.$refs.renderContainer;
+      return {
+        y: dom.offsetTop * this.scaleValue + container.offsetTop,
+        x: dom.offsetLeft * this.scaleValue + container.offsetLeft,
+        w: dom.offsetWidth * this.scaleValue,
+        h: dom.offsetHeight * this.scaleValue,
+        rotation: getPropByPath(this.getComponentSchema(componentId) || {}, 'layoutConfig.rotation', 0),
+      };
+    },
+    updateSelectedComponentInfos() {
+      this.selectedComponentInfos = this.selectedComponents.map(componentId => {
+        return {
+          componentId,
+          ...this.getComponentSelectionLayoutInfo(componentId),
+        };
+      })
+    },
+    ...mapMutations(["selectComponent", "updateSchema", 'selectCurrentPage', 'selectMultipleComponent']),
+  },
+  watch: {
+    selectedComponents(newValue, oldValue) {
+      console.info(newValue, oldValue);
+      if (newValue.length !== oldValue.length) {
+        this.updateSelectedComponentInfos();
+      }
+    }
   },
 };
 </script>
 
 <template>
-  <div class="work-space" ref="workspace">
+  <div class="work-space" ref="workspace" @click.capture.exact="handleWorkspaceClick">
     <!--滚动条-->
     <div :style="contentStyle" v-if="opened"></div>
 
@@ -621,12 +634,12 @@ export default {
 
     <div
       :key="scaleValue"
-      v-if="currentComponentId"
       class="select-item-container"
       ref="selectItemContainer"
     >
       <!--选中框-->
       <vue-draggable-resizable
+        v-if="currentComponentId && !isSelectMultipleComponent"
         :style="{
           transform: `translate(${selectItemLayoutInfo.x}px, ${selectItemLayoutInfo.y}px) rotate(${selectItemLayoutInfo.rotation}deg)`,
         }"
@@ -634,7 +647,7 @@ export default {
         :class="['ae-select-item']"
         :draggable="!isCurrentComponentLocked"
         :active="true"
-        :preventDeactivation="false"
+        :preventDeactivation="true"
         :parent="true"
         :min-width="null"
         :min-height="null"
@@ -650,11 +663,11 @@ export default {
         @dragstop="dragStop"
         @resizestop="resizeStop"
         @dblclick.native="onDblClick"
-        @deactivated="toggleActivate(false)"
       >
         <div
           :style="{ width: '100%', height: '100%' }"
           @contextmenu="onContextmenu(true, $event)"
+          @click.ctrl="selectMultipleComponent(currentComponentId)"
         ></div>
         <rotate-operate
           :active="rotateActive"
@@ -678,9 +691,40 @@ export default {
           ></div>
         </div>
       </vue-draggable-resizable>
+      <template v-if="isSelectMultipleComponent">
+        <vue-draggable-resizable
+            v-for="componentInfo in selectedComponentInfos"
+            :key="componentInfo.id"
+            :style="{
+          transform: `translate(${componentInfo.x}px, ${componentInfo.y}px) rotate(${componentInfo.rotation}deg)`,
+        }"
+            :class="['ae-select-item']"
+            :draggable="!isComponentLocked(componentInfo.componentId)"
+            :resizable="false"
+            :active="true"
+            :preventDeactivation="true"
+            :parent="true"
+            :min-width="null"
+            :min-height="null"
+            :x="componentInfo.x"
+            :y="componentInfo.y"
+            :h="componentInfo.h"
+            :w="componentInfo.w"
+            @dragging="onDrag"
+            :onDragStart="onDragStart"
+            @dragstop="dragStop"
+            @dblclick.native="onDblClick"
+        >
+          <div
+              :style="{ width: '100%', height: '100%' }"
+              @contextmenu="onContextmenu(true, $event)"
+              @click.ctrl="selectMultipleComponent(currentComponentId)"
+          ></div>
+        </vue-draggable-resizable>
+      </template>
     </div>
 
-    <editorWin :parentWidth="workspaceWidth"></editorWin>
+    <editorWin ref="editorWin" :parentWidth="workspaceWidth"></editorWin>
   </div>
 </template>
 

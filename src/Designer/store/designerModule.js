@@ -41,14 +41,20 @@ export default {
         name: '节目',
         description: '',
       },
+      selectedComponents: [],
     };
   },
   getters: {
     currentComponent(state, getters) {
-      if (state.currentComponentId && state.currentPageType) {
-        return getters.components.find(({ id }) => state.currentComponentId === id) || null;
+      return getters.getComponentSchema(state.currentComponentId);
+    },
+    getComponentSchema(state, getters) {
+      return componentId => {
+        if (componentId && state.currentPageType) {
+          return getters.components.find(({ id }) => state.currentComponentId === id) || null;
+        }
+        return null;
       }
-      return null;
     },
     isComponentLocked(state) {
       return componentId => {
@@ -98,6 +104,9 @@ export default {
     gridGuideVerSet(state) {
       const width = getPropByPath(state.schema || {}, 'container.width', 0);
       return Array.from(new Array(Math.ceil(width / DEFAULT_GRID_GUIDE_OFFSET)), (_, i) => i * DEFAULT_GRID_GUIDE_OFFSET);
+    },
+    isSelectMultipleComponent(state) {
+      return !!state.selectedComponents.length;
     }
   },
   mutations,
