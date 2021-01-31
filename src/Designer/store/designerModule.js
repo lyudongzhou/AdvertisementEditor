@@ -51,7 +51,7 @@ export default {
     getComponentSchema(state, getters) {
       return componentId => {
         if (componentId && state.currentPageType) {
-          return getters.components.find(({ id }) => state.currentComponentId === id) || null;
+          return getters.components.find(({ id }) => componentId === id) || null;
         }
         return null;
       }
