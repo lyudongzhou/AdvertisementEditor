@@ -4,7 +4,7 @@
   >
     <div class="full-width">
       <div class="left-operator">
-        <el-button type="primary" @click="showProgramConfig">节目设置</el-button>
+        <el-button type="programConfig" @click="showProgramConfig">节目设置</el-button>
       </div>
     </div>
     <div class="full-width">
@@ -32,6 +32,7 @@ export default {
 </script>
 <style lang="less">
 .left-operator {
+  padding-left: 10px;
   line-height: 55px;
 
   .el-button {

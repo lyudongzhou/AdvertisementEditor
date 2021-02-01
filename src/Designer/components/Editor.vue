@@ -36,7 +36,13 @@
               :placeholder="typeSwitch === 1 ? '搜索素材' : '搜索节目'"
               v-model="searchText"
               @blur="onSortConfigChange(4, searchText)"
-              style="margin: 24px 16px 24px 10px; width: 174px; color: white"
+              style="
+                margin: 24px 16px 24px 10px;
+                width: 174px;
+                height: 32px;
+                color: black;
+              "
+              class="searchInput"
             >
               <i slot="suffix" class="el-input__icon el-icon-search"></i>
             </el-input>
@@ -397,7 +403,13 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="less">
+.searchInput {
+  .el-input__inner {
+    background-color: white !important;
+    color: black;
+  }
+}
 .typeSwitchIcon {
   width: 30px;
   height: 30px;

@@ -12,14 +12,14 @@
         :class="{ checkItem: true, select: 1 === dataCurrentSelect }"
         @click="onChangeCurrentSelect(1)"
       >
-        <img :src="opendialogIcon" />
+        <img :src="opendialogIcon" class="eventIcon" />
         打开弹窗
       </li>
       <li
         :class="{ checkItem: true, select: 2 === dataCurrentSelect }"
         @click="onChangeCurrentSelect(2)"
       >
-        <img :src="openwindowIcon" />
+        <img :src="openwindowIcon" class="eventIcon"  />
         跳转页面
       </li>
       <div>
@@ -398,6 +398,10 @@ export default {
 </script>
 
 <style lang="less" scope>
+.eventIcon{
+  width:35px;
+  height:35px;
+}
 .selectIcon {
   width: 50px;
   height: 50px;

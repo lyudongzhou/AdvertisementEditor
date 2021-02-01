@@ -11,7 +11,7 @@
     <el-container class="dialogContainer">
       <el-main
         class="dialogMiddle"
-        style="max-height: 300px; overflow-x: hidden; overflow-y: scroll"
+        style="max-height: 350px; overflow-x: hidden; overflow-y: auto"
       >
         <component
           v-if="tab"

@@ -90,17 +90,18 @@
               :src="clownImage"
               style="
                 position: absolute;
-                width: 30px;
-                height: 30px;
-                top: 0;
-                left: 0;
+                top: -17px;
+                left: -29px;
+                transform: scale(0.5);
               "
             />
           </el-container>
         </el-card>
       </el-col>
-      <p v-if="isLoading">加载中...</p>
-      <p v-if="noMore">没有更多了</p>
+      <div style="float:left;padding:10px;color:white">
+        <p v-if="isLoading">加载中...</p>
+        <p v-if="noMore" style="color: white">没有更多了</p>
+      </div>
     </el-row>
   </div>
 </template>

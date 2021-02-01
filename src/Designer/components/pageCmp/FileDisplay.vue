@@ -71,8 +71,10 @@
           >
         </div>
       </li>
-      <p v-if="isLoading" style="margin-left: 10px">加载中...</p>
-      <p v-if="noMore" style="margin-left: 10px">没有更多了</p>
+      <div style="float: left; width: 100%; text-align: center">
+        <p v-if="isLoading" style="margin-left: 10px">加载中...</p>
+        <p v-if="noMore" style="margin-left: 10px">没有更多了</p>
+      </div>
     </ul>
   </div>
 </template>

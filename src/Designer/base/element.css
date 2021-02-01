@@ -7,6 +7,7 @@
   padding: 0 10px;
   color: white;
   border-bottom: 1px solid #373737;
+  font-size: 16px;
 }
 .el-collapse {
   border-top: 0;
@@ -57,4 +58,8 @@
   text-align: left;
   background: #f7f7f7;
   border-radius: 5px;
+}
+.el-button--programConfig {
+  background: #409eff !important;
+  border-color: #409eff !important;
 }
