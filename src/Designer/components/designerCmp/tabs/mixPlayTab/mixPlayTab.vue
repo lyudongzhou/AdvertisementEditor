@@ -4,7 +4,7 @@
       >选择<i class="el-icon-upload el-icon--right"></i
     ></el-button>
     <v-form direction="vertical" style="width: 100%; margin-top: 10px">
-      <v-form-item label="切换时间" class="whiteClass">
+      <v-form-item label="切换时间（秒）" class="whiteClass">
         <v-input-number
           :min="1"
           :max="1000"

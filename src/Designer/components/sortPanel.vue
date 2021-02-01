@@ -45,10 +45,10 @@
 
 <script>
 export default {
-  props: ["property", "sortType", "select"],
+  props: ["property", "sortType", "select", "type", "targetType"],
   methods: {
     onClick(value) {
-      console.log(this.property,value);
+      console.log(this.property, value);
       this.$emit("sort-config-change", this.property, value);
     },
     fmtClass(index) {
@@ -57,18 +57,19 @@ export default {
         active: this.select === index,
       };
     },
-    getResources() {
+    getResources(o) {
       return new Promise((resolve) => {
-        this.$axios.get("/label/get").then(resolve);
+        this.$axios.get("/label/get", o).then(resolve);
       });
     },
-    handleOver(name){
+    handleOver(name) {
       console.log("over");
       this.currentSelect = name;
-    }
+    },
   },
   created() {
-    this.getResources().then((res) => {
+    console.log("1111123",this.type,this.targetType);
+    this.getResources({type:this.type,targetType:this.targetType}).then((res) => {
       res.data[0].forEach((ele) => {
         this.industryList.push(ele);
       });

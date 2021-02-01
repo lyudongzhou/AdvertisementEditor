@@ -113,8 +113,9 @@ export default {
       if(this.url !== "/res/get"){
         delete o.resType
       }
-      return o;
+      // return o;
       // return { resType, userId, current, size, orderType, priceType, type,labelIds:JSON.stringify(labelIds) };
+      return { resType, userId, current, size, orderType, priceType, type};
     },
     calculatePara() {
       let para = {};

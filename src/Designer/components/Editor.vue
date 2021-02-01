@@ -64,6 +64,8 @@
       :property="panelProperty"
       @sort-config-change="onSortConfigChange"
       @mouse-leave="closeSortPanel"
+      :type="typeSwitch"
+      :targetType="sortConfig.type"
     ></sortPanel>
   </el-container>
 </template>
@@ -243,7 +245,7 @@ export default {
       typeList: [
         {
           id: 1,
-          name: "素材",
+          name: "图文",
           icon: resourceIcon,
         },
         {
@@ -261,6 +263,10 @@ export default {
         {
           id: 2,
           name: "商城",
+        },
+        {
+          id: 9,
+          name: "个人",
         },
       ],
       isCollapse: true,
@@ -411,6 +417,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  font-size: 16px;
 }
 .typeSwitch.active {
   background-color: #535353;
