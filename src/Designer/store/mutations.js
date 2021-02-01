@@ -1,7 +1,7 @@
 import {clone, getPropByPath} from '../../Utils/utils';
 import { getSchemaManager } from '../manager/schemaManager';
 import { eventBus } from '../plugin/event';
-import {UPDATE_CANVAS_SIZE, UPDATE_SELECT_INFO} from '../constant/event';
+import {UPDATE_CANVAS_SIZE, UPDATE_MULTIPLE_SELECT_INFO, UPDATE_SELECT_INFO} from '../constant/event';
 import operatorMap from '../manager/operators';
 import {
   COMMAND_UPDATE_SELECT_ITEM,
@@ -9,7 +9,8 @@ import {
   COMMAND_SELECT_CONTAINER,
   COMMAND_SELECT_PAGE,
   COMMAND_SELECT_SIBLING_PAGE,
-  COMMAND_CLEAR_CURRENT_TARGET, COMMAND_UPDATE_CANVAS_SIZE,
+  COMMAND_CLEAR_CURRENT_TARGET, COMMAND_UPDATE_CANVAS_SIZE, COMMAND_UPDATE_MULTIPLE_SELECT_ITEM,
+  COMMAND_SELECT_MULTIPLE_COMPONENT,
 } from '../constant/base';
 
 const afterCommandMap = {
@@ -20,6 +21,12 @@ const afterCommandMap = {
     eventBus.emit(UPDATE_SELECT_INFO);
   },
   /**
+   * 更新多个选中框（多选情况下）
+   */
+  [COMMAND_UPDATE_MULTIPLE_SELECT_ITEM]() {
+    eventBus.emit(UPDATE_MULTIPLE_SELECT_INFO);
+  },
+  /**
    * focus组件
    *
    * @param state
@@ -28,6 +35,18 @@ const afterCommandMap = {
   [COMMAND_SELECT_COMPONENT](state, operateConfig) {
     state.currentComponentId = operateConfig.targetId;
     state.currentType = 'component';
+    state.selectedComponents = [];
+  },
+  /**
+   * focus 多个组件
+   *
+   * @param state
+   * @param operateConfig
+   */
+  [COMMAND_SELECT_MULTIPLE_COMPONENT](state, operateConfig) {
+    state.currentComponentId = null;
+    state.currentType = 'component';
+    state.selectedComponents = operateConfig.targetIds;
   },
   /**
    * focus当前容器(page/dialog)
@@ -35,6 +54,7 @@ const afterCommandMap = {
   [COMMAND_SELECT_CONTAINER](state) {
     state.currentType = state.currentPageType;
     state.currentComponentId = null;
+    state.selectedComponents = [];
   },
   /**
    * focus容器(page/dialog)
@@ -46,9 +66,11 @@ const afterCommandMap = {
     state.currentType = operateConfig.currentPageType;
     state.currentPageType = operateConfig.currentPageType;
     state.currentComponentId = null;
+    state.selectedComponents = [];
   },
   [COMMAND_CLEAR_CURRENT_TARGET](state) {
     state.currentComponentId = null;
+    state.selectedComponents = [];
   },
   /**
    * 选择兄弟容器
@@ -61,6 +83,7 @@ const afterCommandMap = {
     state.currentPageType = currentPageType;
     state.currentType = currentPageType;
     state.currentPageId = getPropByPath(state.schema, `${currentPageType === 'page' ? 'pages' : 'dialogs'}[0].id`, null);
+    state.selectedComponents = [];
   },
   /**
    * 修改画布大小
@@ -89,6 +112,9 @@ export default {
     state.currentType = 'component';
     state.selectedComponents = [];
     eventBus.emit(UPDATE_SELECT_INFO);
+  },
+  updateSelectedComponents(state, selectedComponents) {
+    state.selectedComponents = selectedComponents;
   },
   selectMultipleComponent(state, componentId) {
     const originSelectedComponents = state.selectedComponents;
@@ -130,6 +156,9 @@ export default {
         state.selectedComponents = selectedComponents;
       }
     }
+    if (originSelectedComponents.length !== state.selectedComponents.length) {
+      eventBus.emit(UPDATE_MULTIPLE_SELECT_INFO);
+    }
   },
   selectCurrentPage(state) {
     state.currentType = state.currentPageType;
@@ -161,6 +190,9 @@ export default {
     if (!operateConfig.targetId) {
       operateConfig.targetId = state.currentComponentId;
     }
+    if (!operateConfig.targetIds && state.selectedComponents.length) {
+      operateConfig.targetIds = state.selectedComponents;
+    }
     const {handler, after = []} = operatorMap[operateConfig.type];
 
     // 执行操作
@@ -187,13 +219,15 @@ export default {
         });
       } else {
         afterCommandMap[COMMAND_UPDATE_SELECT_ITEM]();
+        afterCommandMap[COMMAND_UPDATE_MULTIPLE_SELECT_ITEM]();
       }
     } else {
       afterCommandMap[COMMAND_UPDATE_SELECT_ITEM]();
+      afterCommandMap[COMMAND_UPDATE_MULTIPLE_SELECT_ITEM]();
     }
   },
-  copyComponent(state, copyComponent) {
-    state.copyComponent = copyComponent;
+  copyComponents(state, copyComponents) {
+    state.copyComponents = copyComponents;
   },
   /**
    * @description: 打开或者关闭单页预览需要先设置total再设置previewing

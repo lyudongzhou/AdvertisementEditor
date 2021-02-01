@@ -6,7 +6,7 @@
     @click.right.exact="dispatchEvent('rightClick', $event)"
     @click.ctrl.exact="dispatchEvent('ctrlClick', $event)"
   >
-    <slot></slot>
+    <slot v-if="!layoutConfig.hidden"></slot>
   </li>
 </template>
 <script>
@@ -80,6 +80,8 @@ export default {
             break;
           case "border-style":
             style["border-style"] = config[key];
+            break;
+          case "hidden":
             break;
           default:
             style[key] = `${config[key]}px`;

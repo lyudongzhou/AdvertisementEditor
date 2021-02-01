@@ -11,6 +11,7 @@
     </el-tooltip>
 
     <el-dialog
+        :modal-append-to-body="false"
         title="请确认"
         :visible.sync="dialogVisible"
         width="30%"

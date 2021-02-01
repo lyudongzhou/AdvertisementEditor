@@ -26,7 +26,7 @@ export default {
       // 当前选中对象所属页面的类型： page、dialog
       currentPageType: '',
       // 复制的组件
-      copyComponent: null,
+      copyComponents: null,
       // 当前选中页面/弹框id
       currentPageId: null,
       previewTotal:false,
@@ -51,7 +51,7 @@ export default {
     getComponentSchema(state, getters) {
       return componentId => {
         if (componentId && state.currentPageType) {
-          return getters.components.find(({ id }) => state.currentComponentId === id) || null;
+          return getters.components.find(({ id }) => componentId === id) || null;
         }
         return null;
       }
