@@ -71,8 +71,8 @@
           >
         </div>
       </li>
-      <p v-if="isLoading" style="margin-left: 10px">加载中...</p>
-      <p v-if="noMore" style="margin-left: 10px">没有更多了</p>
+      <p v-if="isLoading" class="nomore">加载中...</p>
+      <p v-if="noMore" class="nomore">没有更多了</p>
     </ul>
   </div>
 </template>
@@ -370,5 +370,11 @@ export default {
   .vue-select-image__item {
     margin-left: 10px;
   }
+}
+.nomore {
+  text-align: center;
+  padding-top: 10px;
+  color: #999;
+  margin-left: 10px;
 }
 </style>

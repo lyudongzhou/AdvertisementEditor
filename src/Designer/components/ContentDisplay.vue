@@ -812,6 +812,7 @@ export default {
   .engine-design-mode {
     transform-origin: left top;
     position: absolute;
+    background: #d5dce2;
   }
   .select-item-container {
     transform-origin: left top;

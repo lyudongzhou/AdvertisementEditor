@@ -405,15 +405,12 @@ export default {
 }
 .typeSwitch {
   width: 70px;
-  height: 70px;
-  background-color: #424242;
+  padding: 15px 0 10px 0;
+  background: #4D4D4D;
   text-align: center;
-  /* line-height: 70px; */
   color: #b5b5b5;
   cursor: default;
-  border: 1px solid #383838;
   display: flex;
-  flex-wrap: wrap;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -435,12 +432,11 @@ export default {
 .switch_list {
   font-size: 16px;
   width: 100px;
-  background-color: #424242;
+  background: #4D4D4D;
   text-align: center;
   line-height: 40px;
   color: #b5b5b5;
   cursor: default;
-  border: 1px solid #383838;
 }
 .switch_list:hover {
   background-color: #535353;

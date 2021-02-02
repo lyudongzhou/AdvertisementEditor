@@ -34,20 +34,20 @@
               tab-position="left"
               style="height: 100%"
               class="uploadFileTab"
-              v-model="resourceTyp"
-            >
+              v-model="resourceTyp">
               <el-tab-pane
                 v-for="(tab, index) in currentTabs"
                 :key="index"
-                :name="index + ''"
-              >
-                <span slot="label"
-                  ><i class="el-icon-date"></i>{{ tab.text }}</span
-                >
+                style="padding:0px;"
+                :name="index + ''">
+                <p class="img_type" slot="label">
+                  <span>{{ tab.text }}</span>
+                </p>
                 1121212
               </el-tab-pane>
-            </el-tabs></el-aside
-          ><el-main>
+            </el-tabs>
+          </el-aside>
+          <el-main>
             <vue-select-image
               ref="selectCmp"
               :dataImages="aResource"
@@ -88,12 +88,10 @@
             @click="onClickDeleteSelect(index)"
           ></i></div
       ></el-footer>
-      <el-footer style="height: 10%; margin-top: 10px; bottom: 0"
-        ><el-button @click="handleClose">取消</el-button
-        ><el-button style="height: 100%" @click="commit"
-          >确定</el-button
-        ></el-footer
-      >
+      <el-footer style="height: 10%; margin-top: 10px; bottom: 0">
+        <button class="btn_cancel" @click="handleClose">取消</button>
+        <button class="btn_correct" @click="commit">确定</button>
+      </el-footer>
     </el-container>
   </el-dialog>
 </template>
@@ -337,18 +335,15 @@ export default {
   .pub_btn {
     width: 130px;
     height: 45px;
+    background: #1391FF;
+    border-radius: 10px;
     outline: none;
-    border: 1px solid #1391ff;
-    box-sizing: border-box;
     text-align: center;
     line-height: 45px;
-    background: #ffffff;
-    border-radius: 10px;
-    border: 1px solid #1391ff;
     font-size: 16px;
     font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
-    color: #1391ff;
+    color: #FFFFFF;
     cursor: pointer;
   }
   .upload_text {
@@ -360,14 +355,15 @@ export default {
     border: 1px solid #cdcdcd;
   }
   .search_icon {
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
     background: #fe971e;
     border-radius: 10px;
     color: #ffffff;
-    font-size: 30px;
     text-align: center;
-    line-height: 45px;
+    line-height: 40px;
+    font-size: 20px;
+    margin-left: 10px;
   }
 }
 .resourceDialog {
@@ -399,17 +395,48 @@ export default {
       }
       .el-main {
         padding: 0;
+        .img_type {
+          display: inline-block;
+          width: 130px;
+          height: 45px;
+          background: #FFFFFF;
+          border-radius: 10px;
+          border: 1px solid #1391FF;
+          font-size: 16px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: #1391FF;
+          text-align: center;
+        }
       }
       .el-footer {
         padding: 0;
         bottom: 0;
         display: flex;
         justify-content: center;
-        .el-button {
-          height: 100%;
+        font-size: 16px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        .btn_cancel {
           width: 130px;
-          line-height: 100%;
-          padding: 0 20px;
+          height: 45px;
+          background: #FFFFFF;
+          border-radius: 10px;
+          border: 1px solid #1391FF;
+          margin-right: 10px;
+          color: #1391FF;
+          outline: none;
+          cursor: pointer;
+        }
+        .btn_correct {
+          width: 130px;
+          height: 45px;
+          background: #1391FF;
+          border-radius: 10px;
+          color: #FFF;
+          outline: none;
+          cursor: pointer;
+          border: 0;
         }
       }
     }

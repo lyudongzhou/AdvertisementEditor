@@ -7,18 +7,6 @@
               :config="{ props: {}, target: 'props.text' }"
           ></textField>
       </el-form-item>
-      <el-form-item label="文字颜色">
-        <colorpickerFiled
-            :configData="configData"
-            :config="{props:colorpickerConfig,target: 'props.color'}"
-        ></colorpickerFiled>
-      </el-form-item>
-      <el-form-item label="背景颜色">
-        <colorpickerFiled
-            :configData="configData"
-            :config="{props:colorpickerConfig,target: 'props.background'}"
-        ></colorpickerFiled>
-      </el-form-item>
       <el-form-item v-if="config.notSupport!=='显示格式'" label="显示格式">
         <el-select v-model="defaultFormat" placeholder="请选择" @change="selectFormat">
           <el-option
@@ -35,6 +23,18 @@
               :configData="configData"
               :config="{ props: {}, target: 'props.font-size' }"
           ></numberField>
+      </el-form-item>
+      <el-form-item label="文字颜色">
+        <colorpickerFiled
+            :configData="configData"
+            :config="{props:colorpickerConfig,target: 'props.color'}"
+        ></colorpickerFiled>
+      </el-form-item>
+      <el-form-item label="背景颜色">
+        <colorpickerFiled
+            :configData="configData"
+            :config="{props:colorpickerConfig,target: 'props.background'}"
+        ></colorpickerFiled>
       </el-form-item>
     </el-form>
   </div>

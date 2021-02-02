@@ -32,7 +32,6 @@
           <el-aside width="150px">
             <el-tabs
               tab-position="left"
-              style="height: 100%"
               class="uploadFileTab"
               v-model="resourceTyp"
             >
@@ -41,10 +40,10 @@
                 :key="index"
                 :name="index + ''"
               >
-                <span slot="label"
-                  ><i class="el-icon-date"></i>{{ tab.text }}</span
-                >
-                1121212
+              <p class="img_type" slot="label">
+                <span>{{ tab.text }}</span>
+              </p>
+              1121212
               </el-tab-pane>
             </el-tabs></el-aside
           ><el-main>
@@ -85,7 +84,7 @@
       ></el-footer>
       <el-footer style="height: 10%; margin-top: 10px; bottom: 0"
         ><el-button @click="handleClose">取消</el-button
-        ><el-button style="height: 100%" @click="commit"
+        ><el-button @click="commit"
           >确定</el-button
         ></el-footer
       >
@@ -328,18 +327,15 @@ export default {
   .pub_btn {
     width: 130px;
     height: 45px;
+    background: #1391FF;
+    border-radius: 10px;
     outline: none;
-    border: 1px solid #1391ff;
-    box-sizing: border-box;
     text-align: center;
     line-height: 45px;
-    background: #ffffff;
-    border-radius: 10px;
-    border: 1px solid #1391ff;
     font-size: 16px;
     font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
-    color: #1391ff;
+    color: #FFFFFF;
     cursor: pointer;
   }
   .upload_text {
@@ -351,14 +347,15 @@ export default {
     border: 1px solid #cdcdcd;
   }
   .search_icon {
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
     background: #fe971e;
     border-radius: 10px;
     color: #ffffff;
-    font-size: 30px;
+    font-size: 20px;
     text-align: center;
-    line-height: 45px;
+    line-height: 40px;
+    margin-left: 10px;
   }
 }
 .resourceDialog {
@@ -390,6 +387,19 @@ export default {
       }
       .el-main {
         padding: 0;
+        .img_type {
+          display: inline-block;
+          width: 130px;
+          height: 45px;
+          background: #FFFFFF;
+          border-radius: 10px;
+          border: 1px solid #1391FF;
+          font-size: 16px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: #1391FF;
+          text-align: center;
+        }
       }
       .el-footer {
         padding: 0;
@@ -397,10 +407,12 @@ export default {
         display: flex;
         justify-content: center;
         .el-button {
-          height: 100%;
           width: 130px;
-          line-height: 100%;
-          padding: 0 20px;
+          height: 45px;
+          line-height: 45px;
+          background: #FFFFFF;
+          border-radius: 10px;
+          border: 1px solid #1391FF;
         }
       }
     }

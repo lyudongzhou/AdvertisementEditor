@@ -13,8 +13,8 @@ export default [
         "height": 50,
         "background": "transparent",
         "font-family": "黑体",
-        "color": "#0f0",
-        "font-size": 20
+        "color": "#000",
+        "font-size": 40
       },
       "animation": [],
       "events": [],

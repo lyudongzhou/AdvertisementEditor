@@ -25,7 +25,7 @@ export default [
         background: "transparent",
         color: "#000",
         text: "",
-        "font-size": 20,
+        "font-size": 40,
         "font-family": "黑体"
       },
       animation: [],

@@ -90,8 +90,8 @@
               :src="clownImage"
               style="
                 position: absolute;
-                width: 30px;
-                height: 30px;
+                width: 40px;
+                height: auto;
                 top: 0;
                 left: 0;
               "
@@ -99,8 +99,8 @@
           </el-container>
         </el-card>
       </el-col>
-      <p v-if="isLoading">加载中...</p>
-      <p v-if="noMore">没有更多了</p>
+      <p v-if="isLoading" class="nomore">加载中...</p>
+      <p v-if="noMore" class="nomore">没有更多了</p>
     </el-row>
   </div>
 </template>
@@ -120,12 +120,10 @@ export default {
   mixins: [schemaMixin, dataMixin],
   watch: {
     sortConfig() {
-      console.log(111);
       this.reset();
       this.loadResource();
     },
     typeSwitch(type) {
-      console.log(type);
       if (type === 1) {
         this.url = "/res/get";
       } else {
@@ -235,5 +233,10 @@ export default {
 
 .clearfix:after {
   clear: both;
+}
+.nomore {
+  text-align: center;
+  padding-top: 10px;
+  color: #999;
 }
 </style>
