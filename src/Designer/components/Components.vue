@@ -242,7 +242,7 @@ export default {
                 color: #666;
                 display: flex;
                 > li {
-                  padding: 0 10px 0 5px;
+                  padding: 5px 20px 10px 10px;
                   white-space: nowrap;
                   width: auto;
                   height: auto;

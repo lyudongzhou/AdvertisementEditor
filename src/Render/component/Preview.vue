@@ -312,9 +312,22 @@ export default {
     right: 0;
     top: 0;
     z-index: 2;
+    border: 1px solid #59c7f9;
+    border-radius: 3px;
+    box-sizing: border-box;
+    color: #59c7f9;
+    width: 100px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+  }
+  button:hover {
+    background: #59c7f9;
+    color: #fff;
+    cursor: pointer;
   }
   #nextBtn {
-    margin-top: 40px;
+    margin-top: 60px;
   }
   .pt-perspective {
     width: 100%;

@@ -373,4 +373,10 @@ export default {
     margin-left: 10px;
   }
 }
+.nomore {
+  text-align: center;
+  padding-top: 10px;
+  color: #999;
+  margin-left: 10px;
+}
 </style>

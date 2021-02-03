@@ -1,4 +1,5 @@
 import iconText from '../public/icon_text.png';
+import iconImg from '../public/icon_img.png';
 import iconVedio from '../public/icon_vedio.png';
 import iconModule from '../public/icon_module.png';
 import iconOther from '../public/icon_other.png';
@@ -35,7 +36,7 @@ let Constructor ={children:[
     "id": 2,
     "label": "图片",
     "type": "ImageCmp",
-    "icon": "",
+    "icon": iconImg,
     "children": []
   },
   {

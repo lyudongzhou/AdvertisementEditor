@@ -121,12 +121,10 @@ export default {
   mixins: [schemaMixin, dataMixin],
   watch: {
     sortConfig() {
-      console.log(111);
       this.reset();
       this.loadResource();
     },
     typeSwitch(type) {
-      console.log(type);
       if (type === 1) {
         this.url = "/res/get";
       } else {
@@ -236,5 +234,10 @@ export default {
 
 .clearfix:after {
   clear: both;
+}
+.nomore {
+  text-align: center;
+  padding-top: 10px;
+  color: #999;
 }
 </style>

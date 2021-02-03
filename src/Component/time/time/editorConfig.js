@@ -14,7 +14,7 @@ export default [
         "background": "transparent",
         "font-family": "黑体",
         "color": "#000",
-        "font-size": 20
+        "font-size": 40
       },
       "animation": [],
       "events": [],
