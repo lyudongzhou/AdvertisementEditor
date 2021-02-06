@@ -1,8 +1,13 @@
 import axios from "axios";
+import {getPropByPath} from '@/utils'
 
 const getUserId = () => {
   if (PRODUCTION) {
-    return JSON.parse(window.localStorage.getItem("saber-userInfo")).content.id;
+    const userId = getPropByPath(JSON.parse(window.localStorage.getItem('saber-userInfo')) || {}, 'content.id');
+    if (!userId) {
+      location.replace(window.__config__.loginUrl);
+    }
+    return userId;
   }
   return '111';
 };
@@ -18,7 +23,6 @@ const createInstance = ({$message}) => {
           data.append("userId",getUserId());
           return data;
         }
-        console.log("fmt");
         data = data || {};
         data.userId = getUserId();
         return data;
@@ -27,7 +31,6 @@ const createInstance = ({$message}) => {
         if(data instanceof FormData){
           return data;
         }
-        console.log("fmt");
         let ret = '';
         for (let it in data) {
           ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
