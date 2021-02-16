@@ -1,9 +1,9 @@
 <template lang="html">
   <baseCmp :cmpConfig="cmpConfig">
-    <div class="weekdayForecastContainer">
-      <p>7天预报（北京）</p>
-      <ul v-if="weather">
-        <li v-for="(child,index) in weather" :key="index">
+    <div class="weekdayForecastContainer" v-if="weather">
+      <p>7天预报({{weather.city||'北京省'}})</p>
+      <ul>
+        <li v-for="(child,index) in weather.day" :key="index">
           <p>周{{child.week}}</p>
           <p>{{child.date}}</p>
           <p>白天：{{child.day_air_temperature}}℃</p>
@@ -49,7 +49,7 @@
         needday: 7,
         ip: ip
       }).then((res) => {
-        this.weather = res.data.day;
+        this.weather = res.data;
       })
     },
     methods: {

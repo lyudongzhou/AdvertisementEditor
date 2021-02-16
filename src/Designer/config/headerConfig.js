@@ -182,18 +182,18 @@ let Constructor ={children:[
             "type": "weekday_forecast",
             "icon": weather
           },
-          {
-            "id": 4,
-            "label": "生活指南",
-            "type": "index_live",
-            "icon": weather
-          },
-          {
-            "id": 5,
-            "label": "空气质量指数",
-            "type": "index_air",
-            "icon": weather
-          }
+          // {
+          //   "id": 4,
+          //   "label": "生活指南",
+          //   "type": "index_live",
+          //   "icon": weather
+          // },
+          // {
+          //   "id": 5,
+          //   "label": "空气质量指数",
+          //   "type": "index_air",
+          //   "icon": weather
+          // }
         ]
       },
       {
