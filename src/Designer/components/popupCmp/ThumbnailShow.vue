@@ -36,7 +36,11 @@ export default {
         ...mapState(['currentPageId']),
     },
     created() {},
-    mounted() {},
+    mounted() {
+      this.$event.on('correct', (id) => {
+        this.updateSchema({type: DELETE_PAGE, targetId: id, currentPageType: 'dialog'});
+      });
+    },
     updated() {},
     methods: {
         ...mapMutations(['selectPage', 'updateSchema']),
@@ -52,7 +56,7 @@ export default {
           })
         },
         deletePage (id) {
-          this.updateSchema({type: DELETE_PAGE, targetId: id, currentPageType: 'dialog'});
+          this.$event.emit('openPromptDialog', id);
         },
     },
     watch: {
