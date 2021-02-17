@@ -3,8 +3,8 @@
     <div class="realTimeForecastContainer" v-if="weather">
       <div class="location">
         <img src="../../../Designer/public/weather/location.png" />
-        <span>{{weather.prev}} </span>
-        <span>{{weather.city}}</span>
+        <span>{{weather.prov||'北京省'}} </span>
+        <span>{{weather.city||'北京市'}}</span>
       </div>
       <div class="real">
         <p>空气 {{weather.quality}}</p>

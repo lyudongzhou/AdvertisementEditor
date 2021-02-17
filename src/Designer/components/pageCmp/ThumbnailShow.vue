@@ -39,7 +39,11 @@ export default {
         ...mapState(['currentPageId']),
     },
     created() {},
-    mounted() {},
+    mounted() {
+      this.$event.on('correct', (id) => {
+        this.updateSchema({type: DELETE_PAGE, targetId: id, currentPageType: 'page'});
+      });
+    },
     updated() {},
     methods: {
         ...mapMutations(['selectPage', 'updateSchema']),
@@ -55,7 +59,7 @@ export default {
           this.$$addPage('page');
         },
         deletePage (id) {
-          this.updateSchema({type: DELETE_PAGE, targetId: id, currentPageType: 'page'});
+          this.$event.emit('openPromptDialog', id);
         },
     },
     watch: {

@@ -27,10 +27,11 @@
         <editPropWin></editPropWin>
         <svgWin></svgWin>
       </el-container>
+      <prompt-dialog></prompt-dialog>
     </el-container>
     <!-- <singlePagePreview></singlePagePreview> -->
     <pageSnapshot></pageSnapshot>
-    
+
     <totalPreview></totalPreview>
     <key-map></key-map>
   </div>
@@ -50,6 +51,7 @@ import totalPreview from "./components/totalPreview";
 import EditChartWindow from "./components/EditChartWindow.vue";
 import editPropWin from "./components/editPropWin";
 import svgWin from "./components/popupCmp/moreSvg";
+import promptDialog from "./components/promptDialog";
 import KeyMap from "./components/KeyMap.vue";
 // import singlePagePreview from "./components/preView";
 import { mapState } from "./store";
@@ -69,7 +71,8 @@ export default {
     KeyMap,
     programDialog,
     editPropWin,
-    svgWin
+    svgWin,
+    promptDialog,
   },
   computed: {
     ...mapState(["previewing"]),

@@ -1,9 +1,9 @@
 <template lang="html">
   <baseCmp :cmpConfig="cmpConfig">
     <div class="oneDayForecastContainer" v-if="weather">
-      <p>24小时预报（北京）</p>
+      <p>24小时预报({{weather.city||'北京省'}})</p>
       <ul>
-        <li v-for="(child,index) in weather" :key="index">
+        <li v-for="(child,index) in weather.hour" :key="index">
           <p>{{child.time}}</p>
           <p>{{child.temperature}}℃</p>
           <p>{{child.weather}}</p>
@@ -42,7 +42,7 @@
         needday: 24,
         ip: ip
       }).then((res) => {
-        this.weather = res.data.hour;
+        this.weather = res.data;
       })
     },
     methods: {

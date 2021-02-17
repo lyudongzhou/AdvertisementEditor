@@ -35,6 +35,9 @@
                     <div class="svgContainer" v-html="tmpSvg(child)"></div>
                   </li>
                 </ol>
+                <p class="more_btn" v-if="index >= headConfig.length - 1">
+                  <b @click="moreSvg(msg.id)">更多</b>
+                </p>
               </div>
             </div>
           </div>
@@ -49,79 +52,82 @@
 </template>
 
 <script>
-import headConfig from "../config/headerConfig";
-import schemaMixin from "../mixin/schemaMixin";
-import { get } from "@/register";
-import { SVGS } from "@/const";
-import { DELETE_COMPONENT } from "../constant/schema";
-import { mapMutations } from "../store/index";
-export default {
-  name: "components",
-  mixins: [schemaMixin],
-  components: {},
-  created() {
-    let music = headConfig.pop();
-    headConfig.splice(2,0,music);
-    this.headConfig = headConfig;
-    console.log(headConfig);
-  },
-  data() {
-    return {
-      isShowMore: false,
-    };
-  },
-  methods: {
-    ...mapMutations(["updateSchema"]),
-    addCmp(config) {
-      if (config.editConfig.after) {
-        // console.log(DELETE_COMPONENT);
-        // this.$$addNewComponent(config.editConfig.defaultSchema);
-        // return;
-        let me = this;
-        me.$$addNewComponent(config.editConfig.defaultSchema);
-        this.$event.emit("openEditWin", {
-          title: config.editConfig.after.title,
-          tab: config.editConfig.after.tab,
-          cb(isSuccess) {
-            if (!isSuccess) {
-              me.updateSchema({
-                type: DELETE_COMPONENT,
-              });
-            }
+  import headConfig from "../config/headerConfig";
+  import schemaMixin from "../mixin/schemaMixin";
+  import { get } from "@/register";
+  import { SVGS } from "@/const";
+  import { DELETE_COMPONENT } from "../constant/schema";
+  import { mapMutations } from "../store/index";
+  export default {
+    name: "components",
+    mixins: [schemaMixin],
+    components: {},
+    created() {
+      this.headConfig = headConfig;
+    },
+    data() {
+      return {
+        isShowMore: false,
+      };
+    },
+    methods: {
+      ...mapMutations(["updateSchema"]),
+      addCmp(config) {
+        if (config.editConfig.after) {
+          // console.log(DELETE_COMPONENT);
+          // this.$$addNewComponent(config.editConfig.defaultSchema);
+          // return;
+          let me = this;
+          me.$$addNewComponent(config.editConfig.defaultSchema);
+          this.$event.emit("openEditWin", {
+            title: config.editConfig.after.title,
+            tab: config.editConfig.after.tab,
+            cb(isSuccess) {
+              if (!isSuccess) {
+                me.updateSchema({
+                  type: DELETE_COMPONENT,
+                });
+              }
+            },
+          });
+        } else if (config.editConfig.before) {
+          this.$event.emit("openUploadWin", {
+            onSelect: (a) => {
+              this.$$addNewComponent(
+                config.editConfig.before.fmtRes(
+                  a,
+                  config.editConfig.defaultSchema
+                )
+              );
+            },
+            aSelectType: config.editConfig.before.types,
+            multi: config.editConfig.before.multi,
+            title: config.editConfig.before.title,
+          });
+        } else {
+          this.$$addNewComponent(config.editConfig.defaultSchema);
+        }
+      },
+      tmpSvg(msg) {
+        return get(SVGS)[msg.type]({
+          layoutConfig: {
+            width: 30,
+            height: 30,
+          },
+          props: {
+            color: msg.color,
+            type: msg.type,
           },
         });
-      } else if (config.editConfig.before) {
-        this.$event.emit("openUploadWin", {
-          onSelect: (a) => {
-            this.$$addNewComponent(
-              config.editConfig.before.fmtRes(
-                a,
-                config.editConfig.defaultSchema
-              )
-            );
-          },
-          aSelectType: config.editConfig.before.types,
-          multi: config.editConfig.before.multi,
-          title: config.editConfig.before.title,
-        });
-      } else {
-        this.$$addNewComponent(config.editConfig.defaultSchema);
+      },
+      /**
+       * @param {status} 状态码 1:形状 2:线和箭头 3:装饰 4: 图片容器
+       */
+      moreSvg (status) {
+        this.$event.emit('openMoreSvg', {id: status});
       }
     },
-    tmpSvg(msg) {
-      return get(SVGS)[msg.type]({
-        layoutConfig: {
-          width: 50,
-          height: 50,
-        },
-        props: {
-          color: msg.color,
-          type: msg.type,
-        },
-      });
-    },
-  },
-};
+  };
 </script>
 
 <style lang="less" scoped>
@@ -265,6 +271,19 @@ export default {
                 }
                 > li:hover {
                   background: #ccc;
+                }
+              }
+              .more_btn {
+                width: 50px;
+                font-size: 16px;
+                font-family: PingFangSC-Medium, PingFang SC;
+                color: #75838F;
+                // cursor: pointer;
+                b {
+                  border-bottom: 1px solid #D8D8D8;
+                  box-sizing: border-box;
+                  padding-bottom: 2px;
+                  font-weight: 500;
                 }
               }
             }
