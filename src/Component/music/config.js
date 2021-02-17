@@ -1,12 +1,12 @@
 export default {
-  name: '文档',
+  name: '音频',
   notSupport: [
-    
+
   ],
   extraTabs: [
     {
-      type: "documentTab",
-      name: "背景音频配置",
+      type: "musicTab",
+      name: "音频配置",
       children: [
       ]
     }

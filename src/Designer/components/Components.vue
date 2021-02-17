@@ -60,7 +60,10 @@ export default {
   mixins: [schemaMixin],
   components: {},
   created() {
+    let music = headConfig.pop();
+    headConfig.splice(2,0,music);
     this.headConfig = headConfig;
+    console.log(headConfig);
   },
   data() {
     return {

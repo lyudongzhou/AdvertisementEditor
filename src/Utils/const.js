@@ -55,3 +55,4 @@ export const FONTDEFINE = [
     label: "黑体",
   },
 ];
+export const SVGS_DETAIL="SVGS_DETAIL";

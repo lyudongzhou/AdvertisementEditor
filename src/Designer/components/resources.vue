@@ -14,27 +14,33 @@
         :span="12"
         :style="caculatePadding(index, loadResource.length)"
       >
-        <el-card :body-style="{ padding: '0px' }" shadow="hover">
-          <el-container style="height: 100px; position: relative">
-            <el-tooltip placement="right" style="width: 100%; height: 100%">
-              <div slot="content">
-                <div style="width: 250px; height: 250px">
+        <el-card
+          :body-style="{ padding: '0px', width: '93px', height: '93px' }"
+          style="width: 93px; height: 93px"
+          shadow="hover"
+        >
+          <el-container style="height: 93px; width: 93px; position: relative">
+            <el-tooltip
+              :disabled="tipDisable"
+              placement="right"
+              style="width: 100%; height: 100%"
+              :popper-class="'draw_share_atooltip1'"
+              :visible-arrow="false"
+            >
+              <div slot="content" style="">
+                <div style="text-align: center">
                   <img
                     v-if="o.resType === 1"
                     :src="o.sourcePaht"
-                    class="image"
-                    @click="handleClick(o)"
+                    class="image-full"
                   />
                   <video
                     v-if="o.resType === 2"
                     :src="o.sourcePaht"
-                    class="image"
-                    @click.capture="handleClick(o)"
-                    @click="handleClick1()"
+                    class="image-full"
                   ></video>
                   <div
-                    @click="handleClick(o, arguments[0])"
-                    style="position: relative"
+                    style="position: relative; display: flex"
                     v-if="o.resType === 4"
                   >
                     <div
@@ -44,11 +50,14 @@
                         height: 100%;
                         left: 0;
                         top: 0;
+                        margin: auto;
                       "
                     ></div>
-                    <img :src="o.imgList[0]" class="image" />
+                    <img :src="o.imgList[0]" class="image-full" />
                   </div>
-                  <img v-if="o.body" :src="o.thumbnail" class="image" />
+                  <img v-if="o.body" :src="o.thumbnail" class="image-full" />
+                  <div v-if="o.isVip !== 0" class="preText">免费</div>
+                  <el-button class="useImmdiatly" type="programConfig" @click="handleClick(o)">立即使用</el-button>
                 </div>
               </div>
               <div>
@@ -56,19 +65,15 @@
                   v-if="o.resType === 1"
                   :src="o.sourcePaht"
                   class="image"
-                  @click="handleClick(o)"
                 />
                 <img
                   v-if="o.resType === 2"
                   :src="o.thumbnail"
                   class="image"
-                  @click.capture="handleClick(o)"
-                  @click="handleClick1()"
                 />
 
                 <div
                   v-if="o.resType === 4"
-                  @click="handleClick(o, arguments[0])"
                   style="position: relative; width: 100%; height: 100%"
                 >
                   <div
@@ -88,17 +93,12 @@
             <img
               v-if="o.isVip !== 0"
               :src="clownImage"
-              style="
-                position: absolute;
-                top: -17px;
-                left: -29px;
-                transform: scale(0.5);
-              "
+              style="position: absolute; left: 4px; top: 3px"
             />
           </el-container>
         </el-card>
       </el-col>
-      <div style="float:left;padding:10px;color:white">
+      <div style="float: left; padding: 10px; color: white">
         <p v-if="isLoading">加载中...</p>
         <p v-if="noMore" style="color: white">没有更多了</p>
       </div>
@@ -119,6 +119,11 @@ const config = get(REG_TITLECONFIG);
 export default {
   props: ["sortConfig", "typeSwitch"],
   mixins: [schemaMixin, dataMixin],
+  data(){
+    return {
+      tipDisable:false
+    };
+  },
   watch: {
     sortConfig() {
       this.reset();
@@ -143,13 +148,20 @@ export default {
     ...mapMutations(["resetSchema"]),
     caculatePadding(index, count) {
       return {
-        "padding-left": index % 2 === 1 ? "5px" : "10px",
-        "padding-right": index % 2 === 0 ? "5px" : "10px",
-        "padding-top": index < 2 ? "10px" : 0,
-        "padding-bottom": count - index < 2 ? 0 : "10px",
+        "padding-left": index % 2 === 1 ? "0px" : "0px",
+        "padding-right": index % 2 === 0 ? "0px" : "0px",
+        "padding-top": index < 2 ? 0 : "6px",
+        "padding-bottom": count - index < 2 ? 0 : "6px",
       };
     },
     handleClick(o, e) {
+      this.tipDisable = true;
+      // this.$nextTick(()=>{
+      //   this.tipDisable = false;
+      // });
+      setTimeout(()=>{
+        this.tipDisable = false;
+      },1000);
       console.log("capture");
       var isVip;
       try {
@@ -199,11 +211,50 @@ export default {
 </script>
 
 <style scope lang="less">
+.useImmdiatly {
+  width: 218px;
+  height: 36px;
+  background: #1793ff;
+  border-radius: 5px;
+  color: white !important;
+}
+.preText {
+  width: 28px;
+  height: 20px;
+  font-size: 14px;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: #1793ff;
+  line-height: 20px;
+  margin-left: 200px;
+  margin-top: 13px;
+  margin-bottom: 9px;
+}
+.image-full {
+  width: 226px;
+  height: 143px;
+  margin: auto;
+  margin-top: 40px;
+}
+.draw_share_atooltip {
+  width: 240px;
+  height: 272px;
+  padding: 0px !important;
+  transform: translate(108px, 0);
+  background-color: #fff !important;
+}
+.draw_share_atooltip1 {
+  width: 240px;
+  height: 272px;
+  padding: 0px !important;
+  // transform: translate(11px, 0);
+  background-color: #fff !important;
+}
 .el-row {
   margin: 0;
 }
 .el-col {
-  border-radius: 4px;
+  border-radius: 9px;
 }
 .time {
   font-size: 13px;
@@ -221,9 +272,10 @@ export default {
 }
 
 .image {
-  width: 100%;
-  height: 100%;
+  width: 87px;
+  height: 57px;
   display: block;
+  margin: 22px auto 14px auto;
 }
 
 .clearfix:before,

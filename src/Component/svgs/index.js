@@ -5,7 +5,8 @@ import {normal as normalEditor,mask as maskEditor} from "./editorConfig";
 import {register} from "@/register";
 import {REG_TITLECONFIG, REG_COMPONENTS, REG_COMPONENTSSCHEMA,REG_GETRES} from "@/const";
 import fun from "./filterResource";
-
+import "./shape";
+import "./lines";
 
 register(REG_TITLECONFIG,{
   type: qrcode.name,

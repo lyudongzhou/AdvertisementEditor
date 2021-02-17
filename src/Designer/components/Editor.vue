@@ -263,24 +263,24 @@ export default {
       typeSwitch: 1,
       switchList: [
         {
+          id: 9,
+          name: "个人",
+        },
+        {
           id: 1,
           name: "机构",
         },
         {
           id: 2,
           name: "商城",
-        },
-        {
-          id: 9,
-          name: "个人",
-        },
+        }
       ],
       isCollapse: true,
       sortType: null,
       searchText: "",
       sortConfig: {
         searchText: "",
-        type: 1, // 机构1商城2
+        type: 9, // 机构1商城2
         resType: 5,
         orderType: 0,
         priceType: 1,
@@ -391,7 +391,6 @@ export default {
       } else {
         this.sortConfig[type] = config;
       }
-      console.log(this.sortConfig);
       this.sortConfig = Object.assign({}, this.sortConfig);
       this.closeSortPanel();
     },

@@ -25,6 +25,7 @@
         <resourceDialg></resourceDialg>
         <programDialog></programDialog>
         <editPropWin></editPropWin>
+        <svgWin></svgWin>
       </el-container>
     </el-container>
     <!-- <singlePagePreview></singlePagePreview> -->
@@ -48,6 +49,7 @@ import { mapMutations } from "./store";
 import totalPreview from "./components/totalPreview";
 import EditChartWindow from "./components/EditChartWindow.vue";
 import editPropWin from "./components/editPropWin";
+import svgWin from "./components/popupCmp/moreSvg";
 import KeyMap from "./components/KeyMap.vue";
 // import singlePagePreview from "./components/preView";
 import { mapState } from "./store";
@@ -66,7 +68,8 @@ export default {
     resourceDialg,
     KeyMap,
     programDialog,
-    editPropWin
+    editPropWin,
+    svgWin
   },
   computed: {
     ...mapState(["previewing"]),

@@ -196,6 +196,8 @@ export default {
       formData.append("type", 1);
       formData.append("cateforyId", 1);
       formData.append("fileName", file.name);
+      formData.append("targetPath","/");
+      formData.append("fileSize",file.size);
       this.$axios
         .post("/res/upload", formData, {
           headers: {

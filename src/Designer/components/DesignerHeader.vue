@@ -4,7 +4,19 @@
   >
     <div class="full-width">
       <div class="left-operator">
-        <el-button type="programConfig" @click="showProgramConfig">节目设置</el-button>
+        <span class="configBtn" @click="showProgramConfig"
+          ><span
+            :style="{
+              display: 'inline-block',
+              width: '20px',
+              height: '20px',
+              'margin-top': '5px',
+              'margin-right': '8px',
+              'background-image': `url(${icon})`,
+            }"
+          ></span
+          >节目设置</span
+        >
       </div>
     </div>
     <div class="full-width">
@@ -19,18 +31,41 @@
 <script>
 import Components from "./Components.vue";
 import MainOperators from "./MainOperator.vue";
-import {mapMutations} from "../store";
+import { mapMutations } from "../store";
+import icon from "../public/configIcon.png";
 export default {
   components: {
     Components,
     MainOperators,
   },
-  methods:{
-    ...mapMutations(["showProgramConfig"])
-  }
+  data() {
+    return {
+      icon: null,
+    };
+  },
+  created() {
+    this.icon = icon;
+    console.log("ly", icon);
+  },
+  methods: {
+    ...mapMutations(["showProgramConfig"]),
+  },
 };
 </script>
 <style lang="less">
+.configBtn {
+  width: 110px;
+  height: 34px;
+  background: #999999;
+  border-radius: 8px;
+  margin-left: 70px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  line-height: 34px;
+  margin-top: 10px;
+  cursor: pointer;
+}
 .left-operator {
   padding-left: 10px;
   line-height: 55px;

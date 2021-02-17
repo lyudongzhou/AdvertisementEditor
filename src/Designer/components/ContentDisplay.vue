@@ -9,10 +9,11 @@ import RotateOperate from "./RotateOperate";
 import Vue from "vue";
 import {
   CHANGE_SCALE,
-  UPDATE_CANVAS_SIZE, UPDATE_MULTIPLE_SELECT_INFO,
+  UPDATE_CANVAS_SIZE,
+  UPDATE_MULTIPLE_SELECT_INFO,
   UPDATE_SELECT_INFO,
-} from '../constant/event';
-import {CONTENT_OFFSET, GRID_ADSORBENT_VALUE} from '../constant/base';
+} from "../constant/event";
+import { CONTENT_OFFSET, GRID_ADSORBENT_VALUE } from "../constant/base";
 import {
   BEFORE_UPDATE_COMPONENT_SIZE,
   UPDATING_COMPONENT_SIZE,
@@ -23,8 +24,10 @@ import {
   DELETE_COMPONENT,
   UPDATE_INDEX_TO_BOTTOM,
   UPDATE_INDEX_TO_TOP,
-  UPDATE_COMPONENT_PROPS, BATCH_UPDATING_COMPONENT_POSITION, BATCH_AFTER_UPDATE_COMPONENT_POSITION
-} from '../constant/schema';
+  UPDATE_COMPONENT_PROPS,
+  BATCH_UPDATING_COMPONENT_POSITION,
+  BATCH_AFTER_UPDATE_COMPONENT_POSITION,
+} from "../constant/schema";
 import schemaMixin from "../mixin/schemaMixin";
 
 const getScaleValue = (originValue, maxValue) => {
@@ -61,7 +64,9 @@ export default {
       this.updateSelectItemInfo();
     });
     this.$event.on(UPDATE_MULTIPLE_SELECT_INFO, () => {
-      const selectedComponents = this.selectedComponents.filter(componentId => this.components.some(({id}) => componentId === id));
+      const selectedComponents = this.selectedComponents.filter((componentId) =>
+        this.components.some(({ id }) => componentId === id)
+      );
       this.updateSelectedComponents(selectedComponents);
       Vue.nextTick(() => this.updateSelectedComponentInfos());
     });
@@ -73,7 +78,7 @@ export default {
   mounted() {
     const workspaceDom = this.$refs.workspace;
     this.workspaceWidth = workspaceDom.offsetWidth;
-    this.$event.on('currentComponentOperate', (fn) => {
+    this.$event.on("currentComponentOperate", (fn) => {
       fn(this.$refs.render.getCmp(this.currentComponentId));
       // console.log(fn,this.$refs.render.getCmp(this.currentComponentId));
     });
@@ -86,6 +91,7 @@ export default {
   },
   data() {
     return {
+      editText: false,
       scaleState: null,
       selectItemInfo: null,
       dragging: false,
@@ -239,6 +245,24 @@ export default {
     },
   },
   methods: {
+    onContentFocus() {},
+    onContentBlur(e) {
+      this.updateSchema({
+        type: UPDATE_COMPONENT_PROPS,
+        value: {
+          "props.text": e.target.innerText,
+        },
+      });
+    },
+    computedContent() {
+      return {
+        position: "absolute",
+        left: 0,
+        top: 0,
+        width: "100%",
+        height: "100%",
+      };
+    },
     handleWorkspaceClick(event) {
       if (!this.currentComponent && !this.isSelectMultipleComponent) {
         return;
@@ -246,7 +270,7 @@ export default {
       // 点击除了selectItemContainer和编辑框外的内容，取消选中
       const editorWinDom = this.$refs.editorWin && this.$refs.editorWin.$el;
       const selectItemContainer = this.$refs.selectItemContainer;
-      const {target} = event;
+      const { target } = event;
       if (editorWinDom && editorWinDom.contains(target)) {
         return;
       }
@@ -260,7 +284,6 @@ export default {
     },
     onDblClick() {
       let type = this.currentComponent.type;
-      console.log(111);
       if (type === "ImageCmp") {
         this.$event.emit("openUploadWin", {
           onSelect: (a) => {
@@ -281,6 +304,14 @@ export default {
           aSelectType: ["image"],
           multi: true,
           title: "图片",
+        });
+      } else if (type === "textCmp") {
+        this.editText = true;
+        console.log(1122);
+        this.$nextTick(() => {
+          this.$refs.contentEdit.innerText = this.currentComponent.props.text;
+          this.$refs.contentEdit.focus();
+          this.currentComponent.props.text = "";
         });
       }
     },
@@ -311,7 +342,9 @@ export default {
     updateSelectItemInfo() {
       if (this.currentComponentId) {
         Vue.nextTick(() => {
-          this.selectItemLayoutInfo = this.getComponentSelectionLayoutInfo(this.currentComponentId);
+          this.selectItemLayoutInfo = this.getComponentSelectionLayoutInfo(
+            this.currentComponentId
+          );
         });
       }
     },
@@ -319,24 +352,33 @@ export default {
       left = this.positionHandler(left, "hoz", componentId);
       top = this.positionHandler(top, "ver", componentId);
       if (componentId) {
-        const {top: originTop, left: originLeft} = this.componentInfoOfMutiComponent;
+        const {
+          top: originTop,
+          left: originLeft,
+        } = this.componentInfoOfMutiComponent;
         const topOffset = originTop - top;
         const leftOffset = originLeft - left;
         this.updateSchema({
           type,
           value: [
-            {targetId: componentId, top, left},
+            { targetId: componentId, top, left },
             ...this.selectedComponentInfos
-              .filter(({componentId: id}) => id !== componentId && !this.isComponentLocked(id))
-              .map(({componentId: id}) => {
-                const {top, left} = getPropByPath(this.getComponentSchema(id) || {}, 'layoutConfig');
+              .filter(
+                ({ componentId: id }) =>
+                  id !== componentId && !this.isComponentLocked(id)
+              )
+              .map(({ componentId: id }) => {
+                const { top, left } = getPropByPath(
+                  this.getComponentSchema(id) || {},
+                  "layoutConfig"
+                );
                 return {
                   targetId: id,
                   top: top - topOffset,
                   left: left - leftOffset,
                 };
               }),
-          ]
+          ],
         });
       } else {
         this.updateSchema({
@@ -353,8 +395,12 @@ export default {
       }
     },
     updateComponentInfoOfMutiComponent(componentId) {
-      const {top, left} = getPropByPath(this.getComponentSchema(componentId) || {}, 'layoutConfig', {});
-      this.componentInfoOfMutiComponent = {componentId, top, left};
+      const { top, left } = getPropByPath(
+        this.getComponentSchema(componentId) || {},
+        "layoutConfig",
+        {}
+      );
+      this.componentInfoOfMutiComponent = { componentId, top, left };
     },
     onDragStart(event, componentId) {
       this.updateSchema({
@@ -369,12 +415,26 @@ export default {
     onDrag(left, top, componentId) {
       this.dragging = true;
       this.highlightState = true;
-      this.commitDragMutation(left, top, componentId ? BATCH_UPDATING_COMPONENT_POSITION : UPDATING_COMPONENT_POSITION, componentId);
+      this.commitDragMutation(
+        left,
+        top,
+        componentId
+          ? BATCH_UPDATING_COMPONENT_POSITION
+          : UPDATING_COMPONENT_POSITION,
+        componentId
+      );
     },
     dragStop(left, top, componentId) {
       if (this.dragging) {
         this.dragging = false;
-        this.commitDragMutation(left, top, componentId ? BATCH_AFTER_UPDATE_COMPONENT_POSITION : AFTER_UPDATE_COMPONENT_POSITION, componentId);
+        this.commitDragMutation(
+          left,
+          top,
+          componentId
+            ? BATCH_AFTER_UPDATE_COMPONENT_POSITION
+            : AFTER_UPDATE_COMPONENT_POSITION,
+          componentId
+        );
       }
       this.highlightState = false;
       if (componentId) {
@@ -382,7 +442,9 @@ export default {
       }
     },
     positionHandler(value, direction = "ver", componentId) {
-      const component = this.getComponentSchema(componentId || this.currentComponentId);
+      const component = this.getComponentSchema(
+        componentId || this.currentComponentId
+      );
       const container = this.$refs.renderContainer;
       // 与container的某个方向（水平/垂直）的距离
       let offsetValue;
@@ -591,35 +653,48 @@ export default {
         x: dom.offsetLeft * this.scaleValue + container.offsetLeft,
         w: dom.offsetWidth * this.scaleValue,
         h: dom.offsetHeight * this.scaleValue,
-        rotation: getPropByPath(this.getComponentSchema(componentId) || {}, 'layoutConfig.rotation', 0),
+        rotation: getPropByPath(
+          this.getComponentSchema(componentId) || {},
+          "layoutConfig.rotation",
+          0
+        ),
       };
     },
     updateSelectedComponentInfos() {
-      this.selectedComponentInfos = this.selectedComponents.map(componentId => {
-        return {
-          componentId,
-          ...this.getComponentSelectionLayoutInfo(componentId),
-          onDragStart: (...arg) => this.onDragStart(...arg, componentId),
-          onDrag: (...arg) => this.onDrag(...arg, componentId),
-          dragStop: (...arg) => this.dragStop(...arg, componentId),
-        };
-      })
+      this.selectedComponentInfos = this.selectedComponents.map(
+        (componentId) => {
+          return {
+            componentId,
+            ...this.getComponentSelectionLayoutInfo(componentId),
+            onDragStart: (...arg) => this.onDragStart(...arg, componentId),
+            onDrag: (...arg) => this.onDrag(...arg, componentId),
+            dragStop: (...arg) => this.dragStop(...arg, componentId),
+          };
+        }
+      );
     },
-    ...mapMutations(["selectComponent", "updateSchema", 'selectCurrentPage', 'selectMultipleComponent', 'updateSelectedComponents']),
+    ...mapMutations([
+      "selectComponent",
+      "updateSchema",
+      "selectCurrentPage",
+      "selectMultipleComponent",
+      "updateSelectedComponents",
+    ]),
   },
-//  watch: {
-//    selectedComponents(newValue, oldValue) {
-//      console.info(newValue, oldValue);
-//      if (newValue.length !== oldValue.length) {
-//        this.updateSelectedComponentInfos();
-//      }
-//    }
-//  },
+  watch: {
+    currentComponent() {
+      this.editText = false;
+    },
+  },
 };
 </script>
 
 <template>
-  <div class="work-space" ref="workspace" @click.capture.exact="handleWorkspaceClick">
+  <div
+    class="work-space"
+    ref="workspace"
+    @click.capture.exact="handleWorkspaceClick"
+  >
     <!--滚动条-->
     <div :style="contentStyle" v-if="opened"></div>
 
@@ -716,6 +791,14 @@ export default {
           @contextmenu="onContextmenu(true, $event)"
           @click.ctrl="selectMultipleComponent(currentComponentId)"
         ></div>
+        <div
+          ref="contentEdit"
+          :contenteditable="editText"
+          v-if="editText"
+          :style="computedContent()"
+          @blur="onContentBlur"
+          @focus="onContentFocus"
+        ></div>
         <rotate-operate
           :active="rotateActive"
           @activeChange="rotateActiveChange"
@@ -740,32 +823,32 @@ export default {
       </vue-draggable-resizable>
       <template v-if="isSelectMultipleComponent">
         <vue-draggable-resizable
-            v-for="componentInfo in selectedComponentInfos"
-            :key="componentInfo.id"
-            :style="{
-          transform: `translate(${componentInfo.x}px, ${componentInfo.y}px) rotate(${componentInfo.rotation}deg)`,
-        }"
-            :class="['ae-select-item']"
-            :draggable="!isComponentLocked(componentInfo.componentId)"
-            :resizable="false"
-            :active="true"
-            :preventDeactivation="true"
-            :parent="true"
-            :min-width="null"
-            :min-height="null"
-            :x="componentInfo.x"
-            :y="componentInfo.y"
-            :h="componentInfo.h"
-            :w="componentInfo.w"
-            @dragging="componentInfo.onDrag"
-            :onDragStart="componentInfo.onDragStart"
-            @dragstop="componentInfo.dragStop"
-            @dblclick.native="onDblClick"
+          v-for="componentInfo in selectedComponentInfos"
+          :key="componentInfo.id"
+          :style="{
+            transform: `translate(${componentInfo.x}px, ${componentInfo.y}px) rotate(${componentInfo.rotation}deg)`,
+          }"
+          :class="['ae-select-item']"
+          :draggable="!isComponentLocked(componentInfo.componentId)"
+          :resizable="false"
+          :active="true"
+          :preventDeactivation="true"
+          :parent="true"
+          :min-width="null"
+          :min-height="null"
+          :x="componentInfo.x"
+          :y="componentInfo.y"
+          :h="componentInfo.h"
+          :w="componentInfo.w"
+          @dragging="componentInfo.onDrag"
+          :onDragStart="componentInfo.onDragStart"
+          @dragstop="componentInfo.dragStop"
+          @dblclick.native="onDblClick"
         >
           <div
-              :style="{ width: '100%', height: '100%' }"
-              @contextmenu="onContextmenu(true, $event)"
-              @click.ctrl="selectMultipleComponent(currentComponentId)"
+            :style="{ width: '100%', height: '100%' }"
+            @contextmenu="onContextmenu(true, $event)"
+            @click.ctrl="selectMultipleComponent(currentComponentId)"
           ></div>
         </vue-draggable-resizable>
       </template>
