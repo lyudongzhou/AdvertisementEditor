@@ -2,7 +2,8 @@
   <div @contextmenu.prevent="onContextmenu">
     <el-container
       class="full-height"
-      :style="{ filter: `blur(${previewing ? 30 : 0}px)` }">
+      :style="{ filter: `blur(${previewing ? 30 : 0}px)` }"
+    >
       <el-header class="no-padding" height="55px">
         <designer-header></designer-header>
       </el-header>
@@ -22,7 +23,6 @@
           <PageFrame></PageFrame>
         </el-aside>
         <edit-chart-window></edit-chart-window>
-        <resourceDialg></resourceDialg>
         <programDialog></programDialog>
         <editPropWin></editPropWin>
         <svgWin></svgWin>
@@ -33,6 +33,7 @@
     <pageSnapshot></pageSnapshot>
 
     <totalPreview></totalPreview>
+    <resourceDialg></resourceDialg>
     <key-map></key-map>
   </div>
 </template>

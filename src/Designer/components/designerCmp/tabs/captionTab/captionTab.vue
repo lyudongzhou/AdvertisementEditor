@@ -25,19 +25,19 @@
               :config="{ props: {}, target: 'props.text' }"
           ></textField>
       </el-form-item>
-      <el-form-item label="文字颜色">
+      <el-form-item label="文字颜色" v-if="!config.isFirstEdit" >
         <colorpickerFiled
             :configData="configData"
             :config="{props:colorpickerConfig,target: 'props.color'}"
         ></colorpickerFiled>
       </el-form-item>
-      <el-form-item label="背景颜色">
+      <el-form-item label="背景颜色" v-if="!config.isFirstEdit" >
         <colorpickerFiled
             :configData="configData"
             :config="{props:colorpickerConfig,target: 'props.background'}"
         ></colorpickerFiled>
       </el-form-item>
-      <el-form-item label="大小" style="margin-bottom:50px;">
+      <el-form-item label="大小" style="margin-bottom:50px;" v-if="!config.isFirstEdit" >
           <numberField
           style="width:100%"
               :configData="configData"

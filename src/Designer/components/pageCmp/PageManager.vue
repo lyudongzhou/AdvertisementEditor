@@ -37,7 +37,7 @@ export default {
     flex-direction: column;
     overflow: hidden;
     .thumbnail_warp {
-      overflow: scroll;
+      overflow: auto;
       flex: 1;
       ::-webkit-scrollbar {
         display: none; /* Chrome Safari */

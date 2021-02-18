@@ -69,11 +69,13 @@ export default {
       this.cb = cb;
       this.title = title;
       this.tab = tab;
+      this.tab.isFirstEdit = true;
       this.showEditWin = true;
     },
     handleClose() {
       this.showEditWin = false;
       this.tab = null;
+      this.tab.isFirstEdit = false;
       this.cb && this.cb(false);
     },
     commit() {

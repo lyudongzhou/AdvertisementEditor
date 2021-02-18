@@ -24,13 +24,13 @@
               :config="{ props: {}, target: 'props.font-size' }"
           ></numberField>
       </el-form-item>
-      <el-form-item label="文字颜色">
+      <el-form-item v-if="!config.isFirstEdit" label="文字颜色">
         <colorpickerFiled
             :configData="configData"
             :config="{props:colorpickerConfig,target: 'props.color'}"
         ></colorpickerFiled>
       </el-form-item>
-      <el-form-item label="背景颜色">
+      <el-form-item  v-if="!config.isFirstEdit" label="背景颜色">
         <colorpickerFiled
             :configData="configData"
             :config="{props:colorpickerConfig,target: 'props.background'}"
@@ -83,6 +83,7 @@
       }
     },
     mounted () {
+      // console.log(this.configData,this.config);
     },
     methods: {
       ...mapMutations(["updateSchema"]),

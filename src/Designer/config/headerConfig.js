@@ -405,13 +405,13 @@ let Constructor ={children:[
       }
     ]
   },
-  {
-    "id": 7,
-    "label": "背景音频",
-    "type": "ImageCmp",
-    "icon": iconImg,
-    "children": []
-  },
+  // {
+  //   "id": 7,
+  //   "label": "背景音频",
+  //   "type": "ImageCmp",
+  //   "icon": iconImg,
+  //   "children": []
+  // },
 ]};
 const config = get(REG_TITLECONFIG);
 console.log(config);
