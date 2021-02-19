@@ -107,6 +107,7 @@ export default {
   background-color: gray;
 }
 .configBtn {
+  margin:10px;
   width: 50%;
   height: 30px;
   align-items: center;

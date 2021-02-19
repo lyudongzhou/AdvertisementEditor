@@ -1,4 +1,4 @@
-import Vote from "./Vote.vue";
+import Vote from "./Form.vue";
 import schema from "./config";
 import editorConfig from "./editorConfig";
 import fun from "./filterResource";

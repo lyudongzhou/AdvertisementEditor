@@ -30,45 +30,78 @@
                     <el-form-item label="节目名称">
                       <el-input v-model="projectInfo.name"></el-input>
                     </el-form-item>
-                    <el-form-item label="描述">
-                      <el-input type="textarea" v-model="projectInfo.description"></el-input>
+                    <el-form-item label="描述" style="margin-top: 20px">
+                      <el-input
+                        class="descriptionInput"
+                        rows="10"
+                        type="textarea"
+                        v-model="projectInfo.description"
+                        style="height: 229px"
+                        resize="none"
+                      ></el-input>
                     </el-form-item>
                   </el-form>
                 </div>
                 <div class="bgmConfigContainer">
-                  <div style="padding: 10px 0 10px 0">背景音乐</div>
+                  <div class="previewLable">
+                    背景音乐<el-switch
+                      v-model="value"
+                      active-color="#13ce66"
+                      inactive-color="#ff4949"
+                      style="float: right"
+                    >
+                    </el-switch>
+                  </div>
                   <el-row :gutter="24" style="width: 100%; margin: 0">
                     <el-col :span="12"
                       ><div
                         class="selectBgm blackFont"
                         @click="handleBGMConfig"
                       >
-                        背景音乐<i class="el-icon-headset icon"></i></div
+                        背景音乐<span
+                          :style="
+                            'width:20px;height:20px;margin-left:170px;background-image:url(' +
+                            musicIcon +
+                            ')'
+                          "
+                        ></span></div
                     ></el-col>
                     <el-col :span="12"
                       ><div class="grid-content bg-purple">
-                        <div
-                          class="selectBgm blackFont"
-                          @click="handleAutoPlay"
-                        >
+                        <div class="selectBgm Dark whiteFont">
                           音乐自动播放
-                          <div class="autoPlaySwitch">
+                          <el-switch
+                            v-model="bgmConfig.autoPlay"
+                            active-color="#13ce66"
+                            inactive-color="#ff4949"
+                            style="margin-left: 123px"
+                          ></el-switch>
+                          <!-- <div class="autoPlaySwitch">
                             {{ bgmConfig.autoPlay ? "ON" : "OFF" }}
-                          </div>
+                          </div> -->
                         </div>
                       </div></el-col
                     >
                   </el-row>
-                  <div style="width: 100%; padding: 10px 12px 0 12px">
+                  <div style="width: 100%; padding: 10px 0px 0 0px">
                     <el-row
                       style="
                         width: 100%;
                         border: 1px solid black;
-                        border-radius: 4px;
+                        background: #545454;
+                        padding-left: 20px;
+                        padding-right: 26px;
+                        padding-top: 9px;
+                        padding-bottom: 9px;
+                        background: #545454;
+                        border-radius: 8px;
                       "
+                      class="volumeContainer"
                     >
                       <el-col :span="6"
-                        ><div class="volumeConfig">背景音量</div></el-col
+                        ><div class="volumeConfig volumeLable">
+                          背景音量
+                        </div></el-col
                       >
                       <el-col :span="13"
                         ><div class="grid-content bg-purple">
@@ -76,28 +109,30 @@
                             <el-slider v-model="bgmConfig.volume"></el-slider>
                           </div></div
                       ></el-col>
-                      <el-col :span="5"
+                      <el-col :span="3"
                         ><div class="volumeConfig">
                           <el-input
                             class="volumeInput"
                             v-model="volumeTemp"
                             @change="onVolumeChange"
-                          >
-                            <template slot="append">%</template></el-input
-                          >
+                          ></el-input></div
+                      ></el-col>
+                      <el-col :span="1"
+                        ><div class="volumeConfig" style="padding-left: 10px">
+                          %
                         </div></el-col
                       >
                     </el-row>
                   </div>
                 </div>
                 <div class="pageContainer">
-                  <div style="padding: 10px 0 10px 0">页码</div>
+                  <div style="padding: 10px 0 10px 0" class="previewLable">
+                    页码
+                  </div>
                   <el-row :gutter="24" style="width: 100%; margin: 10px 0 0 0">
                     <el-col :span="12">
                       <div style="selectBgm">
-                        <span style="margin: 10px 0 10px 0; display: block"
-                          >页码位置</span
-                        >
+                        <span class="configLable">页码位置</span>
                         <el-select
                           v-model="pagingObj.position"
                           placeholder="请选择"
@@ -114,9 +149,7 @@
                     </el-col>
                     <el-col :span="12">
                       <div style="selectBgm">
-                        <span style="margin: 10px 0 10px 0; display: block"
-                          >页码样式</span
-                        >
+                        <span class="configLable">页码样式</span>
                         <el-select v-model="pagingObj.fmt" placeholder="请选择">
                           <el-option
                             v-for="item in pagingStyle"
@@ -131,8 +164,8 @@
                   </el-row>
                   <el-row :gutter="24" style="width: 100%; margin: 10px 0 0 0">
                     <el-col :span="12">
-                      <div style="selectBgm">
-                        <span style="margin: 10px 0 10px 0; display: block"
+                      <div class="colorConfig">
+                        <span class="configLable" style="line-height: 40px"
                           >页码颜色</span
                         >
                         <el-color-picker
@@ -141,8 +174,8 @@
                       </div>
                     </el-col>
                     <el-col :span="12">
-                      <div style="selectBgm">
-                        <span style="margin: 10px 0 10px 0; display: block"
+                      <div class="colorConfig">
+                        <span class="configLable" style="line-height: 40px"
                           >背景颜色</span
                         >
                         <el-color-picker
@@ -154,9 +187,7 @@
                   <el-row :gutter="24" style="width: 100%; margin: 10px 0 0 0">
                     <el-col :span="12">
                       <div style="selectBgm">
-                        <span style="margin: 10px 0 10px 0; display: block"
-                          >页码字体</span
-                        >
+                        <span class="configLable">页码字体</span>
                         <el-select
                           v-model="pagingObj.family"
                           placeholder="请选择"
@@ -173,10 +204,9 @@
                     </el-col>
                     <el-col :span="12">
                       <div style="selectBgm">
-                        <span style="margin: 10px 0 10px 0; display: block"
-                          >字体大小</span
-                        >
+                        <span class="configLable">字体大小</span>
                         <el-input
+                          style="width: 192px"
                           v-model="sizeTemp"
                           @change="handleSizeChange"
                         ></el-input>
@@ -321,8 +351,21 @@
               </el-tab-pane>
             </el-tabs>
           </el-main>
-          <el-footer class="buttonContainer">
-            <el-button @click="cancelChange">关闭</el-button>
+          <el-footer class="buttonContainer" height="“70px”">
+            <el-button
+              @click="cancelChange"
+              style="
+                width: 136px;
+                height: 64px;
+                margin: 18px;
+                font-size: 20px;
+                font-family: PingFangSC-Semibold, PingFang SC;
+                font-weight: 600;
+                color: #333333;
+                line-height: 28px;
+              "
+              >关闭</el-button
+            >
           </el-footer>
         </el-container>
       </div>
@@ -356,6 +399,7 @@ import {
   UPDATE_BGM_AFTER,
 } from "../constant/schema";
 import icon from "../public/icon.png";
+import musicIcon from "../public/music.png";
 const map = {
   "0:vertical": 68,
   "0:horizontal": 70,
@@ -470,6 +514,7 @@ export default {
       });
     },
     handleAutoPlay() {
+      console.log(this.bgmConfig.autoPlay);
       this.bgmConfig.autoPlay = !this.bgmConfig.autoPlay;
     },
     onVolumeChange(value) {
@@ -555,6 +600,7 @@ export default {
       deep: true,
       handler(value) {
         if (this.isMounted) {
+          console.log("change");
           this.volumeTemp = value.volume;
           this.updateSchema({
             type: UPDATE_BGM,
@@ -618,7 +664,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(["previewing", "previewTotal", "schema","projectInfo"]),
+    ...mapState(["previewing", "previewTotal", "schema", "projectInfo"]),
     changeTypeSchema() {
       return map[`${this.changeTypeIndex}:${this.changeTypeIndex2}`];
     },
@@ -788,10 +834,63 @@ export default {
     };
   },
   mounted() {},
+  created() {
+    this.musicIcon = musicIcon;
+  },
 };
 </script>
 
 <style lang="less">
+.colorConfig {
+  display: flex;
+  /deep/ .el-color-picker__trigger {
+    width: 190px;
+    height: 40px;
+    border-radius: 14px;
+  }
+}
+.configLable {
+  width: 64px;
+  height: 22px;
+  font-size: 16px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #ffffff;
+  line-height: 22px;
+  margin-right: 15px;
+}
+.volumeContainer {
+  /deep/ .el-slider__runway {
+    height: 8px;
+    background: #8f8f8f;
+    border-radius: 14px;
+  }
+  /deep/ .el-slider__bar {
+    height: 8px;
+    border-radius: 14px;
+  }
+  /deep/ .el-input__inner {
+    height: 30px;
+    background: #3f3f3f;
+    border-radius: 14px;
+    margin-right: 10px;
+  }
+}
+.previewLable {
+  padding: 20px 0 10px 0;
+  font-size: 20px;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: #ffffff;
+  line-height: 28px;
+}
+.volumeLable {
+  font-size: 16px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #ffffff;
+  line-height: 22px;
+}
 .clearfix:after,
 .clearfix:before {
   content: "";
@@ -822,8 +921,14 @@ export default {
   z-index: 10;
   left: 0;
   top: 0;
+  /deep/ .el-input__inner {
+    background: #3f3f3f;
+  }
+  /deep/ .el-textarea__inner {
+    background: #3f3f3f;
+  }
   .leftContainer {
-    margin-left: -400px;
+    margin-left: -652px;
     float: left;
     width: 100%;
     display: flex;
@@ -836,12 +941,11 @@ export default {
     }
   }
   .rightContainer {
-    width: 400px;
+    width: 652px;
     float: right;
     display: flex;
     height: 100%;
     background: #777777;
-    padding: 20px;
     .buttonContainer {
       display: flex;
       justify-content: center;
@@ -852,7 +956,7 @@ export default {
       .bgmConfigContainer {
         width: 100%;
         border: 0;
-        padding: 0 0 10px 0;
+        padding: 0 20px 10px 0;
       }
       .pageContainer {
         width: 100%;
@@ -869,11 +973,13 @@ export default {
       }
       .leftImg {
         display: flex;
-        width: 175px;
-        height: 175px;
-        border: 1px solid white;
+        width: 371px;
+        height: 393px;
+        border-radius: 8px;
+        border: 4px solid #d8d8d8;
       }
       .leftImg.noborder {
+        width: 228px;
         border: 0;
       }
       .card {
@@ -891,6 +997,13 @@ export default {
           background: transparent;
           width: 50%;
           border: 0;
+          height: 70px;
+          line-height: 70px;
+          text-align: center;
+          font-size: 20px;
+          font-family: PingFangSC-Semibold, PingFang SC;
+          font-weight: 600;
+          color: #ffffff;
         }
         /deep/ .el-tabs__item.is-active {
           background: #777777;
@@ -901,7 +1014,7 @@ export default {
         }
       }
       .card > .el-tabs__content {
-        padding: 10px 0 0 0;
+        padding: 40px 0 0 26px;
         .el-tab-pane {
           display: flex;
           flex-wrap: wrap;
@@ -909,11 +1022,25 @@ export default {
       }
       /deep/.nameConfig {
         .el-form-item {
-          width: 100%;
-          padding: 0 10px;
-          margin: 0;
+          width: 214px;
+          padding: 0;
+          margin: 0 0 0 16px;
           .el-form-item__label {
             float: left;
+            font-size: 20px;
+            font-family: PingFangSC-Semibold, PingFang SC;
+            font-weight: 600;
+            color: #ffffff;
+            line-height: 28px;
+            margin-bottom: 17px;
+          }
+          .el-input__inner {
+            height: 55px;
+            font-size: 16px;
+            font-family: PingFangSC-Regular, PingFang SC;
+            font-weight: 400;
+            color: #ffffff;
+            line-height: 22px;
           }
         }
       }
@@ -948,6 +1075,13 @@ export default {
 }
 .blackFont {
   color: black;
+}
+.selectBgm.whiteFont {
+  font-size: 16px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #ffffff;
+  line-height: 22px;
 }
 .changeType {
   .changeIconContainer {
@@ -996,14 +1130,22 @@ export default {
     background-position-y: -120px !important;
   }
 }
+.selectBgm.Dark {
+  background: #545454;
+}
 .selectBgm {
   padding: 10px;
   display: flex;
   align-items: center;
-  border-radius: 4px;
-  background: white;
-  width: 100%;
+  width: 280px;
   height: 40px;
+  background: #ffffff;
+  border-radius: 28px;
+  font-size: 16px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #333333;
+  line-height: 22px;
   cursor: pointer;
   position: relative;
   .autoPlaySwitch {
