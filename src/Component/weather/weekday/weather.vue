@@ -1,7 +1,7 @@
 <template lang="html">
   <baseCmp :cmpConfig="cmpConfig">
     <div class="weekdayForecastContainer" v-if="weather">
-      <p>7天预报({{weather.city||'北京省'}})</p>
+      <p>7天预报({{weather.cityinfo.city||'北京省'}})</p>
       <ul>
         <li v-for="(child,index) in weather.day" :key="index">
           <p>周{{child.week}}</p>

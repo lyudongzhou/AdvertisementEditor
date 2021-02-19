@@ -3,26 +3,26 @@
     <div class="realTimeForecastContainer" v-if="weather">
       <div class="location">
         <img src="../../../Designer/public/weather/location.png" />
-        <span>{{weather.prov||'北京省'}} </span>
-        <span>{{weather.city||'北京市'}}</span>
+        <span>{{weather.cityinfo.provinces||'北京省'}} </span>
+        <span>{{weather.cityinfo.city||'北京市'}}</span>
       </div>
       <div class="real">
-        <p>空气 {{weather.quality}}</p>
-        <p>{{weather.time}} 更新</p>
+        <p>空气 {{weather.now.quality}}</p>
+        <p>{{weather.now.time}} 更新</p>
       </div>
       <div class="temperature">
-        <span>{{weather.temperature}}℃</span>
-        <i :class="`weather_icon bg-${Number(weather.weather_code)}`"></i>
-        <span>{{weather.weather}}</span>
+        <span>{{weather.now.temperature}}℃</span>
+        <i :class="`weather_icon bg-${Number(weather.now.weather_code)}`"></i>
+        <span>{{weather.now.weather}}</span>
       </div>
       <div class="remind">
         <p>
           <img src="../../../Designer/public/weather/humidity.png" />
-          <span>湿度 {{weather.humidity}}</span>
+          <span>湿度 {{weather.now.humidity}}</span>
         </p>
         <p>
           <img src="../../../Designer/public/weather/wind_power.png" />
-          <span>{{weather.wind_direction}} {{weather.wind_power}}</span>
+          <span>{{weather.now.wind_direction}} {{weather.now.wind_power}}</span>
         </p>
       </div>
     </div>
@@ -56,7 +56,7 @@
         needday: 1,
         ip: ip,
       }).then((res) => {
-        this.weather = res.data.now;
+        this.weather = res.data;
       })
     },
     methods: {
