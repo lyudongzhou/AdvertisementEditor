@@ -373,22 +373,31 @@ router.get("/program/list", (req, res) => {
 
 router.get("/weather/get", (req, res) => {
   let realtime = {
-      now: {
-        prov: "北京省",
-        city: "北京市",
-        wind_direction: "东北风",
-        wind_power: "1级",
-        quality: "轻度污染",
-        temperature: "0",
-        weather: "晴",
-        humidity: "32%",
-        time: "20:30",
-        weather_code: "00",
-      },
+      data: {
+        cityinfo: {
+          area: "北京",
+          provinces: "北京",
+          city: "北京"
+        },
+        now: {
+          wind_direction: "东北风",
+          wind_power: "1级",
+          quality: "轻度污染",
+          temperature: "0",
+          weather: "晴",
+          humidity: "32%",
+          time: "20:30",
+          weather_code: "00"
+        }
+      }
     },
     oneday = {
-      now: {
-        city: "北京",
+      data: {
+        cityinfo: {
+          area: "北京",
+          provinces: "北京",
+          city: "北京"
+        },
         hour: [
           {
             wind_direction: "东风",
@@ -594,8 +603,12 @@ router.get("/weather/get", (req, res) => {
       }
     },
     weekday = {
-      now: {
-        city: "北京",
+      data: {
+        cityinfo: {
+          area: "北京",
+          provinces: "北京",
+          city: "北京"
+        },
         day: [
           {
             date: "01-13",

@@ -1,7 +1,7 @@
 <template lang="html">
   <baseCmp :cmpConfig="cmpConfig">
     <div class="oneDayForecastContainer" v-if="weather">
-      <p>24小时预报({{weather.city||'北京省'}})</p>
+      <p>24小时预报({{weather.cityinfo.city||'北京省'}})</p>
       <ul>
         <li v-for="(child,index) in weather.hour" :key="index">
           <p>{{child.time}}</p>

@@ -15,7 +15,7 @@
         :style="caculatePadding(index, loadResource.length)"
       >
         <el-card :body-style="{ padding: '0px' }" shadow="hover">
-          <el-container style="height: 100px; position: relative">
+          <el-container style="height: 93px; position: relative;">
             <el-tooltip placement="right" style="width: 100%; height: 100%">
               <div slot="content">
                 <div style="width: 250px; height: 250px">
@@ -90,9 +90,9 @@
               :src="clownImage"
               style="
                 position: absolute;
-                top: -17px;
-                left: -29px;
-                transform: scale(0.5);
+                top: -22px;
+                left: -36px;
+                transform: scale(0.4);
               "
             />
           </el-container>
@@ -147,6 +147,7 @@ export default {
         "padding-right": index % 2 === 0 ? "5px" : "10px",
         "padding-top": index < 2 ? "10px" : 0,
         "padding-bottom": count - index < 2 ? 0 : "10px",
+        "margin-bottom": "6px",
       };
     },
     handleClick(o, e) {
