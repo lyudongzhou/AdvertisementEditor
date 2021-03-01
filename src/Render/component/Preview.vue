@@ -22,6 +22,11 @@
               :pageData="nextData"
           ></singlePage>
       </div>
+    <ol class="audio_list">
+      <li v-for="(music, index) in currentLayout.container.bgMusic.music" :key="index">
+        <audio :src="music.sourcePaht" ref="music"></audio>
+      </li>
+    </ol>
   </div>
 </template>
 
@@ -38,6 +43,7 @@ export default {
       nextData: null,
       isDialog: false,
       clickSwitchPage: null,
+      playing: null,
     };
   },
   props: ["renderData"],
@@ -61,6 +67,7 @@ export default {
       if (!this.singlePagePreview) {
         this.automaticCycle();
       }
+      this.autoPlay();
     }
   },
   methods: {
@@ -71,6 +78,80 @@ export default {
       "backPrevDialog",
       "setCurrentPage",
     ]),
+    autoPlay () {
+      let audios = this.$refs.music,
+          order  = this.currentLayout.container.bgMusic.type;
+      if (audios.length > 0) {
+        switch (order) {
+          case 1:
+            this.listCirculation();
+            break;
+          case 2:
+            this.playOrder();
+            break;
+          default:
+            this.randomPlay();
+        }
+      }
+    },
+
+    // 列表循环
+    listCirculation () {
+      this.$nextTick(() => {
+        let audios = this.$refs.music,
+            index = 0;
+        let circulation = () => {
+          if (index < audios.length) {
+            this.playing = audios[index];
+            this.playing.play();
+            index++;
+            this.callback = () => {
+              if (index >= audios.length) index = 0;
+              this.playing.removeEventListener('ended', this.callback);
+              circulation();
+            }
+            this.playing.addEventListener('ended', this.callback)
+          }
+        }
+        circulation();
+      })
+    },
+    // 顺序播放
+    playOrder () {
+      this.$nextTick(() => {
+        let audios = this.$refs.music,
+            index = 0;
+        let circulation = () => {
+          if (index < audios.length) {
+            this.playing = audios[index];
+            this.playing.play();
+            index++;
+            this.callback = () => {
+              this.playing.removeEventListener('ended', this.callback);
+              circulation();
+            }
+            this.playing.addEventListener('ended', this.callback)
+          }
+        }
+        circulation();
+      })
+    },
+    // 随机播放
+    randomPlay () {
+      this.$nextTick(() => {
+        let audios = this.$refs.music;
+        let circulation = () => {
+          this.playing = audios[Math.floor(Math.random()*audios.length)];
+          this.playing.play();
+          this.callback = () => {
+            this.playing.removeEventListener('ended', this.callback);
+            circulation();
+          }
+          this.playing.addEventListener('ended', this.callback)
+        }
+        circulation();
+      })
+    },
     /**
      * @description Change page action
      * @author lyuDongzhou
@@ -121,6 +202,10 @@ export default {
       }
     },
     handleNextPage() {
+      if (this.playing && !this.designMode) {
+        this.playing.pause();
+        this.playing.removeEventListener('ended', this.callback);
+      }
       let getIndex = this.findCurrentIndex("pages", this.currentPage),
         pages = this.renderData.pages;
       if (getIndex + 1 < pages.length) {
@@ -133,6 +218,10 @@ export default {
       }
     },
     handlePrevPage() {
+      if (this.playing && !this.designMode) {
+        this.playing.pause();
+        this.playing.removeEventListener('ended', this.callback);
+      }
       let getIndex = this.findCurrentIndex("pages", this.currentPage),
         pages = this.renderData.pages;
       if (getIndex - 1 >= 0) {
@@ -292,6 +381,11 @@ export default {
         });
       });
     },
+    currentPage () {
+      if (!this.designMode) {
+        this.autoPlay();
+      }
+    }
   },
 };
 </script>

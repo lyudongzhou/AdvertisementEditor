@@ -34,6 +34,19 @@ window.renderData = {
           type: "image",
           value: "images/Jellyfish.jpg",
         },
+        bgMusic: {
+          type: 3,
+          music: [
+            {
+              resName: "bg1",
+              sourcePaht: "http://xes-h5-icourse.oss-cn-beijing.aliyuncs.com/test1/zhangrui/tice/2021/%E5%B9%BC%E6%95%99%E6%98%A5%E5%AD%A3%E4%B8%AD%E7%8F%AD/3-2/math_area_of_comparative/resources/assets/audios/read_title_2.mp3"
+            },
+            {
+              resName: "bg2",
+              sourcePaht: "http://xes-h5-icourse.oss-cn-beijing.aliyuncs.com/test1/zhangrui/tice/2021/%E5%B9%BC%E6%95%99%E6%98%A5%E5%AD%A3%E4%B8%AD%E7%8F%AD/3-2/math_area_of_comparative/resources/assets/audios/right2.mp3"
+            }
+          ]
+        },
       },
       components: [
         {
@@ -224,6 +237,23 @@ window.renderData = {
         backGround: {
           type: "image",
           value: "images/Jellyfish.jpg",
+        },
+        bgMusic: {
+          type: 1,
+          music: [
+            {
+              resName: "bg1",
+              sourcePaht: "http://xes-h5-icourse.oss-cn-beijing.aliyuncs.com/test1/zhangrui/tice/2021/%E5%B9%BC%E6%95%99%E6%98%A5%E5%AD%A3%E4%B8%AD%E7%8F%AD/3-2/math_area_of_comparative/resources/assets/audios/wrong.mp3"
+            },
+            {
+              resName: "bg2",
+              sourcePaht: "http://xes-h5-icourse.oss-cn-beijing.aliyuncs.com/test1/zhangrui/tice/2021/%E5%B9%BC%E6%95%99%E6%98%A5%E5%AD%A3%E4%B8%AD%E7%8F%AD/3-2/math_area_of_comparative/resources/assets/audios/give_me_five.mp3"
+            },
+            {
+              resName: "bg3",
+              sourcePaht: "http://xes-h5-icourse.oss-cn-beijing.aliyuncs.com/test1/zhangrui/tice/2021/%E5%B9%BC%E6%95%99%E6%98%A5%E5%AD%A3%E4%B8%AD%E7%8F%AD/3-2/math_area_of_comparative/resources/assets/audios/read_title_2.mp3"
+            },
+          ]
         },
       },
       components: [],

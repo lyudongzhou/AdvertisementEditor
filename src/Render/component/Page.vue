@@ -29,7 +29,8 @@ export default {
     props: ["pageData", "pageState"],
     components: get(REG_COMPONENTS),
     data() {
-        return {};
+      return {
+      };
     },
     mounted() {
     },
@@ -48,7 +49,7 @@ export default {
               this.$refs[ele.id]&&this.$refs[ele.id][0].$children[0].idleAction();
           });
         }
-      }
+      },
     },
     methods: {
         getCmp(id){
