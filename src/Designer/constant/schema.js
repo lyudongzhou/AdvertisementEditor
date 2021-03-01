@@ -46,6 +46,7 @@ export const AUTO_AFTER_PROP = "AUTO_AFTER_PROP";
 
 export const UPDATE_SCHEMA = 'UPDATE_SCHEMA';
 
+export const AFTRE_BG_MUSIC = "AFTRE_BG_MUSIC";
 export const UPDATE_BGM_BEFORE = "UPDATE_BGM_BEFORE";
 export const UPDATE_BGM = "UPDATE_BGM";
 export const UPDATE_BGM_AFTER = "UPDATE_BGM_AFTER";

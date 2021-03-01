@@ -21,6 +21,7 @@ import {
   AUTO_AFTER_PROP,
   UPDATE_SCHEMA,
   UPDATE_RESOLUTION,
+  AFTRE_BG_MUSIC,
   UPDATE_BGM_BEFORE,
   UPDATE_BGM,
   UPDATE_BGM_AFTER, BATCH_UPDATING_COMPONENT_POSITION, BATCH_AFTER_UPDATE_COMPONENT_POSITION, BATCH_ADD_COMPONENT
@@ -138,6 +139,8 @@ const doSwitchIndex = (components, newIndex, oldIndex) => {
 };
 //更新背景色
 const updatePageColor = generatePageUpdater("container.backGround");
+//更新背景音乐列表
+const updateBgMusic = generatePageUpdater("container.bgMusic");
 //更新背景音频
 const updateBgm = (schema, config) => {
   Object.entries(config.value).forEach(([path, value]) => {
@@ -186,6 +189,10 @@ export default {
   afterPage: {
     handler: commitHandler,
     updater: updatePageColor,
+  },
+  [AFTRE_BG_MUSIC]: {
+    handler: commitHandler,
+    updater: updateBgMusic,
   },
   [UPDATE_BGM_BEFORE]: {
     handler: snapshotHandler
