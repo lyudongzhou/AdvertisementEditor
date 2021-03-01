@@ -39,14 +39,11 @@
                 v-for="(tab, index) in currentTabs"
                 :key="index"
                 :name="index + ''"
+                label="fdsafs"
               >
-              <p class="img_type" slot="label">
-                <span>{{ tab.text }}</span>
-              </p>
-              1121212
-              </el-tab-pane>
-            </el-tabs></el-aside
-          ><el-main>
+              </el-tab-pane> </el-tabs
+          ></el-aside>
+          <el-main>
             <vue-select-image
               ref="selectCmp"
               :dataImages="aResource"
@@ -89,9 +86,7 @@
       ></el-footer>
       <el-footer style="height: 10%; margin-top: 10px; bottom: 0"
         ><el-button @click="handleClose">取消</el-button
-        ><el-button @click="commit"
-          >确定</el-button
-        ></el-footer
+        ><el-button @click="commit">确定</el-button></el-footer
       >
     </el-container>
   </el-dialog>
@@ -103,8 +98,10 @@ import VueSelectImage from "./FileDisplay";
 // require("vue-select-image/dist/vue-select-image.css");
 import dataMixin from "../../mixin/pagingResourceMixin";
 import fileIcon from "../../public/file.jpg";
+import music from "../../public/music.png";
+import Image from "../../../Component/image/image.vue";
 export default {
-  components: { VueSelectImage },
+  components: { VueSelectImageImage },
   mixins: [dataMixin],
   data() {
     return {
@@ -112,10 +109,10 @@ export default {
       multi: false,
       title: "标题",
       tabs: [
-        { icon: "", text: "图片", resType: 1 },
-        { icon: "", text: "视频", resType: 2 },
-        { icon: "", text: "音频", resType: 3 },
-        { icon: "", text: "文档", resType: 4 },
+        { icon: music, text: "图片", resType: 1 },
+        { icon: music, text: "视频", resType: 2 },
+        { icon: music, text: "音频", resType: 3 },
+        { icon: music, text: "文档", resType: 4 },
       ],
       currentTabs: [],
       resourceTyp: 0,
@@ -333,7 +330,7 @@ export default {
   .pub_btn {
     width: 130px;
     height: 45px;
-    background: #1391FF;
+    background: #1391ff;
     border-radius: 10px;
     outline: none;
     text-align: center;
@@ -341,7 +338,7 @@ export default {
     font-size: 16px;
     font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
-    color: #FFFFFF;
+    color: #ffffff;
     cursor: pointer;
   }
   .upload_text {
@@ -397,13 +394,13 @@ export default {
           display: inline-block;
           width: 130px;
           height: 45px;
-          background: #FFFFFF;
+          background: #ffffff;
           border-radius: 10px;
-          border: 1px solid #1391FF;
+          border: 1px solid #1391ff;
           font-size: 16px;
           font-family: PingFangSC-Regular, PingFang SC;
           font-weight: 400;
-          color: #1391FF;
+          color: #1391ff;
           text-align: center;
         }
       }
@@ -416,9 +413,9 @@ export default {
           width: 130px;
           height: 45px;
           line-height: 45px;
-          background: #FFFFFF;
+          background: #ffffff;
           border-radius: 10px;
-          border: 1px solid #1391FF;
+          border: 1px solid #1391ff;
         }
       }
     }

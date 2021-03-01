@@ -55,7 +55,7 @@ export default {
   },
   computed: {
     props() {
-      return this.cmpConfig.props || {};
+      return this.cmpConfig.props.data || {};
     },
 //    width() {
 //      return this.cmpConfig.layoutConfig.width;

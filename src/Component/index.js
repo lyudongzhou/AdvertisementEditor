@@ -13,3 +13,4 @@ import "./notice";
 import "./weather";
 import "./timer";
 import "./vote";
+import "./form";

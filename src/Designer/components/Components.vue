@@ -52,82 +52,84 @@
 </template>
 
 <script>
-  import headConfig from "../config/headerConfig";
-  import schemaMixin from "../mixin/schemaMixin";
-  import { get } from "@/register";
-  import { SVGS } from "@/const";
-  import { DELETE_COMPONENT } from "../constant/schema";
-  import { mapMutations } from "../store/index";
-  export default {
-    name: "components",
-    mixins: [schemaMixin],
-    components: {},
-    created() {
-      this.headConfig = headConfig;
-    },
-    data() {
-      return {
-        isShowMore: false,
-      };
-    },
-    methods: {
-      ...mapMutations(["updateSchema"]),
-      addCmp(config) {
-        if (config.editConfig.after) {
-          // console.log(DELETE_COMPONENT);
-          // this.$$addNewComponent(config.editConfig.defaultSchema);
-          // return;
-          let me = this;
-          me.$$addNewComponent(config.editConfig.defaultSchema);
-          this.$event.emit("openEditWin", {
-            title: config.editConfig.after.title,
-            tab: config.editConfig.after.tab,
-            cb(isSuccess) {
-              if (!isSuccess) {
-                me.updateSchema({
-                  type: DELETE_COMPONENT,
-                });
-              }
-            },
-          });
-        } else if (config.editConfig.before) {
-          this.$event.emit("openUploadWin", {
-            onSelect: (a) => {
-              this.$$addNewComponent(
-                config.editConfig.before.fmtRes(
-                  a,
-                  config.editConfig.defaultSchema
-                )
-              );
-            },
-            aSelectType: config.editConfig.before.types,
-            multi: config.editConfig.before.multi,
-            title: config.editConfig.before.title,
-          });
-        } else {
-          this.$$addNewComponent(config.editConfig.defaultSchema);
-        }
-      },
-      tmpSvg(msg) {
-        return get(SVGS)[msg.type]({
-          layoutConfig: {
-            width: 30,
-            height: 30,
-          },
-          props: {
-            color: msg.color,
-            type: msg.type,
+import headConfig from "../config/headerConfig";
+import schemaMixin from "../mixin/schemaMixin";
+import { get } from "@/register";
+import { SVGS } from "@/const";
+import { DELETE_COMPONENT } from "../constant/schema";
+import { mapMutations } from "../store/index";
+export default {
+  name: "components",
+  mixins: [schemaMixin],
+  components: {},
+  created() {
+    this.headConfig = headConfig;
+  },
+  data() {
+    return {
+      isShowMore: false,
+    };
+  },
+  methods: {
+    ...mapMutations(["updateSchema"]),
+    addCmp(config) {
+      if (config.label === "投票" || config.label === "表单") {
+        this.$event.emit("selectPlugin",config.label==="投票"?1:2,config);
+      } else if (config.editConfig.after) {
+        // console.log(DELETE_COMPONENT);
+        // this.$$addNewComponent(config.editConfig.defaultSchema);
+        // return;
+        let me = this;
+        me.$$addNewComponent(config.editConfig.defaultSchema);
+        this.$event.emit("openEditWin", {
+          title: config.editConfig.after.title,
+          tab: config.editConfig.after.tab,
+          cb(isSuccess) {
+            if (!isSuccess) {
+              me.updateSchema({
+                type: DELETE_COMPONENT,
+              });
+            }
           },
         });
-      },
-      /**
-       * @param {status} 状态码 1:形状 2:线和箭头 3:装饰 4: 图片容器
-       */
-      moreSvg (status) {
-        this.$event.emit('openMoreSvg', {id: status});
+      } else if (config.editConfig.before) {
+        this.$event.emit("openUploadWin", {
+          onSelect: (a) => {
+            this.$$addNewComponent(
+              config.editConfig.before.fmtRes(
+                a,
+                config.editConfig.defaultSchema
+              )
+            );
+          },
+          aSelectType: config.editConfig.before.types,
+          multi: config.editConfig.before.multi,
+          title: config.editConfig.before.title,
+        });
+      } else {
+        this.$$addNewComponent(config.editConfig.defaultSchema);
       }
     },
-  };
+    tmpSvg(msg) {
+      return get(SVGS)[msg.type]({
+        layoutConfig: {
+          width: 30,
+          height: 30,
+        },
+        props: {
+          color: msg.color,
+          type: msg.type,
+        },
+      });
+    },
+    /**
+     * @param {status} 状态码 1:形状 2:线和箭头 3:装饰 4: 图片容器
+     */
+    moreSvg(status) {
+      this.$event.emit("openMoreSvg", { id: status });
+    },
+  },
+};
 </script>
 
 <style lang="less" scoped>
@@ -277,10 +279,10 @@
                 width: 50px;
                 font-size: 16px;
                 font-family: PingFangSC-Medium, PingFang SC;
-                color: #75838F;
+                color: #75838f;
                 // cursor: pointer;
                 b {
-                  border-bottom: 1px solid #D8D8D8;
+                  border-bottom: 1px solid #d8d8d8;
                   box-sizing: border-box;
                   padding-bottom: 2px;
                   font-weight: 500;

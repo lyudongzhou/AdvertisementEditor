@@ -41,9 +41,9 @@
                 style="padding:0px;"
                 :name="index + ''">
                 <p class="img_type" slot="label">
-                  <span>{{ tab.text }}</span>
+                  <img :src="tab.icon"/>
+                  <span class="marginLeft">{{ tab.text }}</span>
                 </p>
-                1121212
               </el-tab-pane>
             </el-tabs>
           </el-aside>
@@ -103,6 +103,7 @@ import VueSelectImage from "./FileDisplay";
 import dataMixin from "../../mixin/pagingResourceMixin";
 import fileIcon from "../../public/file.jpg";
 import image from "../../public/58.png";
+import music from "../../public/music.png";
 
 export default {
   components: { VueSelectImage },
@@ -113,10 +114,10 @@ export default {
       multi: false,
       title: "标题",
       tabs: [
-        { icon: "", text: "图片", resType: 1 },
-        { icon: "", text: "视频", resType: 2 },
-        { icon: "", text: "音频", resType: 3 },
-        { icon: "", text: "文档", resType: 4 },
+        { icon: music, text: "图片", resType: 1 },
+        { icon: music, text: "视频", resType: 2 },
+        { icon: music, text: "音频", resType: 3 },
+        { icon: music, text: "文档", resType: 4 },
       ],
       currentTabs: [],
       resourceTyp: 0,
@@ -303,6 +304,9 @@ export default {
 
 <style lang="less" scope>
 @deep: ~">>>";
+.marginLeft{
+  margin-left: 30px;
+}
 .deleteIcon {
   cursor: pointer;
   background: white;
@@ -398,17 +402,19 @@ export default {
       .el-main {
         padding: 0;
         .img_type {
-          display: inline-block;
-          width: 130px;
-          height: 45px;
-          background: #FFFFFF;
-          border-radius: 10px;
-          border: 1px solid #1391FF;
-          font-size: 16px;
-          font-family: PingFangSC-Regular, PingFang SC;
-          font-weight: 400;
-          color: #1391FF;
-          text-align: center;
+          display: flex;
+          align-items: center;
+          // display: inline-block;
+          // width: 130px;
+          // height: 45px;
+          // background: #FFFFFF;
+          // border-radius: 10px;
+          // border: 1px solid #1391FF;
+          // font-size: 16px;
+          // font-family: PingFangSC-Regular, PingFang SC;
+          // font-weight: 400;
+          // color: #1391FF;
+          // text-align: center;
         }
       }
       .el-footer {
