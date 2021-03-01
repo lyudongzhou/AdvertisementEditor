@@ -42,89 +42,6 @@
                     </el-form-item>
                   </el-form>
                 </div>
-                <div class="bgmConfigContainer">
-                  <div class="previewLable">
-                    背景音乐<el-switch
-                      v-model="value"
-                      active-color="#13ce66"
-                      inactive-color="#ff4949"
-                      style="float: right"
-                    >
-                    </el-switch>
-                  </div>
-                  <el-row :gutter="24" style="width: 100%; margin: 0">
-                    <el-col :span="12"
-                      ><div
-                        class="selectBgm blackFont"
-                        @click="handleBGMConfig"
-                      >
-                        背景音乐<span
-                          :style="
-                            'width:20px;height:20px;margin-left:170px;background-image:url(' +
-                            musicIcon +
-                            ')'
-                          "
-                        ></span></div
-                    ></el-col>
-                    <el-col :span="12"
-                      ><div class="grid-content bg-purple">
-                        <div class="selectBgm Dark whiteFont">
-                          音乐自动播放
-                          <el-switch
-                            v-model="bgmConfig.autoPlay"
-                            active-color="#13ce66"
-                            inactive-color="#ff4949"
-                            style="margin-left: 123px"
-                          ></el-switch>
-                          <!-- <div class="autoPlaySwitch">
-                            {{ bgmConfig.autoPlay ? "ON" : "OFF" }}
-                          </div> -->
-                        </div>
-                      </div></el-col
-                    >
-                  </el-row>
-                  <div style="width: 100%; padding: 10px 0px 0 0px">
-                    <el-row
-                      style="
-                        width: 100%;
-                        border: 1px solid black;
-                        background: #545454;
-                        padding-left: 20px;
-                        padding-right: 26px;
-                        padding-top: 9px;
-                        padding-bottom: 9px;
-                        background: #545454;
-                        border-radius: 8px;
-                      "
-                      class="volumeContainer"
-                    >
-                      <el-col :span="6"
-                        ><div class="volumeConfig volumeLable">
-                          背景音量
-                        </div></el-col
-                      >
-                      <el-col :span="13"
-                        ><div class="grid-content bg-purple">
-                          <div class="volumeConfig">
-                            <el-slider v-model="bgmConfig.volume"></el-slider>
-                          </div></div
-                      ></el-col>
-                      <el-col :span="3"
-                        ><div class="volumeConfig">
-                          <el-input
-                            class="volumeInput"
-                            v-model="volumeTemp"
-                            @change="onVolumeChange"
-                          ></el-input></div
-                      ></el-col>
-                      <el-col :span="1"
-                        ><div class="volumeConfig" style="padding-left: 10px">
-                          %
-                        </div></el-col
-                      >
-                    </el-row>
-                  </div>
-                </div>
                 <div class="pageContainer">
                   <div style="padding: 10px 0 10px 0" class="previewLable">
                     页码
@@ -226,22 +143,34 @@
                   <div class="changeIconContainer">
                     <div
                       :class="fmtClass(item.icon, index)"
-                      :style="fmtUrl()"
+                      :style="fmtUrl('icon' + item.icon)"
                     ></div>
                     <div>{{ item.text }}</div>
                   </div>
                 </div>
                 <div class="playContainer">
-                  <div style="padding: 10px 0 10px 0">翻页设置</div>
+                  <div
+                    style="
+                      padding: 10px 0 10px 0;
+                      font-size: 20px;
+                      font-family: PingFangSC-Semibold, PingFang SC;
+                      font-weight: 600;
+                      color: #ffffff;
+                      line-height: 28px;
+                    "
+                  >
+                    翻页设置
+                  </div>
                   <el-row
                     :gutter="24"
                     class="playSet"
                     style="width: 100%; margin: 10px 0 0 0; padding: 0 12px"
                   >
-                    <el-col :span="8">
+                    <el-col :span="24">
                       <el-select
                         v-model="changeTypeIndex2"
                         placeholder="请选择"
+                        class="previewChangeType"
                       >
                         <el-option
                           v-for="item in changeTypes"
@@ -252,30 +181,30 @@
                         </el-option>
                       </el-select>
                     </el-col>
-                    <el-col :span="8">
-                      <div
-                        class="grid-content bg-purple"
-                        @click="handleLoopTemp"
-                      >
-                        <div class="selectBgm blackFont">
-                          循环播放
-                          <div class="autoPlaySwitch">
-                            {{ playConfig.loop ? "ON" : "OFF" }}
-                          </div>
-                        </div>
+                    <el-col :span="24">
+                      <div class="looping">
+                        循环播放
+                        <el-switch
+                          active-color="#545454"
+                          inactive-color="#545454"
+                          active-text="ON"
+                          inactive-text="OFF"
+                          v-model="playConfig.loop"
+                        >
+                        </el-switch>
                       </div>
                     </el-col>
-                    <el-col :span="8">
-                      <div class="grid-content bg-purple">
-                        <div
-                          class="selectBgm blackFont"
-                          @click="handleChangeHint"
+                    <el-col :span="24">
+                      <div class="looping">
+                        翻页提示
+                        <el-switch
+                          active-color="#545454"
+                          inactive-color="#545454"
+                          active-text="ON"
+                          inactive-text="OFF"
+                          v-model="playConfig.changeHint"
                         >
-                          翻页提示
-                          <div class="autoPlaySwitch">
-                            {{ playConfig.changeHint ? "ON" : "OFF" }}
-                          </div>
-                        </div>
+                        </el-switch>
                       </div>
                     </el-col>
                   </el-row>
@@ -283,14 +212,15 @@
                     <el-row
                       style="
                         width: 100%;
-                        border: 1px solid black;
+                        border: 0px solid black;
                         border-radius: 4px;
                       "
+                      class="dragContainer"
                     >
-                      <el-col :span="9"
-                        ><div class="volumeConfig">默认页播放时长</div></el-col
+                      <el-col :span="5"
+                        ><div class="dragText">默认页播放时长</div></el-col
                       >
-                      <el-col :span="8"
+                      <el-col :span="14"
                         ><div class="grid-content bg-purple">
                           <div class="volumeConfig">
                             <el-slider
@@ -300,7 +230,7 @@
                             ></el-slider>
                           </div></div
                       ></el-col>
-                      <el-col :span="7"
+                      <el-col :span="3"
                         ><div class="volumeConfig">
                           <el-input
                             class="volumeInput"
@@ -317,14 +247,15 @@
                     <el-row
                       style="
                         width: 100%;
-                        border: 1px solid black;
+                        border: 0px solid black;
                         border-radius: 4px;
                       "
+                      class="dragContainer"
                     >
-                      <el-col :span="9"
-                        ><div class="volumeConfig">无触摸返回时长</div></el-col
+                      <el-col :span="5"
+                        ><div class="dragText">无触摸返回时长</div></el-col
                       >
-                      <el-col :span="8"
+                      <el-col :span="14"
                         ><div class="grid-content bg-purple">
                           <div class="volumeConfig">
                             <el-slider
@@ -334,7 +265,7 @@
                             ></el-slider>
                           </div></div
                       ></el-col>
-                      <el-col :span="7"
+                      <el-col :span="3"
                         ><div class="volumeConfig">
                           <el-input
                             class="volumeInput"
@@ -398,7 +329,26 @@ import {
   UPDATE_BGM,
   UPDATE_BGM_AFTER,
 } from "../constant/schema";
-import icon from "../public/icon.png";
+// import icon from "../public/icon.png";
+
+import iconcvbe from "../public/preview/cvbe.png";
+import iconmove from "../public/preview/move.png";
+import iconfade from "../public/preview/fade.png";
+import iconcover from "../public/preview/cover.png";
+import iconcarousel from "../public/preview/carousel.png";
+import iconscale from "../public/preview/scale.png";
+import iconglue from "../public/preview/glue.png";
+import iconpush from "../public/preview/push.png";
+let imageMap = {
+  iconcvbe,
+  iconmove,
+  iconfade,
+  iconcover,
+  iconcarousel,
+  iconscale,
+  iconglue,
+  iconpush,
+};
 import musicIcon from "../public/music.png";
 const map = {
   "0:vertical": 68,
@@ -484,15 +434,13 @@ export default {
         this.pageInfo.containerHeight = containerBound.height;
       });
     },
-    fmtUrl() {
+    fmtUrl(type) {
       return {
-        backgroundImage: `url(${icon})`,
+        backgroundImage: `url(${imageMap[type]})`,
       };
     },
     fmtClass(text, index) {
-      return `changeIcon ${text} ${
-        index === this.changeTypeIndex ? "active" : ""
-      }`;
+      return `changeIcon ${index === this.changeTypeIndex ? "active" : ""}`;
     },
     handleBGMConfig() {
       this.$event.emit("openUploadWin", {
@@ -841,6 +789,76 @@ export default {
 </script>
 
 <style lang="less">
+.dragContainer {
+  .el-col {
+    .volumeConfig {
+      .volumeInput {
+        .el-input__inner {
+          background: #545454;
+          border-top-right-radius: 4px;
+          border-bottom-right-radius: 4px;
+        }
+        .el-input-group__append {
+          background: transparent;
+          border: 0px;
+          font-size: 16px;
+          font-family: PingFangSC-Medium, PingFang SC;
+          font-weight: 500;
+          color: #ffffff;
+          padding-left: 7px;
+        }
+      }
+    }
+    .grid-content {
+      .volumeConfig {
+        .el-slider {
+          .el-slider__runway {
+            background-color: #545454;
+            .el-slider__bar {
+              background-color: #545454;
+            }
+            .el-slider__button-wrapper{
+              .el-slider__button{
+                border: 2px solid white;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.dragText {
+  font-size: 16px;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 40px;
+}
+.looping {
+  margin-bottom: 10px;
+  margin-top: 10px;
+  font-size: 16px;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 22px;
+  .el-switch {
+    .el-switch__label {
+      color: white;
+    }
+  }
+}
+.previewChangeType {
+  .el-input--suffix {
+    .el-input__inner {
+      width: 220px;
+      height: 44px;
+      background: #969696;
+      border-radius: 14px;
+    }
+  }
+}
 .colorConfig {
   display: flex;
   /deep/ .el-color-picker__trigger {
@@ -1089,20 +1107,21 @@ export default {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    width: 70px;
-    height: 100px;
+    width: 112px;
+    height: 150px;
   }
   .changeIcon {
-    width: 60px;
-    height: 60px;
-    transform: rotateZ(-90deg);
+    width: 110px;
+    height: 117px;
+    border-radius: 10px;
+    // transform: rotateZ(-90deg);
   }
   .changeIcon:hover {
-    background: #424242;
+    background: #b9b9b9;
     cursor: pointer;
   }
   .changeIcon.active {
-    background: #424242;
+    background: #b9b9b9;
     cursor: pointer;
   }
   .cvbe {
