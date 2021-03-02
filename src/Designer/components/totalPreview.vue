@@ -1111,9 +1111,10 @@ export default {
     height: 150px;
   }
   .changeIcon {
-    width: 110px;
-    height: 117px;
+    width: 108px;
+    height: 108px;
     border-radius: 10px;
+    background-repeat: no-repeat;
     // transform: rotateZ(-90deg);
   }
   .changeIcon:hover {

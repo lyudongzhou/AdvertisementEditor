@@ -74,7 +74,11 @@ export default {
     ...mapMutations(["updateSchema"]),
     addCmp(config) {
       if (config.label === "投票" || config.label === "表单") {
-        this.$event.emit("selectPlugin",config.label==="投票"?1:2,config);
+        this.$event.emit(
+          "selectPlugin",
+          config.label === "投票" ? 1 : 2,
+          config
+        );
       } else if (config.editConfig.after) {
         // console.log(DELETE_COMPONENT);
         // this.$$addNewComponent(config.editConfig.defaultSchema);
@@ -95,12 +99,14 @@ export default {
       } else if (config.editConfig.before) {
         this.$event.emit("openUploadWin", {
           onSelect: (a) => {
-            this.$$addNewComponent(
-              config.editConfig.before.fmtRes(
-                a,
-                config.editConfig.defaultSchema
-              )
-            );
+            if (a&&a.length) {
+              this.$$addNewComponent(
+                config.editConfig.before.fmtRes(
+                  a,
+                  config.editConfig.defaultSchema
+                )
+              );
+            }
           },
           aSelectType: config.editConfig.before.types,
           multi: config.editConfig.before.multi,
