@@ -1,6 +1,10 @@
 import { clone, getPropByPath, getUuid } from "../../Utils/utils";
 import { mapGetters, mapState, mapMutations } from "../store/index";
-import {ADD_COMPONENT, ADD_PAGE, BATCH_ADD_COMPONENT} from '../constant/schema';
+import {
+  ADD_COMPONENT,
+  ADD_PAGE,
+  BATCH_ADD_COMPONENT,
+} from "../constant/schema";
 import { get } from "@/register";
 import { REG_COMPONENTSSCHEMA } from "@/const";
 
@@ -84,11 +88,13 @@ export default {
       return createComponent(base);
     },
     $$addNewComponents(components) {
-      components = components.map(component => this.convertBaseToNewComponent(component));
+      components = components.map((component) =>
+        this.convertBaseToNewComponent(component)
+      );
       executeMutations.call(this, "updateSchema", {
         type: BATCH_ADD_COMPONENT,
         value: components,
-        targetIds: components.map(component => component.id),
+        targetIds: components.map((component) => component.id),
       });
     },
     $$addNewComponent(base) {
@@ -104,7 +110,7 @@ export default {
       if (!components || !components.length) {
         return;
       }
-      components.forEach(component => {
+      components.forEach((component) => {
         // 默认错开一些
         component.layoutConfig.top = component.layoutConfig.top - 30;
         component.layoutConfig.left = component.layoutConfig.left - 30;
@@ -116,12 +122,23 @@ export default {
       }
     },
     $$copyComponents() {
-      const isSelectMultipleComponent = executeGetter.call(this, "isSelectMultipleComponent");
+      const isSelectMultipleComponent = executeGetter.call(
+        this,
+        "isSelectMultipleComponent"
+      );
       let components;
       if (isSelectMultipleComponent) {
-        const getComponentSchema = executeGetter.call(this, 'getComponentSchema');
-        const selectedComponents = getFromState.call(this, 'selectedComponents');
-        components = selectedComponents.map(id => clone(getComponentSchema(id)));
+        const getComponentSchema = executeGetter.call(
+          this,
+          "getComponentSchema"
+        );
+        const selectedComponents = getFromState.call(
+          this,
+          "selectedComponents"
+        );
+        components = selectedComponents.map((id) =>
+          clone(getComponentSchema(id))
+        );
       } else {
         const component = executeGetter.call(this, "currentComponent");
         if (!component) {
@@ -133,8 +150,8 @@ export default {
       executeMutations.call(this, "copyComponents", components);
     },
     $$copyPage() {
-      const base = executeGetter.call(this, 'currentContainer');
-      const pageType = getFromState.call(this, 'currentPageType');
+      const base = executeGetter.call(this, "currentContainer");
+      const pageType = getFromState.call(this, "currentPageType");
       this.$$addPage(pageType, base);
     },
     $$addPage(pageType, base = {}) {
@@ -184,6 +201,10 @@ const createPage = (pageType, base) => {
       backGround: {
         type: "",
         value: "",
+      },
+      bgMusic: {
+        type: 1,
+        music: [],
       },
     },
     components: [],

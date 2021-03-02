@@ -15,6 +15,12 @@
             class="previewPage"
             @afterRender="onRender"
           ></singlePagePreview>
+          <el-button type="primary" class="totalPreviewPreBtn" @click="prePage"
+            >上一页</el-button
+          >
+          <el-button type="primary" class="totalPreviewNextBtn" @click="nextPage"
+            >下一页</el-button
+          >
         </div>
       </div>
       <div class="rightContainer">
@@ -389,6 +395,12 @@ const mapInverse = {
 export default {
   methods: {
     ...mapMutations(["setPreviewState", "updateSchema"]),
+    prePage(){
+      this.$refs.render.prePage();
+    },
+    nextPage(){
+      this.$refs.render.nextPage();
+    },
     commit() {
       this.isShow = false;
     },
@@ -789,6 +801,42 @@ export default {
 </script>
 
 <style lang="less">
+.el-button.totalPreviewPreBtn.el-button--primary.totalPreviewPreBtn {
+  position: absolute;
+  width: 136px;
+  height: 64px;
+  bottom: 0px;
+  left: 50%;
+  transform: translate(-161px,0);
+  background: #ffffff;
+  border-radius: 10px;
+  opacity: 0.8;
+  border: 1px solid #979797;
+  span {
+    font-size: 20px;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #333333;
+  }
+}
+.el-button.totalPreviewNextBtn.el-button--primary {
+  position: absolute;
+  width: 136px;
+  height: 64px;
+  bottom: 0px;
+  left: 50%;
+  transform: translate(25px,0);
+  background: #ffffff;
+  border-radius: 10px;
+  opacity: 0.8;
+  border: 1px solid #979797;
+  span {
+    font-size: 20px;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #333333;
+  }
+}
 .dragContainer {
   .el-col {
     .volumeConfig {
@@ -817,8 +865,8 @@ export default {
             .el-slider__bar {
               background-color: #545454;
             }
-            .el-slider__button-wrapper{
-              .el-slider__button{
+            .el-slider__button-wrapper {
+              .el-slider__button {
                 border: 2px solid white;
               }
             }
@@ -1065,7 +1113,7 @@ export default {
     }
   }
   .leftContainer_inner {
-    margin-left: 400px;
+    margin-left: 652px;
     width: 100%;
     height: 100%;
     position: relative;

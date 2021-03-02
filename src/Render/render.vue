@@ -137,6 +137,12 @@ export default {
     getCmp(id) {
       return this.$refs["preview"].getCmp(id);
     },
+    nextPage(){
+      this.$refs["preview"].handleNextPage();
+    },
+    prePage(){
+      this.$refs["preview"].handlePrevPage();
+    },
     findCurrentIndex(chooice, useId) {
       let getIndex;
       this.renderData[chooice].some((child, index) => {

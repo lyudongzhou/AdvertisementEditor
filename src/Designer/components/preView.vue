@@ -27,12 +27,12 @@ export default {
   },
   watch: {
     previewing(data) {
-      console.log("preview",data);
+      console.log("preview", data);
       this.isShow = data;
       // if (this.isShow) {
-        // this.$nextTick(() => {
-          this.renderPreview();
-        // });
+      // this.$nextTick(() => {
+      this.renderPreview();
+      // });
       // }
     },
     isShow(value) {
@@ -68,8 +68,15 @@ export default {
           },
           store: previewStore(),
         });
+        console.log(this.previewInstance);
       });
     },
+    nextPage() {
+      this.previewInstance.$children[0].nextPage();
+    },
+    prePage(){
+      this.previewInstance.$children[0].prePage()
+    }
   },
 };
 </script>

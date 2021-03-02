@@ -1,12 +1,12 @@
 <template lang="html">
   <div class="preview" :style="!designMode ? { overflow: 'hidden' } : {}">
     <div class="mask"></div>
-    <button id="prevBtn" v-if="!designMode&&!isProduction" @click="handlePrevPage">
+    <!-- <button id="prevBtn" v-if="!designMode&&!isProduction" @click="handlePrevPage">
       上一页
     </button>
     <button id="nextBtn" v-if="!designMode&&!isProduction" @click="handleNextPage">
       下一页
-    </button>
+    </button> -->
     <div id="pt-main" class="pt-perspective" ref="main">
           <singlePage
               v-if="currentLayout"
