@@ -5,6 +5,7 @@ import './assets/css/animations.css';
 import "@/register";
 import store from "./store";
 import axios from 'axios';
+import "../../font/font.scss";
 Vue.config.productionTip = false;
 Vue.prototype.$axios = axios;
 new Vue({

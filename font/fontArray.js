@@ -1,0 +1,15 @@
+export default [
+    { name: "微软雅黑", type: "微软雅黑" },
+    { name: "黑体", type: "黑体" },
+    { name: "庞门正道标题体", type: "pmzdbtt" },
+    { name: "庞门正道粗书体", type: "pmzdcst" },
+    { name: "站酷高端黑", type: "zkgdh" },
+    { name: "站酷酷黑", type: "zkkh" },
+    { name: "站酷快乐体", type: "zkhlt" },
+    { name: "站酷文艺体", type: "zkwyt" },
+    { name: "站酷小薇LOGO体", type: "zklogot" },
+    { name: "SourceHanSansSC-Bold", type: "SourceHanSansSC-Bold" },
+    { name: "SourceHanSansSC-Regular", type: "SourceHanSansSC-Regular" },
+    { name: "SourceHanSerifSC-Heavy", type: "SourceHanSerifSC-Heavy" },
+    { name: "SourceHanSerifSC-Regular", type: "SourceHanSerifSC-Regular" },
+    ];

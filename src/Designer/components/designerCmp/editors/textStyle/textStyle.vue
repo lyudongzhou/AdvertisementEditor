@@ -135,6 +135,11 @@ import textField from "../textField/textField";
 import colorpickerFiled from "../colorpickerFiled/colorpickerFiled";
 import { UPDATE_COMPONENT_PROPS } from "../../../../constant/schema";
 import { mapMutations } from "../../../../store";
+import fontStore from "../../../../../../font/fontArray";
+const myFontStore = [];
+fontStore.forEach(ele=>{
+  myFontStore.push({label:ele.name,value:ele.type});
+});
 export default {
   name: "textStyle",
   props: ["configData", "config", 'isHasBg'],
@@ -147,16 +152,7 @@ export default {
   data() {
     return {
       fontFamily: "微软雅黑",
-      fontFamilies: [
-        {
-          value: "微软雅黑",
-          label: "微软雅黑",
-        },
-        {
-          value: "黑体",
-          label: "黑体",
-        },
-      ],
+      fontFamilies: myFontStore,
       fontStyle: "normal",
       fontAlign: "left",
       fontWeight: "normal",

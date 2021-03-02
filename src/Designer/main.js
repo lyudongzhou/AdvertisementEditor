@@ -12,7 +12,8 @@ import handleRenderDep from './renderDep';
 import Event from './plugin/event';
 import http from './plugin/http';
 import ContextMenu from "vue-contextmenujs"
-import 'vue-beauty/package/style/vue-beauty.min.css'
+import 'vue-beauty/package/style/vue-beauty.min.css';
+import "../../font/font.scss";
 
 //import components
 import vueBeauty from 'vue-beauty'
