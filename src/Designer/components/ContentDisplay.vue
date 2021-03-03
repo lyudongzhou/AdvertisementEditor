@@ -137,7 +137,7 @@ export default {
       };
     },
     isCurrentComponentLocked() {
-      return this.isComponentLocked(this.currentComponentId);
+      return this.isComponentLocked(this.currentComponentId)||this.editText;
     },
     scaleValue() {
       if (this.scaleState) {
@@ -282,6 +282,40 @@ export default {
     handleCtrlClick(componentInstance, componentId) {
       this.selectMultipleComponent(componentId);
     },
+    fmtStyle(assignStyle) {
+      const style = {
+        width: "100%",
+        "overflow-wrap": "break-word",
+      };
+      Object.keys(assignStyle).forEach((key) => {
+        switch (key) {
+          case "fontFamily":
+            style["font-family"] = assignStyle[key];
+            break;
+          case "fontWeight":
+            style["font-weight"] = assignStyle[key];
+            break;
+          case "fontStyle":
+            style["font-style"] = assignStyle[key];
+            break;
+          case "fontSize":
+            style["font-size"] = assignStyle[key]*this.scaleValue + "px";
+            break;
+          case "color":
+            style["color"] = assignStyle[key];
+            break;
+          case "background":
+            style["background"] = assignStyle[key];
+            break;
+          case "fontAlign":
+            style["text-align"] = assignStyle[key];
+            break;
+          case "decoration":
+            style["text-decoration"] = assignStyle[key];
+        }
+      });
+      return style;
+    },
     onDblClick() {
       let type = this.currentComponent.type;
       if (type === "ImageCmp") {
@@ -310,6 +344,7 @@ export default {
         console.log(1122);
         this.$nextTick(() => {
           this.$refs.contentEdit.innerText = this.currentComponent.props.text;
+          Object.assign(this.$refs.contentEdit.style,this.fmtStyle(this.currentComponent.props));
           this.$refs.contentEdit.focus();
           this.currentComponent.props.text = "";
         });

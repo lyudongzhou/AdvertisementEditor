@@ -1,11 +1,13 @@
 <template>
   <baseCmp ref="parent" :cmpConfig="cmpConfig">
-    <div :style="publicList"  ref="text" @click="openEdit" >{{ cmpConfig.props.text }}</div>
+    <div :style="publicList" ref="text" @click="openEdit">
+      {{ cmpConfig.props.text }}
+    </div>
   </baseCmp>
 </template>
 <script>
 import baseCmp from "../Base.vue";
-import {mapGetters} from "../../Render/store/index"
+import { mapGetters } from "../../Render/store/index";
 export default {
   name: "textCmp",
   components: {
@@ -23,6 +25,7 @@ export default {
     publicList() {
       const style = {
         width: "100%",
+        "overflow-wrap": "break-word",
       };
       Object.keys(this.textStyle).forEach((key) => {
         switch (key) {
@@ -54,10 +57,10 @@ export default {
       return style;
     },
   },
-  methods:{
-    openEdit(){
+  methods: {
+    openEdit() {
       console.log(this.designMode);
-    }
-  }
+    },
+  },
 };
 </script>
