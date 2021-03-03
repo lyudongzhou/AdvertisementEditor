@@ -68,14 +68,11 @@
           const style = {};
           Object.keys(this.cmpConfig.props).forEach((key) => {
             switch (key) {
-              case 'fontFamily':
-                  style['font-family'] = this.cmpConfig.props[key]
-                  break
-              case 'fontSize':
-                  style['font-size'] = this.cmpConfig.props[key] + 'px'
-                  break
-              case 'color':
-                  style['color'] = this.cmpConfig.props[key]
+              case 'font-size':
+                style['font-size'] = this.cmpConfig.props[key] + 'px'
+                break
+              default:
+                style[key] = this.cmpConfig.props[key];
             }
           })
           return style;

@@ -65,7 +65,7 @@
           height = this.configData.btnProps.height.split('px')[0];
         }
         return {
-          'background': '#abcdef',
+          'background': '#4A92ED',
           'color': '#fff',
           'border-radius': '4px',
           'box-shadow': `#43a1ff 0px ${height*0.8} 0px 0px`,
@@ -78,7 +78,7 @@
           height = this.configData.btnProps.height.split('px')[0];
         }
         return {
-          'background': '#abcdef',
+          'background': '#4A92ED',
           'color': '#fff',
           'border-radius': `${height*0.8}px`,
           'box-shadow': 'none',
@@ -91,18 +91,18 @@
           height = this.configData.btnProps.height.split('px')[0];
         }
         return {
-          'color': '#abcdef',
+          'color': '#4A92ED',
           'background': 'transparent',
           'border-width': height*0.1+'px',
           'border-style': 'solid',
-          'border-color': '#abcdef',
+          'border-color': '#4A92ED',
           'border-radius': '4px',
           'box-shadow': 'none',
         }
       },
       btn4 () {
         return {
-          'background': '#abcdef',
+          'background': '#4A92ED',
           'color': '#fff',
           'border': 'none',
           'border-radius': '4px',
@@ -116,7 +116,7 @@
           height = this.configData.btnProps.height.split('px')[0];
         }
         return {
-          'background': '#abcdef',
+          'background': '#4A92ED',
           'color': '#fff',
           'border-radius': `${height*0.5}px 0px`,
           'box-shadow': 'none',
@@ -166,15 +166,18 @@
       width: 100%;
       display: flex;
       flex-wrap: wrap;
+      justify-content: space-between;
       >div {
-        flex: 1;
-        min-width: 70px;
-        height: 45px;
+        width: 108px;
+        height: 40px;
         border: 1px solid #ccc;
         box-sizing: border-box;
         margin: 0 3px 10px 1px;
         text-align: center;
-        line-height: 45px;
+        line-height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         button {
           width: 90%;
           height: 30px;
@@ -187,30 +190,33 @@
           box-sizing: border-box;
         }
         .btn1 {
-          background: #abcdef;
+          background: #ABCCF6;
           color: #fff;
           border-radius: 4px;
-          box-shadow: #43a1ff 0px 2px 0px 0px;
+          line-height: 26px;
+          box-shadow: inset 0px -4px 0px #4A92ED;
         }
         .btn2 {
-          background: #abcdef;
+          background: linear-gradient(to right, #ABCCF6, #4A92ED);
           color: #fff;
-          border-radius: 40px;
+          border-radius: 4px;
         }
         .btn3 {
-          color: #abcdef;
-          border: 1px solid #abcdef;
+          color: #4A92ED;
+          border: 1px solid #4A92ED;
           border-radius: 4px;
         }
         .btn4 {
-          background: #abcdef;
+          background: #ABCCF6;
           color: #fff;
           border-radius: 4px;
+          box-shadow: inset 0px -15px 0px #4A92ED;
         }
         .btn5 {
-          background: #abcdef;
+          background: #ABCCF6;
           border-radius: 110px 0px;
           color: #fff;
+          box-shadow: inset 0px -4px 0px #4A92ED;
         }
         .btn7 {
           background: transparent;
@@ -221,6 +227,7 @@
           border: 1px solid #fff;
           border-radius: 4px;
           color: #FFF;
+          box-sizing: border-box;
         }
       }
       .active_btn {
