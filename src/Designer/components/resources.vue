@@ -98,9 +98,9 @@
           </el-container>
         </el-card>
       </el-col>
-      <div style="float: left; padding: 10px; color: white">
+      <div style="float: left; padding: 10px; color: white;width:100%">
         <p v-if="isLoading">加载中...</p>
-        <p v-if="noMore" style="color: white">没有更多了</p>
+        <p v-if="!isLoading&&noMore" style="color: white;">没有更多了</p>
       </div>
     </el-row>
   </div>

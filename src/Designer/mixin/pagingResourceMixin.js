@@ -75,7 +75,7 @@ export default {
     onLoad(res) {
       console.log(res);
       if (this.url === "/res/get") {
-        res.data.resources.forEach((ele) => {
+        res.data.records.forEach((ele) => {
           this.aResource.push(this.fmtRes(ele));
         });
       } else {

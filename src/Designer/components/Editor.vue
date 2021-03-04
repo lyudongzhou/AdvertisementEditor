@@ -188,6 +188,49 @@ export default {
             },
             { text: "全部", type: 5, isLabel: true },
           ],
+          9: [
+            {
+              text: "类型",
+              type: 0,
+              aSort: [
+                {
+                  label: "全部",
+                  value: 5,
+                },
+                {
+                  label: "图片",
+                  value: 1,
+                },
+                {
+                  label: "视频",
+                  value: 2,
+                },
+                {
+                  label: "文档",
+                  value: 4,
+                },
+              ],
+            },
+            {
+              text: "排序",
+              type: 1,
+              aSort: [
+                {
+                  label: "默认",
+                  value: 0,
+                },
+                {
+                  label: "最新",
+                  value: 1,
+                },
+                {
+                  label: "精选",
+                  value: 2,
+                },
+              ],
+            },
+            { text: "全部", type: 5, isLabel: true },
+          ],
         },
         2: {
           1: [
@@ -240,6 +283,49 @@ export default {
                 },
                 {
                   label: "会员免费",
+                  value: 2,
+                },
+              ],
+            },
+            { text: "全部", type: 5, isLabel: true },
+          ],
+          9: [
+            {
+              text: "类型",
+              type: 0,
+              aSort: [
+                {
+                  label: "全部",
+                  value: 5,
+                },
+                {
+                  label: "图片",
+                  value: 1,
+                },
+                {
+                  label: "视频",
+                  value: 2,
+                },
+                {
+                  label: "文档",
+                  value: 4,
+                },
+              ],
+            },
+            {
+              text: "排序",
+              type: 1,
+              aSort: [
+                {
+                  label: "默认",
+                  value: 0,
+                },
+                {
+                  label: "最新",
+                  value: 1,
+                },
+                {
+                  label: "精选",
                   value: 2,
                 },
               ],
