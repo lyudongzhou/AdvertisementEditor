@@ -70,10 +70,10 @@ export default {
   created() {
     console.log("1111123",this.type,this.targetType);
     this.getResources({type:this.type,targetType:this.targetType}).then((res) => {
-      res.data[0].forEach((ele) => {
+      res.data.industryList.forEach((ele) => {
         this.industryList.push(ele);
       });
-      res.data[1].forEach((ele) => {
+      res.data.purposeList.forEach((ele) => {
         this.purposeList.push(ele);
       });
     });

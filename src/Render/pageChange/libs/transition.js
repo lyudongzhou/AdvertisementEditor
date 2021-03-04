@@ -18,18 +18,29 @@
 })(this, function(exports) {
   "use strict";
 
-  transition.prototype.option = {
-    $main: "",
-    $pages: "",
-    pagesCount: 0,
-    current: 0,
-    isAnimating: false,
-    endCurrPage: false,
-    endNextPage: false,
-    loop: true,
-    callback: null,
-  };
+  // transition.prototype.option = {
+  //   $main: "",
+  //   $pages: "",
+  //   pagesCount: 0,
+  //   current: 0,
+  //   isAnimating: false,
+  //   endCurrPage: false,
+  //   endNextPage: false,
+  //   loop: true,
+  //   callback: null,
+  // };
   transition.prototype.init = function(option) {
+    this.option = {
+      $main: "",
+      $pages: "",
+      pagesCount: 0,
+      current: 0,
+      isAnimating: false,
+      endCurrPage: false,
+      endNextPage: false,
+      loop: true,
+      callback: null,
+    };
     this.option.$main = option.$main;
     this.option.$pages = option.$main.children(".pt-page");
     this.option.pagesCount = this.option.$pages.length;

@@ -4,13 +4,13 @@
 <script>
 import designer from "./Designer.vue";
 import { SUBMIT_PROJECT } from "./constant/event";
-import { mapMutations,mapState } from "./store/index";
+import { mapMutations, mapState } from "./store/index";
 import { clone } from "@/utils";
 
 /*eslint no-unused-vars: ["error", { "args": "none" }]*/
 import { get } from "@/register";
 import { REG_GETRES } from "@/const";
-import defaultJson from "../../testData/defaultJson.json"
+import defaultJson from "../../testData/defaultJson.json";
 const resourceVisitor = {
   component: (schema, context) => {
     let fun = get(REG_GETRES)[schema.type];
@@ -36,17 +36,25 @@ const resourceVisitor = {
     // todo 处理对应资源
   },
   page(schema, context) {
+    let arr = [];
     if (schema.container.backGround.type === "image") {
-      return [schema.container.backGround.value];
+      arr.push(schema.container.backGround.value);
     }
-    return [];
+    schema.container.bgMusic.music.forEach((ele) => {
+      arr.push(ele.sourcePaht);
+    });
+    return arr;
     // todo 处理对应资源
   },
   dialog(schema, context) {
+    let arr = [];
     if (schema.container.backGround.type === "image") {
-      return [schema.container.backGround.value];
+      arr.push(schema.container.backGround.value);
     }
-    return [];
+    schema.container.bgMusic.music.forEach((ele) => {
+      arr.push(ele.sourcePaht);
+    });
+    return arr;
     // todo 处理对应资源
   },
 };
@@ -65,7 +73,7 @@ export default {
       this.handleSubmit(payload);
     });
   },
-  computed:{
+  computed: {
     ...mapState(["projectInfo"]),
   },
   methods: {
@@ -81,7 +89,13 @@ export default {
         4
       );
       this.$axios
-        .post(url, { userId: payload.id, bodyJson ,name:this.projectInfo.name,resolutionWidth:payload.schema.container.width,resolutionHeight:payload.schema.container.height})
+        .post(url, {
+          userId: payload.id,
+          bodyJson,
+          name: this.projectInfo.name,
+          resolutionWidth: payload.schema.container.width,
+          resolutionHeight: payload.schema.container.height,
+        })
         .then(({ data }) => {
           if (isCreate) {
             const urlSearchParams = new URLSearchParams(location.hash);
@@ -109,12 +123,15 @@ export default {
       // }
       if (id) {
         this.$axios.post("/program/get", { programId: id }).then(({ data }) => {
-          let {id, name, description, programData} = data;
+          let { id, name, description, programData } = data;
           // 引用情况&&不是新增后刷新的
-          if (urlSearchParams.get('action') === 'quote' && !urlHashParams.get("id")) {
+          if (
+            urlSearchParams.get("action") === "quote" &&
+            !urlHashParams.get("id")
+          ) {
             id = null;
           }
-          this.setProgramInfo({id, name, description});
+          this.setProgramInfo({ id, name, description });
           this.$refs.designer.openProject(programData);
         });
       } else {

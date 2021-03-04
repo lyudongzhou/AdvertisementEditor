@@ -78,10 +78,10 @@ export default {
       "backPrevDialog",
       "setCurrentPage",
     ]),
-    autoPlay () {
+    autoPlay() {
       let audios = this.$refs.music,
-          order  = this.currentLayout.container.bgMusic.type;
-      if (audios.length > 0) {
+        order = this.currentLayout.container.bgMusic.type;
+      if (audios && audios.length > 0) {
         switch (order) {
           case 1:
             this.listCirculation();
@@ -96,10 +96,10 @@ export default {
     },
 
     // 列表循环
-    listCirculation () {
+    listCirculation() {
       this.$nextTick(() => {
         let audios = this.$refs.music,
-            index = 0;
+          index = 0;
         let circulation = () => {
           if (index < audios.length) {
             this.playing = audios[index];
@@ -107,50 +107,56 @@ export default {
             index++;
             this.callback = () => {
               if (index >= audios.length) index = 0;
-              this.playing.removeEventListener('ended', this.callback);
+              this.playing.removeEventListener("ended", this.callback);
               circulation();
-            }
-            this.playing.addEventListener('ended', this.callback)
+            };
+            this.playing.addEventListener("ended", this.callback);
           }
+        };
+        if (audios) {
+          circulation();
         }
-        circulation();
-      })
+      });
     },
     // 顺序播放
-    playOrder () {
+    playOrder() {
       this.$nextTick(() => {
         let audios = this.$refs.music,
-            index = 0;
+          index = 0;
         let circulation = () => {
           if (index < audios.length) {
             this.playing = audios[index];
             this.playing.play();
             index++;
             this.callback = () => {
-              this.playing.removeEventListener('ended', this.callback);
+              this.playing.removeEventListener("ended", this.callback);
               circulation();
-            }
-            this.playing.addEventListener('ended', this.callback)
+            };
+            this.playing.addEventListener("ended", this.callback);
           }
+        };
+        if (audios) {
+          circulation();
         }
-        circulation();
-      })
+      });
     },
     // 随机播放
-    randomPlay () {
+    randomPlay() {
       this.$nextTick(() => {
         let audios = this.$refs.music;
         let circulation = () => {
-          this.playing = audios[Math.floor(Math.random()*audios.length)];
+          this.playing = audios[Math.floor(Math.random() * audios.length)];
           this.playing.play();
           this.callback = () => {
-            this.playing.removeEventListener('ended', this.callback);
+            this.playing.removeEventListener("ended", this.callback);
             circulation();
-          }
-          this.playing.addEventListener('ended', this.callback)
+          };
+          this.playing.addEventListener("ended", this.callback);
+        };
+        if (audios) {
+          circulation();
         }
-        circulation();
-      })
+      });
     },
     /**
      * @description Change page action
@@ -204,7 +210,7 @@ export default {
     handleNextPage() {
       if (this.playing && !this.designMode) {
         this.playing.pause();
-        this.playing.removeEventListener('ended', this.callback);
+        this.playing.removeEventListener("ended", this.callback);
       }
       let getIndex = this.findCurrentIndex("pages", this.currentPage),
         pages = this.renderData.pages;
@@ -220,7 +226,7 @@ export default {
     handlePrevPage() {
       if (this.playing && !this.designMode) {
         this.playing.pause();
-        this.playing.removeEventListener('ended', this.callback);
+        this.playing.removeEventListener("ended", this.callback);
       }
       let getIndex = this.findCurrentIndex("pages", this.currentPage),
         pages = this.renderData.pages;
@@ -381,11 +387,11 @@ export default {
         });
       });
     },
-    currentPage () {
+    currentPage() {
       if (!this.designMode) {
         this.autoPlay();
       }
-    }
+    },
   },
 };
 </script>
