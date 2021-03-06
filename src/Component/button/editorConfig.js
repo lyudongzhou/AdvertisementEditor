@@ -5,8 +5,8 @@ export default [
     defaultSchema: {
       "type": "buttonCmp",
       "layoutConfig": {
-        "width": 300,
-        "height": 150
+        "width": 240,
+        "height": 72
       },
       "btnProps": {
         "width": 240,
@@ -14,7 +14,7 @@ export default [
         "opacity": 1,
         "text-align": "center",
         "background": "#4A92ED",
-        'border-width': 10,
+        'border-width': '0px',
         'border-style': 'solid',
         'border-color': "#4A92ED",
         "border-radius": "4px",

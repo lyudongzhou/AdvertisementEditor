@@ -32,6 +32,7 @@
       btnStyle() {
         const style = {};
         Object.keys(this.cmpConfig.btnProps).forEach((key) => {
+          let msg = this.cmpConfig.btnProps[key];
           switch (key) {
             case 'width':
                 style[key] = this.cmpConfig.layoutConfig[key]+'px'
@@ -39,27 +40,8 @@
             case 'height':
                 style[key] = this.cmpConfig.layoutConfig[key]+'px'
                 break
-            case 'background':
-                style[key] = this.cmpConfig.btnProps[key]
-                break
-            case 'box-shadow':
-                style[key] = `#43a1ff 0px ${this.cmpConfig.layoutConfig.height*0.8} 0px 0px`
-                break
-            case 'border-radius':
-                style[key] = this.cmpConfig.btnProps['border-radius'].split('px').length>2?
-                                         `${this.cmpConfig.layoutConfig.height}px 0px`:
-                                         (this.cmpConfig.btnProps['border-radius']!=='4px'?
-                                            `${this.cmpConfig.layoutConfig.height*0.8}px`:
-                                            this.cmpConfig.btnProps[key])
-                break
-            case 'border-width':
-                style[key] = this.cmpConfig.layoutConfig.height*0.1+'px'
-                break
-            case 'border-style':
-                style[key] = this.cmpConfig.btnProps[key]
-                break
-            case 'border-color':
-                style[key] = this.cmpConfig.btnProps[key]
+            default:
+              style[key] = msg
           }
         })
         return style;
