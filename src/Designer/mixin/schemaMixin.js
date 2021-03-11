@@ -61,7 +61,7 @@ export default {
           rotation: 0,
           top: 0,
           left: 0,
-          opacity: 1,
+          opacity: 100,
           pivotX: 0,
           pivotY: 0,
           scaleX: 1,

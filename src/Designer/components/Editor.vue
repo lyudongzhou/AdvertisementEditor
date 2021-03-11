@@ -19,7 +19,7 @@
           <!-- 机构、商城 -->
           <el-header style="height: 40px; padding: 0px; display: flex">
             <div
-              v-for="list in switchList"
+              v-for="list in switchList[typeSwitch]"
               :key="list.id"
               :class="{
                 switch_list: true,
@@ -347,26 +347,38 @@ export default {
         },
       ],
       typeSwitch: 1,
-      switchList: [
-        {
-          id: 9,
-          name: "个人",
-        },
-        {
-          id: 1,
-          name: "机构",
-        },
-        {
-          id: 2,
-          name: "商城",
-        }
-      ],
+      switchList: {
+        2: [
+          {
+            id: 9,
+            name: "个人",
+          },
+          {
+            id: 1,
+            name: "机构",
+          },
+          {
+            id: 2,
+            name: "商城",
+          },
+        ],
+        1: [
+          {
+            id: 1,
+            name: "机构",
+          },
+          {
+            id: 2,
+            name: "商城",
+          },
+        ],
+      },
       isCollapse: true,
       sortType: null,
       searchText: "",
       sortConfig: {
         searchText: "",
-        type: 9, // 机构1商城2
+        type: 1, // 机构1商城2
         resType: 5,
         orderType: 0,
         priceType: 1,
@@ -503,7 +515,7 @@ export default {
 .typeSwitch {
   width: 70px;
   padding: 15px 0 10px 0;
-  background: #4D4D4D;
+  background: #4d4d4d;
   text-align: center;
   color: #b5b5b5;
   cursor: default;
@@ -529,7 +541,7 @@ export default {
 .switch_list {
   font-size: 16px;
   width: 100px;
-  background: #4D4D4D;
+  background: #4d4d4d;
   text-align: center;
   line-height: 40px;
   color: #b5b5b5;

@@ -67,7 +67,7 @@ export default {
             }deg) matrix(${ma.toCssArray().join(",")})`;
             break;
           case "opacity":
-            style[key] *= config[key];
+            style[key] *= config[key]/100;
             break;
           case "alpha":
             style["opacity"] *= config[key];

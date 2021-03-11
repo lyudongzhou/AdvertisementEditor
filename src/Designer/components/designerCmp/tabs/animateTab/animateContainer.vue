@@ -29,13 +29,13 @@
       </ul>
     </div>
     <el-form size="mini" class="aniform"
-      ><el-form-item label="时间" style="width:100%">
+      ><el-form-item label="时间（秒）" style="width:100%">
         <numberField
           style="width: 100%"
           :configData="configData"
           :config="{ props: {}, target: `animation.${index}.duration` }"
         ></numberField> </el-form-item
-      ><el-form-item label="延迟">
+      ><el-form-item label="延迟（秒）">
         <numberField
           style="width: 100%"
           :configData="configData"

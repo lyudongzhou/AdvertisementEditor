@@ -128,25 +128,25 @@ export default {
           type: "textField",
         },
         {
-          label: "旋转角度",
+          label: "旋转角度（度）",
           props: {},
           target: "layoutConfig.rotation",
           type: "numberField",
         },
         {
-          label: "左边距",
+          label: "左边距（像素）",
           props: {},
           target: "layoutConfig.left",
           type: "numberField",
         },
         {
-          label: "上边距",
+          label: "上边距（像素）",
           props: {},
           target: "layoutConfig.top",
           type: "numberField",
         },
         {
-          label: "宽度",
+          label: "宽度（像素）",
           props: {
             min: 1,
             max: 3000,
@@ -155,7 +155,7 @@ export default {
           type: "numberField",
         },
         {
-          label: "高度",
+          label: "高度（像素）",
           props: {
             min: 1,
             max: 3000,
@@ -164,7 +164,7 @@ export default {
           type: "numberField",
         },
         {
-          label: "不透明度",
+          label: "不透明度（%）",
           props: {},
           target: "layoutConfig.opacity",
           type: "numberField",

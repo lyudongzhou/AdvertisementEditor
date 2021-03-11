@@ -17,7 +17,7 @@ export default [
           {
             type: "textField",
             target: "props.refreshTime",
-            label: "刷新时间",
+            label: "刷新时间（秒）",
             props: {},
           },
           {
@@ -38,7 +38,7 @@ export default [
         height: 200,
       },
       props: {
-        text: "",
+        text: "https://",
         refreshTime: "",
       },
       animation: [],

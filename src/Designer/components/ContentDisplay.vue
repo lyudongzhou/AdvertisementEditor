@@ -137,7 +137,7 @@ export default {
       };
     },
     isCurrentComponentLocked() {
-      return this.isComponentLocked(this.currentComponentId)||this.editText;
+      return this.isComponentLocked(this.currentComponentId) || this.editText;
     },
     scaleValue() {
       if (this.scaleState) {
@@ -247,6 +247,7 @@ export default {
   methods: {
     onContentFocus() {},
     onContentBlur(e) {
+      this.editText = false;
       this.updateSchema({
         type: UPDATE_COMPONENT_PROPS,
         value: {
@@ -299,7 +300,7 @@ export default {
             style["font-style"] = assignStyle[key];
             break;
           case "fontSize":
-            style["font-size"] = assignStyle[key]*this.scaleValue + "px";
+            style["font-size"] = assignStyle[key] * this.scaleValue + "px";
             break;
           case "color":
             style["color"] = assignStyle[key];
@@ -318,6 +319,9 @@ export default {
     },
     onDblClick() {
       let type = this.currentComponent.type;
+      if (this.editText) {
+        return;
+      }
       if (type === "ImageCmp") {
         this.$event.emit("openUploadWin", {
           onSelect: (a) => {
@@ -344,7 +348,10 @@ export default {
         console.log(1122);
         this.$nextTick(() => {
           this.$refs.contentEdit.innerText = this.currentComponent.props.text;
-          Object.assign(this.$refs.contentEdit.style,this.fmtStyle(this.currentComponent.props));
+          Object.assign(
+            this.$refs.contentEdit.style,
+            this.fmtStyle(this.currentComponent.props)
+          );
           this.$refs.contentEdit.focus();
           this.currentComponent.props.text = "";
         });
@@ -717,6 +724,18 @@ export default {
     ]),
   },
   watch: {
+    "currentComponent.props": {
+      deep: true,
+      handler() {
+        if(!this.$refs.contentEdit||!this.currentComponent){
+          return;
+        }
+        Object.assign(
+          this.$refs.contentEdit.style,
+          this.fmtStyle(this.currentComponent.props)
+        );
+      },
+    },
     currentComponent() {
       this.editText = false;
     },
@@ -829,7 +848,7 @@ export default {
         <div
           ref="contentEdit"
           :contenteditable="editText"
-          v-if="editText"
+          v-show="editText"
           :style="computedContent()"
           @blur="onContentBlur"
           @focus="onContentFocus"

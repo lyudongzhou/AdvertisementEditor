@@ -27,7 +27,7 @@ export const DEFAULTTABS = [
       {
         type: "numberField",
         target: "layoutConfig.border-width",
-        label: "边框尺寸",
+        label: "边框尺寸（像素）",
         props: {},
       },
       {
@@ -39,7 +39,7 @@ export const DEFAULTTABS = [
       {
         type: "numberField",
         target: "layoutConfig.border-radius",
-        label: "边框弧度",
+        label: "边框圆角半径（像素）",
         props: {},
       },
     ],
