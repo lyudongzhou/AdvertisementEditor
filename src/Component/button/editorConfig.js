@@ -5,25 +5,26 @@ export default [
     defaultSchema: {
       "type": "buttonCmp",
       "layoutConfig": {
-        "width": 300,
-        "height": 150
+        "width": 240,
+        "height": 72
       },
       "btnProps": {
-        "width": 300,
-        "height": 150,
+        "width": 240,
+        "height": 72,
         "opacity": 1,
         "text-align": "center",
-        "background": '#abcdef',
-        'border-width': 10,
+        "background": "#4A92ED",
+        'border-width': '0px',
         'border-style': 'solid',
-        'border-color': '#abcdef',
+        'border-color': "#4A92ED",
         "border-radius": "4px",
       },
       "props": {
         "text":"按钮1",
-        "fontFamily": "黑体",
-        "fontSize": 30,
-        "color": "#000000"
+        "font-family": "PingFangSC-Semibold, PingFang SC",
+        "font-weight": 600,
+        "font-size": 40,
+        "color": "#4D4D4D",
       },
       "animation": [],
       "events": [],
