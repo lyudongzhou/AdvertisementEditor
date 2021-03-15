@@ -12,7 +12,12 @@
     </div>
     <text-style v-if="activeBtn!=='btn6'" :configData="configData" :config="config"></text-style>
     <p v-if="activeBtn!=='btn6'">背景颜色</p>
-    <colorpicker-filed v-if="activeBtn!=='btn6'" :configData="configData" :config="hueConfig"></colorpicker-filed>
+    <colorpicker-filed v-if="activeBtn!=='btn6'"
+                       :configData="configData"
+                       :config="hueConfig"
+                       :btnName="activeBtn"
+                       :btnStyle="configData.btnProps">
+    </colorpicker-filed>
   </div>
 </template>
 
@@ -48,7 +53,7 @@
         hueConfig: {
           "target": 'btnProps.background',
           "props": {
-            "changeType": "cmp",
+            "changeType": "btn",
             "type": {
               "before": "BEFORE_UPDATE_COMPONENT_PROPS",
               "update": "UPDATING_COMPONENT_PROPS",
@@ -110,13 +115,13 @@
           height = this.configData.btnProps.height.split('px')[0];
         }
         return {
-          'background': '#4A92ED',
           'color': '#4D4D4D',
           'border-radius': '4px',
-          'box-shadow': `inset 0px ${height*0.5}px 0px #ABCCF6`,
+          'background': 'linear-gradient(0deg,#4A92ED 50%,#ABCCF6 50%)',
           'border-width': '0px',
           'border-style': 'none',
           'border-color': 'transparent',
+          'box-shadow': 'none',
         }
       },
       btn5 () {

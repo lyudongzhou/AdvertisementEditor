@@ -16,7 +16,7 @@ import {getPropByPath} from '@/utils';
 
 export default {
   name: 'colorpickerFiled',
-  props: ['configData', 'config'],
+  props: ['configData', 'config', 'btnName', 'btnStyle'],
   data () {
     return {
       palette: [
@@ -104,14 +104,34 @@ export default {
           });
         },
         up: (hex) => {
-          this.updateSchema({
-            type: this.config.props.type.after || null,
-            value: this.config.props.changeType === 'page'?
-                    {
-                      ["type"]: "color",
-                      ["value"]:hex,
-                    }:{[this.config.target]:hex},
-          });
+          if (this.config.props.changeType === 'btn') {
+            // 针对于button
+            if (this.btnName === 'btn2') {
+              this.updateSchema({
+                type: this.config.props.type.after || null,
+                value: {[this.config.target]:`linear-gradient(to right, #ABCCF6, ${hex})`},
+              });
+            } else if (this.btnName === 'btn4') {
+              this.updateSchema({
+                type: this.config.props.type.after || null,
+                value: {[this.config.target]:`linear-gradient(0deg,${hex} 50%,#ABCCF6 50%)`},
+              });
+            } else {
+              this.updateSchema({
+                type: this.config.props.type.after || null,
+                value: {[this.config.target]:hex},
+              });
+            }
+          } else {
+            this.updateSchema({
+              type: this.config.props.type.after || null,
+              value: this.config.props.changeType === 'page'?
+                      {
+                        ["type"]: "color",
+                        ["value"]:hex,
+                      }:{[this.config.target]:hex},
+            });
+          }
         },
         change: () => {},
       })
