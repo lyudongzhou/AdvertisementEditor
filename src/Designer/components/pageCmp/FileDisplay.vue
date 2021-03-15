@@ -16,7 +16,7 @@
           :class="
             classThumbnail(singleSelected.id, dataImage.id, dataImage.disabled)
           "
-          :style="`width:${w}`"
+          :style="`width:${w};position:relative`"
           @click="onSelectImage(dataImage)"
           v-if="!isMultiple"
         >
@@ -24,6 +24,10 @@
             v-if="dataImage.payload.isVip"
             :src="imageIcon"
             style="position: absolute; width: 70px; height: 30px"
+          />
+          <img
+            :src="dataImage.payload.approveState===1?reviewed:reviewing"
+            style="position: absolute; width: 38px; height: 38px;right:0px;top:0px;"
           />
           <img
             :src="dataImage.src"
@@ -45,7 +49,7 @@
         <div
           :class="classThumbnailMultiple(dataImage.id, dataImage.disabled)"
           @click="onSelectMultipleImage(dataImage)"
-          :style="`width:${w}`"
+          :style="`width:${w};position:relative`"
           v-if="isMultiple"
         >
           <img
@@ -53,7 +57,10 @@
             :src="imageIcon"
             style="position: absolute; width: 70px; height: 30px"
           />
-
+          <img
+            :src="dataImage.payload.approveState===1?reviewed:reviewing"
+            style="position: absolute; width: 38px; height: 38px;right:0px;top:0px;"
+          />
           <img
             :src="dataImage.src"
             :alt="dataImage.alt"
@@ -82,6 +89,8 @@
 <script>
 var console = { log: () => {} };
 import imageIcon from "../../public/58.png";
+import reviewing from "../../public/reviewing.png";
+import reviewed from "../../public/reviewed.png";
 export default {
   name: "vue-select-image",
   props: {
@@ -163,6 +172,8 @@ export default {
   },
   created() {
     this.imageIcon = imageIcon;
+    this.reviewing = reviewing;
+    this.reviewed = reviewed;
   },
   mounted() {
     // set initial selectedImage

@@ -35,10 +35,16 @@ export default {
       if (!a || a.length === 0) {
         return;
       }
+      let arrResources = [{
+          name:a[0].resName,
+          uuid:a[0].uuid,
+          url:a[0].sourcePaht
+        }];
       this.updateSchema({
         type: UPDATE_COMPONENT_PROPS,
         value: {
           "props.bgUrl": a[0].sourcePaht,
+          "props.arrResources":arrResources
         },
       });
     },

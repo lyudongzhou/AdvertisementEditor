@@ -62,14 +62,25 @@ export default {
         return;
       }
       let arr = [];
+      let arrResources = [];
       a.forEach((ele) => {
         let t = [];
         if (ele.resType === 4) {
           ele.imgList.forEach((ele) => {
-            t.push({ sourcePaht: ele, resType: 1 });
+            t.push({ sourcePaht: ele.sourcePaht, resType: 1 });
+            arrResources.push({
+              name: ele.resName,
+              uuid: ele.uuid,
+              url: ele.sourcePaht,
+            });
           });
           arr.push.apply(arr, t);
-        }else{
+        } else {
+          arrResources.push({
+            name: ele.resName,
+            uuid: ele.uuid,
+            url: ele.sourcePaht,
+          });
           arr.push(ele);
         }
       });
@@ -77,6 +88,7 @@ export default {
         type: UPDATE_COMPONENT_PROPS,
         value: {
           "props.components": arr,
+          "props.arrResources":arrResources
         },
       });
     },

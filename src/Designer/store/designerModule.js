@@ -42,6 +42,7 @@ export default {
         description: '',
       },
       selectedComponents: [],
+      shiftKey:false,
     };
   },
   getters: {

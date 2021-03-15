@@ -3,7 +3,7 @@ export default [
     name: "混播",
     position: "3.0.0",
     before: {
-      types: ["image","video","document"],
+      types: ["image", "video", "document"],
       multi: true,
       title: "混播",
       fmtRes(a, schema) {
@@ -11,34 +11,46 @@ export default [
           return schema;
         }
         let arr = [];
+        let arrResources = [];
         a.forEach((ele) => {
           let t = [];
           if (ele.resType === 4) {
             ele.imgList.forEach((ele) => {
-              t.push({ sourcePaht: ele, resType: 1 });
+              t.push({ sourcePaht: ele.sourcePaht, resType: 1 });
+              arrResources.push({
+                name: ele.resName,
+                uuid: ele.uuid,
+                url: ele.sourcePaht,
+              });
             });
             arr.push.apply(arr, t);
-          }else{
+          } else {
             arr.push(ele);
+            arrResources.push({
+              name: ele.resName,
+              uuid: ele.uuid,
+              url: ele.sourcePaht,
+            });
           }
         });
         schema.props.components = arr;
+        schema.props.arrResources = arrResources;
         return schema;
       },
     },
     defaultSchema: {
-      "type": "mixplayCmp",
-      "layoutConfig": {
-        "width": 200,
-        "height": 200
+      type: "mixplayCmp",
+      layoutConfig: {
+        width: 200,
+        height: 200,
       },
-      "props": {
-        "components":[],
-        "changeTime":3
+      props: {
+        components: [],
+        changeTime: 3,
       },
-      "animation": [],
-      "events": [],
-      "children": []
-    }
-  }
-]
+      animation: [],
+      events: [],
+      children: [],
+    },
+  },
+];

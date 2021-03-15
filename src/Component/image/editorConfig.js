@@ -19,12 +19,19 @@ export default [
         }
         let arr = [];
         let arr1 = [];
+        let arrResources = [];
         a.forEach((ele) => {
           arr.push(ele.sourcePaht);
           arr1.push(ele.resName);
+          arrResources = [{
+            name:ele.resName,
+            uuid:ele.uuid,
+            url:ele.sourcePaht
+          }];
         });
         schema.props.bgUrl = arr;
         schema.props.introduce = arr1;
+        schema.props.arrResources = arrResources;
         return schema;
       },
     },

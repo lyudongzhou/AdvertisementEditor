@@ -10,11 +10,21 @@ export default [
         if (!a || a.length === 0) {
           return schema;
         }
+        let arrResources = [];
         let arr = [];
         a.forEach((ele) => {
-          arr.push.apply(arr, ele.imgList);
+          ele.imgList.forEach((ele) => {
+            arr.push(ele.sourcePaht);
+            arrResources.push({
+              name: ele.resName,
+              uuid: ele.uuid,
+              url: ele.sourcePaht,
+            });
+          });
+          // arr.push.apply(arr, ele.imgList);
         });
         schema.props.bgUrl = arr;
+        schema.props.arrResources = arrResources;
         return schema;
       },
     },

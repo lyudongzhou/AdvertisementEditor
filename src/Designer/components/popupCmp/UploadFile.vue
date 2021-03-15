@@ -169,6 +169,7 @@ export default {
   },
   created() {
     this.url = "/res/get";
+    this.sortConfig.type = 9;
     // this.loadResource();
   },
   methods: {
@@ -181,6 +182,8 @@ export default {
       let type = this.resourceTyp;
       this.sortConfig.resType = this.currentTabs[type].para.resType;
       this.acceptFile = this.currentTabs[type].para.accept;
+      this.sortConfig.type = 9;
+      console.log("change");
       this.reset();
       this.loadResource();
     },
@@ -244,6 +247,7 @@ export default {
     },
     //开始选择，配置参数
     start({ onSelect, aSelectType, multi, title }) {
+      console.log("start");
       this.dialogVisible = true;
       while (this.selectImages.length) {
         this.selectImages.pop();

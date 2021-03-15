@@ -1,15 +1,26 @@
 <template>
   <baseCmp :cmpConfig="cmpConfig">
     <div class="vote">
-      <div class="vote-title">{{props.voteTitle}}</div>
+      <div class="vote-title">{{ props.title }}</div>
       <div class="vote-container">
-        <div :class="['vote-item', {activate: item.optionIndex === activate}]"
-             v-for="item in props.voteOption"
-             :key="item.optionIndex"
-             @click="select(item.optionIndex)">
-          <img :src="handleUrl(item.photoUrl)" :alt="item.optionMemo" width="250" height="250">
-          <div class="vote-item-title">{{item.optionMemo}}</div>
-          <span class="submit" @click="handleClick(item)"><span>提交</span></span>
+        <div
+          :class="['vote-item', { activate: item.uuid === activate }]"
+          v-for="item in props.element[0].choices"
+          :key="item.uuid"
+          @click="select(item.uuid)"
+        >
+          <img
+            :src="handleUrl(item['image-url'])"
+            :alt="item.text"
+            width="250"
+            height="250"
+          />
+          <div class="vote-item-title">{{ item.text }}</div>
+          <span
+            class="submit"
+            @click="handleClick(item, props.element[0], props)"
+            ><span>提交</span></span
+          >
         </div>
       </div>
     </div>
@@ -28,15 +39,21 @@ export default {
   },
   data() {
     return {
-      activate: -1
+      activate: -1,
     };
   },
+  created() {
+    this.cmpConfig.props.data.config = JSON.parse(
+      this.cmpConfig.props.data.json
+    );
+    this.props = this.cmpConfig.props.data.config;
+  },
   methods: {
-    handleClick() {
-      const {voteStartDate, voteFinishDate} = this.props;
-      const startTimestamp = (new Date(voteStartDate)).getTime();
-      const finishTimestamp = (new Date(voteFinishDate)).getTime();
-      const now = (new Date()).getTime();
+    handleClick(item, vote, props) {
+      const { voteStartDate, voteFinishDate } = this.props;
+      const startTimestamp = new Date(voteStartDate).getTime();
+      const finishTimestamp = new Date(voteFinishDate).getTime();
+      const now = new Date().getTime();
       if (now < startTimestamp) {
         alert("投票未开始");
         return;
@@ -45,24 +62,64 @@ export default {
         alert("投票已结束");
         return;
       }
+
       // todo
+      function dateFormat(fmt, date) {
+        let ret;
+        const opt = {
+          "Y+": date.getFullYear().toString(), // 年
+          "m+": (date.getMonth() + 1).toString(), // 月
+          "d+": date.getDate().toString(), // 日
+          "H+": date.getHours().toString(), // 时
+          "M+": date.getMinutes().toString(), // 分
+          "S+": date.getSeconds().toString(), // 秒
+          // 有其他格式化字符需求可以继续添加，必须转化成字符串
+        };
+        for (let k in opt) {
+          ret = new RegExp("(" + k + ")").exec(fmt);
+          if (ret) {
+            fmt = fmt.replace(
+              ret[1],
+              ret[1].length == 1 ? opt[k] : opt[k].padStart(ret[1].length, "0")
+            );
+          }
+        }
+        return fmt;
+      }
+
+      let o = {
+        uuid: props.uuid,
+        "commit-time": dateFormat("YYYY-mm-dd HH:MM:SS", new Date()),
+        element: [
+          {
+            uuid: vote.uuid,
+            answer: item.lavel,
+          },
+        ],
+      };
+      this.$axios
+        .post("/vote/add", {
+          pluginId: this.props.data.id,
+          deviceCode: "",
+          planUuid: "",
+          prograUuid: "",
+          json: JSON.stringify(o),
+        })
+        .then(() => {});
     },
     select(index) {
       if (!this.designMode) {
         this.activate = index;
       }
-    }
+    },
   },
   computed: {
-    props() {
-      return this.cmpConfig.props.data || {};
-    },
-//    width() {
-//      return this.cmpConfig.layoutConfig.width;
-//    }
+    //    width() {
+    //      return this.cmpConfig.layoutConfig.width;
+    //    }
     ...mapGetters(["handleUrl", "designMode"]),
-  }
-}
+  },
+};
 </script>
 
 <style lang="less" scoped>
@@ -98,7 +155,7 @@ export default {
     }
 
     &.activate {
-      background-color: rgba(0, 0, 0, .38);
+      background-color: rgba(0, 0, 0, 0.38);
       .submit {
         display: inline;
         position: absolute;
@@ -106,7 +163,7 @@ export default {
         height: 100px;
         border-radius: 50%;
         background-color: #fff;
-        color: #1391FF;
+        color: #1391ff;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);

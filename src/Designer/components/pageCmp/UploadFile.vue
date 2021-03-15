@@ -68,7 +68,7 @@
         ></el-container>
       </el-main>
       <el-footer
-        style="height: 110px; width: 100%; display: block; overflow: auto"
+        style="height: 110px; width: 100%; display: flex; overflow: auto;overflow-y:hidden;"
         v-if="multi"
         ><div
           v-for="(item, index) in selectImages"
@@ -76,13 +76,14 @@
           style="
             display: inline-block;
             width: 100px;
+            min-width: 100px;
             height: 100px;
             position: relative;
             margin: 5px 5px;
           "
         >
           <img :src="item.src" style="width: 100%; height: 70%" />
-          <label style="width: 100%; height: 30%">{{ item.alt }}</label>
+          <label style="display:block;width: 100%; height: 30%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">{{ item.alt }}</label>
           <i
             class="el-icon-delete deleteIcon"
             @click="onClickDeleteSelect(index)"
@@ -104,6 +105,10 @@ import dataMixin from "../../mixin/pagingResourceMixin";
 import fileIcon from "../../public/file.jpg";
 import image from "../../public/58.png";
 import music from "../../public/music.png";
+import video from "../../public/video.png";
+import doc from "../../public/doc.png";
+import img from "../../public/img.png";
+
 
 export default {
   components: { VueSelectImage },
@@ -114,10 +119,10 @@ export default {
       multi: false,
       title: "标题",
       tabs: [
-        { icon: music, text: "图片", resType: 1 },
-        { icon: music, text: "视频", resType: 2 },
+        { icon: img, text: "图片", resType: 1 },
+        { icon: video, text: "视频", resType: 2 },
         { icon: music, text: "音频", resType: 3 },
-        { icon: music, text: "文档", resType: 4 },
+        { icon: doc, text: "文档", resType: 4 },
       ],
       currentTabs: [],
       resourceTyp: 0,
@@ -175,6 +180,7 @@ export default {
   created() {
     this.url = "/res/get";
     this.imageIcon = image;
+    this.sortConfig.type = 9;
     // this.loadResource();
   },
   methods: {

@@ -204,6 +204,9 @@ export default {
       afterCommandMap[command](state, operateConfig);
     })
   },
+  pressShift(state,isPress){
+    state.shiftKey = isPress;
+  },
   redo (state) {
     const manager = getSchemaManager(state);
     manager.redo();

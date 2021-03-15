@@ -133,13 +133,23 @@ export default {
         return;
       }
       let arr = [];
+      let arrResources = [];
       a.forEach((ele) => {
         arr.push.apply(arr,ele.imgList);
+        ele.imgList.forEach(ele=>{
+          arr.push(ele.sourcePaht);
+          arrResources.push({
+              name: ele.resName,
+              uuid: ele.uuid,
+              url: ele.sourcePaht,
+            });
+        });
       });
       this.updateSchema({
         type: UPDATE_COMPONENT_PROPS,
         value: {
           "props.bgUrl": arr,
+          "props.arrResources":arrResources
         },
       });
     },

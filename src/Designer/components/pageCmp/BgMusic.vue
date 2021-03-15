@@ -62,22 +62,22 @@ export default {
       this.$event.emit("openUploadWin", {
         onSelect: (bgmList) => {
           console.log(bgmList);
-          let test = [
-            {
-              "resName": "bg1",
-              "sourcePaht": "http://xes-h5-icourse.oss-cn-beijing.aliyuncs.com/test1/zhangrui/tice/2021/%E5%B9%BC%E6%95%99%E6%98%A5%E5%AD%A3%E4%B8%AD%E7%8F%AD/3-2/math_area_of_comparative/resources/assets/audios/bg.mp3"
-            },
-            {
-              "resName": "bg2",
-              "sourcePaht": "http://xes-h5-icourse.oss-cn-beijing.aliyuncs.com/test1/zhangrui/tice/2021/%E5%B9%BC%E6%95%99%E6%98%A5%E5%AD%A3%E4%B8%AD%E7%8F%AD/3-2/math_area_of_comparative/resources/assets/audios/bg.mp3"
-            },
-            {
-              "resName": "bg3",
-              "sourcePaht": "http://xes-h5-icourse.oss-cn-beijing.aliyuncs.com/test1/zhangrui/tice/2021/%E5%B9%BC%E6%95%99%E6%98%A5%E5%AD%A3%E4%B8%AD%E7%8F%AD/3-2/math_area_of_comparative/resources/assets/audios/right1.mp3"
-            }
-          ];
+          // let test = [
+          //   {
+          //     "resName": "bg1",
+          //     "sourcePaht": "http://xes-h5-icourse.oss-cn-beijing.aliyuncs.com/test1/zhangrui/tice/2021/%E5%B9%BC%E6%95%99%E6%98%A5%E5%AD%A3%E4%B8%AD%E7%8F%AD/3-2/math_area_of_comparative/resources/assets/audios/bg.mp3"
+          //   },
+          //   {
+          //     "resName": "bg2",
+          //     "sourcePaht": "http://xes-h5-icourse.oss-cn-beijing.aliyuncs.com/test1/zhangrui/tice/2021/%E5%B9%BC%E6%95%99%E6%98%A5%E5%AD%A3%E4%B8%AD%E7%8F%AD/3-2/math_area_of_comparative/resources/assets/audios/bg.mp3"
+          //   },
+          //   {
+          //     "resName": "bg3",
+          //     "sourcePaht": "http://xes-h5-icourse.oss-cn-beijing.aliyuncs.com/test1/zhangrui/tice/2021/%E5%B9%BC%E6%95%99%E6%98%A5%E5%AD%A3%E4%B8%AD%E7%8F%AD/3-2/math_area_of_comparative/resources/assets/audios/right1.mp3"
+          //   }
+          // ];
           this.updateBGM('beforeupdatePage', this.currentPage.container.bgMusic.music)
-          this.updateBGM('AFTRE_BG_MUSIC', test)
+          this.updateBGM('AFTRE_BG_MUSIC', bgmList)
         },
         aSelectType: ['audio'],
         multi: true,

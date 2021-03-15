@@ -41,7 +41,15 @@ const resourceVisitor = {
       arr.push(schema.container.backGround.value);
     }
     schema.container.bgMusic.music.forEach((ele) => {
-      arr.push(ele.sourcePaht);
+      arr.push({
+        name: ele.resName,
+        uuid: ele.uuid,
+        url: ele.sourcePaht,
+      });
+      // arr.push({url:ele.sourcePaht});
+    });
+    arr.forEach((ele) => {
+      context.resource.add(ele);
     });
     return arr;
     // todo 处理对应资源
@@ -52,7 +60,14 @@ const resourceVisitor = {
       arr.push(schema.container.backGround.value);
     }
     schema.container.bgMusic.music.forEach((ele) => {
-      arr.push(ele.sourcePaht);
+      arr.push({
+        name: ele.resName,
+        uuid: ele.uuid,
+        url: ele.sourcePaht,
+      });
+    });
+    arr.forEach((ele) => {
+      context.resource.add(ele);
     });
     return arr;
     // todo 处理对应资源

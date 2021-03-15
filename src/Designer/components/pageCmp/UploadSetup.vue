@@ -53,18 +53,23 @@ export default {
       });
     },
     onSelect(a) {
-      if (!a) {
+      if (!a||a.length===0) {
         return;
       }
+      
       this.updateSchema({
         type: "beforeupdatePage",
       });
-      var newValue = a.length ? a[0].sourcePaht : "";
+      // var newValue = a.length ? a[0].sourcePaht : "";
       this.updateSchema({
         type: "afterPage",
         value: {
           ["type"]: "image",
-          ["value"]: newValue,
+          ["value"]: {
+            name:a[0].resName,
+            uuid:a[0].uuid,
+            url:a[0].sourcePaht
+          },
         },
       });
     },

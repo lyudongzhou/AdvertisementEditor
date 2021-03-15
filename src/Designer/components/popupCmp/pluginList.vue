@@ -11,7 +11,7 @@
       <el-main class="svgContainer_main">
         <el-table
           :data="tableData"
-          height="308"
+          height="276"
           border
           style="width: 100%"
           highlight-current-row
@@ -21,6 +21,14 @@
           <el-table-column prop="createDate" label="创建时间">
           </el-table-column>
         </el-table>
+        <el-pagination
+          :current-page="currentPage"
+          @current-change="pageChange"
+          style="text-align: center"
+          layout="prev, pager, next"
+          :total="totalSize"
+        >
+        </el-pagination>
       </el-main>
       <el-footer>
         <el-button class="cancel" @click="handelCancel">取消</el-button>
@@ -45,6 +53,8 @@ export default {
       aDetails: [],
       sortName: "all",
       tableData: [],
+      totalSize: 0,
+      currentPage: 1,
     };
   },
   methods: {
@@ -128,54 +138,18 @@ export default {
             type: this.title === "投票" ? 1 : 2,
           })
           .then((data) => {
-        if(data.data.formPlugin){
-          data.data.formPlugin.id = this.current.id;
-        }else{
-          data.data.votePlugin.id = this.current.id;
-        }
-            // data = {
-            //   code: 200,
-            //   success: true,
-            //   msg: "操作成功",
-            //   data: {
-            //     formPlugin: {
-            //       formName: "表单插件",
-            //       formStartDate: "2021-01-01",
-            //       formfinishDate: "2021-01-01",
-            //       component: [
-            //         {
-            //           compoType: 1,
-            //           compoIndex: 1,
-            //           text: "单行文本",
-            //         },
-            //         {
-            //           compoType: 2,
-            //           compoIndex: 2,
-            //           text: "多行文本",
-            //         },
-            //         {
-            //           compoType: 3,
-            //           compoIndex: 3,
-            //           option: ["选项 1", "选项 2", "选项 3"],
-            //         },
-            //         {
-            //           compoType: 4,
-            //           compoIndex: 4,
-            //           option: ["选项 1", "选项 2", "选项 3"],
-            //         },
-            //       ],
-            //       buttonText: "点击提交",
-            //       clickText: "感谢提交",
-            //     },
-            //   },
-            // };
+            // if (data.data.formPlugin) {
+            //   data.data.formPlugin.id = this.current.id;
+            // } else {
+            //   data.data.votePlugin.id = this.current.id;
+            // }
             if (this.type === "投票") {
               let schema = this.currentConfig.editConfig.defaultSchema;
-              schema.props.data = data.data.votePlugin;
+              schema.props.data = data.data;
               this.$$addNewComponent(schema);
             } else {
               let schema = this.currentConfig.editConfig.defaultSchema;
-              schema.props.data = data.data.formPlugin;
+              schema.props.data = data.data;
               this.$$addNewComponent(schema);
             }
             this.handelCancel();
@@ -187,48 +161,13 @@ export default {
         });
       }
     },
+    pageChange() {},
     getData() {
       return new Promise((resolve) => {
         this.$axios.get("/plugin/list", this.fmtParams()).then((res) => {
-          res = {
-            code: 200,
-            success: true,
-            msg: "操作成功",
-            data: {
-              records: [
-                {
-                  id: 1,
-                  name: "测试插件 1",
-                  type: 1,
-                  createDate: "2021-01-01",
-                },
-                {
-                  id: 2,
-                  name: "测试插件 2",
-                  type: 1,
-                  createDate: "2021-01-01",
-                },
-                {
-                  id: 3,
-                  name: "测试插件 3",
-                  type: 1,
-                  createDate: "2021-01-01",
-                },
-              ],
-              total: 3,
-              size: 10,
-              current: 1,
-              orders: [],
-              optimizeCountSql: true,
-              hitCount: false,
-              countId: "",
-              maxLimit: -1,
-              searchCount: true,
-              pages: 1,
-            },
-          };
           //   console.log(res);
           this.tableData = res.data.records;
+          this.totalSize = Math.ceil(res.data.total / 10);
           resolve();
         });
       });
@@ -236,6 +175,8 @@ export default {
     fmtParams() {
       return {
         type: this.sortType,
+        current: this.currentPage,
+        size: 10,
       };
     },
     handleCurrentChange(val) {
@@ -251,6 +192,7 @@ export default {
       this.dialogVisible = true;
       this.current = null;
       this.title = type === 1 ? "投票" : "表单";
+      this.sortType = type===1?1:2;
       this.tableData = [];
       this.getData();
     });

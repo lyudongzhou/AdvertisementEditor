@@ -136,7 +136,7 @@ export default {
         },
       });
     },
-    handleShowName(){
+    handleShowName() {
       this.updateSchema({
         type: UPDATE_COMPONENT_PROPS,
         value: {
@@ -150,15 +150,24 @@ export default {
       }
       let arr = [];
       let arr1 = [];
+      let arrResources = [];
       a.forEach((ele) => {
         arr.push(ele.sourcePaht);
         arr1.push(ele.resName);
+        arrResources.push([
+          {
+            name: ele.resName,
+            uuid: ele.uuid,
+            url: ele.sourcePaht,
+          },
+        ]);
       });
       this.updateSchema({
         type: UPDATE_COMPONENT_PROPS,
         value: {
           "props.bgUrl": arr,
-          "props.introduce":arr1,
+          "props.introduce": arr1,
+          "props.arrResource": arrResources,
         },
       });
     },

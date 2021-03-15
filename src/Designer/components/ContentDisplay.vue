@@ -2,8 +2,7 @@
 import render from "../../Render/render.vue";
 import { mapState, mapGetters, mapMutations } from "../store";
 import { getPropByPath } from "../../Utils/utils";
-import VueDraggableResizable from "vue-draggable-resizable";
-import "vue-draggable-resizable/dist/VueDraggableResizable.css";
+import VueDraggableResizable from "./resizeable/components/vue-draggable-resizable";
 import editorWin from "./EditorWindow";
 import RotateOperate from "./RotateOperate";
 import Vue from "vue";
@@ -109,6 +108,10 @@ export default {
       selectItemLayoutInfo: {},
       selectedComponentInfos: [],
       componentInfoOfMutiComponent: null,
+      background: {
+        type: "",
+        value: "",
+      },
     };
   },
   computed: {
@@ -119,6 +122,7 @@ export default {
       "currentPageId",
       "copyComponents",
       "selectedComponents",
+      "shiftKey",
     ]),
     ...mapGetters([
       "components",
@@ -128,6 +132,7 @@ export default {
       "gridGuideHozSet",
       "gridGuideVerSet",
       "isSelectMultipleComponent",
+      "currentPage",
     ]),
     selectItemContainerStyle() {
       const workspaceDom = this.$refs.workspace;
@@ -246,6 +251,22 @@ export default {
   },
   methods: {
     onContentFocus() {},
+    computedStyle() {
+      if (this.background.type === "image") {
+        return {
+          "background-image": `url(${this.background.value.url})`,
+          width: "100%",
+          height: "100%",
+          "background-size": "100% 100%",
+        };
+      } else {
+        return {
+          "background-color": this.background.value,
+          width: "100%",
+          height: "100%",
+        };
+      }
+    },
     onContentBlur(e) {
       this.editText = false;
       this.updateSchema({
@@ -587,14 +608,24 @@ export default {
       });
     },
     onResizeStart() {
+      console.log("start");
       this.updateSchema({
         type: BEFORE_UPDATE_COMPONENT_SIZE,
       });
       this.highlightState = true;
     },
-    onResize(left, top, width, height) {
+    onResize(a,left, top, width, height) {
       this.resizing = true;
       this.highlightState = true;
+      // console.log(width,height);
+      this.oldSize = height / width;
+      if (this.shiftKey) {
+        if (this.oldSize) {
+          height = width;
+        } else {
+          height = width * this.oldSize;
+        }
+      }
       this.commitResizeMutation(
         left,
         top,
@@ -602,6 +633,9 @@ export default {
         height,
         UPDATING_COMPONENT_SIZE
       );
+      if (this.shiftKey) {
+        return { left, top, width, height };
+      }
     },
     resizeStop(left, top, width, height) {
       if (this.resizing) {
@@ -724,10 +758,40 @@ export default {
     ]),
   },
   watch: {
+    "currentPage.container.backGround": {
+      deep: true,
+      handler(obj) {
+        this.background.value = obj.value;
+        this.background.type = obj.type;
+        //   if (this.pageData.container.backGround.type === "image") {
+        //   return {
+        //     "background-image": `url(${this.handleUrl(
+        //       this.pageData.container.backGround.value
+        //     )})`,
+        //     width: "100%",
+        //     height: "100%",
+        //     "background-size": "100% 100%",
+        //   };
+        // } else {
+        //   return {
+        //     "background-color": this.pageData.container.backGround.value,
+        //     width: "100%",
+        //     height: "100%",
+        //   };
+        // }
+      },
+    },
+    // currentPageId(id){
+    //   console.log("change");
+    //   let hasFound = false;
+    //   this.schema.pages.some((ele)=>{
+    //     if(ele.id===id){}
+    //   });
+    // },
     "currentComponent.props": {
       deep: true,
       handler() {
-        if(!this.$refs.contentEdit||!this.currentComponent){
+        if (!this.$refs.contentEdit || !this.currentComponent) {
           return;
         }
         Object.assign(
@@ -738,6 +802,7 @@ export default {
     },
     currentComponent() {
       this.editText = false;
+      this.oldSize = null;
     },
   },
 };
@@ -758,18 +823,7 @@ export default {
       :style="engineContainerStyle"
       @contextmenu="onContextmenu(false, $event)"
     >
-      <render
-        @ctrlClick="handleCtrlClick"
-        v-if="opened"
-        ref="render"
-        :renderData="schema"
-        :currentPage="currentPageId"
-        @click="handleClickComponent"
-        @rightClick="handleRightClickComponent"
-        :designMode="true"
-        baseUrl=""
-      ></render>
-      <div class="grid-guide">
+      <div class="grid-guide" :style="computedStyle()">
         <!--辅助线-->
         <div
           :class="['grid-guide-item']"
@@ -806,6 +860,17 @@ export default {
           }"
         ></div>
       </div>
+      <render
+        @ctrlClick="handleCtrlClick"
+        v-if="opened"
+        ref="render"
+        :renderData="schema"
+        :currentPage="currentPageId"
+        @click="handleClickComponent"
+        @rightClick="handleRightClickComponent"
+        :designMode="true"
+        baseUrl=""
+      ></render>
     </div>
 
     <div
@@ -835,7 +900,7 @@ export default {
         @dragging="onDrag"
         :onDragStart="onDragStart"
         :onResizeStart="onResizeStart"
-        @resizing="onResize"
+        :onResize="onResize"
         @dragstop="dragStop"
         @resizestop="resizeStop"
         @dblclick.native="onDblClick"
