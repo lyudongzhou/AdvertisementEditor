@@ -23,11 +23,11 @@ export default [
         a.forEach((ele) => {
           arr.push(ele.sourcePaht);
           arr1.push(ele.resName);
-          arrResources = [{
+          arrResources.push({
             name:ele.resName,
             uuid:ele.uuid,
             url:ele.sourcePaht
-          }];
+          });
         });
         schema.props.bgUrl = arr;
         schema.props.introduce = arr1;
