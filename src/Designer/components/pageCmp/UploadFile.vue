@@ -68,7 +68,7 @@
         ></el-container>
       </el-main>
       <el-footer
-        style="height: 110px; width: 100%; display: flex; overflow: auto;overflow-y:hidden;"
+        style="height: 110px; width: 100%; display: flex; justify-content: flex-start; overflow: auto;overflow-y:hidden;"
         v-if="multi"
         ><div
           v-for="(item, index) in selectImages"
@@ -130,6 +130,7 @@ export default {
       acceptFile: "*",
       isStarting: true,
       selectImages: [],
+      targetData: null,
     };
   },
   watch: {
@@ -139,6 +140,20 @@ export default {
       }
       this.resetType();
     },
+    aResource(val) {
+      if (this.targetData) {
+          const defaultSelect = val.find(i => this.targetData.find(t => t.url === i.src));
+          // select default data
+          if (defaultSelect) {
+            if (this.multi) {
+              this.$refs["selectCmp"].onSelectMultipleImage(defaultSelect);
+            } else {
+              this.$refs["selectCmp"].onSelectImage(defaultSelect);
+            }
+            this.targetData = null;
+          }
+        }
+    }
   },
   mounted() {
     this.typeMap = {
@@ -257,7 +272,7 @@ export default {
       };
     },
     //开始选择，配置参数
-    start({ onSelect, aSelectType, multi, title }) {
+    start({ onSelect, aSelectType, multi, title, targetData }) {
       this.dialogVisible = true;
       while (this.selectImages.length) {
         this.selectImages.pop();
@@ -273,6 +288,7 @@ export default {
         this.title = title;
         this.resourceTyp = "0";
         this.isStarting = false;
+        this.targetData = targetData;
         this.resetType();
       });
     },

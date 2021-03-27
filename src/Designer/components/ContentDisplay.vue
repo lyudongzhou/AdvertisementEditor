@@ -340,6 +340,7 @@ export default {
     },
     onDblClick() {
       let type = this.currentComponent.type;
+      let targetData = this.currentComponent.props.arrResources;
       if (this.editText) {
         return;
       }
@@ -363,6 +364,7 @@ export default {
           aSelectType: ["image"],
           multi: true,
           title: "图片",
+          targetData,
         });
       } else if (type === "textCmp") {
         this.editText = true;
