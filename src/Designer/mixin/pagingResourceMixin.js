@@ -107,15 +107,19 @@ export default {
       orderType = 0,
       priceType = 1,
       type = 1,
+      searchText = "",
       // labelIds = [],
     }) {
-      let o = { resType, userId, current, size, orderType, priceType, type };
-      if(this.url !== "/res/get"){
-        delete o.resType
+      let o = { resType, userId, current, size, orderType, priceType, type, searchText };
+      if (this.url !== "/res/get") {
+         delete o.resType
+      }
+      if (!searchText) {
+         delete o.searchText
       }
       // return o;
       // return { resType, userId, current, size, orderType, priceType, type,labelIds:JSON.stringify(labelIds) };
-      return { resType, userId, current, size, orderType, priceType, type};
+      return o;
     },
     calculatePara() {
       let para = {};
