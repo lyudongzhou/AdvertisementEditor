@@ -6,11 +6,11 @@ export default [
         "name": "按钮1",
         "type": "textCmp",
         "layoutConfig":{
-            "width":100,
-            "height":30
+            "width":200,
+            "height":36
         },
         "props": {
-            "text": "文本",
+            "text": "双击进行编辑",
             "fontFamily": "微软雅黑",
             "fontStyle": "normal",
             "fontSize": 30,

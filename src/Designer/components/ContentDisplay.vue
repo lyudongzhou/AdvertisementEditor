@@ -250,7 +250,12 @@ export default {
     },
   },
   methods: {
-    onContentFocus() {},
+    onContentFocus(e) {
+      const { innerText } = e.target;
+      if (innerText === "双击进行编辑") {
+        this.$refs["contentEdit"].innerText = "";
+      }
+    },
     computedStyle() {
       if (this.background.type === "image") {
         return {
@@ -272,7 +277,7 @@ export default {
       this.updateSchema({
         type: UPDATE_COMPONENT_PROPS,
         value: {
-          "props.text": e.target.innerText,
+          "props.text": e.target.innerText === "" ? "双击进行编辑" :  e.target.innerText ,
         },
       });
     },
