@@ -383,6 +383,28 @@ export default {
           this.$refs.contentEdit.focus();
           this.currentComponent.props.text = "";
         });
+      } else if (type === "VideoCmp") {
+        this.$event.emit("openUploadWin", {
+          onSelect: (a) => {
+            if (!a || a.length === 0) {
+              return;
+            }
+            let arr = [];
+            a.forEach((ele) => {
+              arr.push(ele.sourcePaht);
+            });
+            this.updateSchema({
+              type: UPDATE_COMPONENT_PROPS,
+              value: {
+                "props.bgUrl": arr,
+              },
+            });
+          },
+          aSelectType: ["video"],
+          multi: false,
+          title: "视频",
+          targetData,
+        });
       }
     },
     getInitialScale() {
@@ -615,7 +637,6 @@ export default {
       });
     },
     onResizeStart() {
-      console.log("start");
       this.updateSchema({
         type: BEFORE_UPDATE_COMPONENT_SIZE,
       });
@@ -625,12 +646,12 @@ export default {
       this.resizing = true;
       this.highlightState = true;
       // console.log(width,height);
-      this.oldSize = height / width;
+
       if (this.shiftKey) {
         if (this.oldSize) {
-          height = width;
-        } else {
           height = width * this.oldSize;
+        } else {
+          this.oldSize = height / width;
         }
       }
       this.commitResizeMutation(
@@ -656,6 +677,7 @@ export default {
         );
       }
       this.highlightState = false;
+      this.oldSize = null;
     },
     mousemove(e) {
       if (this.resizing || this.dragging) {
@@ -810,7 +832,7 @@ export default {
     currentComponent() {
       this.editText = false;
       this.oldSize = null;
-    },
+    }
   },
 };
 </script>
