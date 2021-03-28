@@ -139,8 +139,8 @@ export default {
           label: "1920*1080",
         },
         {
-          value: "1920*1440",
-          label: "1920*1440",
+          value: "1080*1920",
+          label: "1080*1920",
         },
         {
           value: "userConfig",

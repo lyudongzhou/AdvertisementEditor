@@ -10,7 +10,7 @@
       :images="cmpConfig.props.bgUrl"
       :transitions="[cmpConfig.props.changeType]"
       ref="slider"
-      :captions="cmpConfig.props.showName&&cmpConfig.props.introduce"
+      :captions="cmpConfig.props.showName ? getPureImageName() : []"
     >
       <template v-slot:caption>
         <flux-caption />
@@ -35,6 +35,11 @@ export default {
     next() {
       this.$refs.slider.show();
       console.log(this.$refs.slider);
+    },
+    getPureImageName() {
+      let arr = []
+      this.cmpConfig.props.introduce.map(name => arr.push(name.substring(0, name.lastIndexOf("."))))
+      return arr
     },
   },
   data: () => {
