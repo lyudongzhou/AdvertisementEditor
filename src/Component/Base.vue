@@ -98,7 +98,7 @@ export default {
       if (!this.$store.state.currentRenderState.designMode) {
         this.cmpConfig.events.forEach((ele) => {
           if (eventMap[ele.type] && eventMap[ele.type].eventKey === type) {
-            eventMap[ele.type].method.call(this, ele.value, e, this);
+            eventMap[ele.type].method.call(this, ele.props, e, this);
           }
         });
       } else if (type === "click") {
