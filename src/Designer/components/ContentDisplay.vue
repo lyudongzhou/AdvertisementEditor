@@ -256,6 +256,22 @@ export default {
         this.$refs["contentEdit"].innerText = "";
       }
     },
+    onContentInput(e) {
+      const { width } = this.containerInfo;
+      const { innerText } = e.target;
+      // 为了适应文字宽度
+      if (innerText && innerText.length > 2) {
+        let textWidth = this.scaleValue * 35 * innerText.length;
+        if (width*0.8 < textWidth) return;
+        this.commitResizeMutation(
+          this.selectItemLayoutInfo.x,
+          this.selectItemLayoutInfo.y,
+          textWidth,
+          this.selectItemLayoutInfo.h,
+          UPDATING_COMPONENT_SIZE
+        );
+      }
+    },
     computedStyle() {
       if (this.background.type === "image") {
         return {
@@ -946,6 +962,7 @@ export default {
           :style="computedContent()"
           @blur="onContentBlur"
           @focus="onContentFocus"
+          @input="onContentInput"
         ></div>
         <rotate-operate
           :active="rotateActive"
