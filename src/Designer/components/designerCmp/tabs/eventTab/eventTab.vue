@@ -108,7 +108,8 @@
                 align-items: center;
               "
             >
-              <span style="float: left; color: black">{{ item.name }}</span>
+              <!-- <span style="float: left; color: black">{{ item.name }}</span> -->
+              <span style="float: left; color: black">弹窗</span>
               <span
                 style="
                   display: inline-block;

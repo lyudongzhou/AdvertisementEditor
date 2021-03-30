@@ -361,11 +361,11 @@ export default {
     },
     onDblClick() {
       let type = this.currentComponent.type;
-      let targetData = this.currentComponent.props.arrResources;
       if (this.editText) {
         return;
       }
       if (type === "ImageCmp") {
+        let targetData = [{url: this.currentComponent.props.bgUrl[0]}];
         this.$event.emit("openUploadWin", {
           onSelect: (a) => {
             if (!a || a.length === 0) {
@@ -400,6 +400,7 @@ export default {
           this.currentComponent.props.text = "";
         });
       } else if (type === "VideoCmp") {
+        let targetData = this.currentComponent.props.arrResources;
         this.$event.emit("openUploadWin", {
           onSelect: (a) => {
             if (!a || a.length === 0) {
