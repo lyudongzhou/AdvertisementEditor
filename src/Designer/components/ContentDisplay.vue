@@ -261,7 +261,8 @@ export default {
       const { innerText } = e.target;
       // 为了适应文字宽度
       if (innerText && innerText.length > 2) {
-        let textWidth = this.scaleValue * 35 * innerText.length;
+        const fontSize = this.$refs.contentEdit.style.fontSize.replace("px", "");
+        let textWidth = fontSize * (innerText.length+1);
         if (width*0.8 < textWidth) return;
         this.commitResizeMutation(
           this.selectItemLayoutInfo.x,
