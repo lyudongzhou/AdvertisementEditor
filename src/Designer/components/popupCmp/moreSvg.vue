@@ -100,7 +100,7 @@ export default {
   mounted() {
     this.$event.on("openMoreSvg", ({id}) => {
       // todo
-      // this.activeName = this.idMap[id];
+      this.activeName = this.idMap[id];
       console.log(id);
       this.dialogVisible = true;
     });

@@ -1,0 +1,3 @@
+export default function(cmpConfig) {
+    return `<svg style="width: ${cmpConfig.layoutConfig.width}; height: ${cmpConfig.layoutConfig.height}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 47.44"><defs><style>.cls-1{fill:#040000;}</style></defs><title>资源 24</title><g id="图层_2" data-name="图层 2"><g id="图层_1-2" data-name="图层 1"><path class="cls-1" d="M47.51,19A22.58,22.58,0,0,0,3,18.71a4.1,4.1,0,0,0,0,7.9,22.58,22.58,0,0,0,18.38,18.2,4.1,4.1,0,0,0,7.6.13,4,4,0,0,0,.32-1.6,4.1,4.1,0,0,0-7.88-1.59A19.57,19.57,0,0,1,6,26.27,4.1,4.1,0,0,0,6,19,19.57,19.57,0,0,1,44.48,19a4.09,4.09,0,1,0,3,.07Z"/></g></g></svg>`;
+}

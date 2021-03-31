@@ -263,7 +263,7 @@ export default {
       if (innerText && innerText.length > 2) {
         const fontSize = this.$refs.contentEdit.style.fontSize.replace("px", "");
         let textWidth = fontSize * (innerText.length+1);
-        if (width*0.8 < textWidth) return;
+        if (width*0.90 < textWidth) return;
         this.commitResizeMutation(
           this.selectItemLayoutInfo.x,
           this.selectItemLayoutInfo.y,
