@@ -81,6 +81,13 @@ export default {
       fn(this.$refs.render.getCmp(this.currentComponentId));
       // console.log(fn,this.$refs.render.getCmp(this.currentComponentId));
     });
+
+    this.$event.on("changeContainerSize", (data) => {
+      this.updateSchema({
+        type: UPDATING_COMPONENT_SIZE,
+        value: data,
+      });
+    })
     document.addEventListener("mousemove", this.mousemove, true);
     const { height, width } = this.$refs.workspace.getBoundingClientRect();
     this.containerInfo = { height, width };

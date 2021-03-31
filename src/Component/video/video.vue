@@ -11,6 +11,7 @@
 <script>
 import baseCmp from '../Base.vue'
 import { mapGetters } from '../../Render/store/'
+import editorConfig from "./editorConfig";
 export default {
     name: 'VideoCmp',
     components: {
@@ -19,22 +20,27 @@ export default {
     mounted() {
         var vm = this;
         this.$refs.videoEl.addEventListener('canplay', function () {
-            window.console.log(vm.cmpConfig, this.videoWidth, this.videoHeight,">>>11>>")
+            vm.autoChangeVideoSize(this.videoWidth, this.videoHeight)
         });
         this.parent = this.$refs['parent']
-        window.console.log(this.parent, ">>>11>>")
     },
     methods: {
-        // autoChangeVideoSize(videoWidth, videoHeight) {
-        //     let { height, width } = this.cmpConfig.layoutConfig;
-        //     const rate = videoWidth / videoHeight;
-        //     if (rate > 1) {
-        //         height = height * rate;
-        //     } else {
-        //         width = width * rate;
-        //     }
-        //     window.console.log(height, width, this.parent, ">>>11>>")
-        // }
+        autoChangeVideoSize(videoWidth, videoHeight) {
+            const rate = videoWidth / videoHeight;
+            let width = editorConfig[0]['defaultSchema']['layoutConfig']['width'];
+            let height = editorConfig[0]['defaultSchema']['layoutConfig']['height'];
+            if (rate > 1) {
+                height = height / rate;
+            } else {
+                width = width * rate;
+            }
+            this.$event.emit("changeContainerSize", {
+                left: 0,
+                top: 0,
+                width,
+                height,
+            })
+        },
     },
     computed: {
         ...mapGetters(['handleUrl']),
