@@ -56,7 +56,7 @@ import circle55 from "./circle55";
 import circle56 from "./circle56";
 import circle57 from "./circle57";
 import circle58 from "./circle58";
-import circle59 from "./circle59";
+// import circle59 from "./circle59";
 import circle60 from "./circle60";
 import circle61 from "./circle61";
 import circle62 from "./circle62";
@@ -121,7 +121,7 @@ const arr = [
     circle56,
     circle57,
     circle58,
-    circle59,
+    // circle59,
     circle60,
     circle61,
     circle62,
@@ -140,7 +140,6 @@ export default {
             },
             props: {
                 type: "circle_0",
-                color: "#F00",
             },
             animation: [],
             events: [],

@@ -20,10 +20,12 @@ import circle19 from "./circle19";
 import circle20 from "./circle20";
 import circle21 from "./circle21";
 import circle22 from "./circle22";
-import circle23 from "./circle23";
+// import circle23 from "./circle23";
 import circle24 from "./circle24";
 
-const arr = [circle1, circle2, circle3, circle4, circle5, circle6, circle7, circle8, circle9, circle10, circle11, circle12, circle13, circle14, circle15, circle16, circle17, circle18, circle19, circle20, circle21, circle22, circle23, circle24];
+const arr = [circle1, circle2, circle3, circle4, circle5, circle6, circle7, circle8, circle9, circle10, circle11, circle12, circle13, circle14, circle15, circle16, circle17, circle18, circle19, circle20, circle21, circle22, //circle23, 
+    circle24
+];
 export default {
     decoration: {
         name: "装饰",

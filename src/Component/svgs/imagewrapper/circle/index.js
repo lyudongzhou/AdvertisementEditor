@@ -1,4 +1,4 @@
-import circle1 from "./circle1";
+// import circle1 from "./circle1";
 import circle2 from "./circle2";
 import circle3 from "./circle3";
 import circle4 from "./circle4";
@@ -10,7 +10,10 @@ import circle9 from "./circle9";
 import circle10 from "./circle10";
 import circle11 from "./circle11";
 
-const arr = [circle1, circle2, circle3, circle4, circle5, circle6, circle7, circle8, circle9, circle10, circle11, ];
+const arr = [
+    //circle1, 
+    circle2, circle3, circle4, circle5, circle6, circle7, circle8, circle9, circle10, circle11,
+];
 export default {
     imagewrapper: {
         name: "图片容器",
@@ -23,7 +26,6 @@ export default {
             },
             props: {
                 type: "imagewrapper_0",
-                color: "#F00",
             },
             animation: [],
             events: [],

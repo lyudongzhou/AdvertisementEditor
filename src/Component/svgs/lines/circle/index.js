@@ -9,8 +9,9 @@ import circle8 from "./circle8";
 import circle9 from "./circle9";
 import circle10 from "./circle10";
 import circle11 from "./circle11";
-import circle12 from "./circle12";
-const arr = [circle1, circle2, circle3, circle4, circle5, circle6, circle7, circle8, circle9, circle10, circle11, circle12, ];
+// import circle12 from "./circle12";
+const arr = [circle1, circle2, circle3, circle4, circle5, circle6, circle7, circle8, circle9, circle10, circle11, //circle12, 
+];
 export default {
     line: { name: "线和箭头", fun: arr }
 };
