@@ -249,7 +249,8 @@
                       >
                     </el-row>
                   </div>
-                  <div style="width: 100%; padding: 10px 12px 0 12px">
+                  <!-- 无触摸返回时长模块 -->
+                  <!-- <div style="width: 100%; padding: 10px 12px 0 12px">
                     <el-row
                       style="
                         width: 100%;
@@ -283,7 +284,7 @@
                         </div></el-col
                       >
                     </el-row>
-                  </div>
+                  </div> -->
                 </div>
               </el-tab-pane>
             </el-tabs>

@@ -103,5 +103,10 @@ export default {
       // font-size: 2rem;
     }
   }
+
+  .flux-image {
+    background-size: 100% 100% !important;
+    background-position: 0% 0% !important;
+  }
 }
 </style>
