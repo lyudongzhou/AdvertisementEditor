@@ -14,12 +14,14 @@
               class="pt-page pt-page-current"
               :pageData="currentLayout"
               :pageState="currentState"
+              :pageType="pageType"
           ></singlePage>
           <singlePage
               v-if="nextData !== null"
               ref="nextPage"
               class="pt-page"
               :pageData="nextData"
+              :pageType="pageType"
           ></singlePage>
       </div>
     <ol class="audio_list">
@@ -46,7 +48,7 @@ export default {
       playing: null,
     };
   },
-  props: ["renderData"],
+  props: ["renderData","pageType"],
   computed: {
     ...mapState(["windowStorage", "singlePagePreview"]),
     ...mapGetters(["targetPage", "currentPage", "designMode"]),

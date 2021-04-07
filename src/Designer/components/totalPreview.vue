@@ -14,11 +14,15 @@
             :style="caculateRenderScale"
             class="previewPage"
             @afterRender="onRender"
+            :pageType="playConfig.changeHint"
           ></singlePagePreview>
           <el-button type="primary" class="totalPreviewPreBtn" @click="prePage"
             >上一页</el-button
           >
-          <el-button type="primary" class="totalPreviewNextBtn" @click="nextPage"
+          <el-button
+            type="primary"
+            class="totalPreviewNextBtn"
+            @click="nextPage"
             >下一页</el-button
           >
         </div>
@@ -396,10 +400,10 @@ const mapInverse = {
 export default {
   methods: {
     ...mapMutations(["setPreviewState", "updateSchema"]),
-    prePage(){
+    prePage() {
       this.$refs.render.prePage();
     },
-    nextPage(){
+    nextPage() {
       this.$refs.render.nextPage();
     },
     commit() {
@@ -808,7 +812,7 @@ export default {
   height: 64px;
   bottom: 0px;
   left: 50%;
-  transform: translate(-161px,0);
+  transform: translate(-161px, 0);
   background: #ffffff;
   border-radius: 10px;
   opacity: 0.8;
@@ -826,7 +830,7 @@ export default {
   height: 64px;
   bottom: 0px;
   left: 50%;
-  transform: translate(25px,0);
+  transform: translate(25px, 0);
   background: #ffffff;
   border-radius: 10px;
   opacity: 0.8;
@@ -1121,6 +1125,7 @@ export default {
     position: relative;
   }
 }
+
 .volumeInput {
   .el-input-group__append {
     padding: 0;

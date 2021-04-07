@@ -25,6 +25,7 @@
       ref="preview"
       :renderData="renderData"
       :currentIndex="currentIndex"
+      :pageType="pageType"
     ></preview>
     <span class="paging" :style="fmtPagingStyle()">{{ paging }}</span>
   </div>
@@ -44,7 +45,8 @@ export default {
     "designMode",
     "baseUrl",
     "singlePagePreview",
-    "Production"
+    "Production",
+    "pageType"
   ],
   data() {
     return {
