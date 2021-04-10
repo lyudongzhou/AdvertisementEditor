@@ -103,14 +103,19 @@ export default {
         null,
         4
       );
+
+      let postBody = {
+        bodyJson,
+        name: this.projectInfo.name,
+        resolutionWidth: payload.schema.container.width,
+        resolutionHeight: payload.schema.container.height,
+      }
+      if (!isCreate) {
+        postBody.programId = payload.id;
+      }
+
       this.$axios
-        .post(url, {
-          userId: payload.id,
-          bodyJson,
-          name: this.projectInfo.name,
-          resolutionWidth: payload.schema.container.width,
-          resolutionHeight: payload.schema.container.height,
-        })
+        .post(url, postBody)
         .then(({ data }) => {
           if (isCreate) {
             const urlSearchParams = new URLSearchParams(location.hash);
@@ -133,11 +138,12 @@ export default {
       const urlSearchParams = new URLSearchParams(location.search);
       const urlHashParams = new URLSearchParams(location.hash);
       let id = urlSearchParams.get("id") || urlHashParams.get("id");
+      let programType = urlSearchParams.get("programType") || urlHashParams.get("programType");
       // if (!PRODUCTION) {
       //   id = id || 1
       // }
       if (id) {
-        this.$axios.post("/program/get", { programId: id }).then(({ data }) => {
+        this.$axios.post("/program/get", { programId: id,programType: programType }).then(({ data }) => {
           let { id, name, description, programData } = data;
           // 引用情况&&不是新增后刷新的
           if (

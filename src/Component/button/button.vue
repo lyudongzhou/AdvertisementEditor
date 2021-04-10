@@ -25,19 +25,6 @@
     watch: {
       "cmpConfig.props.url"(value) {
         this.url = value;
-      },
-      // 监听按钮背景色变化
-      btnStyle(val) {
-        if(val['box-shadow'] != 'none'){
-          let color = val.background;  //图标选择背景色   默认色: #ABCCF6
-          let boxShadow = val['box-shadow'].split('#')[0];  //底部shadow背景色去除
-          let bosColor = '#' + val['box-shadow'].split('#')[1]; //必读shadow背景色 默认色: #4A92ED
-          if(color == '#ABCCF6' && bosColor == '#4A92ED'){
-            return;
-          }else{
-            this.btnStyle['box-shadow'] = boxShadow + color;  //重新给shadow上色
-          }
-        }
       }
     },
     computed: {

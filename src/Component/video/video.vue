@@ -20,7 +20,7 @@ export default {
     mounted() {
         var vm = this;
         this.$refs.videoEl.addEventListener('canplay', function () {
-            if (!document.queryelect(".totalPreviewContainer")) {
+            if (!document.querySelector(".totalPreviewContainer")) {
                 vm.autoChangeVideoSize(this.videoWidth, this.videoHeight)
             }
         });

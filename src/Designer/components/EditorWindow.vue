@@ -103,9 +103,9 @@ export default {
   watch: {
     currentComponent(data) {
       // 判断是否为二维码
-      if(data.name.indexOf('二维码') != -1){
+      if(data && data.name.indexOf('二维码') != -1){
         if(data.props.text == 'qrcode'){
-          data.props.text = 'http://saberxf.rz-edu.cn/login';
+          data.props.text = window.location.href;
         }
         // console.log(this.projectInfo);
         // console.log(this.schema);

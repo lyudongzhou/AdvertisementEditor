@@ -264,21 +264,13 @@ export default {
       }
     },
     onContentInput(e) {
-      const { width } = this.containerInfo;
-      const { innerText } = e.target;
-      // 为了适应文字宽度
-      if (innerText && innerText.length > 2) {
-        const fontSize = this.$refs.contentEdit.style.fontSize.replace("px", "");
-        let textWidth = fontSize * (innerText.length+1);
-        if (width*0.90 < textWidth) return;
-        this.commitResizeMutation(
-          this.selectItemLayoutInfo.x,
-          this.selectItemLayoutInfo.y,
-          textWidth,
-          this.selectItemLayoutInfo.h,
-          UPDATING_COMPONENT_SIZE
-        );
-      }
+      this.commitResizeMutation(
+        this.selectItemLayoutInfo.x,
+        this.selectItemLayoutInfo.y,
+        this.selectItemLayoutInfo.w,
+        e.target.scrollHeight,
+        UPDATING_COMPONENT_SIZE
+      );
     },
     computedStyle() {
       if (this.background.type === "image") {

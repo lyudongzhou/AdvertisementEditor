@@ -110,12 +110,12 @@ export default {
       searchText = "",
       // labelIds = [],
     }) {
-      let o = { resType, userId, current, size, orderType, priceType, type, searchText };
+      let o = { resType, userId, current, size, orderType, priceType, type, keyword: searchText };
       if (this.url !== "/res/get") {
          delete o.resType
       }
       if (!searchText) {
-         delete o.searchText
+         delete o.keyword
       }
       // return o;
       // return { resType, userId, current, size, orderType, priceType, type,labelIds:JSON.stringify(labelIds) };

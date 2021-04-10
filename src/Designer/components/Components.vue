@@ -100,12 +100,12 @@ export default {
         this.$event.emit("openUploadWin", {
           onSelect: (a) => {
             if (a&&a.length) {
-              this.$$addNewComponent(
-                config.editConfig.before.fmtRes(
-                  a,
+              a.map(i => {
+                this.$$addNewComponent(config.editConfig.before.fmtRes(
+                  [i],
                   config.editConfig.defaultSchema
-                )
-              );
+                ));
+              })
             }
           },
           aSelectType: config.editConfig.before.types,
