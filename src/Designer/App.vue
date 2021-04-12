@@ -4,13 +4,15 @@
 <script>
 import designer from "./Designer.vue";
 import { SUBMIT_PROJECT } from "./constant/event";
-import { mapMutations, mapState } from "./store/index";
+import { mapGetters, mapMutations, mapState } from "./store/index";
 import { clone } from "@/utils";
 
 /*eslint no-unused-vars: ["error", { "args": "none" }]*/
 import { get } from "@/register";
 import { REG_GETRES } from "@/const";
 import defaultJson from "../../testData/defaultJson.json";
+import manager from "./manager/snapShot";
+
 
 const resourceVisitor = {
   component: (schema, context) => {
@@ -92,6 +94,7 @@ export default {
   },
   computed: {
     ...mapState(["projectInfo"]),
+    ...mapGetters(["pages"]),
   },
   methods: {
     ...mapMutations(["setProgramInfo"]),
@@ -106,18 +109,23 @@ export default {
         null,
         4
       );
-
-      let postBody = {
-        bodyJson,
-        name: this.projectInfo.name,
-        resolutionWidth: payload.schema.container.width,
-        resolutionHeight: payload.schema.container.height,
-      }
-      if (!isCreate) {
-        postBody.programId = payload.id;
-      }
-
-      this.$axios
+      // 处理首页封面
+      let pagesId = this.pages[0].id;
+      let pagesData = manager.getResult(pagesId);
+      this.$axios.post("/program/uploadCover", { file: pagesData }).then(({ data }) => {
+        // 获取封面图的uuid
+        console.log('coverUuid:' + data);
+        let postBody = {
+          bodyJson,
+          name: this.projectInfo.name,
+          resolutionWidth: payload.schema.container.width,
+          resolutionHeight: payload.schema.container.height,
+          coverUuid: data
+        }
+        if (!isCreate) {
+          postBody.programId = payload.id;
+        }
+        this.$axios
         .post(url, postBody)
         .then(({ data }) => {
           if (isCreate) {
@@ -127,6 +135,8 @@ export default {
           }
           this.$message({ message: "操作成功！", type: "success" });
         });
+        
+      });
     },
     init() {
       if (PRODUCTION) {

@@ -34,7 +34,6 @@ class ScreenSnapshotManager extends EventEmitter {
             id: id,
             data: data,
           });
-          window.console.log(data);
         });
       }
     }

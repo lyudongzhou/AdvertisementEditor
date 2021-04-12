@@ -73,17 +73,18 @@ export default {
       return res;
     },
     onLoad(res) {
-      console.log(res);
-      if (this.url === "/res/get") {
-        res.data.records.forEach((ele) => {
-          this.aResource.push(this.fmtRes(ele));
-        });
-      } else {
-        res.data.records.forEach((ele) => {
-          this.aResource.push(this.fmtProgram(ele));
-        });
+      window.console.log(res);
+      if(!res.data.records == false){
+        if (this.url === "/res/get") {
+          res.data.records.forEach((ele) => {
+            this.aResource.push(this.fmtRes(ele));
+          });
+        } else {
+          res.data.records.forEach((ele) => {
+            this.aResource.push(this.fmtProgram(ele));
+          });
+        }
       }
-
       this.isLoading = false;
       this.total = res.data.total;
     },
