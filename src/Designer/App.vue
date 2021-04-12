@@ -11,6 +11,7 @@ import { clone } from "@/utils";
 import { get } from "@/register";
 import { REG_GETRES } from "@/const";
 import defaultJson from "../../testData/defaultJson.json";
+
 const resourceVisitor = {
   component: (schema, context) => {
     let fun = get(REG_GETRES)[schema.type];
@@ -75,6 +76,7 @@ const resourceVisitor = {
 };
 
 export default {
+
   components: {
     designer,
   },
@@ -94,6 +96,7 @@ export default {
   methods: {
     ...mapMutations(["setProgramInfo"]),
     handleSubmit(payload) {
+      console.log(payload)
       const isCreate = !payload.id;
       const url = `/program/${isCreate ? "add" : "update"}`;
       const resource = this.getResource(payload.schema);
@@ -153,7 +156,11 @@ export default {
             id = null;
           }
           this.setProgramInfo({ id, name, description });
-          this.$refs.designer.openProject(programData);
+          if(programType){
+            this.$refs.designer.openProject(JSON.parse(data.body));
+          }else{
+            this.$refs.designer.openProject(programData);
+          }
         });
       } else {
         this.$refs.designer.openProject(defaultJson);
