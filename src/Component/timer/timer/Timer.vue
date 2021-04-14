@@ -1,13 +1,17 @@
 <template>
-  <BaseTimer :cmpConfig="cmpConfig" :text="text"></BaseTimer>
+  <baseCmp :cmpConfig="cmpConfig">
+    <BaseTimer :cmpConfig="cmpConfig" :text="text"></BaseTimer>
+  </baseCmp>
 </template>
 
 <script>
   import BaseTimer from '../BaseTimer.vue';
+  import baseCmp from '../../Base.vue';
   export default {
     name: "timerCmp",
     components: {
       BaseTimer,
+      baseCmp,
     },
     props: ["cmpConfig"],
     data() {

@@ -36,7 +36,7 @@ export default {
             } else {
                 width = width * rate;
             }
-            this.$event.emit("changeContainerSize", {
+            this.$event && this.$event.emit("changeContainerSize", {
                 left: 0,
                 top: 0,
                 width,
