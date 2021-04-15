@@ -101,7 +101,8 @@ export default {
     handleSubmit(payload) {
       console.log(payload)
       const isCreate = !payload.id;
-      const url = `/program/${isCreate ? "add" : "update"}`;
+      const url = `/program/update`;
+      // const url = `/program/${isCreate ? "add" : "update"}`;
       const resource = this.getResource(payload.schema);
       console.log(resource);
       const bodyJson = JSON.stringify(
@@ -122,9 +123,9 @@ export default {
           resolutionHeight: payload.schema.container.height,
           coverUuid: data
         }
-        if (!isCreate) {
+        // if (!isCreate) {
           postBody.programId = payload.id;
-        }
+        // }
         this.$axios
         .post(url, postBody)
         .then(({ data }) => {
