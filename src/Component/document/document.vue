@@ -68,7 +68,9 @@ export default {
     //   );
     // },
   },
-  beforeDestroy() {},
+  beforeDestroy() {
+    clearInterval(this.interval)
+  },
   props: ["cmpConfig"],
 };
 </script>
