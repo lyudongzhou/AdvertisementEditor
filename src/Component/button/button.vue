@@ -25,7 +25,7 @@
     watch: {
       "cmpConfig.props.url"(value) {
         this.url = value;
-      },
+      }
     },
     computed: {
       ...mapGetters(["handleUrl"]),

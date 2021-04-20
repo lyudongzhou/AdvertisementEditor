@@ -17,6 +17,9 @@ export default {
   },
   computed: {
     getSize () {
+      if (this.mounted) {
+        this.myChart.resize();
+      }
       return `width:${this.cmpConfig.layoutConfig.width}px;
               height:${this.cmpConfig.layoutConfig.height}px`;
     },
@@ -42,6 +45,7 @@ export default {
   mounted() {
     this.myChart = echarts.init(this.$refs.chart);
     this.myChart.setOption(this.option);
+    this.mounted = true;
   },
   watch: {
     // 图例

@@ -1,0 +1,3 @@
+export default function(cmpConfig) {
+    return `<svg xmlns="http://www.w3.org/2000/svg" style="width: ${cmpConfig.layoutConfig.width}; height: ${cmpConfig.layoutConfig.height}" viewBox="0 0 144 36.41"><defs><style>.cls-1{font-size:36px;font-family:STYuanti-SC-Regular, Yuanti SC;}</style></defs><title>资源 112</title><g id="图层_2" data-name="图层 2"><g id="图层_1-2" data-name="图层 1"><text class="cls-1" transform="translate(0 28.93)">图片容器</text></g></g></svg>`
+}

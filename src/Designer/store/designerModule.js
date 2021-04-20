@@ -96,7 +96,8 @@ export default {
       return containerMap[state.currentPageType] || {};
     },
     currentMaxIndex(state, getters) {
-      return Math.max(...getPropByPath(getters, 'currentContainer.components', []).map(component => component.layoutConfig.zIndex)) || 0;
+      const max = Math.max(...getPropByPath(getters, 'currentContainer.components', []).map(component => component.layoutConfig.zIndex))
+      return max > -1 ? max : 0;
     },
     gridGuideHozSet(state) {
       const height = getPropByPath(state.schema || {}, 'container.height', 0);

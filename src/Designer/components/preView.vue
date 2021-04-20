@@ -16,6 +16,13 @@ import { mapState, mapMutations } from "../store";
 import Vue from "vue";
 import previewStore from "../store/previewStore";
 export default {
+  props: {
+    // 翻页方式--由父组件传给子组件
+    pageType: {
+      type: Boolean,
+      default: true
+    }
+  },
   data() {
     return {
       isShow: false,
@@ -63,6 +70,7 @@ export default {
                 currentPage: currentPage,
                 singlePagePreview: !this.previewTotal,
                 baseUrl: "",
+                pageType: this.pageType
               },
             });
           },

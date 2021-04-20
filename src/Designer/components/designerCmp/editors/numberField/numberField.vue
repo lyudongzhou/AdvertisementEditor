@@ -39,7 +39,8 @@ export default {
     computed: {
         ...mapState(["currentComponentId"]),
         dataText() {
-            return getPropByPath(this.configData, this.config.target);
+            // fix undefined bug
+            return getPropByPath(this.configData, this.config.target) || 0;
         },
     },
     methods: {

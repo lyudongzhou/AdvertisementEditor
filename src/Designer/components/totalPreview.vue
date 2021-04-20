@@ -14,11 +14,15 @@
             :style="caculateRenderScale"
             class="previewPage"
             @afterRender="onRender"
+            :pageType="playConfig.changeHint"
           ></singlePagePreview>
           <el-button type="primary" class="totalPreviewPreBtn" @click="prePage"
             >上一页</el-button
           >
-          <el-button type="primary" class="totalPreviewNextBtn" @click="nextPage"
+          <el-button
+            type="primary"
+            class="totalPreviewNextBtn"
+            @click="nextPage"
             >下一页</el-button
           >
         </div>
@@ -249,7 +253,8 @@
                       >
                     </el-row>
                   </div>
-                  <div style="width: 100%; padding: 10px 12px 0 12px">
+                  <!-- 无触摸返回时长模块 -->
+                  <!-- <div style="width: 100%; padding: 10px 12px 0 12px">
                     <el-row
                       style="
                         width: 100%;
@@ -283,7 +288,7 @@
                         </div></el-col
                       >
                     </el-row>
-                  </div>
+                  </div> -->
                 </div>
               </el-tab-pane>
             </el-tabs>
@@ -392,13 +397,16 @@ const mapInverse = {
   96: [7, "vertical"],
   98: [7, "horizontal"],
 };
+
+let goNextPage = null;  //自动翻页定时器
+let oldTime = 180;  //上一次自动播放时长
 export default {
   methods: {
     ...mapMutations(["setPreviewState", "updateSchema"]),
-    prePage(){
+    prePage() {
       this.$refs.render.prePage();
     },
-    nextPage(){
+    nextPage() {
       this.$refs.render.nextPage();
     },
     commit() {
@@ -575,6 +583,17 @@ export default {
     playConfig: {
       deep: true,
       handler(value) {
+        if(value.loop && (oldTime!=value.singlePagePlayTime)){
+          if(!goNextPage){
+            clearTimeout(goNextPage);
+          }
+          oldTime = value.singlePagePlayTime
+          goNextPage = setTimeout(()=>{
+            this.nextPage();
+          }, value.singlePagePlayTime * 1000)
+        }else if(!value.loop && oldTime){
+          clearTimeout(goNextPage)
+        }
         if (this.isMounted) {
           this.singlePagePlayTimeTemp = value.singlePagePlayTime;
           this.backTimeTemp = value.backTime;
@@ -622,6 +641,7 @@ export default {
         });
       }
     },
+
   },
   computed: {
     ...mapState(["previewing", "previewTotal", "schema", "projectInfo"]),
@@ -807,7 +827,7 @@ export default {
   height: 64px;
   bottom: 0px;
   left: 50%;
-  transform: translate(-161px,0);
+  transform: translate(-161px, 0);
   background: #ffffff;
   border-radius: 10px;
   opacity: 0.8;
@@ -825,7 +845,7 @@ export default {
   height: 64px;
   bottom: 0px;
   left: 50%;
-  transform: translate(25px,0);
+  transform: translate(25px, 0);
   background: #ffffff;
   border-radius: 10px;
   opacity: 0.8;
@@ -1120,6 +1140,7 @@ export default {
     position: relative;
   }
 }
+
 .volumeInput {
   .el-input-group__append {
     padding: 0;

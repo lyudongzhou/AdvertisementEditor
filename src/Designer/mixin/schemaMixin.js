@@ -31,15 +31,15 @@ const getNextName = (array, prefix = "组件") => {
   });
   const { length } = countArray;
   if (!length) {
-    return `${prefix}1`;
+    return `${prefix}`;
   }
   countArray.sort((a, b) => a - b);
   for (let i = 0; i < length; i++) {
     if (i + 1 !== countArray[i]) {
-      return `${prefix}${i + 1}`;
+      return `${prefix}`;
     }
   }
-  return `${prefix}${length + 1}`;
+  return `${prefix}`;
 };
 
 /**

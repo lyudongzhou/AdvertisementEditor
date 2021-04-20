@@ -106,15 +106,34 @@ export default {
         up: (hex) => {
           if (this.config.props.changeType === 'btn') {
             // 针对于button
-            if (this.btnName === 'btn2') {
+
+            if (this.btnName === 'btn1') {
               this.updateSchema({
                 type: this.config.props.type.after || null,
-                value: {[this.config.target]:`linear-gradient(to right, #ABCCF6, ${hex})`},
+                value: {
+                  [this.config.target]:hex,
+                  "btnProps.boxShadow":`inset 0px -14.4px 0px ${this.lightDarkenColor(hex, 60)}`,
+                },
+              });
+            } else if (this.btnName === 'btn2') {
+              this.updateSchema({
+                type: this.config.props.type.after || null,
+                value: {[this.config.target]:`linear-gradient(to right, ${this.colorRgba(hex, 0.4)}, ${hex})`},
               });
             } else if (this.btnName === 'btn4') {
               this.updateSchema({
                 type: this.config.props.type.after || null,
-                value: {[this.config.target]:`linear-gradient(0deg,${hex} 50%,#ABCCF6 50%)`},
+                value: {
+                  [this.config.target]:`linear-gradient(0deg,${hex} 50%,${this.lightDarkenColor(hex, 60)} 50%)`,
+                },
+              });
+            }  else if (this.btnName === 'btn5') {
+              this.updateSchema({
+                type: this.config.props.type.after || null,
+                value: {
+                  [this.config.target]:hex,
+                  "btnProps.boxShadow":`inset 0px -14px 0px ${this.lightDarkenColor(hex, 60)}`,
+                },
               });
             } else {
               this.updateSchema({
@@ -135,6 +154,47 @@ export default {
         },
         change: () => {},
       })
+    },
+    getRgbNum(sColor){
+      if(sColor.length === 4){
+        var sColorNew = "#";
+        for(let i=1; i<4; i+=1){
+            sColorNew += sColor.slice(i,i+1).concat(sColor.slice(i,i+1));
+        }
+        sColor = sColorNew;
+      }
+      var sColorChange = [];
+      for(var c=1; c<7; c+=2){
+        sColorChange.push(parseInt("0x"+sColor.slice(c,c+2)));
+      }
+      return sColorChange;
+    },
+    lightDarkenColor(color, num) {
+      let colorArr = this.getRgbNum(color);
+      let sColorChange = [];
+      for(var i=0;i<colorArr.length;i++){
+          let  val = colorArr[i]+num;
+          if(val<0){
+            val = 0;
+          }
+          if(val>255){
+            val=255;
+          }
+          sColorChange.push(val)
+      }
+      return "rgb(" + sColorChange.join(",") + ")";
+    },
+    colorRgba(str,n){
+      var reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
+      var sColor = str.toLowerCase();
+      n= n||1;
+      //十六进制颜色转换为RGB格式
+        if(sColor && reg.test(sColor)){
+          let sColorChange=this.getRgbNum(sColor);
+          return "rgba(" + sColorChange.join(",") + ","+n+")";
+        }else{
+          return sColor;
+        }
     },
   },
   watch: {

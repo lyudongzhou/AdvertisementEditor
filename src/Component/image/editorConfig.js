@@ -43,7 +43,7 @@ export default [
       props: {
         bgUrl: [],
         changeType: "",
-        autoChange: false,
+        autoChange: true,
         changeTime: 5,
       },
       animation: [],

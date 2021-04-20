@@ -11,7 +11,7 @@ export default [
     position: "2",
     before: {
       types: ["video"],
-      multi: false,
+      multi: true,
       title: "视频",
       fmtRes(a, schema) {
         if (!a || a.length === 0) {

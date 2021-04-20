@@ -81,6 +81,13 @@ export default {
       fn(this.$refs.render.getCmp(this.currentComponentId));
       // console.log(fn,this.$refs.render.getCmp(this.currentComponentId));
     });
+
+    this.$event.on("changeContainerSize", (data) => {
+      this.updateSchema({
+        type: UPDATING_COMPONENT_SIZE,
+        value: data,
+      });
+    })
     document.addEventListener("mousemove", this.mousemove, true);
     const { height, width } = this.$refs.workspace.getBoundingClientRect();
     this.containerInfo = { height, width };
@@ -250,7 +257,21 @@ export default {
     },
   },
   methods: {
-    onContentFocus() {},
+    onContentFocus(e) {
+      const { innerText } = e.target;
+      if (innerText === "双击进行编辑") {
+        this.$refs["contentEdit"].innerText = "";
+      }
+    },
+    onContentInput(e) {
+      this.commitResizeMutation(
+        this.selectItemLayoutInfo.x,
+        this.selectItemLayoutInfo.y,
+        this.selectItemLayoutInfo.w,
+        e.target.scrollHeight,
+        UPDATING_COMPONENT_SIZE
+      );
+    },
     computedStyle() {
       if (this.background.type === "image") {
         return {
@@ -272,7 +293,7 @@ export default {
       this.updateSchema({
         type: UPDATE_COMPONENT_PROPS,
         value: {
-          "props.text": e.target.innerText,
+          "props.text": e.target.innerText === "" ? "双击进行编辑" :  e.target.innerText ,
         },
       });
     },
@@ -344,6 +365,7 @@ export default {
         return;
       }
       if (type === "ImageCmp") {
+        let targetData = [{url: this.currentComponent.props.bgUrl[0]}];
         this.$event.emit("openUploadWin", {
           onSelect: (a) => {
             if (!a || a.length === 0) {
@@ -363,6 +385,7 @@ export default {
           aSelectType: ["image"],
           multi: true,
           title: "图片",
+          targetData,
         });
       } else if (type === "textCmp") {
         this.editText = true;
@@ -375,6 +398,29 @@ export default {
           );
           this.$refs.contentEdit.focus();
           this.currentComponent.props.text = "";
+        });
+      } else if (type === "VideoCmp") {
+        let targetData = this.currentComponent.props.arrResources;
+        this.$event.emit("openUploadWin", {
+          onSelect: (a) => {
+            if (!a || a.length === 0) {
+              return;
+            }
+            let arr = [];
+            a.forEach((ele) => {
+              arr.push(ele.sourcePaht);
+            });
+            this.updateSchema({
+              type: UPDATE_COMPONENT_PROPS,
+              value: {
+                "props.bgUrl": arr,
+              },
+            });
+          },
+          aSelectType: ["video"],
+          multi: false,
+          title: "视频",
+          targetData,
         });
       }
     },
@@ -608,7 +654,6 @@ export default {
       });
     },
     onResizeStart() {
-      console.log("start");
       this.updateSchema({
         type: BEFORE_UPDATE_COMPONENT_SIZE,
       });
@@ -618,12 +663,12 @@ export default {
       this.resizing = true;
       this.highlightState = true;
       // console.log(width,height);
-      this.oldSize = height / width;
+
       if (this.shiftKey) {
         if (this.oldSize) {
-          height = width;
-        } else {
           height = width * this.oldSize;
+        } else {
+          this.oldSize = height / width;
         }
       }
       this.commitResizeMutation(
@@ -649,6 +694,7 @@ export default {
         );
       }
       this.highlightState = false;
+      this.oldSize = null;
     },
     mousemove(e) {
       if (this.resizing || this.dragging) {
@@ -803,7 +849,7 @@ export default {
     currentComponent() {
       this.editText = false;
       this.oldSize = null;
-    },
+    }
   },
 };
 </script>
@@ -917,6 +963,7 @@ export default {
           :style="computedContent()"
           @blur="onContentBlur"
           @focus="onContentFocus"
+          @input="onContentInput"
         ></div>
         <rotate-operate
           :active="rotateActive"

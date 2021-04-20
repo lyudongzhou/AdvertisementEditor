@@ -8,9 +8,9 @@
         allowFullscreen: false,
       }"
       :images="cmpConfig.props.bgUrl"
-      :transitions="[cmpConfig.props.changeType]"
+      :transitions="[getDefaultTranstion()]"
       ref="slider"
-      :captions="cmpConfig.props.showName&&cmpConfig.props.introduce"
+      :captions="cmpConfig.props.showName ? getPureImageName() : []"
     >
       <template v-slot:caption>
         <flux-caption />
@@ -33,9 +33,21 @@ export default {
   },
   methods: {
     next() {
-      this.$refs.slider.show();
-      console.log(this.$refs.slider);
+      this.$refs.slider.show('next');
     },
+    getPureImageName() {
+      let arr = []
+      this.cmpConfig.props.introduce.map(name => arr.push(name.substring(0, name.lastIndexOf("."))))
+      return arr
+    },
+    getDefaultTranstion() {
+      if (this.cmpConfig.props.changeType) return this.cmpConfig.props.changeType;
+      if (!this.cmpConfig.props.changeType && this.cmpConfig.props.autoChange && !this.designMode) {
+        return 'fade';
+      } else {
+        return ''
+      }
+    }
   },
   data: () => {
     return {};
@@ -51,13 +63,12 @@ export default {
   created() {},
   mounted() {
     this.parent = this.$refs["parent"];
+
     if (this.cmpConfig.props.autoChange && !this.designMode) {
       this.interval = setInterval(() => {
         this.next();
       }, this.cmpConfig.props.changeTime * 1000);
     }
-    this.$el.addEventLis;
-    console.log(this.cmpConfig.props);
   },
   computed: {
     ...mapGetters(["handleUrl", "designMode"]),
@@ -74,7 +85,9 @@ export default {
     //   );
     // },
   },
-  beforeDestroy() {},
+  beforeDestroy() {
+    this.interval && clearInterval(this.interval);
+  },
   props: ["cmpConfig"],
 };
 </script>
@@ -89,6 +102,11 @@ export default {
       // transform: translate(0,50%);
       // font-size: 2rem;
     }
+  }
+
+  .flux-image {
+    background-size: 100% 100% !important;
+    background-position: 0% 0% !important;
   }
 }
 </style>

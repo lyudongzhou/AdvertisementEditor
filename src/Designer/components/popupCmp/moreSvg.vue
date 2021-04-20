@@ -74,6 +74,12 @@ export default {
       sortItem: {},
       aDetails: [],
       sortName: "all",
+      idMap: {
+        "1": "shape",
+        "2": "line",
+        "3": "decoration",
+        "4": "imagewrapper",
+      }
     };
   },
   methods: {
@@ -88,8 +94,14 @@ export default {
     },
   },
   watch: {},
+  /**
+  * @param {status} 状态码 1:形状 2:线和箭头 3:装饰 4: 图片容器
+  */
   mounted() {
-    this.$event.on("openMoreSvg", () => {
+    this.$event.on("openMoreSvg", ({id}) => {
+      // todo
+      this.activeName = this.idMap[id];
+      console.log(id);
       this.dialogVisible = true;
     });
   },

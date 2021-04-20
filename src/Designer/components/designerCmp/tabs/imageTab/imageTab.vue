@@ -45,13 +45,23 @@
         </div>
       </v-form-item>
     </v-form>
-    <el-image
-      style="width: 100%; height: 100px; margin: 10px"
+
+    <div 
+      style="position: relative; margin: 10px; color: '#606266'" 
       v-for="(img, index) in configData.props.bgUrl"
       :key="index"
-      :src="img"
-      fit="fill"
-    ></el-image>
+    >
+      <el-image
+        style="width: 100%; height: 100px;"
+        :src="img"
+        fit="fill"
+      ></el-image>
+      <i
+        v-if="configData.props.bgUrl.length > 1"
+        class="el-icon-delete deleteIcon"
+        @click="onClickDeleteSelect(index)">
+      </i>
+    </div>
   </div>
 </template>
 
@@ -145,12 +155,14 @@ export default {
       });
     },
     onSelect(a) {
+      let { bgUrl, introduce, arrResources } = this.configData.props;
       if (!a || a.length === 0) {
         return;
       }
-      let arr = [];
-      let arr1 = [];
-      let arrResources = [];
+      
+      let arr = bgUrl || [];
+      let arr1 = introduce || [];
+      let arr2 = arrResources || [];
       a.forEach((ele) => {
         arr.push(ele.sourcePaht);
         arr1.push(ele.resName);
@@ -167,9 +179,25 @@ export default {
         value: {
           "props.bgUrl": arr,
           "props.introduce": arr1,
-          "props.arrResource": arrResources,
+          "props.arrResources": arr2,
         },
       });
+    },
+    onClickDeleteSelect(index) {
+      let { bgUrl, introduce, arrResources } = this.configData.props;
+
+      bgUrl.splice(index, 1);
+      introduce.splice(index, 1);
+      arrResources.splice(index, 1);
+      this.updateSchema({
+        type: UPDATE_COMPONENT_PROPS,
+        value: {
+          "props.bgUrl": bgUrl,
+          "props.introduce": introduce,
+          "props.arrResources": arrResources,
+        },
+      });
+
     },
   },
 };

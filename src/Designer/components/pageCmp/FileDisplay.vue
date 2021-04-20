@@ -229,6 +229,9 @@ export default {
       if (!isVip && objectImage.payload.isVip) {
         return;
       }
+      if (objectImage.payload.approveState !== 1) {
+        return;
+      }
       if (!objectImage.disabled) {
         this.singleSelected = Object.assign(
           {},
@@ -269,6 +272,9 @@ export default {
         isVip = true;
       }
       if (!isVip && objectImage.payload.isVip) {
+        return;
+      }
+      if (objectImage.payload.approveState !== 1) {
         return;
       }
       if (!objectImage.disabled) {

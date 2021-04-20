@@ -6,6 +6,9 @@
 -->
 <template>
   <ul :style="fmtStyle()" ref="page" :key="pageData.id">
+    <div class="nextPage" v-if="pageType">
+      <img src="../../Designer/public/prewPage.png" />
+    </div>
     <component
       v-for="cmp in pageData.components"
       v-bind:key="cmp.id"
@@ -26,7 +29,7 @@ import { mapGetters } from "../store";
 //0 准备进入 1 进入中 2 已进入 3 弹出中*
 export default {
   name: "singlePage",
-  props: ["pageData", "pageState"],
+  props: ["pageData", "pageState", "pageType"],
   components: get(REG_COMPONENTS),
   data() {
     return {
@@ -103,3 +106,45 @@ export default {
   },
 };
 </script>
+
+<style lang="less">
+ul {
+  position: relative;
+
+  .nextPage {
+    background: none;
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    z-index: 999;
+    transform: translateY(-50%);
+    animation-name: moveImg;
+    animation-duration: 1.4s;
+    animation-iteration-count: infinite;
+
+    img {
+      width: 35px;
+    }
+  }
+}
+
+// 翻页效果动画
+@keyframes moveImg {
+  0% {
+    right: 15px;
+    opacity: 0;
+  }
+  40% {
+    right: 24px;
+  }
+  50% {
+    opacity: 1;
+  }
+  80% {
+    right: 15px;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+</style>

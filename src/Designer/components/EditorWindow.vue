@@ -39,6 +39,7 @@
 </template>
 
 <script>
+// import { mapState } from "../store";
 import { get } from "@/register";
 import { REG_TABS, REG_COMPONENTSSCHEMA, DEFAULTTABS } from "@/const";
 import "./designerCmp";
@@ -56,6 +57,7 @@ export default {
     };
   },
   computed: {
+    // ...mapState(['schema', 'projectInfo']),
     ...mapGetters(["currentComponent"]),
     initialPosition() {
       return { x: this.parentWidth - 327 };
@@ -100,6 +102,14 @@ export default {
   },
   watch: {
     currentComponent(data) {
+      // 判断是否为二维码
+      if(data && data.name.indexOf('二维码') != -1){
+        if(data.props.text == 'qrcode'){
+          data.props.text = window.location.href;
+        }
+        // console.log(this.projectInfo);
+        // console.log(this.schema);
+      }
       this.activeNames = '';
       this.isClose = data ? false : true;
       this.onChangeType(data);

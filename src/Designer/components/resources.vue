@@ -178,13 +178,17 @@ export default {
         });
         return;
       }
-      console.log(o);
       if (this.typeSwitch === 1) {
         if (o.resType === 1) {
           let defaultSchema = config["ImageCmp"][0].defaultSchema;
           // console.log(o);
           defaultSchema.props.bgUrl = [o.sourcePaht];
           defaultSchema.props.introduce = [o.resName];
+          defaultSchema.props.arrResources = [{
+            name: o.resName,
+            uuid: o.uuid,
+            url:  o.sourcePaht
+          }];
           this.$$addNewComponent(defaultSchema);
         } else if (o.resType === 2) {
           let defaultSchema = config["VideoCmp"][0].defaultSchema;
@@ -202,9 +206,6 @@ export default {
       if (e) {
         e.preventDefault();
       }
-    },
-    handleClick1() {
-      console.log("bubble");
     },
   },
 };

@@ -73,17 +73,18 @@ export default {
       return res;
     },
     onLoad(res) {
-      console.log(res);
-      if (this.url === "/res/get") {
-        res.data.records.forEach((ele) => {
-          this.aResource.push(this.fmtRes(ele));
-        });
-      } else {
-        res.data.records.forEach((ele) => {
-          this.aResource.push(this.fmtProgram(ele));
-        });
+      window.console.log(res);
+      if(!res.data.records == false){
+        if (this.url === "/res/get") {
+          res.data.records.forEach((ele) => {
+            this.aResource.push(this.fmtRes(ele));
+          });
+        } else {
+          res.data.records.forEach((ele) => {
+            this.aResource.push(this.fmtProgram(ele));
+          });
+        }
       }
-
       this.isLoading = false;
       this.total = res.data.total;
     },
@@ -107,15 +108,19 @@ export default {
       orderType = 0,
       priceType = 1,
       type = 1,
+      searchText = "",
       // labelIds = [],
     }) {
-      let o = { resType, userId, current, size, orderType, priceType, type };
-      if(this.url !== "/res/get"){
-        delete o.resType
+      let o = { resType, userId, current, size, orderType, priceType, type, keyword: searchText };
+      if (this.url !== "/res/get") {
+         delete o.resType
+      }
+      if (!searchText) {
+         delete o.keyword
       }
       // return o;
       // return { resType, userId, current, size, orderType, priceType, type,labelIds:JSON.stringify(labelIds) };
-      return { resType, userId, current, size, orderType, priceType, type};
+      return o;
     },
     calculatePara() {
       let para = {};

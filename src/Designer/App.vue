@@ -4,13 +4,16 @@
 <script>
 import designer from "./Designer.vue";
 import { SUBMIT_PROJECT } from "./constant/event";
-import { mapMutations, mapState } from "./store/index";
+import { mapGetters, mapMutations, mapState } from "./store/index";
 import { clone } from "@/utils";
 
 /*eslint no-unused-vars: ["error", { "args": "none" }]*/
 import { get } from "@/register";
 import { REG_GETRES } from "@/const";
 import defaultJson from "../../testData/defaultJson.json";
+import manager from "./manager/snapShot";
+
+
 const resourceVisitor = {
   component: (schema, context) => {
     let fun = get(REG_GETRES)[schema.type];
@@ -75,6 +78,7 @@ const resourceVisitor = {
 };
 
 export default {
+
   components: {
     designer,
   },
@@ -90,10 +94,12 @@ export default {
   },
   computed: {
     ...mapState(["projectInfo"]),
+    ...mapGetters(["pages"]),
   },
   methods: {
     ...mapMutations(["setProgramInfo"]),
     handleSubmit(payload) {
+      console.log(payload)
       const isCreate = !payload.id;
       const url = `/program/${isCreate ? "add" : "update"}`;
       const resource = this.getResource(payload.schema);
@@ -103,14 +109,24 @@ export default {
         null,
         4
       );
-      this.$axios
-        .post(url, {
-          userId: payload.id,
+      // 处理首页封面
+      let pagesId = this.pages[0].id;
+      let pagesData = manager.getResult(pagesId);
+      this.$axios.post("/program/uploadCover", { file: pagesData }).then(({ data }) => {
+        // 获取封面图的uuid
+        console.log('coverUuid:' + data);
+        let postBody = {
           bodyJson,
           name: this.projectInfo.name,
           resolutionWidth: payload.schema.container.width,
           resolutionHeight: payload.schema.container.height,
-        })
+          coverUuid: data
+        }
+        if (!isCreate) {
+          postBody.programId = payload.id;
+        }
+        this.$axios
+        .post(url, postBody)
         .then(({ data }) => {
           if (isCreate) {
             const urlSearchParams = new URLSearchParams(location.hash);
@@ -119,6 +135,8 @@ export default {
           }
           this.$message({ message: "操作成功！", type: "success" });
         });
+        
+      });
     },
     init() {
       if (PRODUCTION) {
@@ -133,11 +151,12 @@ export default {
       const urlSearchParams = new URLSearchParams(location.search);
       const urlHashParams = new URLSearchParams(location.hash);
       let id = urlSearchParams.get("id") || urlHashParams.get("id");
+      let programType = urlSearchParams.get("programType") || urlHashParams.get("programType");
       // if (!PRODUCTION) {
       //   id = id || 1
       // }
       if (id) {
-        this.$axios.post("/program/get", { programId: id }).then(({ data }) => {
+        this.$axios.post("/program/get", { programId: id,programType: programType }).then(({ data }) => {
           let { id, name, description, programData } = data;
           // 引用情况&&不是新增后刷新的
           if (
@@ -147,7 +166,11 @@ export default {
             id = null;
           }
           this.setProgramInfo({ id, name, description });
-          this.$refs.designer.openProject(programData);
+          if(programType){
+            this.$refs.designer.openProject(JSON.parse(data.body));
+          }else{
+            this.$refs.designer.openProject(programData);
+          }
         });
       } else {
         this.$refs.designer.openProject(defaultJson);
