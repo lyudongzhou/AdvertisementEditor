@@ -168,7 +168,14 @@ export default {
           }
           this.setProgramInfo({ id, name, description });
           if(programType){
-            this.$refs.designer.openProject(JSON.parse(data.body));
+            if(data.body === ""){
+              var copyJson = JSON.parse(JSON.stringify(defaultJson));
+              copyJson.container.width = data.width;
+              copyJson.container.height = data.height;
+              this.$refs.designer.openProject(copyJson);
+            }else{
+              this.$refs.designer.openProject(JSON.parse(data.body));
+            }
           }else{
             this.$refs.designer.openProject(programData);
           }
