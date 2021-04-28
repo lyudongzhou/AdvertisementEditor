@@ -34,14 +34,16 @@
               tab-position="left"
               style="height: 100%"
               class="uploadFileTab"
-              v-model="resourceTyp">
+              v-model="resourceTyp"
+            >
               <el-tab-pane
                 v-for="(tab, index) in currentTabs"
                 :key="index"
-                style="padding:0px;"
-                :name="index + ''">
+                style="padding: 0px"
+                :name="index + ''"
+              >
                 <p class="img_type" slot="label">
-                  <img :src="tab.icon"/>
+                  <img :src="tab.icon" />
                   <span class="marginLeft">{{ tab.text }}</span>
                 </p>
               </el-tab-pane>
@@ -49,6 +51,7 @@
           </el-aside>
           <el-main>
             <vue-select-image
+              v-if="dialogVisible"
               ref="selectCmp"
               :dataImages="aResource"
               @onselectimage="onSelectImage"
@@ -68,7 +71,14 @@
         ></el-container>
       </el-main>
       <el-footer
-        style="height: 110px; width: 100%; display: flex; justify-content: flex-start; overflow: auto;overflow-y:hidden;"
+        style="
+          height: 110px;
+          width: 100%;
+          display: flex;
+          justify-content: flex-start;
+          overflow: auto;
+          overflow-y: hidden;
+        "
         v-if="multi"
         ><div
           v-for="(item, index) in selectImages"
@@ -83,7 +93,17 @@
           "
         >
           <img :src="item.src" style="width: 100%; height: 70%" />
-          <label style="display:block;width: 100%; height: 30%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">{{ item.alt }}</label>
+          <label
+            style="
+              display: block;
+              width: 100%;
+              height: 30%;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            "
+            >{{ item.alt }}</label
+          >
           <i
             class="el-icon-delete deleteIcon"
             @click="onClickDeleteSelect(index)"
@@ -108,7 +128,6 @@ import music from "../../public/music.png";
 import video from "../../public/video.png";
 import doc from "../../public/doc.png";
 import img from "../../public/img.png";
-
 
 export default {
   components: { VueSelectImage },
@@ -140,20 +159,33 @@ export default {
       }
       this.resetType();
     },
-    aResource(val) {
-      if (this.targetData) {
-          const defaultSelect = val.find(i => this.targetData.find(t => t.url === i.src));
-          // select default data
-          if (defaultSelect) {
-            if (this.multi) {
-              this.$refs["selectCmp"].onSelectMultipleImage(defaultSelect);
-            } else {
-              this.$refs["selectCmp"].onSelectImage(defaultSelect);
-            }
-            this.targetData = null;
-          }
-        }
-    }
+    // aResource() {
+    //   return;
+    //   if (this.targetData) {
+    //     const defaultSelect = {};
+    //     if (this.multi) {
+    //       this.$refs["selectCmp"].onSelectMultipleImage(defaultSelect);
+    //     } else {
+    //       this.$refs["selectCmp"].onSelectImage(defaultSelect);
+    //     }
+    //     this.targetData = null;
+    //   }
+
+    //   // if (this.targetData) {
+    //   //   const defaultSelect = val.find((i) =>
+    //   //     this.targetData.find((t) => t.url === i.src)
+    //   //   );
+    //   //   // select default data
+    //   //   if (defaultSelect) {
+    //   //     if (this.multi) {
+    //   //       this.$refs["selectCmp"].onSelectMultipleImage(defaultSelect);
+    //   //     } else {
+    //   //       this.$refs["selectCmp"].onSelectImage(defaultSelect);
+    //   //     }
+    //   //     this.targetData = null;
+    //   //   }
+    //   // }
+    // },
   },
   mounted() {
     this.typeMap = {
@@ -218,8 +250,8 @@ export default {
       formData.append("type", 1);
       formData.append("cateforyId", 1);
       formData.append("fileName", file.name);
-      formData.append("targetPath","/");
-      formData.append("fileSize",file.size);
+      formData.append("targetPath", "/");
+      formData.append("fileSize", file.size);
       this.$axios
         .post("/res/upload", formData, {
           headers: {
@@ -263,25 +295,47 @@ export default {
     },
     fmtRes(res) {
       const { resName, resType, sourcePaht, resId } = res;
-      console.log(resId);
+      // let hasFind = false;
+      // this.aResource.some((ele)=>{
+      //   if(ele.id === resId){
+      //     hasFind = true;
+      //     return true;
+      //   }
+      // });
+      // if(hasFind){
+      //   return null;
+      // }
+      // console.log(resId);
       return {
         id: resId,
-        src: resType === 1 ? sourcePaht : resType === 2 ? res.thumbnail : fileIcon ,
+        src:
+          resType === 1 ? sourcePaht : resType === 2 ? res.thumbnail : fileIcon,
         alt: resName,
         payload: res,
       };
     },
     //开始选择，配置参数
-    start({ onSelect, aSelectType, multi, title, targetData }) {
+    start({ onSelect, aSelectType, multi, title, targetData, selected }) {
       this.dialogVisible = true;
       while (this.selectImages.length) {
         this.selectImages.pop();
+      }
+      // this.aResult = [];
+      let aSelect = [];
+      if (selected) {
+        selected.forEach((ele) => {
+          // this.selectImages.push(ele);
+          // this.aResult.push(ele);
+
+          aSelect.push(this.fmtRes(ele.payload));
+        });
       }
       this.$nextTick(() => {
         this.$refs["selectCmp"].reset();
         this.aResult = [];
         this.isStarting = true;
         this.searchText = "";
+        this.sortConfig.searchText = "";
         this.onSelect = onSelect;
         this.calculateTabs(aSelectType);
         this.multi = multi;
@@ -290,6 +344,18 @@ export default {
         this.isStarting = false;
         this.targetData = targetData;
         this.resetType();
+        // selected.payload = {};
+        if (selected) {
+          if (this.multi) {
+            aSelect.forEach((ele) => {
+              this.$refs["selectCmp"].onSelectMultipleImage(ele, true);
+            });
+          } else {
+            this.$refs["selectCmp"].onSelectImage(selected[0]);
+          }
+        }
+
+        this.aResource = aSelect;
       });
     },
     calculateTabs(aSelectType) {
@@ -326,7 +392,7 @@ export default {
 
 <style lang="less" scope>
 @deep: ~">>>";
-.marginLeft{
+.marginLeft {
   margin-left: 30px;
 }
 .deleteIcon {
@@ -363,7 +429,7 @@ export default {
   .pub_btn {
     width: 130px;
     height: 45px;
-    background: #1391FF;
+    background: #1391ff;
     border-radius: 10px;
     outline: none;
     text-align: center;
@@ -371,7 +437,7 @@ export default {
     font-size: 16px;
     font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
-    color: #FFFFFF;
+    color: #ffffff;
     cursor: pointer;
   }
   .upload_text {
@@ -450,20 +516,20 @@ export default {
         .btn_cancel {
           width: 130px;
           height: 45px;
-          background: #FFFFFF;
+          background: #ffffff;
           border-radius: 10px;
-          border: 1px solid #1391FF;
+          border: 1px solid #1391ff;
           margin-right: 10px;
-          color: #1391FF;
+          color: #1391ff;
           outline: none;
           cursor: pointer;
         }
         .btn_correct {
           width: 130px;
           height: 45px;
-          background: #1391FF;
+          background: #1391ff;
           border-radius: 10px;
-          color: #FFF;
+          color: #fff;
           outline: none;
           cursor: pointer;
           border: 0;

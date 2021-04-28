@@ -26,8 +26,14 @@
             style="position: absolute; width: 70px; height: 30px"
           />
           <img
-            :src="dataImage.payload.approveState===1?reviewed:reviewing"
-            style="position: absolute; width: 38px; height: 38px;right:0px;top:0px;"
+            :src="dataImage.payload.approveState === 1 ? reviewed : reviewing"
+            style="
+              position: absolute;
+              width: 38px;
+              height: 38px;
+              right: 0px;
+              top: 0px;
+            "
           />
           <img
             :src="dataImage.src"
@@ -58,8 +64,14 @@
             style="position: absolute; width: 70px; height: 30px"
           />
           <img
-            :src="dataImage.payload.approveState===1?reviewed:reviewing"
-            style="position: absolute; width: 38px; height: 38px;right:0px;top:0px;"
+            :src="dataImage.payload.approveState === 1 ? reviewed : reviewing"
+            style="
+              position: absolute;
+              width: 38px;
+              height: 38px;
+              right: 0px;
+              top: 0px;
+            "
           />
           <img
             :src="dataImage.src"
@@ -174,6 +186,7 @@ export default {
     this.imageIcon = imageIcon;
     this.reviewing = reviewing;
     this.reviewed = reviewed;
+    console.log("created");
   },
   mounted() {
     // set initial selectedImage
@@ -226,10 +239,10 @@ export default {
         console.log("vipCatchErr");
         isVip = true;
       }
-      if (!isVip && objectImage.payload.isVip) {
+      if (!isVip && objectImage.payload && objectImage.payload.isVip) {
         return;
       }
-      if (objectImage.payload.approveState !== 1) {
+      if (objectImage.payload && objectImage.payload.approveState !== 1) {
         return;
       }
       if (!objectImage.disabled) {
@@ -261,7 +274,7 @@ export default {
     resetMultipleSelection() {
       this.multipleSelected = [];
     },
-    onSelectMultipleImage(objectImage) {
+    onSelectMultipleImage(objectImage, isSkip) {
       var isVip;
       try {
         isVip =
@@ -271,11 +284,13 @@ export default {
         console.log("vipCatchErr");
         isVip = true;
       }
-      if (!isVip && objectImage.payload.isVip) {
-        return;
-      }
-      if (objectImage.payload.approveState !== 1) {
-        return;
+      if (!isSkip) {
+        if (!isVip && objectImage.payload && objectImage.payload.isVip) {
+          return;
+        }
+        if (objectImage.payload && objectImage.payload.approveState !== 1) {
+          return;
+        }
       }
       if (!objectImage.disabled) {
         if (!this.isExistInArray(objectImage.id)) {

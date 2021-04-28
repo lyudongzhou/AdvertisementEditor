@@ -99,13 +99,18 @@ export default {
       } else if (config.editConfig.before) {
         this.$event.emit("openUploadWin", {
           onSelect: (a) => {
-            if (a&&a.length) {
-              a.map(i => {
-                this.$$addNewComponent(config.editConfig.before.fmtRes(
-                  [i],
-                  config.editConfig.defaultSchema
-                ));
-              })
+            if (a && a.length) {
+              let para = config.editConfig.before.fmtRes(
+                a,
+                config.editConfig.defaultSchema
+              );
+              if (para instanceof Promise) {
+                para.then((res) => {
+                  this.$$addNewComponent(res);
+                });
+              } else {
+                this.$$addNewComponent(para);
+              }
             }
           },
           aSelectType: config.editConfig.before.types,

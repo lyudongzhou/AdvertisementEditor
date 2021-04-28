@@ -35,7 +35,7 @@
             style="width: 50px"
           ></el-input>
           <span v-show="!dialogChecked">秒</span>
-          <el-checkbox v-model="dialogChecked" style="color: white"
+          <el-checkbox v-show="false" v-model="dialogChecked" style="color: white"
             >自动计算</el-checkbox
           >
         </div>

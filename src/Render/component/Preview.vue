@@ -195,8 +195,9 @@ export default {
      * page timer
      */
     automaticCycle() {
+      clearInterval(this._timer);
       if (this.renderData.change.loop) {
-        let singlePagePlayTime = this.renderData.change.singlePagePlayTime;
+        let singlePagePlayTime = this.renderData.change.singlePagePlayTime*1000;
         // console.log(singlePagePlayTime, "qqqqqq");
         this._timer = setInterval(() => {
           if (this.beginTime) {
@@ -206,7 +207,7 @@ export default {
               this.beginTime = null;
             }
           }
-        }, singlePagePlayTime * 1000);
+        }, singlePagePlayTime);
       }
     },
     handleNextPage() {
@@ -345,6 +346,10 @@ export default {
     },
   },
   watch: {
+    "renderData.change.singlePagePlayTime"(){
+      this.beginTime = new Date().getTime();
+      this.automaticCycle();
+    },
     /**
      * @description Watch the varible targetPage for change current page.
      */
@@ -382,7 +387,7 @@ export default {
                 this._timer = setInterval(() => {
                   this.jumpPage(msg[msg.length - 1].fromId);
                   this.backPrevDialog();
-                }, msg[msg.length - 1].backTime);
+                }, parseInt(msg[msg.length - 1].backTime)*1000);
               }
             }
           });

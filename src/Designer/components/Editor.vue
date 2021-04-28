@@ -81,6 +81,51 @@ import sortItem from "./sortItem";
 import sortPanel from "./sortPanel";
 import resourceIcon from "../public/resource.png";
 import programIcon from "../public/program.png";
+const urlSearchParams = new URLSearchParams(location.search);
+const institutionType = parseInt(urlSearchParams.get("institutionType"));
+const list = (institutionType===0||institutionType===2)?{
+  2: [
+    {
+      id: 9,
+      name: "个人",
+    },
+    {
+      id: 2,
+      name: "商城",
+    },
+  ],
+  1: [
+    {
+      id: 2,
+      name: "商城",
+    },
+  ],
+}:{
+  2: [
+    {
+      id: 9,
+      name: "个人",
+    },
+    {
+      id: 1,
+      name: "机构",
+    },
+    {
+      id: 2,
+      name: "商城",
+    },
+  ],
+  1: [
+    {
+      id: 1,
+      name: "机构",
+    },
+    {
+      id: 2,
+      name: "商城",
+    },
+  ],
+};
 export default {
   data() {
     return {
@@ -347,32 +392,7 @@ export default {
         },
       ],
       typeSwitch: 1,
-      switchList: {
-        2: [
-          {
-            id: 9,
-            name: "个人",
-          },
-          {
-            id: 1,
-            name: "机构",
-          },
-          {
-            id: 2,
-            name: "商城",
-          },
-        ],
-        1: [
-          {
-            id: 1,
-            name: "机构",
-          },
-          {
-            id: 2,
-            name: "商城",
-          },
-        ],
-      },
+      switchList: list,
       isCollapse: true,
       sortType: null,
       searchText: "",

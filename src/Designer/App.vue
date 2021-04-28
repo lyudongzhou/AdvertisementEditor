@@ -110,6 +110,8 @@ export default {
         null,
         4
       );
+      console.log(payload.schema);
+      payload.schema.container.domain = window.domain;
       // 处理首页封面
       let pagesId = this.pages[0].id;
       let pagesData = manager.getResult(pagesId);
@@ -158,7 +160,7 @@ export default {
       // }
       if (id) {
         this.$axios.post("/program/get", { programId: id,programType: programType }).then(({ data }) => {
-          let { id, name, description, programData } = data;
+          let { id, name, description, programData,previewUrl,domain } = data;
           // 引用情况&&不是新增后刷新的
           if (
             urlSearchParams.get("action") === "quote" &&
@@ -166,7 +168,9 @@ export default {
           ) {
             id = null;
           }
-          this.setProgramInfo({ id, name, description });
+          window.previewUrl = previewUrl;
+          window.domain = domain;
+          this.setProgramInfo({ id, name, description,domain });
           if(programType){
             if(data.body === ""){
               var copyJson = JSON.parse(JSON.stringify(defaultJson));

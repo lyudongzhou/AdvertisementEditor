@@ -1,13 +1,13 @@
 <template>
-  <textCmp :cmpConfig="textProps"></textCmp>
+  <baseTextCmp :cmpConfig="textProps"></baseTextCmp>
 </template>
 
 <script>
-  import textCmp from '../text/text.vue';
+  import baseTextCmp from './BaseText';
   export default {
     name: "BaseTimer",
     components: {
-      textCmp,
+      baseTextCmp,
     },
     props: ["cmpConfig", 'text'],
     computed: {

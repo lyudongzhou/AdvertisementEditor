@@ -2,7 +2,7 @@
   <vue-draggable-resizable
     class="editWin fly"
     :resizable="false"
-    :parent="true"
+    :parent="false"
     :y="0"
     :x="initialPosition.x"
     :h="'auto'"
@@ -105,7 +105,7 @@ export default {
       // 判断是否为二维码
       if(data && data.name.indexOf('二维码') != -1){
         if(data.props.text == 'qrcode'){
-          data.props.text = window.location.href;
+          data.props.text = window.previewUrl||window.location.href;
         }
         // console.log(this.projectInfo);
         // console.log(this.schema);

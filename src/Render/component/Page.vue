@@ -70,7 +70,7 @@ export default {
             width,
             height,
             allowTaint: true,
-            useCORS: false,
+            useCORS: true,
           }).then((canvas) => {
             resolve(canvas);
           });

@@ -398,8 +398,8 @@ const mapInverse = {
   98: [7, "horizontal"],
 };
 
-let goNextPage = null;  //自动翻页定时器
-let oldTime = 180;  //上一次自动播放时长
+// let goNextPage = null;  //自动翻页定时器
+// let oldTime = 180;  //上一次自动播放时长
 export default {
   methods: {
     ...mapMutations(["setPreviewState", "updateSchema"]),
@@ -583,17 +583,17 @@ export default {
     playConfig: {
       deep: true,
       handler(value) {
-        if(value.loop && (oldTime!=value.singlePagePlayTime)){
-          if(!goNextPage){
-            clearTimeout(goNextPage);
-          }
-          oldTime = value.singlePagePlayTime
-          goNextPage = setTimeout(()=>{
-            this.nextPage();
-          }, value.singlePagePlayTime * 1000)
-        }else if(!value.loop && oldTime){
-          clearTimeout(goNextPage)
-        }
+        // if(value.loop && (oldTime!=value.singlePagePlayTime)){
+        //   if(!goNextPage){
+        //     clearTimeout(goNextPage);
+        //   }
+        //   oldTime = value.singlePagePlayTime
+        //   goNextPage = setTimeout(()=>{
+        //     this.nextPage();
+        //   }, value.singlePagePlayTime * 1000)
+        // }else if(!value.loop && oldTime){
+        //   clearTimeout(goNextPage)
+        // }
         if (this.isMounted) {
           this.singlePagePlayTimeTemp = value.singlePagePlayTime;
           this.backTimeTemp = value.backTime;
@@ -606,6 +606,7 @@ export default {
               "change.backTime": value.backTime,
             },
           });
+          
         }
       },
     },

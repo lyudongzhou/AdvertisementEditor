@@ -87,7 +87,7 @@ export default {
         type: UPDATING_COMPONENT_SIZE,
         value: data,
       });
-    })
+    });
     document.addEventListener("mousemove", this.mousemove, true);
     const { height, width } = this.$refs.workspace.getBoundingClientRect();
     this.containerInfo = { height, width };
@@ -293,7 +293,8 @@ export default {
       this.updateSchema({
         type: UPDATE_COMPONENT_PROPS,
         value: {
-          "props.text": e.target.innerText === "" ? "双击进行编辑" :  e.target.innerText ,
+          "props.text":
+            e.target.innerText === "" ? "双击进行编辑" : e.target.innerText,
         },
       });
     },
@@ -365,7 +366,18 @@ export default {
         return;
       }
       if (type === "ImageCmp") {
-        let targetData = [{url: this.currentComponent.props.bgUrl[0]}];
+        let targetData = [{ url: this.currentComponent.props.bgUrl[0] }];
+        let select = [];
+        this.currentComponent.props.arrResources.forEach((ele) => {
+          select.push({
+            name:ele.name,
+            src:ele.url,
+            resName: ele.name,
+            uuid: ele.uuid,
+            sourcePaht: ele.url,
+            payload:ele.payload
+          });
+        });
         this.$event.emit("openUploadWin", {
           onSelect: (a) => {
             if (!a || a.length === 0) {
@@ -382,6 +394,7 @@ export default {
               },
             });
           },
+          selected: select,
           aSelectType: ["image"],
           multi: true,
           title: "图片",
@@ -659,7 +672,7 @@ export default {
       });
       this.highlightState = true;
     },
-    onResize(a,left, top, width, height) {
+    onResize(a, left, top, width, height) {
       this.resizing = true;
       this.highlightState = true;
       // console.log(width,height);
@@ -849,7 +862,7 @@ export default {
     currentComponent() {
       this.editText = false;
       this.oldSize = null;
-    }
+    },
   },
 };
 </script>

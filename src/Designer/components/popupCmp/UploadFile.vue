@@ -257,6 +257,7 @@ export default {
         this.aResult = [];
         this.isStarting = true;
         this.searchText = "";
+        this.sortConfig.searchText = "";
         this.onSelect = onSelect;
         this.calculateTabs(aSelectType);
         this.multi = multi;

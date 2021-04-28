@@ -19,6 +19,9 @@ export default {
   },
   computed: {},
   mounted() {
+    // if(window.previewUrl&&this.cmpConfig.props.text === "qrcode"){
+    //   this.cmpConfig.props.text = window.previewUrl;
+    // }
   },
 }
 </script>

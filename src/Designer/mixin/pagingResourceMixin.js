@@ -69,15 +69,22 @@ export default {
     fmtRes(res) {
       return res;
     },
-    fmtProgram(res){
+    fmtProgram(res) {
       return res;
     },
     onLoad(res) {
       window.console.log(res);
-      if(!res.data.records == false){
+      if (!res.data.records == false) {
         if (this.url === "/res/get") {
           res.data.records.forEach((ele) => {
-            this.aResource.push(this.fmtRes(ele));
+            let result = this.fmtRes(ele);
+            let hasFind = false;
+            this.aResource.some(ele=>{
+              if(ele.id === result.id){
+                hasFind = true;
+              }
+            })
+            !hasFind && this.aResource.push(result);
           });
         } else {
           res.data.records.forEach((ele) => {
@@ -111,12 +118,21 @@ export default {
       searchText = "",
       // labelIds = [],
     }) {
-      let o = { resType, userId, current, size, orderType, priceType, type, keyword: searchText };
+      let o = {
+        resType,
+        userId,
+        current,
+        size,
+        orderType,
+        priceType,
+        type,
+        keyword: searchText,
+      };
       if (this.url !== "/res/get") {
-         delete o.resType
+        delete o.resType;
       }
       if (!searchText) {
-         delete o.keyword
+        delete o.keyword;
       }
       // return o;
       // return { resType, userId, current, size, orderType, priceType, type,labelIds:JSON.stringify(labelIds) };

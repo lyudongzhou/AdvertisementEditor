@@ -1,30 +1,22 @@
 <template>
-  <baseCmp ref="parent" :cmpConfig="cmpConfig">
+  <!-- <baseCmp ref="parent" :cmpConfig="cmpConfig"> -->
     <div :style="publicList" ref="text" @click="openEdit">
-      <span v-for="(item,index) in displayText" :key="index">
-        {{ item }}
-        <br>
-      </span>
+      {{ cmpConfig.props.text }}
     </div>
-  </baseCmp>
+  <!-- </baseCmp> -->
 </template>
 <script>
-import baseCmp from "../Base.vue";
+// import baseCmp from "../Base.vue";
 import { mapGetters } from "../../Render/store/index";
 export default {
-  name: "textCmp",
-  components: {
-    baseCmp,
-  },
+  name: "baseTextCmp",
+//   components: {
+//     baseCmp,
+//   },
   props: ["cmpConfig"],
   mounted() {
     this.parent = this.$refs["parent"];
   },
-  // data(){
-  //   return {
-  //     displayText:""
-  //   }
-  // },
   computed: {
     ...mapGetters(["designMode"]),
     textStyle() {
@@ -64,14 +56,6 @@ export default {
       });
       return style;
     },
-    displayText(){
-      return this.cmpConfig.props.text.split("\n");
-    }
-  },
-  watch:{
-    // "cmpConfig.props.text":(t)=>{
-    //   this.displayText = t.split("\\n").join("&nbsp;");
-    // }
   },
   methods: {
     openEdit() {

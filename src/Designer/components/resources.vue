@@ -56,7 +56,7 @@
                     <img :src="o.imgList[0]" class="image-full" />
                   </div>
                   <img v-if="o.body" :src="o.thumbnail" class="image-full" />
-                  <div v-if="o.isVip !== 0" class="preText">免费</div>
+                  <div v-if="o.isVip !== 1" class="preText">免费</div>
                   <el-button class="useImmdiatly" type="programConfig" @click="handleClick(o)">立即使用</el-button>
                 </div>
               </div>
@@ -91,7 +91,7 @@
               </div>
             </el-tooltip>
             <img
-              v-if="o.isVip !== 0"
+              v-if="o.isVip !== 1"
               :src="clownImage"
               style="position: absolute; left: 4px; top: 3px"
             />

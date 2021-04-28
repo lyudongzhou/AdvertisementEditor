@@ -61,7 +61,7 @@ export default {
       // currentComponent:null,
     };
   },
-  computed:{
+  computed: {
     ...mapGetters(["currentComponent"]),
   },
   methods: {
@@ -87,5 +87,20 @@ export default {
 };
 </script>
 
-<style>
+<style lang="less">
+.propWin .el-form-item__label {
+  color: #666666;
+}
+.propWin .el-input__inner {
+  text-align: left;
+  background-color: white;
+  border: 1px solid black;
+  color: #666666;
+}
+.propWin .el-dialog__header {
+  color: #75838f;
+  text-align: left;
+  background: #f7f7f7;
+  border-radius: 5px;
+}
 </style>

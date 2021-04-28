@@ -26,13 +26,23 @@ export default [
           arrResources.push({
             name:ele.resName,
             uuid:ele.uuid,
-            url:ele.sourcePaht
+            url:ele.sourcePaht,
+            payload:ele
           });
         });
         schema.props.bgUrl = arr;
         schema.props.introduce = arr1;
         schema.props.arrResources = arrResources;
-        return schema;
+        return new Promise((resolve)=>{
+          var image = new Image();
+          image.src = schema.props.bgUrl[0];
+          image.onload = function(){
+            schema.layoutConfig.width = image.width;
+            schema.layoutConfig.height = image.height;
+            resolve(schema);
+          }
+          
+        });
       },
     },
     defaultSchema: {
