@@ -4,10 +4,12 @@ import "../Utils/css/reset.css";
 import './assets/css/animations.css';
 import "@/register";
 import store from "./store";
-import axios from 'axios';
+import http from './http';
 import "../../font/font.scss";
+Vue.use(http);
 Vue.config.productionTip = false;
-Vue.prototype.$axios = axios;
+// Vue.prototype.$axios = http;
+// axios.defaults.baseURL = window.renderUrl;
 new Vue({
   store,
   render: h => h(App),

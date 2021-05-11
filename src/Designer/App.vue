@@ -13,7 +13,6 @@ import { REG_GETRES } from "@/const";
 import defaultJson from "../../testData/defaultJson.json";
 import manager from "./manager/snapShot";
 
-
 const resourceVisitor = {
   component: (schema, context) => {
     let fun = get(REG_GETRES)[schema.type];
@@ -78,7 +77,6 @@ const resourceVisitor = {
 };
 
 export default {
-
   components: {
     designer,
   },
@@ -99,7 +97,7 @@ export default {
   methods: {
     ...mapMutations(["setProgramInfo"]),
     handleSubmit(payload) {
-      console.log(payload)
+      // console.log(this.projectInfo)
       const isCreate = !payload.id;
       const url = `/program/update`;
       // const url = `/program/${isCreate ? "add" : "update"}`;
@@ -114,33 +112,61 @@ export default {
       payload.schema.container.domain = window.domain;
       // 处理首页封面
       let pagesId = this.pages[0].id;
-      let pagesData = manager.getResult(pagesId);
-      this.$axios.post("/program/uploadCover", { file: pagesData }).then(({ data }) => {
-        // 获取封面图的uuid
-        console.log('coverUuid:' + data);
-        let postBody = {
-          bodyJson,
-          name: this.projectInfo.name,
-          resolutionWidth: payload.schema.container.width,
-          resolutionHeight: payload.schema.container.height,
-          coverUuid: data
-        }
-        // if (!isCreate) {
-          postBody.programId = payload.id;
-        // }
-        this.$axios
-        .post(url, postBody)
-        .then(({ data }) => {
-          if (isCreate) {
-            const urlSearchParams = new URLSearchParams(location.hash);
-            urlSearchParams.append("id", data.id);
-            location.hash = urlSearchParams.toString();
+      manager.addTask(pagesId, false, false);
+      let mediaCount = resource.length;
+      let addinCount = 0;
+      let pages = 0;
+      let description = this.projectInfo.description;
+      payload.schema.pages.forEach((ele) => {
+        pages++;
+        ele.components.forEach((ele) => {
+          if (ele.type === "voteCmp" || ele.type === "formCmp") {
+            addinCount++;
           }
-          this.$message({ message: "操作成功！", type: "success" });
         });
-        
       });
-    },
+      payload.schema.dialogs.forEach((ele) => {
+        ele.components.forEach((ele) => {
+          if (ele.type === "voteCmp" || ele.type === "formCmp") {
+            addinCount++;
+          }
+        });
+      });
+    
+      let exeFun = ({data,id}) => {
+        if (id === pagesId) {
+          this.$axios
+            .post("/program/uploadCover", { file: data })
+            .then(({ data }) => {
+              // 获取封面图的uuid
+              console.log("coverUuid:" + data);
+              let postBody = {
+                bodyJson,
+                addinCount,
+                mediaCount,
+                pages,
+                description,
+                name: this.projectInfo.name,
+                resolutionWidth: payload.schema.container.width,
+                resolutionHeight: payload.schema.container.height,
+                coverUuid: data,
+              };
+              // if (!isCreate) {
+              postBody.programId = payload.id;
+              // }
+              this.$axios.post(url, postBody).then(({ data }) => {
+                if (isCreate) {
+                  const urlSearchParams = new URLSearchParams(location.hash);
+                  urlSearchParams.append("id", data.id);
+                  location.hash = urlSearchParams.toString();
+                }
+                this.$message({ message: "操作成功！", type: "success" });
+              });
+            });
+        }
+      };
+      manager.on("change", exeFun);
+      },
     init() {
       if (PRODUCTION) {
         window.addEventListener("beforeunload", function (e) {
@@ -154,36 +180,46 @@ export default {
       const urlSearchParams = new URLSearchParams(location.search);
       const urlHashParams = new URLSearchParams(location.hash);
       let id = urlSearchParams.get("id") || urlHashParams.get("id");
-      let programType = urlSearchParams.get("programType") || urlHashParams.get("programType");
+      let programType =
+        urlSearchParams.get("programType") || urlHashParams.get("programType");
       // if (!PRODUCTION) {
       //   id = id || 1
       // }
       if (id) {
-        this.$axios.post("/program/get", { programId: id,programType: programType }).then(({ data }) => {
-          let { id, name, description, programData,previewUrl,domain } = data;
-          // 引用情况&&不是新增后刷新的
-          if (
-            urlSearchParams.get("action") === "quote" &&
-            !urlHashParams.get("id")
-          ) {
-            id = null;
-          }
-          window.previewUrl = previewUrl;
-          window.domain = domain;
-          this.setProgramInfo({ id, name, description,domain });
-          if(programType){
-            if(data.body === ""){
-              var copyJson = JSON.parse(JSON.stringify(defaultJson));
-              copyJson.container.width = data.width;
-              copyJson.container.height = data.height;
-              this.$refs.designer.openProject(copyJson);
-            }else{
-              this.$refs.designer.openProject(JSON.parse(data.body));
+        this.$axios
+          .post("/program/get", { programId: id, programType: programType })
+          .then(({ data }) => {
+            let {
+              id,
+              name,
+              description,
+              programData,
+              previewUrl,
+              domain,
+            } = data;
+            // 引用情况&&不是新增后刷新的
+            if (
+              urlSearchParams.get("action") === "quote" &&
+              !urlHashParams.get("id")
+            ) {
+              id = null;
             }
-          }else{
-            this.$refs.designer.openProject(programData);
-          }
-        });
+            window.previewUrl = previewUrl;
+            window.domain = domain;
+            this.setProgramInfo({ id, name, description, domain });
+            if (programType) {
+              if (data.body === "") {
+                var copyJson = JSON.parse(JSON.stringify(defaultJson));
+                copyJson.container.width = data.width;
+                copyJson.container.height = data.height;
+                this.$refs.designer.openProject(copyJson);
+              } else {
+                this.$refs.designer.openProject(JSON.parse(data.body));
+              }
+            } else {
+              this.$refs.designer.openProject(programData);
+            }
+          });
       } else {
         this.$refs.designer.openProject(defaultJson);
       }

@@ -33,7 +33,7 @@
             <el-tabs type="border-card" class="card">
               <el-tab-pane label="常用设置" style="display: flex">
                 <div class="leftImg">
-                  <img style="width: 100%; height: 100%" />
+                  <img :src="data" style="width: 100%; height: 100%" />
                 </div>
                 <div class="leftImg noborder">
                   <el-form class="nameConfig">
@@ -332,6 +332,7 @@
 </template>
 
 <script>
+import manager from "../manager/snapShot";
 import singlePagePreview from "./preView";
 import { mapMutations, mapState } from "../store";
 import { FONTDEFINE } from "@/const";
@@ -606,7 +607,6 @@ export default {
               "change.backTime": value.backTime,
             },
           });
-          
         }
       },
     },
@@ -616,6 +616,14 @@ export default {
         this.updateSchema({
           type: UPDATE_BGM_BEFORE,
           value: {},
+        });
+        let firstId = this.schema.pages[0].id;
+        manager.addTask(firstId, false, false);
+        this.data = manager.getResult(firstId);
+        manager.on("change", ({ id, data }) => {
+          if (id === firstId) {
+            this.data = data;
+          }
         });
         this.bgmConfig.autoPlay = this.schema.container.bgm.autoPlay;
         this.bgmConfig.volume = this.schema.container.bgm.volume;
@@ -642,7 +650,6 @@ export default {
         });
       }
     },
-
   },
   computed: {
     ...mapState(["previewing", "previewTotal", "schema", "projectInfo"]),
@@ -812,9 +819,12 @@ export default {
       },
       changeTypeIndex: 0,
       changeTypeIndex2: "horizontal",
+      data: "",
     };
   },
-  mounted() {},
+  mounted() {
+    // console.log(this.schema);
+  },
   created() {
     this.musicIcon = musicIcon;
   },

@@ -80,8 +80,15 @@ export default {
             let result = this.fmtRes(ele);
             let hasFind = false;
             this.aResource.some(ele=>{
-              if(ele.id === result.id){
-                hasFind = true;
+              if(ele.id){
+                if(ele.id === result.id){
+                  hasFind = true;
+                }
+              }
+              if(ele.resId){
+                if(ele.resId === result.resId){
+                  hasFind = true;
+                }
               }
             })
             !hasFind && this.aResource.push(result);

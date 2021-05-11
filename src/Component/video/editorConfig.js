@@ -17,12 +17,19 @@ export default [
         if (!a || a.length === 0) {
           return schema;
         }
-        schema.props.bgUrl = a[0].sourcePaht;
-        schema.props.arrResources = [{
-          name:a[0].resName,
-          uuid:a[0].uuid,
-          url:a[0].sourcePaht
-        }];
+        let arr = [];
+        let arr1 = [];
+        a.forEach(ele=>{
+          arr.push(ele.sourcePaht);
+          arr1.push({
+            name:ele.resName,
+            uuid:ele.uuid,
+            url:ele.sourcePaht,
+            payload:ele
+          });
+        });
+        schema.props.bgUrl = arr;
+        schema.props.arrResources = arr1;
         return schema;
       },
     },

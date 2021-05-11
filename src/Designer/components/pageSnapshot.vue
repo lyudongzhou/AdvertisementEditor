@@ -39,7 +39,7 @@ export default {
   mounted() {
     setSnapShotInstance(this);
   },
-  created(){
+  created() {
     console.log("create");
   },
   methods: {
@@ -62,25 +62,28 @@ export default {
       return new Promise((resolve) => {
         this.snapping = true;
         this.snapData = this.getPageData(id);
-        this.$nextTick(() => {
-          let currentPage = this.$refs.page;
-          currentPage
-            .screenShots({
-              width: this.schema.container.width,
-              height: this.schema.container.height,
-            })
-            .then((canvas) => {
-              let data = null;
-              try {
-                data = canvas.toDataURL();
-              } catch (e) {
-                console.log(e);
-              }
-              this.snapping = false;
-              this.snapData = null;
-              resolve(data);
-            });
-        });
+        setTimeout(() => {
+          this.$nextTick(() => {
+            let currentPage = this.$refs.page;
+            currentPage
+              .screenShots({
+                width: this.schema.container.width,
+                height: this.schema.container.height,
+              })
+              .then((canvas) => {
+                let data = null;
+                try {
+                  data = canvas.toDataURL();
+                } catch (e) {
+                  console.log("ERR", e);
+                }
+                window.canvas = canvas;
+                this.snapping = false;
+                this.snapData = null;
+                resolve(data);
+              });
+          });
+        }, 500);
       });
     },
   },

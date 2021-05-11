@@ -14,11 +14,11 @@ export default [
         let arr = [];
         a.forEach((ele) => {
           ele.imgList.forEach((ele) => {
-            arr.push(ele.sourcePaht);
+            arr.push(ele.url);
             arrResources.push({
               name: ele.resName,
               uuid: ele.uuid,
-              url: ele.sourcePaht,
+              url: ele.url,
             });
           });
           // arr.push.apply(arr, ele.imgList);

@@ -140,6 +140,7 @@ export default {
       "gridGuideVerSet",
       "isSelectMultipleComponent",
       "currentPage",
+      "currentDialog",
     ]),
     selectItemContainerStyle() {
       const workspaceDom = this.$refs.workspace;
@@ -370,12 +371,12 @@ export default {
         let select = [];
         this.currentComponent.props.arrResources.forEach((ele) => {
           select.push({
-            name:ele.name,
-            src:ele.url,
+            name: ele.name,
+            src: ele.url,
             resName: ele.name,
             uuid: ele.uuid,
             sourcePaht: ele.url,
-            payload:ele.payload
+            payload: ele.payload,
           });
         });
         this.$event.emit("openUploadWin", {
@@ -414,6 +415,17 @@ export default {
         });
       } else if (type === "VideoCmp") {
         let targetData = this.currentComponent.props.arrResources;
+        let selected = [];
+        this.currentComponent.props.arrResources.forEach((ele) => {
+          selected.push({
+            name: ele.name,
+            src: ele.url,
+            resName: ele.name,
+            uuid: ele.uuid,
+            sourcePaht: ele.url,
+            payload: ele.payload,
+          });
+        });
         this.$event.emit("openUploadWin", {
           onSelect: (a) => {
             if (!a || a.length === 0) {
@@ -430,8 +442,9 @@ export default {
               },
             });
           },
+          selected,
           aSelectType: ["video"],
-          multi: false,
+          multi: true,
           title: "视频",
           targetData,
         });
@@ -817,9 +830,38 @@ export default {
     ]),
   },
   watch: {
+    "currentDialog.container.backGround": {
+      deep: true,
+      handler(obj) {
+        if (!obj) {
+          return;
+        }
+        this.background.value = obj.value;
+        this.background.type = obj.type;
+        //   if (this.pageData.container.backGround.type === "image") {
+        //   return {
+        //     "background-image": `url(${this.handleUrl(
+        //       this.pageData.container.backGround.value
+        //     )})`,
+        //     width: "100%",
+        //     height: "100%",
+        //     "background-size": "100% 100%",
+        //   };
+        // } else {
+        //   return {
+        //     "background-color": this.pageData.container.backGround.value,
+        //     width: "100%",
+        //     height: "100%",
+        //   };
+        // }
+      },
+    },
     "currentPage.container.backGround": {
       deep: true,
       handler(obj) {
+        if (!obj) {
+          return;
+        }
         this.background.value = obj.value;
         this.background.type = obj.type;
         //   if (this.pageData.container.backGround.type === "image") {

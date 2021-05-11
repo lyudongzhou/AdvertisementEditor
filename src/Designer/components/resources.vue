@@ -56,21 +56,23 @@
                     <img :src="o.imgList[0]" class="image-full" />
                   </div>
                   <img v-if="o.body" :src="o.thumbnail" class="image-full" />
-                  <div v-if="o.isVip !== 1" class="preText">免费</div>
-                  <el-button class="useImmdiatly" type="programConfig" @click="handleClick(o)">立即使用</el-button>
+                  <div
+                    v-if="o.isVip !== 1 && sortConfig.type === 2"
+                    class="preText"
+                  >
+                    免费
+                  </div>
+                  <el-button
+                    class="useImmdiatly"
+                    type="programConfig"
+                    @click="handleClick(o)"
+                    >立即使用</el-button
+                  >
                 </div>
               </div>
               <div>
-                <img
-                  v-if="o.resType === 1"
-                  :src="o.sourcePaht"
-                  class="image"
-                />
-                <img
-                  v-if="o.resType === 2"
-                  :src="o.thumbnail"
-                  class="image"
-                />
+                <img v-if="o.resType === 1" :src="o.sourcePaht" class="image" />
+                <img v-if="o.resType === 2" :src="o.thumbnail" class="image" />
 
                 <div
                   v-if="o.resType === 4"
@@ -91,16 +93,16 @@
               </div>
             </el-tooltip>
             <img
-              v-if="o.isVip !== 1"
+              v-if="o.isVip !== 1 && sortConfig.type === 2 && o.priceType !== 1"
               :src="clownImage"
               style="position: absolute; left: 4px; top: 3px"
             />
           </el-container>
         </el-card>
       </el-col>
-      <div style="float: left; padding: 10px; color: white;width:100%">
+      <div style="float: left; padding: 10px; color: white; width: 100%">
         <p v-if="isLoading">加载中...</p>
-        <p v-if="!isLoading&&noMore" style="color: white;">没有更多了</p>
+        <p v-if="!isLoading && noMore" style="color: white">没有更多了</p>
       </div>
     </el-row>
   </div>
@@ -119,9 +121,9 @@ const config = get(REG_TITLECONFIG);
 export default {
   props: ["sortConfig", "typeSwitch"],
   mixins: [schemaMixin, dataMixin],
-  data(){
+  data() {
     return {
-      tipDisable:false
+      tipDisable: false,
     };
   },
   watch: {
@@ -144,6 +146,9 @@ export default {
     this.clownImage = image;
     this.fireImage = fileIcon;
   },
+  mounted() {
+    console.log(this.sortConfig, this.typeSwitch);
+  },
   methods: {
     ...mapMutations(["resetSchema"]),
     caculatePadding(index, count) {
@@ -159,9 +164,9 @@ export default {
       // this.$nextTick(()=>{
       //   this.tipDisable = false;
       // });
-      setTimeout(()=>{
+      setTimeout(() => {
         this.tipDisable = false;
-      },1000);
+      }, 1000);
       console.log("capture");
       var isVip;
       try {
@@ -172,7 +177,7 @@ export default {
         console.log("vipCatchErr");
         isVip = true;
       }
-      if (!isVip && o.isVip !== 0) {
+      if (!isVip && o.isVip !== 1 && this.sortConfig.type === 2) {
         this.$alert("成为会员即可免费哦。", {
           confirmButtonText: "确定",
         });
@@ -184,15 +189,26 @@ export default {
           // console.log(o);
           defaultSchema.props.bgUrl = [o.sourcePaht];
           defaultSchema.props.introduce = [o.resName];
-          defaultSchema.props.arrResources = [{
-            name: o.resName,
-            uuid: o.uuid,
-            url:  o.sourcePaht
-          }];
+          defaultSchema.props.arrResources = [
+            {
+              name: o.resName,
+              uuid: o.uuid,
+              url: o.sourcePaht,
+              payload: o,
+            },
+          ];
           this.$$addNewComponent(defaultSchema);
         } else if (o.resType === 2) {
           let defaultSchema = config["VideoCmp"][0].defaultSchema;
-          defaultSchema.props.bgUrl = o.sourcePaht;
+          defaultSchema.props.bgUrl = [o.sourcePaht];
+          defaultSchema.props.arrResources = [
+            {
+              name: o.resName,
+              uuid: o.uuid,
+              url: o.sourcePaht,
+              payload: o,
+            },
+          ];
           this.$$addNewComponent(defaultSchema);
           // TODO: simulate body
         } else if (o.resType === 4) {

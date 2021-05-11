@@ -81,12 +81,12 @@
           v-show="dataCurrentSelect === 2"
           style="margin-top: 10px; color: black"
         >
-          <span
+          <!-- <span
             style="display: inline-block; width: 50px; text-align: center"
             :class="caculatePageClass()"
             @click="onChangeWindowNextPage(true)"
             >下一页</span
-          >
+          > -->
           <el-select
             size="small"
             v-model="dataWindowValue"

@@ -60,10 +60,11 @@ export default {
       this.$refs.slider && this.$refs.slider.resize();
     },
   },
-  created() {},
+  created() {
+    // this.cmpConfig.props.bgUrl = ["http://xes-h5-icourse.oss-cn-beijing.aliyuncs.com/dist/static/assets/images/1550734569380.png"];
+  },
   mounted() {
     this.parent = this.$refs["parent"];
-
     if (this.cmpConfig.props.autoChange && !this.designMode) {
       this.interval = setInterval(() => {
         this.next();

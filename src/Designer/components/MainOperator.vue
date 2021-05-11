@@ -24,7 +24,11 @@ export default {
       this.setPreviewState({previewTotal:true,previewing:true});
     },
     submitProject() {
+      console.log(JSON.stringify(this.schema));
       this.$event.emit(SUBMIT_PROJECT, {id: this.projectInfo.id, schema: this.schema});
+    },
+    handleExit(){
+      window.close();
     }
   },
 };
@@ -34,8 +38,8 @@ export default {
   <div class="main-operator">
     <el-button @click="handlePreview">预览</el-button>
     <el-button @click="submitProject" type="button">提交</el-button>
-    <el-button plain>发布</el-button>
-    <el-button plain>退出</el-button>
+    <!-- <el-button plain>发布</el-button> -->
+    <el-button plain @click="handleExit">退出</el-button>
   </div>
 </template>
 
