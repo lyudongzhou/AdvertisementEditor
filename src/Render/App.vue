@@ -41,7 +41,363 @@ export default {
             containerStyle: {},
             deviceWidth: document.body.clientWidth,
             deviceHeight: document.body.clientHeight,
-            renderData: window.renderData,
+            renderData: {
+          container: {
+            bgm: {},
+            paging: {
+              color: "#E41C1C",
+              fmt: "${CURRENT}/${TOTAL}",
+              size: 20,
+              bgColor: "#000000",
+              position: "center&amp;top",
+              family: "",
+            },
+            width: 1660,
+            height: 954,
+          },
+          resource: [
+            {
+              uuid: "af4463075c60d93f8fce09ef7acbbc02",
+              url:
+                "http://rongmeiyun.s3.cn-south-1.jdcloud-oss.com/upload/20210512/7ccead3ade36472fb8a4873af2db9633.png",
+              name: "6",
+            },
+            {
+              uuid: "2ff19bc767a53f1d6b6f675076ac6a37",
+              url:
+                "http://rongmeiyun.s3.cn-south-1.jdcloud-oss.com/upload/20210512/58cc076b499ae18df50bfc3bac2dbf51.mp4",
+              name: "中国",
+            },
+            {
+              url:
+                "http://rongmeiyun.s3.cn-south-1.jdcloud-oss.com/upload/20210512/6cada7f2286e4d5eb83e3c721121b170.png",
+            },
+            {
+              uuid: "af4463075c60d93f8fce09ef7acbbc02",
+              url:
+                "http://rongmeiyun.s3.cn-south-1.jdcloud-oss.com/upload/20210512/7ccead3ade36472fb8a4873af2db9633.png",
+              name: "6",
+            },
+            {
+              uuid: "2ff19bc767a53f1d6b6f675076ac6a37",
+              url:
+                "http://rongmeiyun.s3.cn-south-1.jdcloud-oss.com/upload/20210512/58cc076b499ae18df50bfc3bac2dbf51.mp4",
+              name: "中国",
+            },
+            {
+              uuid: "6d79f40f23f16a4ebbb126e420171d62",
+              url:
+                "http://rongmeiyun.s3.cn-south-1.jdcloud-oss.com/upload/20210512/7ccead3ade36472fb8a4873af2db9633.png",
+              payload: {
+                thumbnail:
+                  "http://rongmeiyun.s3.cn-south-1.jdcloud-oss.com/upload/20210512/7ccead3ade36472fb8a4873af2db9633.png",
+                resType: 1,
+                sourcePaht:
+                  "http://rongmeiyun.s3.cn-south-1.jdcloud-oss.com/upload/20210512/7ccead3ade36472fb8a4873af2db9633.png",
+                priceType: 1,
+                resId: 177,
+                uuid: "6d79f40f23f16a4ebbb126e420171d62",
+                pdfPaht: "",
+                resName: "6",
+                imgList: [],
+                approveState: 1,
+              },
+              name: "6",
+            },
+            {
+              url:
+                "http://rongmeiyun.s3.cn-south-1.jdcloud-oss.com/upload/20210512/6cada7f2286e4d5eb83e3c721121b170.png",
+            },
+          ],
+          change: {
+            singlePagePlayTime: 1800,
+            type: 70,
+            loop: true,
+            changeHint: true,
+            backTime: 6000,
+          },
+          description: "",
+          version: "1.0",
+          dialogs: [],
+          pages: [
+            {
+              container: {
+                backGround: {
+                  type: "",
+                  value: "",
+                },
+                bgMusic: {
+                  type: 1,
+                  music: [],
+                },
+              },
+              components: [
+                {
+                  type: "mixplayCmp",
+                  props: {
+                    components: [
+                      {
+                        thumbnail:
+                          "http://rongmeiyun.s3.cn-south-1.jdcloud-oss.com/upload/20210512/7ccead3ade36472fb8a4873af2db9633.png",
+                        resType: 1,
+                        sourcePaht:
+                          "http://rongmeiyun.s3.cn-south-1.jdcloud-oss.com/upload/20210512/7ccead3ade36472fb8a4873af2db9633.png",
+                        priceType: 1,
+                        resId: 568,
+                        uuid: "af4463075c60d93f8fce09ef7acbbc02",
+                        pdfPaht: "",
+                        resName: "6",
+                        imgList: [],
+                        approveState: 1,
+                      },
+                      {
+                        thumbnail:
+                          "http://rongmeiyun.s3.cn-south-1.jdcloud-oss.com/upload/20210512/36f792060335e6b0c4d92aea0d4ab6ed.jpg",
+                        resType: 2,
+                        sourcePaht:
+                          "http://rongmeiyun.s3.cn-south-1.jdcloud-oss.com/upload/20210512/58cc076b499ae18df50bfc3bac2dbf51.mp4",
+                        priceType: 1,
+                        resId: 570,
+                        uuid: "2ff19bc767a53f1d6b6f675076ac6a37",
+                        pdfPaht: "",
+                        resName: "中国",
+                        imgList: [],
+                        approveState: 1,
+                      },
+                      {
+                        sourcePaht:
+                          "http://rongmeiyun.s3.cn-south-1.jdcloud-oss.com/upload/20210512/6cada7f2286e4d5eb83e3c721121b170.png",
+                        resType: 1,
+                      },
+                    ],
+                    changeTime: 3,
+                    arrResources: [
+                      {
+                        uuid: "af4463075c60d93f8fce09ef7acbbc02",
+                        url:
+                          "http://rongmeiyun.s3.cn-south-1.jdcloud-oss.com/upload/20210512/7ccead3ade36472fb8a4873af2db9633.png",
+                        name: "6",
+                      },
+                      {
+                        uuid: "2ff19bc767a53f1d6b6f675076ac6a37",
+                        url:
+                          "http://rongmeiyun.s3.cn-south-1.jdcloud-oss.com/upload/20210512/58cc076b499ae18df50bfc3bac2dbf51.mp4",
+                        name: "中国",
+                      },
+                      {
+                        url:
+                          "http://rongmeiyun.s3.cn-south-1.jdcloud-oss.com/upload/20210512/6cada7f2286e4d5eb83e3c721121b170.png",
+                      },
+                    ],
+                  },
+                  animation: [],
+                  layoutConfig: {
+                    aniRotation: 0,
+                    hidden: false,
+                    rotation: 0,
+                    skewX: 0,
+                    skewY: 0,
+                    pivotY: 0,
+                    pivotX: 0,
+                    positionX: 0,
+                    scaleX: 1,
+                    positionY: 0,
+                    scaleY: 1,
+                    top: 489,
+                    left: 120,
+                    alpha: 1,
+                    width: 200,
+                    opacity: 100,
+                    height: 200,
+                    zIndex: 4,
+                  },
+                  children: [],
+                  name: "混播",
+                  id: "10020c70-b399-11eb-aab0-f539ee7e6001",
+                  events: [],
+                },
+                {
+                  type: "mixplayCmp",
+                  props: {
+                    components: [
+                      {
+                        thumbnail:
+                          "http://rongmeiyun.s3.cn-south-1.jdcloud-oss.com/upload/20210512/7ccead3ade36472fb8a4873af2db9633.png",
+                        resType: 1,
+                        sourcePaht:
+                          "http://rongmeiyun.s3.cn-south-1.jdcloud-oss.com/upload/20210512/7ccead3ade36472fb8a4873af2db9633.png",
+                        priceType: 1,
+                        resId: 568,
+                        uuid: "af4463075c60d93f8fce09ef7acbbc02",
+                        pdfPaht: "",
+                        resName: "6",
+                        imgList: [],
+                        approveState: 1,
+                      },
+                      {
+                        thumbnail:
+                          "http://rongmeiyun.s3.cn-south-1.jdcloud-oss.com/upload/20210512/36f792060335e6b0c4d92aea0d4ab6ed.jpg",
+                        resType: 2,
+                        sourcePaht:
+                          "http://rongmeiyun.s3.cn-south-1.jdcloud-oss.com/upload/20210512/58cc076b499ae18df50bfc3bac2dbf51.mp4",
+                        priceType: 1,
+                        resId: 570,
+                        uuid: "2ff19bc767a53f1d6b6f675076ac6a37",
+                        pdfPaht: "",
+                        resName: "中国",
+                        imgList: [],
+                        approveState: 1,
+                      },
+                    ],
+                    changeTime: 3,
+                    arrResources: [
+                      {
+                        uuid: "af4463075c60d93f8fce09ef7acbbc02",
+                        url:
+                          "http://rongmeiyun.s3.cn-south-1.jdcloud-oss.com/upload/20210512/7ccead3ade36472fb8a4873af2db9633.png",
+                        name: "6",
+                      },
+                      {
+                        uuid: "2ff19bc767a53f1d6b6f675076ac6a37",
+                        url:
+                          "http://rongmeiyun.s3.cn-south-1.jdcloud-oss.com/upload/20210512/58cc076b499ae18df50bfc3bac2dbf51.mp4",
+                        name: "中国",
+                      },
+                    ],
+                  },
+                  animation: [],
+                  layoutConfig: {
+                    aniRotation: 0,
+                    hidden: false,
+                    rotation: 0,
+                    skewX: 0,
+                    skewY: 0,
+                    pivotY: 0,
+                    pivotX: 0,
+                    positionX: 0,
+                    scaleX: 1,
+                    positionY: 0,
+                    scaleY: 1,
+                    top: 65,
+                    left: 733,
+                    alpha: 1,
+                    width: 200,
+                    opacity: 100,
+                    height: 200,
+                    zIndex: 3,
+                  },
+                  children: [],
+                  name: "混播",
+                  id: "04a4ced0-b399-11eb-aab0-f539ee7e6001",
+                  events: [],
+                },
+                {
+                  type: "ImageCmp",
+                  props: {
+                    introduce: ["6"],
+                    changeType: "",
+                    autoChange: true,
+                    changeTime: 5,
+                    arrResources: [
+                      {
+                        uuid: "6d79f40f23f16a4ebbb126e420171d62",
+                        url:
+                          "http://rongmeiyun.s3.cn-south-1.jdcloud-oss.com/upload/20210512/7ccead3ade36472fb8a4873af2db9633.png",
+                        payload: {
+                          thumbnail:
+                            "http://rongmeiyun.s3.cn-south-1.jdcloud-oss.com/upload/20210512/7ccead3ade36472fb8a4873af2db9633.png",
+                          resType: 1,
+                          sourcePaht:
+                            "http://rongmeiyun.s3.cn-south-1.jdcloud-oss.com/upload/20210512/7ccead3ade36472fb8a4873af2db9633.png",
+                          priceType: 1,
+                          resId: 177,
+                          uuid: "6d79f40f23f16a4ebbb126e420171d62",
+                          pdfPaht: "",
+                          resName: "6",
+                          imgList: [],
+                          approveState: 1,
+                        },
+                        name: "6",
+                      },
+                    ],
+                    bgUrl: [
+                      "http://rongmeiyun.s3.cn-south-1.jdcloud-oss.com/upload/20210512/7ccead3ade36472fb8a4873af2db9633.png",
+                    ],
+                  },
+                  animation: [],
+                  layoutConfig: {
+                    aniRotation: 0,
+                    hidden: false,
+                    rotation: 0,
+                    skewX: 0,
+                    skewY: 0,
+                    pivotY: 0,
+                    pivotX: 0,
+                    positionX: 0,
+                    scaleX: 1,
+                    positionY: 0,
+                    scaleY: 1,
+                    top: 98,
+                    left: 135,
+                    alpha: 1,
+                    width: 200,
+                    opacity: 100,
+                    height: 200,
+                    zIndex: 2,
+                  },
+                  children: [],
+                  name: "图片",
+                  id: "de6e1840-b31e-11eb-bda9-1da2011c327e",
+                  events: [],
+                },
+                {
+                  type: "documentCmp",
+                  props: {
+                    changeType: "",
+                    autoChange: true,
+                    changeTime: 5,
+                    arrResources: [
+                      {
+                        url:
+                          "http://rongmeiyun.s3.cn-south-1.jdcloud-oss.com/upload/20210512/6cada7f2286e4d5eb83e3c721121b170.png",
+                      },
+                    ],
+                    bgUrl: [
+                      "http://rongmeiyun.s3.cn-south-1.jdcloud-oss.com/upload/20210512/6cada7f2286e4d5eb83e3c721121b170.png",
+                    ],
+                  },
+                  animation: [],
+                  layoutConfig: {
+                    aniRotation: 0,
+                    hidden: false,
+                    rotation: 0,
+                    skewX: 0,
+                    skewY: 0,
+                    pivotY: 0,
+                    pivotX: 0,
+                    positionX: 0,
+                    scaleX: 1,
+                    positionY: 0,
+                    scaleY: 1,
+                    top: 280,
+                    left: 426,
+                    alpha: 1,
+                    width: 761.2824675324675,
+                    opacity: 100,
+                    height: 619.8051948051948,
+                    zIndex: 1,
+                  },
+                  children: [],
+                  name: "文档",
+                  id: "061e7e50-b31c-11eb-be68-890c0e0db92f",
+                  events: [],
+                },
+              ],
+              name: "页面1",
+              id: "1",
+            },
+          ],
+        },
             currentPage: window.renderData.pages[0].id,
             baseUrl: '',
         };

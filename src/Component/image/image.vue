@@ -37,7 +37,7 @@ export default {
     },
     getPureImageName() {
       let arr = []
-      this.cmpConfig.props.introduce.map(name => arr.push(name.substring(0, name.lastIndexOf("."))))
+      this.cmpConfig.props.introduce.map(name => arr.push(name));
       return arr
     },
     getDefaultTranstion() {
