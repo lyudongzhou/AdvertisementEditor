@@ -7,68 +7,71 @@
 </template>
 
 <script>
-  import baseCmp from "../Base.vue";
-  import { mapGetters } from "../../Render/store/";
+import baseCmp from "../Base.vue";
+import { mapGetters } from "../../Render/store/";
 
-  export default {
-    name: "buttonCmp",
-    props: ["cmpConfig"],
-    components: {
-      baseCmp,
+export default {
+  name: "buttonCmp",
+  props: ["cmpConfig"],
+  components: {
+    baseCmp,
+  },
+  data() {
+    return {
+      url: "",
+      type: 0,
+    };
+  },
+  watch: {
+    "cmpConfig.props.url"(value) {
+      this.url = value;
     },
-    data() {
-      return {
-        url: "",
-        type: 0,
-      };
+  },
+  computed: {
+    ...mapGetters(["handleUrl"]),
+    btnStyle() {
+      const style = {};
+      Object.keys(this.cmpConfig.btnProps).forEach((key) => {
+        let msg = this.cmpConfig.btnProps[key];
+        switch (key) {
+          case "width":
+            style[key] = this.cmpConfig.layoutConfig[key] + "px";
+            break;
+          case "height":
+            style[key] = this.cmpConfig.layoutConfig[key] + "px";
+            break;
+          default:
+            style[key] = msg;
+        }
+      });
+      return style;
     },
-    watch: {
-      "cmpConfig.props.url"(value) {
-        this.url = value;
-      }
+    publicList() {
+      const style = {};
+      Object.keys(this.cmpConfig.props).forEach((key) => {
+        switch (key) {
+          case "font-size":
+            style["font-size"] = this.cmpConfig.props[key] + "px";
+            break;
+          case "decoration":
+            style["text-decoration"] = this.cmpConfig.props[key];
+            break;
+          default:
+            style[key] = this.cmpConfig.props[key];
+        }
+      });
+      return style;
     },
-    computed: {
-      ...mapGetters(["handleUrl"]),
-      btnStyle() {
-        const style = {};
-        Object.keys(this.cmpConfig.btnProps).forEach((key) => {
-          let msg = this.cmpConfig.btnProps[key];
-          switch (key) {
-            case 'width':
-                style[key] = this.cmpConfig.layoutConfig[key]+'px'
-                break
-            case 'height':
-                style[key] = this.cmpConfig.layoutConfig[key]+'px'
-                break
-            default:
-              style[key] = msg
-          }
-        })
-        return style;
-      },
-      publicList() {
-          const style = {};
-          Object.keys(this.cmpConfig.props).forEach((key) => {
-            switch (key) {
-              case 'font-size':
-                style['font-size'] = this.cmpConfig.props[key] + 'px'
-                break
-              default:
-                style[key] = this.cmpConfig.props[key];
-            }
-          })
-          return style;
-      },
-    },
-    mounted() {
-      this.url = this.cmpConfig.props.url;
-    },
-    methods: {
-      // checkUrl(value){
-      //   return /^(https?:\/\/(([a-zA-Z0-9]+-?)+[a-zA-Z0-9]+\.)+[a-zA-Z]+)(:\d+)?(\/.*)?(\?.*)?(#.*)?$/.test(value);
-      // }
-    },
-  };
+  },
+  mounted() {
+    this.url = this.cmpConfig.props.url;
+  },
+  methods: {
+    // checkUrl(value){
+    //   return /^(https?:\/\/(([a-zA-Z0-9]+-?)+[a-zA-Z0-9]+\.)+[a-zA-Z]+)(:\d+)?(\/.*)?(\?.*)?(#.*)?$/.test(value);
+    // }
+  },
+};
 </script>
 
 <style lang="less" scoped>

@@ -177,7 +177,7 @@ export default {
         console.log("vipCatchErr");
         isVip = true;
       }
-      if (!isVip && o.isVip !== 1 && this.sortConfig.type === 2) {
+      if (!isVip && o.isVip !== 1 && this.sortConfig.type === 2 && o.priceType !== 1) {
         this.$alert("成为会员即可免费哦。", {
           confirmButtonText: "确定",
         });
@@ -217,7 +217,7 @@ export default {
           this.$$addNewComponent(defaultSchema);
         }
       } else {
-        this.resetSchema(o.body);
+        this.resetSchema(JSON.parse(o.body));
       }
       if (e) {
         e.preventDefault();

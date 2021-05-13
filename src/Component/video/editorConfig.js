@@ -25,7 +25,8 @@ export default [
             name:ele.resName,
             uuid:ele.uuid,
             url:ele.sourcePaht,
-            payload:ele
+            payload:ele,
+            thumbnail:ele.thumbnail
           });
         });
         schema.props.bgUrl = arr;

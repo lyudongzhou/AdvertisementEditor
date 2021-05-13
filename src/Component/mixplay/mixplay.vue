@@ -22,7 +22,7 @@
         autoplay
         :src="handleUrl(cmp.sourcePaht)"
         style="width: 100%; height: 100%"
-        v-if="cmp.resType === 3"
+        v-if="cmp.resType === 2"
       />
       <!-- </div> -->
     </div>

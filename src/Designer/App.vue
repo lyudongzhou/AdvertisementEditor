@@ -132,8 +132,8 @@ export default {
           }
         });
       });
-    
-      let exeFun = ({data,id}) => {
+
+      let exeFun = ({ data, id }) => {
         if (id === pagesId) {
           this.$axios
             .post("/program/uploadCover", { file: data })
@@ -166,7 +166,7 @@ export default {
         }
       };
       manager.on("change", exeFun);
-      },
+    },
     init() {
       if (PRODUCTION) {
         window.addEventListener("beforeunload", function (e) {
@@ -223,6 +223,7 @@ export default {
       } else {
         this.$refs.designer.openProject(defaultJson);
       }
+      console.log(defaultJson);
     },
     getResource(schema) {
       const resource = new Set();

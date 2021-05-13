@@ -6,6 +6,7 @@
     @click.right.exact="dispatchEvent('rightClick', $event)"
     @click.ctrl.exact="dispatchEvent('ctrlClick', $event)"
   >
+    <div v-if="designMode" style="width:100%;height:100%;position:absolute"></div>
     <slot v-if="!layoutConfig.hidden"></slot>
   </li>
 </template>
@@ -28,6 +29,9 @@ export default {
     return {};
   },
   computed: {
+    designMode(){
+      return this.$store.state.currentRenderState.designMode;
+    },
     layoutConfig() {
       return this.cmpConfig.layoutConfig;
     },
@@ -67,7 +71,7 @@ export default {
             }deg) matrix(${ma.toCssArray().join(",")})`;
             break;
           case "opacity":
-            style[key] *= config[key]/100;
+            style[key] *= config[key] / 100;
             break;
           case "alpha":
             style["opacity"] *= config[key];
@@ -103,9 +107,9 @@ export default {
         });
       } else if (type === "click") {
         pipe.emit("click", this, this.cmpConfig.id);
-      } else if (type === 'rightClick') {
+      } else if (type === "rightClick") {
         pipe.emit("rightClick", this, this.cmpConfig.id, e);
-      } else if (type === 'ctrlClick') {
+      } else if (type === "ctrlClick") {
         pipe.emit("ctrlClick", this, this.cmpConfig.id, e);
       }
     },

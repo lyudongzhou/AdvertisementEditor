@@ -16,11 +16,11 @@ export default [
           let t = [];
           if (ele.resType === 4) {
             ele.imgList.forEach((ele) => {
-              t.push({ sourcePaht: ele.sourcePaht, resType: 1 });
+              t.push({ sourcePaht: ele.url, resType: 1 });
               arrResources.push({
                 name: ele.resName,
                 uuid: ele.uuid,
-                url: ele.sourcePaht,
+                url: ele.url,
               });
             });
             arr.push.apply(arr, t);

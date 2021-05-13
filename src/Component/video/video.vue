@@ -1,11 +1,14 @@
 <template>
   <baseCmp ref="parent" :cmpConfig="cmpConfig">
     <!-- <div v-for="(ele, index) in cmpConfig.props.bgUrl" :key="index"> -->
+      <!-- <img style="width: 100%; height: 100%;position:absolute" :src="currentPoster"/> -->
     <video
       ref="videoEl"
       autoplay
       :src="currentUrl"
-      style="width: 100%; height: 100%"
+      muted="muted"
+      :poster="currentPoster"
+      style="width: 100%, height: 100%"
     />
     <!-- </div> -->
   </baseCmp>
@@ -39,18 +42,25 @@ export default {
     //   //     vm.autoChangeVideoSize(this.videoWidth, this.videoHeight)
     //   // }
     // });
+    // this.$refs.videoEl.play();
     this.$refs.videoEl.onended = () => {
+      let me = this;
+      console.log(me);
       if (
         this.currentPlayIndex + 1 === this.cmpConfig.props.bgUrl.length &&
-        !this.cmpConfig.props.loop
+        this.cmpConfig.props.loop
       ) {
         this.currentPlayIndex = 0;
+        this.$refs.videoEl.play();
         return;
       }
       // if(this.currentPlayIndex+1===this.cmpConfig.props.bgUrl.length){
       //     this.currentPlayIndex = 0;
       // }else{
-      this.currentPlayIndex++;
+      if (this.currentPlayIndex + 1 < this.cmpConfig.props.bgUrl.length) {
+        this.currentPlayIndex++;
+      }
+
       // }
     };
     this.parent = this.$refs["parent"];
@@ -78,6 +88,12 @@ export default {
     ...mapGetters(["handleUrl"]),
     currentUrl() {
       return this.cmpConfig.props.bgUrl[this.currentPlayIndex];
+    },
+    currentPoster() {
+      return (
+        this.cmpConfig.props.arrResources[this.currentPlayIndex] &&
+        this.cmpConfig.props.arrResources[this.currentPlayIndex].thumbnail
+      );
     },
   },
   beforeDestroy() {},
