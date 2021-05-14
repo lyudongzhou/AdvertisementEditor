@@ -10,46 +10,46 @@ import axios from "axios";
 //   }
 //   return '112';
 // };
-var ajax = new XMLHttpRequest();
-// 2、建立连接
-// true:请求为异步  false:同步
-ajax.open("GET", "http://rmtwh.dcc2u.com/openapi/weather/get?needday=7", true);
-// ajax.setRequestHeader("Origin",STATIC_PATH); 
+// var ajax = new XMLHttpRequest();
+// // 2、建立连接
+// // true:请求为异步  false:同步
+// ajax.open("GET", "http://rmtwh.dcc2u.com/openapi/weather/get?needday=7&ip=210.12.105.22", true);
+// // ajax.setRequestHeader("Origin",STATIC_PATH); 
 
-ajax.setRequestHeader("Access-Control-Allow-Origin","*");   
-// // 响应类型    
-ajax.setRequestHeader('Access-Control-Allow-Methods', '*');    
-// // 响应头设置    
-ajax.setRequestHeader('Access-Control-Allow-Headers', 'x-requested-with,content-type');  
-ajax.withCredentials = true;
-// 3、发送请求
-ajax.send(null);
+// // ajax.setRequestHeader("Access-Control-Allow-Origin","*");   
+// // // // 响应类型    
+// // ajax.setRequestHeader('Access-Control-Allow-Methods', '*');    
+// // // // 响应头设置    
+// // ajax.setRequestHeader('Access-Control-Allow-Headers', 'x-requested-with,content-type');  
+// // ajax.withCredentials = true;
+// // 3、发送请求
+// ajax.send(null);
 
-// 4、监听状态的改变
-ajax.onreadystatechange = function () {
-    if (ajax.readyState === 4) {
-        if (ajax.status === 200) {
-            // 用户传了回调才执行
-            // isJson默认值为true，要解析json
-            // if (isJson === undefined) {
-            //     isJson = true;
-            // }
-            // var res = isJson ? JSON.parse(ajax.responseText == "" ? '{}' : ajax.responseText) : ajax.responseText;
-            // succCb && succCb(res);
-            console.log("success");
-        } 
-        // else {
-        //     // 请求失败
-        //     // failCb && failCb();
-        // }
+// // 4、监听状态的改变
+// ajax.onreadystatechange = function () {
+//     if (ajax.readyState === 4) {
+//         if (ajax.status === 200) {
+//             // 用户传了回调才执行
+//             // isJson默认值为true，要解析json
+//             // if (isJson === undefined) {
+//             //     isJson = true;
+//             // }
+//             // var res = isJson ? JSON.parse(ajax.responseText == "" ? '{}' : ajax.responseText) : ajax.responseText;
+//             // succCb && succCb(res);
+//             console.log("success");
+//         } 
+//         // else {
+//         //     // 请求失败
+//         //     // failCb && failCb();
+//         // }
 
-    }
-}
+//     }
+// }
 const createInstance = ({$message}) => {
   const instance = axios.create({
     baseURL: window.renderUrl,
     // headers: {'Content-Type': 'application/json;charset=UTF-8'},
-    headers: {'Content-Type': 'application/x-www-form-urlencoded','Access-Control-Allow-Origin': '*'},
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
     transformRequest: [
       function handleUserId(data) {
         if(data instanceof FormData){

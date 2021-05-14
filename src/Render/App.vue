@@ -39,8 +39,8 @@ export default {
     data() {
         return {
             containerStyle: {},
-            deviceWidth: document.body.clientWidth,
-            deviceHeight: document.body.clientHeight,
+            deviceWidth: window.renderData.container.width,
+            deviceHeight: window.renderData.container.height,
             renderData: window.renderData,
             currentPage: window.renderData.pages[0].id,
             baseUrl: '',
