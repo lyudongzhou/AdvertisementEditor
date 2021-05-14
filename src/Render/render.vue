@@ -178,29 +178,29 @@ export default {
         case "hide":
           o.left = "9999px";
           break;
-        case "center&bottom":
+        case "center$bottom":
           o.left = "50%";
           o.bottom = "0";
           o.transform = "translate(-50%,0)";
           break;
-        case "center&top":
+        case "center$top":
           o.left = "50%";
           o.top = 0;
           o.transform = "translate(-50%,0)";
           break;
-        case "left&top":
+        case "left$top":
           o.left = "0";
           o.top = "0";
           break;
-        case "left&bottom":
+        case "left$bottom":
           o.left = "0";
           o.bottom = "0";
           break;
-        case "right&top":
+        case "right$top":
           o.right = "0";
           o.top = "0";
           break;
-        case "right&bottom":
+        case "right$bottom":
           o.right = "0";
           o.bottom = "0";
           break;

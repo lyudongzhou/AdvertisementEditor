@@ -768,12 +768,12 @@ export default {
       ],
       pagingPositions: [
         { label: "隐藏", value: "hide" },
-        { label: "底部居中", value: "center&bottom" },
-        { label: "顶部居中", value: "center&top" },
-        { label: "左上角", value: "left&top" },
-        { label: "左下角", value: "left&bottom" },
-        { label: "右上角", value: "right&top" },
-        { label: "右下角", value: "right&bottom" },
+        { label: "底部居中", value: "center$bottom" },
+        { label: "顶部居中", value: "center$top" },
+        { label: "左上角", value: "left$top" },
+        { label: "左下角", value: "left$bottom" },
+        { label: "右上角", value: "right$top" },
+        { label: "右下角", value: "right$bottom" },
       ],
       aAniType: [
         { icon: "cvbe", text: "立体旋转" },
