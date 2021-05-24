@@ -67,7 +67,7 @@ export default {
   data() {
     return {
       value: 1,
-      valueType:"",
+      valueType: "",
       options: [
         { label: "淡入", value: "fade" },
         { label: "淡入淡出", value: "kenburn" },
@@ -91,9 +91,7 @@ export default {
       ],
     };
   },
-  watch: {
-    
-  },
+  watch: {},
   methods: {
     ...mapMutations(["updateSchema"]),
     change(value) {
@@ -132,24 +130,49 @@ export default {
       if (!a || a.length === 0) {
         return;
       }
-      let arr = [];
       let arrResources = [];
+      let arr = [];
+      let arrUpload = [];
       a.forEach((ele) => {
-        arr.push.apply(arr,ele.imgList);
-        ele.imgList.forEach(ele=>{
-          arr.push(ele.sourcePaht);
+        let obj = {
+          uuid: ele.uuid,
+          url: ele.sourcePaht,
+          name: ele.resName,
+          imgList: [],
+        };
+        ele.imgList.forEach((ele) => {
+          arr.push(ele.url);
           arrResources.push({
-              name: ele.resName,
-              uuid: ele.uuid,
-              url: ele.sourcePaht,
-            });
+            name: ele.resName,
+            uuid: ele.uuid,
+            url: ele.url,
+          });
+          obj.imgList.push(ele);
         });
+        // arr.push.apply(arr, ele.imgList);
       });
+      // schema.props.bgUrl = arr;
+      // schema.props.arrResources = arrResources;
+      // schema.props.arrUpload = arrUpload;
+      // let arr = [];
+      // let arrResources = [];
+      // a.forEach((ele) => {
+      //   // arr.push.apply(arr,ele.imgList);
+      //   ele.imgList.forEach(ele=>{
+      //     arr.push(ele.sourcePaht);
+      //     arrResources.push({
+      //         name: ele.resName,
+      //         uuid: ele.uuid,
+      //         url: ele.sourcePaht,
+      //       });
+      //   });
+      // });
       this.updateSchema({
         type: UPDATE_COMPONENT_PROPS,
         value: {
           "props.bgUrl": arr,
-          "props.arrResources":arrResources
+          "props.arrResources": arrResources,
+          "props.arrUpload": arrUpload,
         },
       });
     },

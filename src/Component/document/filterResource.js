@@ -1,3 +1,3 @@
 export default function(cmpConfig){
-    return cmpConfig.props.arrResources;
+    return cmpConfig.props.arrUpload;
 }

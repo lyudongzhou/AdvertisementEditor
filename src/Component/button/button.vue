@@ -50,7 +50,7 @@ export default {
       const style = {};
       Object.keys(this.cmpConfig.props).forEach((key) => {
         switch (key) {
-          case "font-size":
+          case "fontSize":
             style["font-size"] = this.cmpConfig.props[key] + "px";
             break;
           case "decoration":

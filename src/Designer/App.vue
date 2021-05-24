@@ -20,6 +20,9 @@ const resourceVisitor = {
       let arr = fun(schema);
       arr.forEach((ele) => {
         if (ele) {
+          if(!ele.imageList){
+            ele.imageList = [];
+          }
           context.resource.add(ele);
         }
       });
@@ -40,6 +43,7 @@ const resourceVisitor = {
   page(schema, context) {
     let arr = [];
     if (schema.container.backGround.type === "image") {
+      schema.container.backGround.value.imageList = [];
       arr.push(schema.container.backGround.value);
     }
     schema.container.bgMusic.music.forEach((ele) => {
@@ -47,6 +51,7 @@ const resourceVisitor = {
         name: ele.resName,
         uuid: ele.uuid,
         url: ele.sourcePaht,
+        imageList:[]
       });
       // arr.push({url:ele.sourcePaht});
     });
@@ -59,6 +64,7 @@ const resourceVisitor = {
   dialog(schema, context) {
     let arr = [];
     if (schema.container.backGround.type === "image") {
+      schema.container.backGround.value.imageList = [];
       arr.push(schema.container.backGround.value);
     }
     schema.container.bgMusic.music.forEach((ele) => {
@@ -66,6 +72,7 @@ const resourceVisitor = {
         name: ele.resName,
         uuid: ele.uuid,
         url: ele.sourcePaht,
+        imageList:[]
       });
     });
     arr.forEach((ele) => {
@@ -165,7 +172,7 @@ export default {
             });
         }
       };
-      manager.on("change", exeFun);
+      manager.once("change", exeFun);
     },
     init() {
       if (PRODUCTION) {

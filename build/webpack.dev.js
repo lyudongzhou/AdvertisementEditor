@@ -11,7 +11,7 @@ module.exports = merge(commonConfig, {
     },
     proxy:{
       "/openapi":{
-        target:"http://saberxf.rz-edu.cn/api/xf-open/",
+        target:"http://rmtwh.dcc2u.com/",
         pathRewrite:{
           // "^/openapi":"/"
         }

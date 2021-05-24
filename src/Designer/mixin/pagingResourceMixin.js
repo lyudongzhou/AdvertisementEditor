@@ -123,7 +123,7 @@ export default {
       priceType = 1,
       type = 1,
       searchText = "",
-      // labelIds = [],
+      labelIds = [],
     }) {
       let o = {
         resType,
@@ -140,6 +140,9 @@ export default {
       }
       if (!searchText) {
         delete o.keyword;
+      }
+      if(labelIds.length){
+        o.labelIds = labelIds[0];
       }
       // return o;
       // return { resType, userId, current, size, orderType, priceType, type,labelIds:JSON.stringify(labelIds) };

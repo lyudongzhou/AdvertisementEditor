@@ -83,49 +83,52 @@ import resourceIcon from "../public/resource.png";
 import programIcon from "../public/program.png";
 const urlSearchParams = new URLSearchParams(location.search);
 const institutionType = parseInt(urlSearchParams.get("institutionType"));
-const list = (institutionType===0||institutionType===2)?{
-  2: [
-    {
-      id: 9,
-      name: "个人",
-    },
-    {
-      id: 2,
-      name: "商城",
-    },
-  ],
-  1: [
-    {
-      id: 2,
-      name: "商城",
-    },
-  ],
-}:{
-  2: [
-    {
-      id: 9,
-      name: "个人",
-    },
-    {
-      id: 1,
-      name: "机构",
-    },
-    {
-      id: 2,
-      name: "商城",
-    },
-  ],
-  1: [
-    {
-      id: 1,
-      name: "机构",
-    },
-    {
-      id: 2,
-      name: "商城",
-    },
-  ],
-};
+const list =
+  institutionType === 0 || institutionType === 2
+    ? {
+        2: [
+          {
+            id: 9,
+            name: "个人",
+          },
+          {
+            id: 2,
+            name: "商城",
+          },
+        ],
+        1: [
+          {
+            id: 2,
+            name: "商城",
+          },
+        ],
+      }
+    : {
+        2: [
+          {
+            id: 9,
+            name: "个人",
+          },
+          {
+            id: 1,
+            name: "机构",
+          },
+          {
+            id: 2,
+            name: "商城",
+          },
+        ],
+        1: [
+          {
+            id: 1,
+            name: "机构",
+          },
+          {
+            id: 2,
+            name: "商城",
+          },
+        ],
+      };
 export default {
   data() {
     return {
@@ -168,10 +171,6 @@ export default {
                   label: "最新",
                   value: 1,
                 },
-                {
-                  label: "精选",
-                  value: 2,
-                },
               ],
             },
             { text: "全部", type: 5, isLabel: true },
@@ -210,10 +209,6 @@ export default {
                 {
                   label: "最新",
                   value: 1,
-                },
-                {
-                  label: "精选",
-                  value: 2,
                 },
               ],
             },
@@ -267,10 +262,6 @@ export default {
                 {
                   label: "最新",
                   value: 1,
-                },
-                {
-                  label: "精选",
-                  value: 2,
                 },
               ],
             },
@@ -312,10 +303,6 @@ export default {
                   label: "最新",
                   value: 1,
                 },
-                {
-                  label: "精选",
-                  value: 2,
-                },
               ],
             },
             {
@@ -335,28 +322,28 @@ export default {
             { text: "全部", type: 5, isLabel: true },
           ],
           9: [
-            {
-              text: "类型",
-              type: 0,
-              aSort: [
-                {
-                  label: "全部",
-                  value: 5,
-                },
-                {
-                  label: "图片",
-                  value: 1,
-                },
-                {
-                  label: "视频",
-                  value: 2,
-                },
-                {
-                  label: "文档",
-                  value: 4,
-                },
-              ],
-            },
+            // {
+            //   text: "类型",
+            //   type: 0,
+            //   aSort: [
+            //     {
+            //       label: "全部",
+            //       value: 5,
+            //     },
+            //     {
+            //       label: "图片",
+            //       value: 1,
+            //     },
+            //     {
+            //       label: "视频",
+            //       value: 2,
+            //     },
+            //     {
+            //       label: "文档",
+            //       value: 4,
+            //     },
+            //   ],
+            // },
             {
               text: "排序",
               type: 1,
@@ -368,10 +355,6 @@ export default {
                 {
                   label: "最新",
                   value: 1,
-                },
-                {
-                  label: "精选",
-                  value: 2,
                 },
               ],
             },
@@ -398,7 +381,7 @@ export default {
       searchText: "",
       sortConfig: {
         searchText: "",
-        type: 1, // 机构1商城2
+        type: 1, // 机构1商城2个人9
         resType: 5,
         orderType: 0,
         priceType: 1,
