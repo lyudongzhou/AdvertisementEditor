@@ -1,3 +1,3 @@
 export default function(cmpConfig) {
-    return `<svg style="width: ${cmpConfig.layoutConfig.width}; height: ${cmpConfig.layoutConfig.height}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 49.31 27"><title>资源 62</title><g id="图层_2" data-name="图层 2"><g id="图层_1-2" data-name="图层 1"><path d="M45.36,4a13.51,13.51,0,0,0-22.95,7.89H13.33a6.77,6.77,0,1,0,0,3.32h9.08A13.5,13.5,0,1,0,45.36,4ZM35.81,23.69A10.19,10.19,0,1,1,46,13.5,10.2,10.2,0,0,1,35.81,23.69Z"/></g></g></svg>`;
+    return `<svg style="width: ${cmpConfig.layoutConfig.width}px; height: ${cmpConfig.layoutConfig.height}px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 49.31 27"><title>资源 62</title><g id="图层_2" data-name="图层 2"><g id="图层_1-2" data-name="图层 1"><path d="M45.36,4a13.51,13.51,0,0,0-22.95,7.89H13.33a6.77,6.77,0,1,0,0,3.32h9.08A13.5,13.5,0,1,0,45.36,4ZM35.81,23.69A10.19,10.19,0,1,1,46,13.5,10.2,10.2,0,0,1,35.81,23.69Z"/></g></g></svg>`;
 }

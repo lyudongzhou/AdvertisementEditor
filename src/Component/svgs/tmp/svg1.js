@@ -6,7 +6,7 @@ register(SVGS, {
     console.log(111);
     // let props = cmpConfig.props;
     return `<svg id="图层_1" data-name="图层 1"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 42.38" style="width: ${cmpConfig.layoutConfig.width}; height: ${cmpConfig.layoutConfig.height}">
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 42.38" style="width: ${cmpConfig.layoutConfig.width}px; height: ${cmpConfig.layoutConfig.height}px">
     <defs>
         <style></style>
     </defs>

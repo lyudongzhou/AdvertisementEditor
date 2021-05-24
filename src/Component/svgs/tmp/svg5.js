@@ -4,7 +4,7 @@ register(SVGS,{
   type: "0.4",
   payload: function(cmpConfig) {
     return `<svg id="图层_1" data-name="图层 1"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 43.76" style="width: ${cmpConfig.layoutConfig.width}; height: ${cmpConfig.layoutConfig.height}">
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 43.76" style="width: ${cmpConfig.layoutConfig.width}px; height: ${cmpConfig.layoutConfig.height}px">
     <defs>
         <style>.cls-0-4{fill:${cmpConfig.props.color};}</style>
     </defs>

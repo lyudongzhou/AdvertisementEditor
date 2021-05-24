@@ -5,7 +5,7 @@ register(SVGS, {
   payload: function(cmpConfig) {
     return `
     <svg
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42 49.77" style="width: ${cmpConfig.layoutConfig.width}; height: ${cmpConfig.layoutConfig.height}">
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42 49.77" style="width: ${cmpConfig.layoutConfig.width}px; height: ${cmpConfig.layoutConfig.height}px">
     <defs>
         <style>.cls-3-0{fill:#dd684f;}</style>
     </defs>
@@ -17,7 +17,7 @@ register(SVGS, {
   type: "3.1",
   payload: function(cmpConfig) {
     return `
-    <svg  style="width: ${cmpConfig.layoutConfig.width}; height: ${cmpConfig.layoutConfig.height}"
+    <svg  style="width: ${cmpConfig.layoutConfig.width}px; height: ${cmpConfig.layoutConfig.height}px"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 49.66 45.03">
     <defs>
         <style>.cls-3-1{fill:#5855c8;}</style>
@@ -30,7 +30,7 @@ register(SVGS, {
   type: "3.2",
   payload: function(cmpConfig) {
     return `
-    <svg style="width: ${cmpConfig.layoutConfig.width}; height: ${cmpConfig.layoutConfig.height}"
+    <svg style="width: ${cmpConfig.layoutConfig.width}px; height: ${cmpConfig.layoutConfig.height}px"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 49.33">
     <defs>
         <style>.cls-3-2{fill:#b12621;}</style>
@@ -44,7 +44,7 @@ register(SVGS, {
   payload: function(cmpConfig) {
     return `
     <svg 
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 31 49.95" style="width: ${cmpConfig.layoutConfig.width}; height: ${cmpConfig.layoutConfig.height}">
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 31 49.95" style="width: ${cmpConfig.layoutConfig.width}px; height: ${cmpConfig.layoutConfig.height}px">
     <defs>
         <style>.cls-3-3{fill:#f9a326;}</style>
     </defs>
@@ -57,7 +57,7 @@ register(SVGS, {
   payload: function(cmpConfig) {
     return `
     <svg 
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 46 46.9" style="width: ${cmpConfig.layoutConfig.width}; height: ${cmpConfig.layoutConfig.height}">
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 46 46.9" style="width: ${cmpConfig.layoutConfig.width}px; height: ${cmpConfig.layoutConfig.height}px">
     <defs>
         <style>.cls-3-4{fill:#f9a326;}</style>
     </defs>
