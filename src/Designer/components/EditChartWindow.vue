@@ -71,7 +71,7 @@
     methods: {
       changeValue (targetData, key) {
         let value = event.currentTarget.value;
-        this.$set(targetData, key, value);
+        this.$set(targetData, key, value===""?[]:value);
       },
       addColumn () {
         let data = !this.thData?{
