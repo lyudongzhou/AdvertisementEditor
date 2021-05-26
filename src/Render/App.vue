@@ -1,51 +1,101 @@
 <template>
-    <div
-        id="app"
-        :style="{
-            position: 'absolute',
-            width: deviceWidth + 'px',
-            height: deviceHeight + 'px',
-            'background-color': 'lightgray',
-        }"
-    >
-        <render
-            v-if="renderData"
-            :renderData="renderData"
-            :currentPage="currentPage"
-            @click="onClick"
-            :designMode="false"
-            :baseUrl="baseUrl"
-            :style="{
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-            }"
-        ></render>
-    </div>
+  <div id="app" :style="computedStyle">
+    <render
+      v-if="renderData"
+      :renderData="renderData"
+      :currentPage="currentPage"
+      @click="onClick"
+      :designMode="false"
+      :baseUrl="baseUrl"
+      :style="{
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+      }"
+    ></render>
+  </div>
 </template>
 <script>
 import render from "./render";
-// import { renderData } from "../../interface";
-// var a = {"version":"1.0","description":"","container":{"width":1920,"height":1080,"bgm":{},"paging":{"position":"center&bottom","fmt":"${CURRENT}/${TOTAL}","color":"#E41C1C","size":20,"family":"","bgColor":"#000000"}},"change":{"type":70,"loop":true,"singlePagePlayTime":1800,"changeHint":true,"backTime":6000},"pages":[{"name":"页面1","id":"1","container":{"backGround":{"type":"","value":""},"bgMusic":{"type":1,"music":[]}},"components":[{"props":{"videoSrc":"","bgUrl":["http://rongmeiyun.s3.cn-south-1.jdcloud-oss.com/upload/20210430/cf2a247ce9ca39e6f070eb31d2d08b5c.mp4","http://rongmeiyun.s3.cn-south-1.jdcloud-oss.com/upload/20210506/13c91010044d87b41100568ef818b40a.mp4"],"arrResources":[{"name":"3.mp4","uuid":"1f9eb015c9c743d6af4e2ca62cd73dfc","url":"http://rongmeiyun.s3.cn-south-1.jdcloud-oss.com/upload/20210430/cf2a247ce9ca39e6f070eb31d2d08b5c.mp4","payload":{"resId":502,"resName":"3.mp4","resType":2,"sourcePaht":"http://rongmeiyun.s3.cn-south-1.jdcloud-oss.com/upload/20210430/cf2a247ce9ca39e6f070eb31d2d08b5c.mp4","pdfPaht":"","imgList":[],"thumbnail":"http://rongmeiyun.s3.cn-south-1.jdcloud-oss.com/upload/20210430/131e292edd505d20b02adaf8b0242aea.jpg","priceType":1,"approveState":1,"uuid":"1f9eb015c9c743d6af4e2ca62cd73dfc"}},{"name":"3 (1).mp4","uuid":"d648d13937c21d5616d36fc17264b0e1","url":"http://rongmeiyun.s3.cn-south-1.jdcloud-oss.com/upload/20210506/13c91010044d87b41100568ef818b40a.mp4","payload":{"resId":517,"resName":"3 (1).mp4","resType":2,"sourcePaht":"http://rongmeiyun.s3.cn-south-1.jdcloud-oss.com/upload/20210506/13c91010044d87b41100568ef818b40a.mp4","pdfPaht":"","imgList":[],"thumbnail":"http://rongmeiyun.s3.cn-south-1.jdcloud-oss.com/upload/20210506/e85423f4e4161be1d1928127863b6e19.jpg","priceType":1,"approveState":1,"uuid":"d648d13937c21d5616d36fc17264b0e1"}}]},"animation":[],"events":[],"type":"VideoCmp","layoutConfig":{"width":300,"height":300,"hidden":false,"rotation":0,"top":0,"left":0,"opacity":100,"pivotX":0,"pivotY":0,"scaleX":1,"scaleY":1,"aniRotation":0,"skewX":0,"skewY":0,"positionX":0,"positionY":0,"alpha":1,"zIndex":1},"children":[],"name":"视频","id":"4105ca40-b331-11eb-8890-05ad1188ee6f"}]}],"dialogs":[],"resource":[]}
 export default {
-    components: {
-        render,
+  components: {
+    render,
+  },
+  computed: {
+    computedStyle() {
+      console.log(
+        `scale(${this.scale}) translate(${this.translateX},${this.translateY})`
+      );
+      return {
+        position: "absolute",
+        width: this.deviceWidth + "px",
+        height: this.deviceHeight + "px",
+        "background-color": "lightgray",
+        transform: `translate(${this.translateX}px,${this.translateY}px) scale(${this.scale})`,
+        transformOrigin: "0 0",
+      };
     },
-    methods: {
-        onClick() {},
+    translateX() {
+      let width = this.deviceWidth;
+      let height = this.deviceHeight;
+      var docEl = document.documentElement;
+      window.clientWidth = docEl.clientWidth;
+      window.clientHeight = docEl.clientHeight;
+      if (!window.clientWidth) return null;
+      var aspectRatio = window.clientWidth / window.clientHeight;
+      if (aspectRatio > width / height) {
+        return (
+          (window.clientWidth - (width * window.clientHeight) / height) / 2
+        );
+      } else {
+        return 0;
+      }
     },
-    created() {
+    translateY() {
+      let width = this.deviceWidth;
+      let height = this.deviceHeight;
+      var docEl = document.documentElement;
+      window.clientWidth = docEl.clientWidth;
+      window.clientHeight = docEl.clientHeight;
+      if (!window.clientWidth) return null;
+      var aspectRatio = window.clientWidth / window.clientHeight;
+      if (aspectRatio > width / height) {
+        return 0;
+      } else {
+        return (
+          (window.clientHeight - (height * window.clientWidth) / width) / 2
+        );
+      }
     },
-    data() {
-        return {
-            containerStyle: {},
-            deviceWidth: window.renderData.container.width,
-            deviceHeight: window.renderData.container.height,
-            renderData: window.renderData,
-            currentPage: window.renderData.pages[0].id,
-            baseUrl: '',
-        };
+    scale() {
+      let width = this.deviceWidth;
+      let height = this.deviceHeight;
+      var docEl = document.documentElement;
+      window.clientWidth = docEl.clientWidth;
+      window.clientHeight = docEl.clientHeight;
+      if (!window.clientWidth) return null;
+      var aspectRatio = window.clientWidth / window.clientHeight;
+      if (aspectRatio > width / height) {
+        return window.clientHeight / height;
+      } else {
+        return window.clientWidth / width;
+      }
     },
+  },
+  methods: {
+    onClick() {},
+  },
+  created() {},
+  data() {
+    return {
+      containerStyle: {},
+      deviceWidth: window.renderData.container.width,
+      deviceHeight: window.renderData.container.height,
+      renderData: window.renderData,
+      currentPage: window.renderData.pages[0].id,
+      baseUrl: "",
+    };
+  },
 };
 </script>
 <style scoped></style>

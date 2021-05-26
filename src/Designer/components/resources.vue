@@ -93,7 +93,15 @@
               </div>
             </el-tooltip>
             <img
-              v-if="o.isVip !== 1 && sortConfig.type === 2 && o.priceType !== 1"
+              v-if="
+                o.isVip !== 1 &&
+                ((typeSwitch === 1 &&
+                  sortConfig.type === 2 &&
+                  o.priceType !== 1) ||
+                  (typeSwitch === 2 &&
+                    sortConfig.type === 2 &&
+                    o.chargeType === 2))
+              "
               :src="clownImage"
               style="position: absolute; left: 4px; top: 3px"
             />
@@ -177,7 +185,12 @@ export default {
         console.log("vipCatchErr");
         isVip = true;
       }
-      if (!isVip && o.isVip !== 1 && this.sortConfig.type === 2 && o.priceType !== 1) {
+      if (
+        !isVip &&
+        o.isVip !== 1 &&
+        this.sortConfig.type === 2 &&
+        o.priceType !== 1
+      ) {
         this.$alert("成为会员即可免费哦。", {
           confirmButtonText: "确定",
         });
