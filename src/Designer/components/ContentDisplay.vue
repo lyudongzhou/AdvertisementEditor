@@ -3,7 +3,7 @@ import render from "../../Render/render.vue";
 import { mapState, mapGetters, mapMutations } from "../store";
 import { getPropByPath } from "../../Utils/utils";
 import VueDraggableResizable from "./resizeable/components/vue-draggable-resizable";
-import editorWin from "./EditorWindow";
+// import editorWin from "./EditorWindow";
 import RotateOperate from "./RotateOperate";
 import Vue from "vue";
 import {
@@ -45,7 +45,7 @@ export default {
   components: {
     render,
     VueDraggableResizable,
-    editorWin,
+    // editorWin,
     RotateOperate,
   },
   created() {
@@ -1075,7 +1075,7 @@ export default {
       </template>
     </div>
 
-    <editorWin ref="editorWin" :parentWidth="workspaceWidth"></editorWin>
+    <!-- <editorWin ref="editorWin" :parentWidth="workspaceWidth"></editorWin> -->
   </div>
 </template>
 

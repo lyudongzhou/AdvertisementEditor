@@ -3,14 +3,14 @@
     class="editWin fly"
     :resizable="false"
     :parent="false"
-    :y="0"
+    :y="initialPosition.y"
     :x="initialPosition.x"
     :h="'auto'"
     :w="327"
     v-if="!isClose"
     dragHandle=".editor_header"
   >
-    <el-container style="height:100%;border:1px solid black;padding:10px">
+    <el-container style="height:100%;padding:10px">
       <el-header class="editor_header">
         <span>编辑面板</span>
         <i class="el-icon-close" @click="closeSetDialog"></i>
@@ -60,7 +60,7 @@ export default {
     // ...mapState(['schema', 'projectInfo']),
     ...mapGetters(["currentComponent"]),
     initialPosition() {
-      return { x: this.parentWidth - 327 };
+      return { x: this.parentWidth - 327-298-50,y:55 };
     },
   },
   created() {},

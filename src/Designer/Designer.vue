@@ -36,6 +36,7 @@
     <totalPreview></totalPreview>
     <resourceDialg></resourceDialg>
     <key-map></key-map>
+    <editorWin ref="editorWin" :parentWidth="workspaceWidth"></editorWin>
   </div>
 </template>
 
@@ -56,6 +57,7 @@ import svgWin from "./components/popupCmp/moreSvg";
 import dialogWin from "./components/popupCmp/pluginList";
 import promptDialog from "./components/promptDialog";
 import KeyMap from "./components/KeyMap.vue";
+import editorWin from "./components/EditorWindow";
 // import singlePagePreview from "./components/preView";
 import { mapState } from "./store";
 export default {
@@ -76,14 +78,17 @@ export default {
     editPropWin,
     svgWin,
     promptDialog,
-    dialogWin
+    dialogWin,
+    editorWin
   },
   computed: {
     ...mapState(["previewing"]),
   },
   mounted() {},
   data() {
-    return {};
+    return {
+      workspaceWidth: document.body.clientWidth,
+    };
   },
   methods: {
     openProject(schema) {
